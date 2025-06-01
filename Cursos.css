@@ -1,0 +1,158 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  }
+
+body {
+  font-family: 'Poppins', sans-serif;
+
+
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/*----------- nav ------------*/
+.nav {
+  padding: 1rem ;
+  display: flex;
+  margin: 1rem 0 1rem 1rem ;
+  border-radius: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+.sidebar-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:space-between;
+}
+#Bulogos{
+  width: 3rem;
+  display: flex;
+  align-items: left;
+}
+.sidebar-top{
+  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+}
+.Side-caret{
+  display: flex;
+  align-items: flex-end;
+  justify-content: right;
+  font-size: 1.5rem;
+
+}
+.Action-nav-btns{
+  display: flex;
+  align-items: center;
+
+}
+.Side-Btns{
+  gap:.5rem;
+  display: flex;
+  align-items: center;
+
+}
+.Side-Btns i{
+  font-size: 1.5rem;
+}
+.linkName{
+  font-size: .8rem;
+}
+#open{
+  margin: 0 -1.3rem;
+}
+.sidebar-bottom{
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+/*----------- Courese-block ------------*/
+.Courese-block{
+  border-radius: 1rem;
+  
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .header {
+      font-size: 24px;
+      font-weight: bold;
+      color: #003366;
+      margin-bottom: 25px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 25px;
+    }
+
+    .filters select {
+      padding: 10px;
+      font-size: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .course-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      position: relative;
+    }
+
+    .course-card h4 {
+      margin: 0;
+      color: #003366;
+    }
+
+    .course-card p {
+      margin: 8px 0;
+      color: #555;
+      font-size: 14px;
+    }
+
+    .enroll-btn {
+      margin-top: 10px;
+      padding: 8px 14px;
+      font-size: 14px;
+      border: none;
+      background-color: #3c8dbc;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .enrolled {
+      background-color: #00a65a;
+      color: white;
+      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 4px;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+    }

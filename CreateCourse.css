@@ -1,0 +1,714 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  }
+
+body {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/*----------- nav ------------*/
+.nav {
+  padding: 1rem ;
+  display: flex;
+  margin: 1rem 0 1rem 1rem ;
+  border-radius: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+.sidebar-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:space-between;
+}
+#Bulogos{
+  width: 3rem;
+  display: flex;
+  align-items: left;
+}
+.sidebar-top{
+  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+}
+.Side-caret{
+  display: flex;
+  align-items: flex-end;
+  justify-content: right;
+  font-size: 1.5rem;
+
+}
+.Action-nav-btns{
+  display: flex;
+  align-items: center;
+}
+.Side-Btns{
+  gap:.5rem;
+  display: flex;
+  align-items: center;
+
+}
+.Side-Btns i{
+  font-size: 1.5rem;
+}
+.linkName{
+  font-size: .8rem;
+}
+#open{
+  margin: 0 -1.3rem;
+}
+.sidebar-bottom{
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+/*----------- nav ------------*/
+.Main{
+  width: 100%;
+  margin: 1rem;
+}
+
+
+.Main-divide{
+  display: flex;
+
+}
+
+.form-container{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.Q-blocks{
+  gap: .5rem;
+  display: flex;
+  flex-direction: column;
+  margin: .3rem 0;
+}
+
+
+.input-tool{
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 14px;
+  background-color: #f5f7fa;
+  margin: .3rem 0;
+  box-sizing: border-box;
+}
+
+.Main-divide-sections {
+  overflow-y: auto;
+  max-height: 85vh;
+  width: 50%;
+  scroll-behavior: smooth; /* Smooth scroll on anchor links */
+  padding-right: 10px; /* Optional spacing for scroll bar */
+}
+
+.Action-btns{
+  padding: .4rem 3rem;
+  border-radius: .5rem;
+  border: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.Main-divide{
+  display: flex;
+  flex-direction: row;
+}
+
+
+.video-input-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: .5rem 0;
+}
+
+/*-------- AddVideoBtn --------*/
+.video-input-section input {
+  padding: 1rem;
+  font-size: 14px;
+  border-radius: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+.video-block-label {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+.remove-video-btn {
+  position: absolute;
+  right: 8px;
+  border: none;
+  font-weight: bold;
+  font-size: 22px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;        
+ 
+}
+/*-------- AddTextBtn --------*/
+.text-input-section {
+  position: relative; /* for remove btn positioning */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.text-input-section textarea {
+  resize: vertical;
+  min-height: 100px;
+  padding: 10px;
+  font-size: 14px; 
+  border-radius: 6px; 
+  width: 100%;
+  box-sizing: border-box;
+}      
+.remove-text-btn {
+  position: absolute;
+  right: 8px;
+  border: none;
+  font-weight: bold;
+  font-size: 22px;  
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;   
+  display: flex;
+  align-items: center;
+  justify-content: center;
+     
+}
+/*-------- AddPresentBtn --------*/
+.present-input-section {
+  position: relative; /* for remove btn positioning */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+  border-radius: 10px;    
+}
+.present-input-section input {
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px; 
+  width: 100%;
+  box-sizing: border-box;
+}
+.remove-present-btn {
+  position: absolute;
+  right: 8px;
+  border: none;
+  font-weight: bold;
+  font-size: 22px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+       
+}
+/*-------- AddExamBtn --------*/
+.exam-input-section {
+  position: relative; 
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 20px 0;
+}
+.question-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  border-radius: 8px;
+}
+.exam-input-section input[type="text"],
+.exam-input-section select {
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.exam-input-section label {
+  font-weight: bold;
+  margin-top: 8px;
+}
+.add-question-btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  align-self: flex-start;
+
+}
+.remove-exam-btn {
+  position: absolute;
+  right: 8px;
+  border: none;
+  font-weight: bold;
+  font-size: 22px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+/*-------- AddTema --------*/
+.tema-input-section {
+  position: relative; /* for remove btn */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+}
+.tema-input-section input[type="text"] {
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.remove-tema-btn {
+  position: absolute;
+  right: 8px;    
+  border: none;
+  font-weight: bold;
+  font-size: 22px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+/*-------- AddSubTema --------*/
+.subtema-input-section {
+  position: relative; /* for remove btn */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+}
+.subtema-input-section input[type="text"] {
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.remove-subtema-btn {
+  position: absolute;
+  right: 8px;
+  border: none;
+  font-weight: bold;
+  font-size: 22px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+/*-------- Main-right --------*/
+#Main-right {
+  width: 100%;
+  height: 100vh;
+  display: none;
+  gap: 1.5rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  margin: -2rem 0 0 0;
+}
+/* Course Title */
+#course-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* Course Image */
+.img-course-block img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 1rem;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.hidden-tabs{
+  padding: 1rem;
+  border-radius: 8px;
+
+}
+.tabs button {
+  padding: 0.5rem 3rem;
+  background-color: #fff;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tabs button:hover {
+  background-color: #f0f0f0;
+}
+
+
+
+
+
+/* Notes section */
+.notes {
+  width: 100%;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Instructor Info */
+.instructor {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-top: 2rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.instructor h4 {
+  margin-bottom: 0.5rem;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 100%;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Progress Bar */
+.progress {
+  margin-bottom: 1.5rem;
+}
+
+.progress-bar {
+  width: 100%;
+  background-color: #eee;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.progress-bar-fill {
+  width: 40%; /* Example: 2/5 complete */
+  height: 100%;
+  background-color: #4caf50;
+}
+
+/* Course List */
+.Course-list {
+  margin-bottom: 2rem;
+}
+
+/* Discussion */
+.discussion {
+  border-top: 1px solid #ddd;
+  padding-top: 1rem;
+}
+
+.comment {
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed #ccc;
+}
+
+
+.tema-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; /* full-width button */
+  padding: 12px 16px;
+  margin: 6px 0;
+
+
+  border: none;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: left;
+}
+
+.tema-button:hover {
+  background-color: #2563eb;
+}
+
+.tema-button .arrow {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+
+.toggle-btn {
+  display: block;
+  background-color: #eee;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 8px 0;
+  font-weight: bold;
+  border: none;
+}
+.item-preview-btn {
+  background: #ddd;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 4px 0;
+  display: block;
+}
+.modal {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 8px;
+}
+
+
+.preview-button {
+  padding: 10px 15px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.tema-btn, .subtema-btn, .item-preview-btn {
+  display: block;
+  background: #f0f0f0;
+  border: none;
+  padding: 8px 12px;
+  margin: 5px 0;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.tema-container, .subtema-container {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.modal h3 {
+  margin-top: 0;
+}
+
+ 
+
+/* --- General Button Styling --- */
+.toggle-btn, .item-preview-btn {
+  display: inline-block;
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 14px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-btn:hover, .item-preview-btn:hover {
+  background-color: #45a049;
+}
+
+/* --- Modal Styling --- */
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  z-index: 1000;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.modal iframe,
+.modal video {
+  width: 100%;
+  height: 500px;
+  margin-bottom: 10px;
+}
+
+/* --- Close Button --- */
+.modal button {
+  background-color: #f44336;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal button:hover {
+  background-color: #d32f2f;
+}
+
+/* --- List Styling --- */
+#Course-list ul {
+  list-style-type: none;
+  padding-left: 20px;
+}
+
+#Course-list li {
+  margin-bottom: 6px;
+}
+
+#Course-list > button {
+  margin-top: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*----------- nav ------------*/
+.Action-side-bar {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  margin: 1rem;
+  border-radius: 1rem;
+   position: relative;
+
+  z-index: 1000;
+}
+.sidebar-container {
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  height: 90vh;
+
+  
+
+}
+#tool-sidebar-top, #tool-sidebar-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.tool-Sidebar-Icon {
+  font-size: 2.5rem;
+  align-self: center;
+}
+.tool-Side-Btns {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+ 
+}
+.tool-Side-Btns i {
+  font-size: 1.5rem;
+}
+.linkName {
+  font-size: 0.9rem;
+
+
+
+  transition: opacity 0.3s ease;
+}
+.tool-Action-nav-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-right: 0.5rem;
+}
+.tool-Side-caret {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin: 0 -1rem 0 0;
+  padding: 0.3rem;
+}
+

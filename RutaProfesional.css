@@ -1,0 +1,109 @@
+  body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f7f9fc;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 180px;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .status {
+      font-size: 12px;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+
+    .completed .status {
+      background: #e6f9ec;
+      color: #2e7d32;
+    }
+
+    .in-progress .status {
+      background: #fff7e0;
+      color: #f57c00;
+    }
+
+    .pending .status {
+      background: #f0f0f0;
+      color: #888;
+    }
+
+    .card h3 {
+      font-size: 16px;
+      margin: 0 0 8px;
+      color: #222;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #666;
+      margin: 0 0 12px;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 16px;
+      color: #444;
+    }
+
+    .footer strong {
+      color: #2e7d32;
+    }
+
+    .icon-row {
+      display: flex;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .icon {
+      background: #f1f4f8;
+      padding: 8px;
+      border-radius: 12px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .card img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+      border-radius: 12px;
+    }

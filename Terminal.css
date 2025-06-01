@@ -1,0 +1,29 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Optional: hides overflow if needed */
+}
+
+#Terminal-Img {
+  max-width: 40vw;     /* Limits width to 90% of viewport width */
+  max-height: 40vh;    /* Limits height to 90% of viewport height */
+  width: auto;
+  height: auto;
+  animation: spin 10s linear infinite;
+}
+#Terminal-text{
+  font-size: 3.5rem;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

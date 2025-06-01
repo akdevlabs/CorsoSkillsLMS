@@ -1,0 +1,154 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+
+  color: #0d1b2a;
+}
+
+
+
+#header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .5rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#Bulogos{
+  width: 10rem;
+}
+.exit-link {
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 6px;
+}
+#header-logo{
+  width: 10rem;
+}
+
+
+
+/*--------container -------*/
+.container {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+
+.IFTop{
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tittle-block{
+  margin-bottom: 1rem;
+}
+.IFBottom{
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.form-group {
+  width: 16rem;
+  margin: 1rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #0056d2;
+  box-shadow: 0 0 0 2px rgba(0, 86, 210, 0.2);
+}
+
+.cards{
+  gap: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+}
+.Card-Icons{
+  font-size: 3rem;
+  padding: 1.5rem 3.5rem;
+  border-radius: 1rem;
+}
+.card.toggle-btn {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 1rem 0;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  border-radius: 1rem;
+}
+.card.toggle-btn span{
+ 
+  font-weight: bold;
+}
+
+.hidden-Info-block{
+  width: 50%;
+  display: none;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+
+
+.next-button {
+  border: none;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+
+
+
+
+.course-btn {
+  margin: 5px;
+  padding: 10px;
+}
+
+.see-more-btn {
+  display: block;
+  margin: 15px auto;
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.course-btn.selected {
+  background-color: #4CAF50;
+  color: white;
+}

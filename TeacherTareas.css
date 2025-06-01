@@ -1,0 +1,103 @@
+  body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #d3e0ea;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .header {
+      font-size: 24px;
+      font-weight: bold;
+      color: #003366;
+      margin-bottom: 20px;
+    }
+
+    .homework-card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    .homework-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .homework-header h3 {
+      margin: 0;
+      color: #003366;
+    }
+
+    .homework-info {
+      margin-top: 10px;
+    }
+
+    .homework-info p {
+      margin: 5px 0;
+      font-size: 15px;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .actions textarea {
+      width: 100%;
+      padding: 10px;
+      resize: vertical;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .actions input[type="number"] {
+      width: 100px;
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .action-buttons button {
+      background-color: #3c8dbc;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .action-buttons button:hover {
+      background-color: #337ab7;
+    }
+
+    .download-link {
+      color: #003366;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .action-buttons {
+        flex-direction: column;
+      }
+    }

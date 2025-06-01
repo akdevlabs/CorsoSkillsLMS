@@ -1,0 +1,171 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  }
+
+body {
+  font-family: 'Poppins', sans-serif;
+
+
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/*----------- nav ------------*/
+.nav {
+  padding: 1rem ;
+  display: flex;
+  margin: 1rem 0 1rem 1rem ;
+  border-radius: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+.sidebar-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:space-between;
+}
+#Bulogos{
+  width: 3rem;
+  display: flex;
+  align-items: left;
+}
+.sidebar-top{
+  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+}
+.Side-caret{
+  display: flex;
+  align-items: flex-end;
+  justify-content: right;
+  font-size: 1.5rem;
+
+}
+.Action-nav-btns{
+  display: flex;
+  align-items: center;
+
+}
+.Side-Btns{
+  gap:.5rem;
+  display: flex;
+  align-items: center;
+
+}
+.Side-Btns i{
+  font-size: 1.5rem;
+}
+.linkName{
+  font-size: .8rem;
+}
+#open{
+  margin: 0 -1.3rem;
+}
+.sidebar-bottom{
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+/*----------- Header ------------*/
+.Main-Content{
+  width: 100%;
+}
+#Wecome-banner{
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem;
+  padding: .5rem 1rem;
+  border-radius: 0 1rem 1rem 0;
+}
+#courses-in-progress{
+  margin: 1.5rem 1rem;
+  padding: .5rem 1rem;
+  border-radius: 0 1rem 1rem 0;
+}
+.CIP-Top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#wecome-banner-tittle{
+  font-size: 1rem;
+
+}
+ .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .header {
+      font-size: 26px;
+      font-weight: bold;
+      color: #003366;
+      margin-bottom: 30px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      position: relative;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      color: #003366;
+      font-size: 18px;
+    }
+
+    .card p {
+      margin: 6px 0;
+      color: #555;
+      font-size: 14px;
+    }
+
+    .card .icon {
+      font-size: 22px;
+      color: #3c8dbc;
+      margin-bottom: 10px;
+    }
+
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .quick-link {
+      background-color: #3c8dbc;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 15px;
+      transition: background-color 0.2s ease;
+    }
+
+    .quick-link:hover {
+      background-color: #2a6e95;
+    }
+
+    .quick-link i {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 6px;
+    }

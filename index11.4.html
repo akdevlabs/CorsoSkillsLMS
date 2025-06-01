@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LearnHub - Descubre tu pasión y aprende a tu propio ritmo con cursos interactivos">
+  <!-- Fuentes y estilos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CorsoSkills/TeacherLecciones</title>
+  <link rel="stylesheet" href="TeacherLecciones.css">
+
+</head>
+<body>  
+  <section class="nav" id="sidebar">
+      
+      <div class="sidebar-content">
+        
+        <div class="sidebar-top" id="sidebar-top">  
+          <img id="Bulogos"></img>
+          
+          <div class="Side-Btns" id="Home">
+            <i class="fa-solid fa-square-poll-vertical"></i>
+            <span class="linkName">Dashboard</span>
+          </div>
+
+          <div class="Side-Btns" id="invocie">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+            <span class="linkName">Pagos</span>
+          </div>
+
+          <div class="Side-Btns" id="Students">
+            <i class="fa-solid fa-school"></i>
+            <span class="linkName">Estudiantes</span>
+          </div>
+
+          <div class="Side-Btns" id="Assignments">
+            <i class="fa-solid fa-list-check"></i>
+            <span class="linkName">Tareas</span>
+          </div>
+
+          <div class="Side-Btns" id="Lessons">    
+            <i class="fa-solid fa-person-chalkboard"></i>
+            <span class="linkName">Lecciones</span>
+          </div>
+
+          <div class="Side-Btns" id="Mensajes">    
+            <i class="fa-solid fa-message"></i>
+            <span class="linkName">Mensajes</span>
+          </div>
+
+        </div>
+
+        <div class="sidebar-bottom">
+
+          <div class="Side-Btns" id="Settings">
+            <i class="fa-solid fa-gear"></i>
+            <span class="linkName">Settings</span>
+          </div>
+   
+          <div class="Side-Btns" id="Logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="linkName">Cerrar sesión</span>
+          </div>
+        </div> 
+        
+      </div>
+
+    
+
+    
+
+      <div class="Action-nav-btns">
+      
+      <div class="Side-caret" id="open">
+          <i class="fa-solid fa-caret-right"></i>
+      </div>
+
+      <div class="Side-caret" id="close">
+          <i class="fa-solid fa-caret-left"></i>
+      </div>
+
+      </div>
+  </section>
+
+
+  <section class="main" id="main">
+       <div class="container">
+    <div class="header">Portal de Lección en Vivo</div>
+
+    <div class="lesson-area">
+      <!-- LEFT SIDE: VIDEO + RESOURCES -->
+      <div class="video-section">
+        <div class="video-box" id="liveVideo">
+          <!-- Embed Zoom/YouTube/live stream iframe here -->
+        </div>
+        <button class="btn-live"><i class="fas fa-video"></i> Iniciar Clase en Vivo</button>
+
+        <div class="lesson-meta">
+          <h3>Título: Yoga Intermedio - Posturas de equilibrio</h3>
+          <p><strong>Duración:</strong> 45 minutos</p>
+          <p><strong>Descripción:</strong> En esta clase se cubrirán técnicas de balance y respiración consciente para mejorar postura y estabilidad.</p>
+        </div>
+
+        <div class="resources">
+          <h4>Material de Apoyo:</h4>
+          <a href="#">PDF: Guía de respiración</a>
+          <a href="#">Video extra: Ejercicios de estiramiento</a>
+          <a href="#">Link: Artículo recomendado</a>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE: CHAT + STUDENTS -->
+      <div class="info-section">
+        <div class="student-list">
+          <h4>Estudiantes Conectados</h4>
+          <ul>
+            <li>Laura Gómez</li>
+            <li>Carlos Díaz</li>
+            <li>Sofía Martínez</li>
+            <li>Juan Pérez</li>
+          </ul>
+        </div>
+
+        <div class="chat-box">
+          <h4>Chat en Vivo</h4>
+          <div class="chat-messages" id="chatMessages">
+            <p><strong>Laura:</strong> ¿Puedo usar bloque de yoga?</p>
+            <p><strong>Profe:</strong> Sí, claro. Úsalo para mejor soporte.</p>
+          </div>
+          <div class="chat-input">
+            <input type="text" placeholder="Escribe un mensaje...">
+            <button><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script  src="TeacherLecciones.js" type="module"></script>
+</body>
+</html>

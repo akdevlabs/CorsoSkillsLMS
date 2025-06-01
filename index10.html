@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LearnHub - Descubre tu pasión y aprende a tu propio ritmo con cursos interactivos">
+  <!-- Fuentes y estilos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CorsoSkills/StudentDashboard/Dashboard</title>
+  <link rel="stylesheet" href="StudentDashboard.css">
+</head>
+<body>
+  <section class="nav" id="sidebar">
+      
+      <div class="sidebar-content">
+        
+        <div class="sidebar-top">  
+          <img id="Bulogos"></img>
+          
+          <div class="Side-Btns" id="Home">
+            <i class="fa-solid fa-table-cells" style="color: #991b1b;"></i>
+            <span class="linkName">Dashboard</span>
+          </div>
+
+          <div class="Side-Btns" id="Books">
+            <i class="fa-solid fa-book-open" style="color: #991b1b;"></i>
+            <span class="linkName">eBooks</span>
+          </div>
+
+          <div class="Side-Btns" id="Videos">
+            <i class="fa-solid fa-file-video" style="color: #991b1b;"></i>
+            <span class="linkName">Cursos</span>
+          </div>
+
+          <div class="Side-Btns" id="Trophy">
+            <i class="fa-solid fa-trophy" style="color: #991b1b;"></i>
+            <span class="linkName">Logros</span>
+          </div>
+
+          <div class="Side-Btns" id="Multi-User">    
+            <i class="fa-solid fa-users" style="color: #991b1b;"></i>
+            <span class="linkName">Comunidad</span>
+          </div>
+
+          <div class="Side-Btns" id="carrer">    
+            <i class="fa-solid fa-graduation-cap" style="color: #991b1b;"></i>
+            <span class="linkName">Ruta Profesional</span>
+          </div>
+
+        </div>
+
+        <div class="sidebar-bottom">
+
+          <div class="Side-Btns" id="Settings">
+            <i class="fa-solid fa-gear" style="color: #991b1b;"></i>
+            <span class="linkName">Settings</span>
+          </div>
+   
+          <div class="Side-Btns" id="profile">
+            <i class="fa-solid fa-user-tie" style="color: #991b1b;"></i>
+            <span class="linkName">Profesor</span>
+          </div>
+
+          <div class="Side-Btns" id="Logout">
+            <i class="fa-solid fa-right-from-bracket"style="color: #991b1b;"></i>
+            <span class="linkName">Cerrar sesión</span>
+          </div>
+        </div> 
+        
+      </div>
+
+    
+
+    
+
+      <div class="Action-nav-btns">
+      
+      <div class="Side-caret" id="open">
+          <i class="fa-solid fa-caret-right" style="color: #991b1b;"></i>
+      </div>
+
+      <div class="Side-caret" id="close">
+          <i class="fa-solid fa-caret-left" style="color: #991b1b;"></i>
+      </div>
+
+      </div>
+  </section>
+
+  <section class="Main-Content" id="Main-Content">
+
+    <div id="Wecome-banner">
+
+      <div class="Wecome-banner-Header" id="Wecome-banner-Header">
+                
+      </div>
+
+      <div class="alerts-block">
+        <div class="Evalopes">
+          <i id="Closed-Evalope" class="fa-solid fa-envelope-open"></i>
+          <i id="Active-Evalope" class="fa-solid fa-envelope-open-text"></i>
+        </div>
+        <div class="Bells">
+          <i class="fa-regular fa-bell"></i>
+          <i class="fa-solid fa-bell"></i>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="courses-in-progress">
+      <div class="CIP-Top">
+        <h1>Courses In Progress</h1>
+        <div class="courses-btns">
+          <div id="next-course-btn">
+            <i class="fa-solid fa-angle-right"></i>
+          </div>
+          <div id="back-course-btn">
+            <i class="fa-solid fa-angle-left"></i>
+          </div>
+        </div>
+      </div>
+      
+
+    </div>
+    <div class="container">
+    <div class="header">Panel del Estudiante</div>
+
+    <div class="grid">
+      <!-- Course Summary -->
+      <div class="card">
+        <div class="icon"><i class="fas fa-graduation-cap"></i></div>
+        <h3>Cursos Actuales</h3>
+        <p>3 cursos en progreso</p>
+        <p>1 curso completado</p>
+      </div>
+
+      <!-- Upcoming Classes -->
+      <div class="card">
+        <div class="icon"><i class="fas fa-calendar-alt"></i></div>
+        <h3>Próximas Clases</h3>
+        <p>Hoy: 18:00 - Yoga Avanzado</p>
+        <p>Mañana: 10:00 - Anatomía Deportiva</p>
+      </div>
+
+      <!-- Homework Status -->
+      <div class="card">
+        <div class="icon"><i class="fas fa-tasks"></i></div>
+        <h3>Tareas</h3>
+        <p>2 tareas pendientes</p>
+        <p>1 tarea calificada</p>
+      </div>
+
+      <!-- Reading / eBooks -->
+      <div class="card">
+        <div class="icon"><i class="fas fa-book"></i></div>
+        <h3>Lecturas Pendientes</h3>
+        <p>5 materiales por revisar</p>
+        <p>Incluye PDF y videos</p>
+      </div>
+    </div>
+
+    <div class="header" style="margin-top: 50px;">Accesos Directos</div>
+
+    <div class="quick-links">
+      <a href="#" class="quick-link"><i class="fas fa-play-circle"></i> Lecciones en Vivo</a>
+      <a href="#" class="quick-link"><i class="fas fa-book-open"></i> Biblioteca</a>
+      <a href="#" class="quick-link"><i class="fas fa-calendar"></i> Calendario</a>
+      <a href="#" class="quick-link"><i class="fas fa-pen"></i> Tareas</a>
+      <a href="#" class="quick-link"><i class="fas fa-user-cog"></i> Mi Cuenta</a>
+    </div>
+  </div>
+
+
+
+  </section>
+
+
+
+
+
+
+  <div id="Popup-info-request"></div>
+
+
+ 
+  <script  src="StudentDashboard.js" type="module"></script>
+</body>
+</html>
