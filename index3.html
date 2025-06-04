@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="LearnHub - Descubre tu pasión y aprende a tu propio ritmo con cursos interactivos">
   <!-- Fuentes y estilos -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,57 +22,118 @@
   <link rel="stylesheet" href="Comunidad.css">
 </head>
 <body>
-  <div class="onda-holo"></div>
-  
-  <header role="banner">
-    <div class="container nav" id="nav-block">
-      <img class="logo" id="Bulogo" aria-label="LearnHub">
-      <nav class="nav-links" id="nav-links" role="navigation" aria-label="Navegación principal">
-        <a href="../Home/index.html" aria-current="page">Inicio</a>
-        <a href="../Materias/index1.html">Materias</a>
-        <a href="../Comunidad/index3.html">Comunidad</a>
-        <a href="../Precios/index4.html">Precios</a>
-        <a href="../../LMS/LogIn/index5.html" class="btn btn-outline">Iniciar Sesión</a>
-        <a href="../../LMS/CreateAcount/index6.html" class="btn btn-primary">Empezar</a>
-      </nav>
-    </div>
-  </header>
+  <div>
+    <header class="Nav-Container" id="header">  
+      <img id="Main-logo" src="">
 
-  <section class="community-header">
-    <div class="container">
-      <h1>Join Our Quantum Community</h1>
-      <p>Connect across dimensions with learners and mentors worldwide</p>
-    </div>
-  </section>
+      <nav class="nav-links">
+
+        <div class="main-nav-links">
+          <a class="nav-link" href="index.html" aria-current="page">Inicio</a>
+          <a class="nav-link"  href="index1.html">Cursos</a>
+          <a class="nav-link"  href="index3.html">Comunidad</a>
+          <a class="nav-link"  href="index4.html">Precios</a> 
+        </div>
+
+        <div class="action-nav-links">
+          <a href="index5.html" class="ANLB" id="LoginSBtn">Alumno</a>
+          <a href="index5.html" class="ANLB" id="LoginTBtn">Docente</a>
+          <a href="index6.html" id="startBtn">Comenzar</a>
+        </div>
+
+      </nav>
+    </header>
+    <!-- Hamburger Button for Mobile -->
+    <button id="menuToggle" aria-label="Abrir menú">
+      <i class="fa-solid fa-bars" style="color: #991b1b;" id="menubtn"></i>
+    </button>
+
+    <!-- Side Navigation -->
+    <aside id="sideNav" class="side-nav">
+      <button id="closeNav" aria-label="Cerrar menú">
+        <i class="fa-regular fa-circle-xmark" style="color: #ffffff;"></i>
+      </button>
+      <nav class="side-nav-links">
+     
+        <a class="sideNav-link" href="index.html">
+          <i class="fa-solid fa-house"></i>  
+          Inicio
+        </a>
+      
+        <a class="sideNav-link" href="index1.html">
+          <i class="fa-solid fa-chalkboard-user"></i>
+          Cursos
+        </a>
+        
+        <a class="sideNav-link" href="index3.html">
+          <i class="fa-solid fa-people-group"></i>
+          Comunidad
+        </a>
+
+        <a class="sideNav-link"
+        href="index4.html">
+          <i class="fa-solid fa-tag"></i>
+          Precios
+        </a>
+
+        <a class="sideNav-link"
+        href="index5.html">
+          <i class="fa-solid fa-user-graduate"></i>
+          Alumno
+        </a>
+
+        <a class="sideNav-link"
+        href="index5.html">
+          <i class="fa-solid fa-user-tie"></i>
+          Docente
+        </a>
+
+        <a class="sideNav-link"
+        href="index6.html">
+          <i class="fa-solid fa-book-open"></i>
+          Comenzar
+        </a>
+      </nav>
+    </aside>
+
+    <section class="community-header" id="community-header">
+      <div class="container">
+        <h1 id="community-header-tittle"></h1>
+        <p id="community-header-Subtittle"></p>
+      </div>
+    </section>
+  </div>
+ 
 
   <section class="container community-sections">
     <div class="community-card">
-      <i class="fas fa-comments fa-3x"></i>
-      <h3>Neural Forums</h3>
-      <p>Engage in AI-moderated discussions with real-time knowledge sharing</p>
+      <i class="fas fa-comments fa-3x" aria-hidden="true"></i>
+      <h3 id="Card-tittle-1"></h3>
+      <p class="Subtittle" id="Card-subtittle-1"></p>
     </div>
     <div class="community-card">
-      <i class="fas fa-broadcast-tower fa-3x"></i>
-      <h3>Holo Events</h3>
-      <p>Immersive live sessions with spatial audio and 3D interfaces</p>
+      <i class="fas fa-broadcast-tower fa-3x" aria-hidden="true"></i>
+      <h3 id="Card-tittle-2"></h3>
+      <p class="Subtittle" id="Card-subtittle-2"></p>
     </div>
     <div class="community-card">
-      <i class="fas fa-network-wired fa-3x"></i>
-      <h3>Neuro Groups</h3>
-      <p>Collaborate in brain-connected learning pods with neural interfaces</p>
+      <i class="fas fa-network-wired fa-3x" aria-hidden="true"></i>
+      <h3 id="Card-tittle-3"></h3>
+      <p class="Subtittle" id="Card-subtittle-3"></p>
     </div>
     <div class="community-card">
-      <i class="fas fa-rocket fa-3x"></i>
-      <h3>Quantum Challenges</h3>
-      <p>Solve multidimensional problems in our virtual coding arenas</p>
+      <i class="fas fa-rocket fa-3x" aria-hidden="true"></i>
+      <h3 id="Card-tittle-4"></h3>
+      <p class="Subtittle" id="Card-subtittle-4"></p>
     </div>
   </section>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 LearnHub • Community Powered Evolution</p>
-    </div>
+  <footer id="footer">
+    
+        <h2>© 2025 CorsoSkills. All rights reserved</h2>
+
   </footer>
+
 
   <script type="module" src="Comunidad.js"></script>
 </body>

@@ -23,71 +23,86 @@
   <link rel="stylesheet" href="Precio.css">
 </head>
 <body>
-  <div class="onda-holo"></div>
-  
-  <header role="banner">
-    <div class="container nav">
-      <div class="logo" aria-label="LearnHub">LearnHub</div>
-      <nav class="nav-links" role="navigation" aria-label="Navegación principal">
-        <a href="../Home/index.html" aria-current="page">Inicio</a>
-        <a href="../Materias/index1.html">Materias</a>
-        <a href="../Comunidad/index3.html">Comunidad</a>
-        <a href="../Precios/index4.html">Precios</a>
-        <a href="../../LMS/LogIn/index5.html" class="btn btn-outline">Iniciar Sesión</a>
-        <a href="../../LMS/CreateAcount/index6.html" class="btn btn-primary">Empezar</a>
-      </nav>
-    </div>
+  <header class="Nav-Container" id="header">  
+    <img id="Main-logo" src="">
+
+    <nav class="nav-links">
+      <div class="main-nav-links">
+        <a class="nav-link" href="index.html" aria-current="page">Inicio</a>
+        <a class="nav-link"  href="index1.html">Materias</a>
+        <a class="nav-link"  href="index3.html">Comunidad</a>
+        <a class="nav-link"  href="index4.html">Precios</a> 
+      </div>
+      <div class="action-nav-links">
+        <a href="index5.html" class="ANLB" id="LoginSBtn">Alumno</a>
+        <a href="index5.html" class="ANLB" id="LoginTBtn">Docente</a>
+        <a href="index6.html" id="startBtn">Comenzar</a>
+      </div>
+    </nav>
   </header>
+  <!-- Pricing Section -->
+  <section class="container" id="container">
+    <h2 class="title">Planes de precios</h2>
+    <p class="subtitle">Elige el plan perfecto para tu crecimiento profesional</p>
 
-  <section class="pricing-header">
-    <div class="container">
-      <h1>Quantum Learning Plans</h1>
-      <p>Choose your path to digital enlightenment</p>
+    <div class="cards">
+      <!-- Starter Plan -->
+      <div class="card" id="Basic-card">
+        <h3 id="Basic-Tittle"></h3>
+        <p class="price" id="Basic-Price"></p>
+        <ul class="features custom-list" id="Basic-features"></ul>
+        <button class="btn" id="Basic-btn">Comenzar Starter</button>
+      </div>
+
+      <!-- Pro Plan -->
+      <div class="card" id="Pro-card">
+        <h3 id="Pro-Tittle"></h3>
+        <p class="price"  id="Pro-Price"></p>
+        <ul class="features custom-list" id="Pro-features"></ul>
+        <button class="btn" id="pro-btn">Elegir Pro</button>
+      </div>
+
+      <!-- Annual Plan -->
+      <div class="card" id="Anual-card">
+        <h3 id="Anual-Tittle"></h3>
+        <p class="price" id="Anual-Price"></p>
+        <ul class="features custom-list" id="Anual-features"></ul>
+        <button class="btn" id="Anual-btn">Elegir Anual</button>
+      </div>
     </div>
   </section>
 
-  <section class="container pricing-cards">
-    <div class="card">
-      <h3>Neural Starter</h3>
-      <p class="price">$0/mo</p>
-      <ul>
-        <li><i class="fas fa-brain"></i>Basic Neural Access</li>
-        <li><i class="fas fa-users"></i>Community Synapses</li>
-        <li><i class="fas fa-project-diagram"></i>Simple Constructs</li>
-      </ul>
-      <button class="btn btn-primary">Initiate Protocol</button>
-    </div>
-
-    <div class="card">
-      <h3>Quantum Pro</h3>
-      <p class="price">$12/mo</p>
-      <ul>
-        <li><i class="fas fa-atom"></i>Full Quantum Access</li>
-        <li><i class="fas fa-headset"></i>Priority Support Matrix</li>
-        <li><i class="fas fa-certificate"></i>Holo-Certifications</li>
-        <li><i class="fas fa-infinity"></i>Unlimited Constructs</li>
-      </ul>
-      <button class="btn btn-primary">Begin Trial</button>
-    </div>
-
-    <div class="card">
-      <h3>Entanglement Team</h3>
-      <p class="price">Custom</p>
-      <ul>
-        <li><i class="fas fa-network-wired"></i>Multi-Node Access</li>
-        <li><i class="fas fa-chart-network"></i>Quantum Analytics</li>
-        <li><i class="fas fa-shield-alt"></i>Dedicated Firewall</li>
-        <li><i class="fas fa-user-astronaut"></i>24/7 Support Beam</li>
-      </ul>
-      <button class="btn btn-primary">Open Channel</button>
-    </div>
+  <section class="Strip-Portal">
+     <p>Picked the wrong subscription? Shop around then come back to pay!</p>
+<div class="product">
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14px" height="16px" viewBox="0 0 14 16" version="1.1">
+      <defs/>
+      <g id="Flow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g id="0-Default" transform="translate(-121.000000, -40.000000)" fill="#E184DF">
+              <path d="M127,50 L126,50 C123.238576,50 121,47.7614237 121,45 C121,42.2385763 123.238576,40 126,40 L135,40 L135,56 L133,56 L133,42 L129,42 L129,56 L127,56 L127,50 Z M127,48 L127,42 L126,42 C124.343146,42 123,43.3431458 123,45 C123,46.6568542 124.343146,48 126,48 L127,48 Z" id="Pilcrow"/>
+          </g>
+      </g>
+  </svg>
+  <div class="description">
+    <h3>Starter plan</h3>
+    <h5>$20.00 / month</h5>
+  </div>
+</div>
+<form action="/create-checkout-session" method="POST">
+  <!-- Add a hidden field with the lookup_key of your Price -->
+  <input type="hidden" name="lookup_key" value="{{PRICE_LOOKUP_KEY}}" />
+  <button id="checkout-and-portal-button" type="submit">Checkout</button>
+</form>
+<form action="/create-portal-session" method="POST">
+  <input type="hidden" id="session-id" name="session_id" value="" />
+  <button id="checkout-and-portal-button" type="submit">Manage your billing information</button>
+</form>
   </section>
-
-  <footer>
-    <div class="container">
-      <p>&copy; 2025 LearnHub • Transcend Digital Limits</p>
-    </div>
+  <!-- Footer -->
+  <footer id="footer">
+    © 2025 CorsoSkills. Todos los derechos reservados.
   </footer>
   <script type="module" src="Precio.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
 </body>
 </html>

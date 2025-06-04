@@ -164,7 +164,12 @@ applyBranding().then((data) => {
   }
 
   console.log(data)
- 
+  function SideNavcolors(){
+    setTextColors(".sideNav-link", Prime5 )
+    setBackgroundColorM("#sideNav", Prime)
+      
+  }
+
 
   function BannerColors(){
     renderImage(data.BuLogos.Simple[1], "Bu logo" ,"Main-logo");
@@ -225,7 +230,7 @@ applyBranding().then((data) => {
 
   }
 
-
+SideNavcolors()
   BannerColors()
   HeroColors()
   StatColors()
@@ -404,4 +409,15 @@ function initCategoryReveal(batchSize = 6) {
 }
 document.addEventListener('DOMContentLoaded', () => {
   initCategoryReveal();
+});
+  document.getElementById('menuToggle').addEventListener('click', () => {
+  const sideNav = document.getElementById('menuToggle');
+  document.getElementById('sideNav').classList.add('open');
+  sideNav.style.display = 'none';
+});
+
+document.getElementById('closeNav').addEventListener('click', () => {
+  const sideNav = document.getElementById('menuToggle');
+  document.getElementById('sideNav').classList.remove('open');
+   sideNav.style.display = 'block';
 });
