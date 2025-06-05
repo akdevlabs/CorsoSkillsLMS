@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,93 +16,36 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CorsoSkills/Precio</title>
-  <link rel="stylesheet" href="Precio.css">
+  <title>CorsoSkills/Login</title>
+  <link rel="stylesheet" href="Login.css">
 </head>
 <body>
-  <header class="Nav-Container" id="header">  
-    <img id="Main-logo" src="">
 
-    <nav class="nav-links">
-      <div class="main-nav-links">
-        <a class="nav-link" href="index.html" aria-current="page">Inicio</a>
-        <a class="nav-link"  href="index1.html">Materias</a>
-        <a class="nav-link"  href="index3.html">Comunidad</a>
-        <a class="nav-link"  href="index4.html">Precios</a> 
-      </div>
-      <div class="action-nav-links">
-        <a href="index5.html" class="ANLB" id="LoginSBtn">Alumno</a>
-        <a href="index5.html" class="ANLB" id="LoginTBtn">Docente</a>
-        <a href="index6.html" id="startBtn">Comenzar</a>
-      </div>
-    </nav>
-  </header>
-  <!-- Pricing Section -->
-  <section class="container" id="container">
-    <h2 class="title">Planes de precios</h2>
-    <p class="subtitle">Elige el plan perfecto para tu crecimiento profesional</p>
+<main>
+  <div class="container" id="container">
+    <img id="Bulogo" src="">
+    <h2>Inicio de sesión</h2>
+   <form id="loginForm" action="#" method="POST">
+    <label for="email">Correo electrónico</label>
+    <input type="email" id="email" name="email" placeholder="ejemplo@email.com" required>
 
-    <div class="cards">
-      <!-- Starter Plan -->
-      <div class="card" id="Basic-card">
-        <h3 id="Basic-Tittle"></h3>
-        <p class="price" id="Basic-Price"></p>
-        <ul class="features custom-list" id="Basic-features"></ul>
-        <button class="btn" id="Basic-btn">Comenzar Starter</button>
-      </div>
+    <label for="password">Contraseña</label>
+    <input type="password" id="password" name="password" placeholder="**********" required>
 
-      <!-- Pro Plan -->
-      <div class="card" id="Pro-card">
-        <h3 id="Pro-Tittle"></h3>
-        <p class="price"  id="Pro-Price"></p>
-        <ul class="features custom-list" id="Pro-features"></ul>
-        <button class="btn" id="pro-btn">Elegir Pro</button>
-      </div>
-
-      <!-- Annual Plan -->
-      <div class="card" id="Anual-card">
-        <h3 id="Anual-Tittle"></h3>
-        <p class="price" id="Anual-Price"></p>
-        <ul class="features custom-list" id="Anual-features"></ul>
-        <button class="btn" id="Anual-btn">Elegir Anual</button>
-      </div>
+    <div class="text-right">
+      <a id="forgot" href="#">¿Olvidaste tu contraseña?</a>
     </div>
-  </section>
 
-  <section class="Strip-Portal">
-     <p>Picked the wrong subscription? Shop around then come back to pay!</p>
-<div class="product">
-  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14px" height="16px" viewBox="0 0 14 16" version="1.1">
-      <defs/>
-      <g id="Flow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-          <g id="0-Default" transform="translate(-121.000000, -40.000000)" fill="#E184DF">
-              <path d="M127,50 L126,50 C123.238576,50 121,47.7614237 121,45 C121,42.2385763 123.238576,40 126,40 L135,40 L135,56 L133,56 L133,42 L129,42 L129,56 L127,56 L127,50 Z M127,48 L127,42 L126,42 C124.343146,42 123,43.3431458 123,45 C123,46.6568542 124.343146,48 126,48 L127,48 Z" id="Pilcrow"/>
-          </g>
-      </g>
-  </svg>
-  <div class="description">
-    <h3>Starter plan</h3>
-    <h5>$20.00 / month</h5>
+    <button id="btn-primary" type="submit" class="btn-primary">Iniciar sesión</button>
+   </form>
+    <div class="text-center">
+      ¿No tienes una cuenta? <a id="add" href="index6.html">Regístrate</a>
+    </div>
   </div>
-</div>
-<form action="/create-checkout-session" method="POST">
-  <!-- Add a hidden field with the lookup_key of your Price -->
-  <input type="hidden" name="lookup_key" value="{{PRICE_LOOKUP_KEY}}" />
-  <button id="checkout-and-portal-button" type="submit">Checkout</button>
-</form>
-<form action="/create-portal-session" method="POST">
-  <input type="hidden" id="session-id" name="session_id" value="" />
-  <button id="checkout-and-portal-button" type="submit">Manage your billing information</button>
-</form>
-  </section>
-  <!-- Footer -->
-  <footer id="footer">
-    © 2025 CorsoSkills. Todos los derechos reservados.
-  </footer>
-  <script type="module" src="Precio.js"></script>
-  <script src="https://js.stripe.com/v3/"></script>
+</main>
+
+
+  <script  src="Login.js" type="module"></script>
 </body>
 </html>

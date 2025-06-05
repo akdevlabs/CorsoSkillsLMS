@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="LearnHub - Descubre tu pasión y aprende a tu propio ritmo con cursos interactivos">
   <!-- Fuentes y estilos -->
+   <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,12 +19,38 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CorsoSkills/Terminal</title>
-  <link rel="stylesheet" href="Terminal.css">
+  <title>CorsoSkills/TeacherSignUp</title>
+  <link rel="stylesheet" href="TeacherSignUp.css">
 </head>
 <body>
-  <img id="Terminal-Img" src="" alt="">
-  <h1 id="Terminal-text">Corsoskills</h1>
+
+
+  <main>
+  <div class="container" id="container">
+    <img id="Bulogo"></img>
+    <h2>Crea Una Cuenta<br> Para Mastero</h2>
+    <form id="signupForm" action="#" method="POST">
+      <label for="name">Nombre completo</label>
+      <input type="text" id="name" name="name" placeholder="Juan Pérez" required>
+
+      <label for="email">Correo electrónico</label>
+      <input type="email" id="email" name="email" placeholder="ejemplo@email.com" required>
+
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" name="password" placeholder="***********" required>
+
+      <label for="confirm-password">Confirmar contraseña</label>
+      <input type="password" id="confirm-password" name="confirm-password" placeholder="***********" required>
+
+      <button id="signupForm-btn" type="submit" class="btn-primary">Registrarse</button>
+    </form>
+    <div class="text-center">
+      ¿Ya tienes una cuenta? <a id="add" href="index5.html">Inicia sesión</a>
+    </div>
+  </div>
+</main>
+
+
+  <script  src="TeacherSignUp.js" type="module"></script>
 </body>
-  <script  src="Terminal.js" type="module"></script>
 </html>

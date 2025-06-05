@@ -197,22 +197,20 @@ applyBranding().then((data) => {
     setBackgroundColorM("#sideNav", Prime)
       
   }
-
-
   function BannerColors(){
     renderImage(data.BuLogos.Simple[1], "Bu logo" ,"Main-logo");
     setBodyBackgroundColor(Prime4, Base)
     setBackgroundColor('header', Prime5)
     setTextColors(".nav-link", Prime)
     setTextColors(".ANLB", Prime2)
-    setBorder("LoginSBtn", `2px solid ${Prime2}`)
-    setBorder("LoginTBtn", `2px solid ${Prime2}`)
+    setBorder("#LoginSBtn", `2px solid ${Prime2}`)
+    setBorder("#LoginTBtn", `2px solid ${Prime2}`)
     setTextColors("#startBtn", Prime5)
    
   }
   function HeroColors(){
     setBackgroundColor("startBtn", Prime2)
-    setTextColors("#startHBtn", Prime5)
+
     setBackgroundColor("StartHBtn", Prime2)
     applyRightToLeftFade('hero-Block-text', Prime, 30, 1500)
     setTextColors('.hero-Block-text', Prime5)
@@ -248,7 +246,6 @@ applyBranding().then((data) => {
     setTextColors(".subtitle", Prime3)
     setTextColors(".title", Prime)
   }
-
   function Eventscolors(){
 
 
@@ -261,9 +258,8 @@ applyBranding().then((data) => {
     renderImage(data.BuLogos.Simple[1], "Bu logo" ,"footer-logo-Img");
     setBackgroundColorM('#footer', Prime5)
     setBackgroundColorM('footer', Prime)
-  
-
-
+    setTextColors('#footer', Prime4)
+    setTextColors(".footer-link", Prime4)
 
   }
 
@@ -383,22 +379,22 @@ Promise.all([RenderCoursesContent(), applyContent()]).then(([coursesData, websit
 
 
   function renderHeaderCont() {
-    const header = websiteData.Constent.Header.Hero;
+    const header = websiteData.Constent.Landing.Header.Hero;
     setHeroBackgroundImage(header.Imgs[1], 'Hero');
     renderText("hero-heading", header.Text.Heading.Normal);
     renderText("hero-body", header.Text.Body.Normal);
-    renderText("StartHBtn", header.Text.ActionBtn.Normal);
+    renderText("StartHBtn", header.Text.ActionBtn);
 
   }
- 
   function WCUBlock(){
-    renderImage(websiteData.Constent.WCU.Imgs[0], "professional", "WCU-img")
+  
+    renderImage(websiteData.Constent.Landing.WCU.Imgs[0], "professional", "WCU-img")
   }
 
   function Eventscontent(){
-    renderImage(websiteData.Constent.Events.Img[3], "professional", "Event-img-1")
-    renderImage(websiteData.Constent.Events.Img[1], "professional", "Event-img-2")
-    renderImage(websiteData.Constent.Events.Img[4], "professional", "Event-img-3")
+    renderImage(websiteData.Constent.Landing.Events.Img[3], "professional", "Event-img-1")
+    renderImage(websiteData.Constent.Landing.Events.Img[1], "professional", "Event-img-2")
+    renderImage(websiteData.Constent.Landing.Events.Img[4], "professional", "Event-img-3")
   }
   
 

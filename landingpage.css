@@ -181,11 +181,12 @@
   flex: 1 1 45%;
 }
 .subtitle {
+  font-size: 1rem;
   font-weight: bold;
   margin-bottom: 10px;
 }
 .title {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: bold;
   margin-bottom: 30px;
   color: #111827;
@@ -471,7 +472,10 @@ h4 {
 #footer-logo-Img{
   width: 10rem;
 }
-
+.footer-link{
+   list-style: none; 
+  text-decoration: none;
+} 
 
 .footer-bottom{
   display: flex;
@@ -2132,7 +2136,7 @@ h4 {
   }
 
   .title {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 30px;
   }
