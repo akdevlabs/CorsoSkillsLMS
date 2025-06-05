@@ -162,6 +162,34 @@ applyBranding().then((data) => {
     // Apply the gradient background
     el.style.background = gradient;
   }
+  function applyGradientFade(selector, color1, color2, fadeStartPercent = 90, duration = 1000) {
+    // Clamp fadeStartPercent between 0 and 100
+    fadeStartPercent = Math.max(0, Math.min(100, fadeStartPercent));
+
+    // Build the gradient
+    const gradient = `
+      linear-gradient(to right,
+        ${color1} 0%,
+        ${color2} ${fadeStartPercent}%,
+        transparent 100%
+      )
+    `;
+
+    let elements = [];
+
+    if (selector.startsWith('#')) {
+      const el = document.getElementById(selector.slice(1));
+      if (el) elements.push(el);
+    } else if (selector.startsWith('.')) {
+      elements = Array.from(document.querySelectorAll(selector));
+    }
+
+    elements.forEach(el => {
+      el.style.transition = `background ${duration}ms ease-in-out`;
+      el.style.background = gradient;
+    });
+  }
+
 
   console.log(data)
   function SideNavcolors(){
@@ -193,7 +221,14 @@ applyBranding().then((data) => {
 
   }
   function StatColors(){
-    setBackgroundColorM(".stat", Base)
+    setBackgroundColorM(".stat", Prime)
+    applyGradientFade(
+      ".stat",         // ID of your element
+      Prime,                  // Left side color
+      Base,                  // Right side color
+      100,                        // Optional: where to start fading to transparent
+      1000                        // Duration of the transition in ms
+    );
     setTextColors(".stat", Prime5)
   }
   function CategorieColors(){
@@ -225,7 +260,9 @@ applyBranding().then((data) => {
     setBackgroundColorM('.footer-line', Prime1)
     renderImage(data.BuLogos.Simple[1], "Bu logo" ,"footer-logo-Img");
     setBackgroundColorM('#footer', Prime5)
-    applybottomFade('footer', Prime, 10, 1500)
+    setBackgroundColorM('footer', Prime)
+  
+
 
 
   }
