@@ -1,0 +1,139 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f9fafb;
+  color: #111827;
+}
+
+.container {
+  width: 90%;
+  max-width: 1000px;
+  margin: auto;
+}
+
+/* Header */
+.header {
+  background: #fff;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.nav a {
+  margin-left: 1.5rem;
+  text-decoration: none;
+  color: #374151;
+  font-weight: 500;
+}
+
+.nav a:hover {
+  color: #2563eb;
+}
+
+/* Hero */
+.hero {
+  background: #eff6ff;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.hero h2 {
+  font-size: 2.5rem;
+  color: #1d4ed8;
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  color: #4b5563;
+}
+
+/* FAQ */
+.faq-section {
+  padding: 3rem 0;
+}
+
+.faq-item {
+  background: #fff;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.faq-question {
+  width: 100%;
+  background: #ffffff;
+  border: none;
+  padding: 1rem 1.5rem;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #111827;
+}
+
+.faq-answer {
+  display: none;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e5e7eb;
+  color: #4b5563;
+}
+
+.faq-item.active .faq-answer {
+  display: block;
+}
+
+/* CTA */
+.cta-section {
+  background: #1d4ed8;
+  color: white;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.cta-section h3 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.cta-section p {
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  background: #fff;
+  color: #1d4ed8;
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.btn:hover {
+  background: #e2e8f0;
+}
+
+/* Footer */
+.footer {
+  background: #1f2937;
+  color: #d1d5db;
+  text-align: center;
+  padding: 2rem 0;
+}

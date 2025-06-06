@@ -1,0 +1,169 @@
+/* Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f9fafb;
+  color: #111827;
+  line-height: 1.6;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Header */
+.header {
+  background: #fff;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.nav a {
+  margin-left: 1.5rem;
+  text-decoration: none;
+  color: #374151;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav a:hover {
+  color: #2563eb;
+}
+
+/* Hero */
+.hero {
+  background: #eff6ff;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.hero h2 {
+  font-size: 2.5rem;
+  color: #1d4ed8;
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  color: #4b5563;
+}
+
+/* Partner Section */
+.partner-section {
+  padding: 3rem 0;
+}
+
+.partner-section h3 {
+  text-align: center;
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+  color: #1f2937;
+}
+
+.partner-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.card {
+  background: #fff;
+  padding: 1.75rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.card h4 {
+  font-size: 1.2rem;
+  margin-bottom: 0.6rem;
+  color: #111827;
+}
+
+.card p {
+  color: #4b5563;
+}
+
+/* Types of partnerships */
+.types-section {
+  padding: 2.5rem 0;
+}
+
+.types-section h3 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.types-list {
+  list-style: none;
+  max-width: 800px;
+  margin: auto;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.types-list li {
+  background: #fff;
+  margin: 0.75rem 0;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+}
+
+/* CTA */
+.cta-section {
+  background: #1d4ed8;
+  color: white;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.cta-section h3 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.cta-section p {
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  background: #fff;
+  color: #1d4ed8;
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.btn:hover {
+  background: #e2e8f0;
+}
+
+/* Footer */
+.footer {
+  background: #1f2937;
+  color: #d1d5db;
+  text-align: center;
+  padding: 2rem 0;
+}
