@@ -247,12 +247,64 @@ applyBranding().then((data) => {
     setTextColors(".title", Prime)
   }
   function Eventscolors(){
-
-
-
-
+    setBackgroundColorM(".Event-Block", Prime5)
+    setTextColors("#event-subtitulo", Prime3) 
+    setTextColors("#event-titulo", Base) 
+    setTextColors("#Shows-all-events", Prime2) 
+    const style = document.createElement('style');
+    style.textContent = `
+      .event {
+        background: ${Prime5};
+        border: 1px solid ${Prime};
+      }
+      .event-date {
+        background: ${Prime3};
+        color: ${Prime5};
+      }
+      .event-info h3 {
+        color:${Base};
+      }
+      .event-info p {
+        color:${Prime1};
+      }
+    `;
+    document.head.appendChild(style);
   }
 
+  function reviewcolors(){
+      
+
+    const style = document.createElement('style');
+    style.textContent = `
+      .review-block h3 {
+        color: ${Prime3};
+        
+      }
+      .review-block h1 {
+        color: ${Prime};
+        font-size: 32px;
+        margin-bottom: 40px;
+      }
+      .review {
+        background-color: ${Prime5};
+        border: 1px solid ${Prime};
+      }
+      .review .message {
+        color: ${Prime1};
+      }
+      .review .name {
+        color: ${Base};
+      }
+      .review .stars {
+        color: ${Prime2};
+      }
+    `;
+    document.head.appendChild(style);
+    setTextColors('#next', Prime5) 
+    setBackgroundColorM('#next', Prime2) 
+    setTextColors('#back', Prime5)  
+    setBackgroundColorM('#back', Prime2)     
+  }
    function Footercolors(){
     setBackgroundColorM('.footer-line', Prime1)
     renderImage(data.BuLogos.Simple[1], "Bu logo" ,"footer-logo-Img");
@@ -260,16 +312,19 @@ applyBranding().then((data) => {
     setBackgroundColorM('footer', Prime)
     setTextColors('#footer', Prime4)
     setTextColors(".footer-link", Prime4)
+    setBackgroundColorM('#SubBtn-newsletter', Prime2)
+    setTextColors('#SubBtn-newsletter', Prime5)
 
   }
 
-SideNavcolors()
+  SideNavcolors()
   BannerColors()
   HeroColors()
   StatColors()
   CategorieColors()
   WCUColor()
   Eventscolors()
+  reviewcolors()
   Footercolors()
 
 
@@ -372,7 +427,7 @@ Promise.all([RenderCoursesContent(), applyContent()]).then(([coursesData, websit
       }
     }
   }
-  
+
   
   
 
@@ -392,17 +447,213 @@ Promise.all([RenderCoursesContent(), applyContent()]).then(([coursesData, websit
   }
 
   function Eventscontent(){
+    function eventContent() {
+      let currentIndex = 0;
+      const eventsPerPage = 3;
+      const eventSlots = websiteData.Constent.Events.List;
+
+      // Get slot keys and reverse to show newest first
+      const slotKeys = Object.keys(eventSlots).reverse();
+      console.log(`Total event slots: ${slotKeys.length}`);
+
+      slotKeys.forEach((key, index) => {
+      // console.log(`slot#${index + 1}: ${key}`);
+      });
+
+      // Convert each slot to an array of event objects
+      const eventsData = slotKeys.map(slot => eventSlots[slot]);
+
+      function renderEvents() {
+        const container = document.getElementById("event-list-block");
+        container.innerHTML = "";
+
+        const sliced = eventsData.slice(currentIndex, currentIndex + eventsPerPage);
+
+        sliced.forEach(event => {
+          const eventBtn = document.createElement("button");
+          eventBtn.className = "event";
+          eventBtn.innerHTML = `
+            <div class="event-date">
+              <span class="day">${event.Date[0]}</span>
+              <span class="month">${event.Date[1]}</span>
+            </div>
+            <div class="event-info">
+              <h3 class="event-description">${event.Description}</h3>
+              <p class="event-time">${event.Time}</p>
+              <p class="event-address">${event.Adress}</p>
+            </div>
+          `;
+
+          eventBtn.addEventListener("click", () => {
+          // console.log(`Event title: ${event.Description}`);
+          });
+
+          container.appendChild(eventBtn);
+        });
+      }
+
+      document.getElementById("next").addEventListener("click", () => {
+        if (currentIndex + eventsPerPage < eventsData.length) {
+          currentIndex += eventsPerPage;
+          renderEvents();
+        }
+      });
+
+      document.getElementById("back").addEventListener("click", () => {
+        if (currentIndex - eventsPerPage >= 0) {
+          currentIndex -= eventsPerPage;
+          renderEvents();
+        }
+      });
+
+      // Initial render
+      renderEvents();
+    }
+    function alleventContent() {
+      const eventSlots = websiteData.Constent.Events.List;
+      const slotKeys = Object.keys(eventSlots).reverse(); // Newest first
+      const eventsData = slotKeys.map(slot => eventSlots[slot]);
+
+      const popup = document.createElement("div");
+      popup.id = "event-popup";
+      popup.style.position = "fixed";
+      popup.style.top = "0";
+      popup.style.left = "0";
+      popup.style.width = "100vw";
+      popup.style.height = "100vh";
+      popup.style.backgroundColor = "rgba(0, 0, 0, 0.6)";
+      popup.style.display = "none";
+      popup.style.justifyContent = "center";
+      popup.style.alignItems = "center";
+      popup.style.zIndex = "9999";
+
+      const content = document.createElement("div");
+      content.style.background = "#fff";
+      content.style.padding = "20px";
+      content.style.borderRadius = "10px";
+      content.style.maxHeight = "80vh";
+      content.style.overflowY = "auto";
+      content.style.width = "90%";
+      content.style.maxWidth = "600px";
+      content.style.position = "relative";
+
+      const closeBtn = document.createElement("span");
+      closeBtn.innerHTML = "&times;";
+      closeBtn.style.position = "absolute";
+      closeBtn.style.top = "10px";
+      closeBtn.style.right = "20px";
+      closeBtn.style.fontSize = "24px";
+      closeBtn.style.cursor = "pointer";
+      closeBtn.style.color = "#000";
+
+      closeBtn.addEventListener("click", () => {
+        popup.style.display = "none";
+      });
+
+      popup.appendChild(content);
+      content.appendChild(closeBtn);
+      document.body.appendChild(popup);
+
+      function renderAllEvents() {
+        content.innerHTML = '';
+        content.appendChild(closeBtn);
+
+        eventsData.forEach(event => {
+          const eventEl = document.createElement("div");
+          eventEl.className = "event";
+
+          eventEl.innerHTML = `
+            <div class="event-date">${event.Date[0]} ${event.Date[1]}</div>
+            <div class="event-info">
+              <h3>${event.Description}</h3>
+              <p class="event-time">${event.Time}</p>
+              <p class="event-address">${event.Adress}</p>
+            </div>
+          `;
+
+          content.appendChild(eventEl);
+        });
+      }
+
+      document.getElementById("Shows-all-events").addEventListener("click", () => {
+        renderAllEvents();
+        popup.style.display = "flex";
+      });
+    }
+
+
+    alleventContent()
+    eventContent()
     renderImage(websiteData.Constent.Landing.Events.Img[3], "professional", "Event-img-1")
     renderImage(websiteData.Constent.Landing.Events.Img[1], "professional", "Event-img-2")
     renderImage(websiteData.Constent.Landing.Events.Img[4], "professional", "Event-img-3")
+    renderImage(websiteData.Constent.Landing.Events.Img[3], "professional", "mobile-Even-img")
   }
   
+  function ReviewContent() {
+    let currentIndex = 0;
+    const reviewsPerPage = 3;
+    const reviewsSlots = websiteData.Constent.Reviews;
+
+    function renderImg(){
+      renderImage(websiteData.Constent.reviewCont.img, "Team", "review-left-img")  
+      renderImage(websiteData.Constent.reviewCont.img, "Team", "mobile-review-img")       
+
+    }
+    renderImg()
+    // Get all slot keys (slot1, slot2, ...)
+    const slotKeys = Object.keys(reviewsSlots);
+    console.log(`Total slots: ${slotKeys.length}`);
+
+    slotKeys.forEach((key, index) => {
+     // console.log(`slot#${index + 1}: ${key}`);
+    });
+
+    // Convert each slot object into a review object array
+    const reviewsData = slotKeys.map(slot => reviewsSlots[slot]);
+
+    function renderReviews() {
+      const container = document.getElementById("reviews");
+      container.innerHTML = "";
+
+      const sliced = reviewsData.slice(currentIndex, currentIndex + reviewsPerPage);
+
+      sliced.forEach(review => {
+        const reviewEl = document.createElement("div");
+        reviewEl.className = "review";
+        reviewEl.innerHTML = `
+          <p class="message">"${review.Message}"</p>
+          <p class="name"><strong>${review.Name}</strong> – ${review.Type}</p>
+          <p class="stars">${"★".repeat(review.Stars)}${"☆".repeat(5 - review.Stars)}</p>
+        `;
+        container.appendChild(reviewEl);
+      });
+    }
+
+    document.getElementById("next").addEventListener("click", () => {
+      if (currentIndex + reviewsPerPage < reviewsData.length) {
+        currentIndex += reviewsPerPage;
+        renderReviews();
+      }
+    });
+
+    document.getElementById("back").addEventListener("click", () => {
+      if (currentIndex - reviewsPerPage >= 0) {
+        currentIndex -= reviewsPerPage;
+        renderReviews();
+      }
+    });
+
+    // Initial render
+    renderReviews();
+  }
+
+
 
   
   
   
-  
-
+  ReviewContent()
 
   renderHeaderCont();
   WCUBlock();
@@ -453,4 +704,9 @@ document.getElementById('closeNav').addEventListener('click', () => {
   const sideNav = document.getElementById('menuToggle');
   document.getElementById('sideNav').classList.remove('open');
    sideNav.style.display = 'block';
+});
+
+
+document.getElementById('StartHBtn').addEventListener('click', function () {
+  window.location.href = "index5.1.html";
 });

@@ -177,7 +177,7 @@ async function fetchAllContent() {
         if (completed === true) {
           window.location.href = "index11.html";
         } else {
-          window.location.href = "index7.1.html";
+          window.location.href = "index5.4.html";
         }
 
       }else{

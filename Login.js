@@ -71,11 +71,11 @@
       if (studentDoc.exists()) {
         localStorage.setItem("UserRole", "student");
         console.log("Logged in as Student");
-         window.location.href = "index8.html";
+         window.location.href = "index5.html";
       } else if (teacherDoc.exists()) {
         localStorage.setItem("UserRole", "teacher");
         console.log("Logged in as Teacher");
-        window.location.href = "index8.html";
+        window.location.href = "index5.html";
       } else {
         alert("Este usuario no está registrado como estudiante ni como profesor.");
       }

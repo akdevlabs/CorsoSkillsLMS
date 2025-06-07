@@ -1320,7 +1320,7 @@ document.getElementById("Settings").addEventListener("click", function () {
   window.location.href = "index11.6.html";
 }); 
 document.getElementById("Logout").addEventListener("click", function () {
-  window.location.href = "index7.html";
+  window.location.href = "index4.html";
 });  
 
 

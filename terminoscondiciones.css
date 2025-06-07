@@ -1,101 +1,84 @@
-/* Base */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-
-body {
-  font-family: 'Inter', sans-serif;
-  background: #f9fafb;
-  color: #111827;
-  line-height: 1.6;
-}
-
-.container {
-  width: 90%;
-  max-width: 900px;
-  margin: auto;
-}
-
-/* Header */
-.header {
-  background: #fff;
-  padding: 1rem 0;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.header .container {
+body{
+  height: 100vh;
+  width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+}
+.Nav-Container{
+  display: flex;
   align-items: center;
+  padding: 1rem;
+  justify-content: space-between;
 }
-
-.logo {
+.Nav-Container i{
   font-size: 1.5rem;
-  font-weight: 700;
-  color: #2563eb;
 }
-
-.nav a {
-  margin-left: 1.5rem;
-  text-decoration: none;
-  color: #374151;
-  font-weight: 500;
+#Main-logo{
+  width: 10rem;
 }
-
-.nav a:hover {
-  color: #2563eb;
-}
-
-/* Hero */
+/* Hero Section */
 .hero {
-  background: #eff6ff;
-  text-align: center;
   padding: 3rem 0;
+  text-align: center;
 }
-
 .hero h2 {
-  font-size: 2.25rem;
-  color: #1d4ed8;
-  margin-bottom: 0.5rem;
+  font-size: 2.5rem;
 }
-
 .hero p {
-  color: #4b5563;
+  margin-top: 0.5rem;
 }
 
-/* Terms Content */
+
+/* Terms Section */
 .terms-section {
-  background: #ffffff;
-  margin-top: 2rem;
-  margin-bottom: 3rem;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  padding: 2rem 1.5rem;
+  max-width: 800px;
+  margin: 2rem auto;
+  text-align: left;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  border-radius: 1rem;
 }
 
 .terms-section h3 {
-  font-size: 1.25rem;
-  margin-top: 1.5rem;
+  font-size: 1.2rem;
+  margin-top: 2rem;
   margin-bottom: 0.5rem;
-  color: #1f2937;
 }
 
 .terms-section p {
   margin-bottom: 1rem;
-  color: #4b5563;
 }
 
 .terms-section a {
-  color: #2563eb;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.terms-section a:hover {
   text-decoration: underline;
 }
 
+
+
+
+
+
+
+
+
+
 /* Footer */
-.footer {
-  background: #1f2937;
-  color: #d1d5db;
+#footer {
+  display: flex;
+  font-size: .6rem;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  padding: 2rem 0;
 }
