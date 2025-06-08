@@ -181,7 +181,9 @@ applyBranding().then((data) => {
     setTextColors("#Basic-card", Prime)
     setBackgroundColorM("#Basic-card", Prime5)
     setBackgroundColorM("#Pro-card", Base)
-    setBackgroundColorM("#Anual-card", Prime1)
+    setBackgroundColorM("#Anual-card", Prime5)
+    setTextColors("#Anual-card", Prime)
+
     setBorder(".card", `2px solid ${Prime}`)
     setBackgroundColorM("#Basic-card", Prime5)
 
@@ -196,9 +198,9 @@ applyBranding().then((data) => {
     setTextColors("#pro-btn", Prime5)
 
 
-    setBorder("#Anual-btn", `3px solid ${Base}`)
-    setBackgroundColorM("#Anual-btn", Prime4)
-    setTextColors("#Anual-btn", Base)
+    setBorder("#Anual-btn", `3px solid ${Prime2}`)
+    setBackgroundColorM("#Anual-btn", Prime5)
+    setTextColors("#Anual-btn", Prime2)
 
   }
 
@@ -413,81 +415,3 @@ document.getElementById("Anual-card").addEventListener("click", function () {
 
 
 
-
-
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
-const stripe = require('stripe')(functions.config().stripe.secret);
-
-admin.initializeApp();
-
-exports.createStripePaymentIntent = functions.https.onCall(async (data, context) => {
-  try {
-    // Validate user and data
-    if (!context.auth) {
-      throw new functions.https.HttpsError('unauthenticated', 'User must be authenticated.');
-    }
-
-    const amount = data.amount; // amount in cents
-    const currency = data.currency || 'usd';
-
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount,
-      currency,
-      // optional: metadata, receipt_email, description, etc.
-      metadata: {
-        userId: context.auth.uid,
-        courseId: data.courseId || '',
-      },
-    });
-
-    return {
-      clientSecret: paymentIntent.client_secret,
-    };
-  } catch (error) {
-    throw new functions.https.HttpsError('internal', error.message);
-  }
-});
-
-
-
-import { getFunctions, httpsCallable } from "firebase/functions";
-
-const functions = getFunctions();
-const createPaymentIntent = httpsCallable(functions, 'createStripePaymentIntent');
-
-const paymentData = {
-  amount: 1000, // $10.00 in cents
-  currency: 'usd',
-  courseId: 'course_abc123',
-};
-
-createPaymentIntent(paymentData)
-  .then((result) => {
-    const clientSecret = result.data.clientSecret;
-    // Use Stripe.js on frontend to complete payment with clientSecret
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-const elements = stripe.elements();
-const cardElement = elements.create('card');
-cardElement.mount('#card-element');
-
-// On form submit:
-stripe.confirmCardPayment(clientSecret, {
-  payment_method: {
-    card: cardElement,
-    billing_details: {
-      name: 'Customer Name',
-    },
-  },
-}).then(function(result) {
-  if (result.error) {
-    // Show error to your customer
-  } else {
-    if (result.paymentIntent.status === 'succeeded') {
-      // Payment successful — update Firestore etc.
-    }
-  }
-});

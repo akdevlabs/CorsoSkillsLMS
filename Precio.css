@@ -105,7 +105,9 @@ body {
   opacity: 0.9;
 }
 
-
+.Strip-Portal{
+  display: none;
+}
 
 footer {
   text-align: center;

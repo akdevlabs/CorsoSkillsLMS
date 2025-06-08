@@ -2056,12 +2056,20 @@
     margin: 1rem 0;
   }
   .footer-top{
-    width: 95%;
+    width: 65%;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: space-between;
     margin: 1rem 2rem  1rem 2rem ;
+  }
+  .footer-list{
+    width: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 3rem;
   }
   .footer-list-catagory{
     gap: 1rem;
@@ -2072,12 +2080,13 @@
   .footer-List-Block{
     display: flex;
     text-align: center;
-    justify-content: space-between;
+    justify-content: center;
+    margin: 0 0 0 -1rem;
   }
   .List-F ul {
     gap: 1rem;
     display: flex;
-    font-size: 1rem;
+    font-size: .8rem;
     flex-direction: column;
   }
   .footer-link{
