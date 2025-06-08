@@ -3,42 +3,41 @@
   padding: 0;
   box-sizing: border-box;
 }
-body{
+
+body {
   height: 100vh;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
-.Nav-Container{
+
+.Nav-Container {
   display: flex;
   align-items: center;
   padding: 1rem;
   justify-content: space-between;
 }
-.Nav-Container i{
+
+.Nav-Container i {
   font-size: 1.5rem;
 }
 
-
-#Main-logo{
+#Main-logo {
   width: 10rem;
 }
 
-
-
 /* Hero Section */
-
 .hero {
   width: 100%;
   height: 80vh;
   background-size: cover;
   background-repeat: no-repeat;
   display: flex;
-
   z-index: 1;
 }
-#Hero-text{
+
+#Hero-text {
   width: 100%;
   height: auto;
   display: flex;
@@ -46,116 +45,194 @@ body{
   justify-content: center;
   align-items: flex-start;
   padding: 2rem;
-background-color: #0c1f2cc5;
+  background-color: #0c1f2cc5;
 }
+
 .hero h2 {
   font-size: 2.5rem;
 }
+
 .hero p {
   margin-top: 0.5rem;
 }
 
-.About-Block{
+/* About Block */
+.About-Block {
   width: 60%;
-  gap:2rem ;
+  gap: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: -15rem auto 5rem auto;
   border-radius: 1rem;
-
-
 }
 
-#about-img{
+#about-img {
   width: 20rem;
   height: 30rem;
-
   border-radius: 1rem 0 0 1rem;
 }
-#About-Text{
 
+#About-Text {
   text-align: justify;
-  margin: 1rem  2rem 0 0;
-}
-#About-Tittle{
-  font-size:3rem;
+  margin: 1rem 2rem 0 0;
 }
 
+#About-Tittle {
+  font-size: 3rem;
+}
 
-.Mission-Block{
-  width:60%;
+/* Mission Block */
+.Mission-Block {
+  width: 60%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
 }
-.Mission-text{
-  gap:1rem;
-  display:flex;
+
+.Mission-text {
+  gap: 1rem;
+  display: flex;
   flex-direction: column;
 }
-#Mission-Tittle{
+
+#Mission-Tittle {
   font-size: 3rem;
 }
-#Mission-Line{
+
+#Mission-Line {
   width: 100%;
-  height: .2rem;
+  height: 0.2rem;
 }
-#Mission-Text{
+
+#Mission-Text {
   font-size: 1.2rem;
 }
 
-
-
-.Vission-Block{
- display: flex;
- align-items: center;
- justify-content: center;
- flex-direction: row-reverse;
- margin: 6rem 0;
+/* Vission Block */
+.Vission-Block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row-reverse;
+  margin: 6rem 0;
+  flex-wrap: wrap;
 }
 
-#Vission-img{
+#Vission-img {
   width: 20rem;
   height: 20rem;
   object-fit: cover;
   border-radius: 1rem;
-  margin:  0 0 0 -6rem;
+  margin: 0 0 0 -6rem;
 }
-.Vission-text{
+
+.Vission-text {
   width: 50%;
-  padding:3rem 2rem ;
+  padding: 3rem 2rem;
   border-radius: 1rem;
-
-
 }
-.Vission-text h1{
 
-margin:  -8rem 0 0 0;  
-font-size: 10rem;
+.Vission-text h1 {
+  margin: -8rem 0 0 0;
+  font-size: 10rem;
 }
-.Vission-text h3{
-font-size: 3rem;
-margin: 1rem 0;
+
+.Vission-text h3 {
+  font-size: 3rem;
+  margin: 1rem 0;
 }
-.Vission-text p{
+
+.Vission-text p {
   width: 80%;
   font-size: 1.2rem;
- text-align: justify;
-
+  text-align: justify;
 }
-
-
-
-
-
 
 /* Footer */
 #footer {
   display: flex;
-  font-size: .6rem;
+  font-size: 0.6rem;
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+/* ========== ✅ MEDIA QUERIES FOR RESPONSIVENESS ========== */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .hero h2 {
+    font-size: 2rem;
+  }
+
+  .About-Block,
+  .Mission-Block,
+  .Vission-Block {
+    width: 90%;
+    flex-direction: column;
+    margin: 2rem auto;
+  }
+
+  #about-img {
+    width: 100%;
+    height: auto;
+    border-radius: 1rem 1rem 0 0;
+  }
+
+  #About-Text {
+    margin: 1rem;
+  }
+
+  #About-Tittle,
+  #Mission-Tittle {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  #Mission-Text,
+  .Vission-text p {
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .Vission-Block {
+    flex-direction: column-reverse;
+    margin-top: 3rem;
+  }
+
+  .Vission-text {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .Vission-text h1 {
+    font-size: 5rem;
+    margin: 0;
+    text-align: center;
+  }
+
+  .Vission-text h3 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  #Vission-img {
+    width: 100%;
+    height: auto;
+    margin: 2rem 0 0 0;
+  }
+
+  .Nav-Container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  #Main-logo {
+    width: 8rem;
+  }
 }
