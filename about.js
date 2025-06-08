@@ -199,9 +199,24 @@ applyBranding().then((data) => {
     setTextColors("#header", Prime2 )
     setBackgroundColorM("#header", Prime5 )
   }
+  function AboutColors(){
+    setBackgroundColorM(".About-Block", Base )
+    setTextColors("#About-Tittle", Prime5 )
+    setTextColors("#About-Text", Prime5 )
+  }
   function Herocolors(){
     setTextColors(".hero-text", Prime5 )
-    setBackgroundColorM(".hero", Prime )
+  }
+  function MissionColors(){
+    setBackgroundColorM("#Mission-Line", Prime2)
+    setTextColors("#Mission-Tittle", Prime3 )
+    setTextColors("#Mission-Text", Prime )
+  }
+  function visionColors(){
+    setBackgroundColorM(".Vission-text", Prime5 )
+setTextColors("#top-num", Prime2 )
+
+
   }
   function blogbtnColors(){
     function setBlogCardTheme({ bg, text, muted, mediaBg }) {
@@ -259,10 +274,12 @@ applyBranding().then((data) => {
 
   Bodycolors()
   Navcolors()
+  AboutColors()
   Herocolors()
   blogbtnColors()
   Footercolors()
-
+  MissionColors()
+  visionColors()
 
 });
 
@@ -290,7 +307,26 @@ BlogContent().then((data) => {
 
 
   console.log(data)
-  
+  function renderImage(imageUrl, altUrl, UrlId) {
+    const logoElement = document.getElementById(UrlId);
+    if (logoElement) {
+      logoElement.src = imageUrl;
+      logoElement.alt = altUrl;
+    } else {
+      console.error(`Element with ID '${UrlId}' not found.`);
+    }
+  }
+  function setHeroBackgroundImage(imageUrl,url) {
+    const heroSection = document.getElementById(url);
+    if (heroSection) {
+      heroSection.style.backgroundImage = `url('${imageUrl}')`;
+      heroSection.style.backgroundSize = 'cover';
+      heroSection.style.backgroundPosition = 'center';
+      heroSection.style.backgroundRepeat = 'no-repeat';
+    } else {
+      console.error("Element with ID 'Hero' not found.");
+    }
+  }
   function renderTextSection(containerId, titleText, subtitleText) {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -354,14 +390,22 @@ BlogContent().then((data) => {
 
 
   function heroContent(){
+
+    setHeroBackgroundImage( About.Hero.img,"hero")
     renderTextSection("hero-tittle", About.Hero.tittle)
     renderTextSection("hero-text", About.Hero.text)
+  }
+    function aboutContent(){
+    renderImage(About.about.img, "Old people","about-img")
+    renderTextSection("About-Tittle", About.about.tittle)
+    renderTextSection("About-Text", About.about.text)
   }
   function renderMission(){
     renderTextSection('Mission-Tittle', About.Mission.tittle)
     renderTextSection('Mission-Text', About.Mission.text)
   }
   function rendervision(){
+    renderImage(About.Vision.img, "Idea","Vission-img")
     renderTextSection('Vission-Tittle', About.Vision.tittle)
     renderTextSection('Vission-Text', About.Vision.text)
   }
@@ -381,7 +425,7 @@ BlogContent().then((data) => {
 
 
 
-
+aboutContent()
   heroContent()
   renderMission()
   rendervision()
