@@ -214,7 +214,7 @@ applyBranding().then((data) => {
   }
   function visionColors(){
     setBackgroundColorM(".Vission-text", Prime5 )
-setTextColors("#top-num", Prime2 )
+    setTextColors("#top-num", Prime2 )
 
 
   }
@@ -266,6 +266,13 @@ setTextColors("#top-num", Prime2 )
     setPopupcolors();
 
   }
+  function GridColors(){
+    setBackgroundColorM("#Goal-Block", Prime1 )
+    setBackgroundColorM("#Key-Block-text", Prime )
+    setTextColors("#Goal-Block", Prime5 )
+    setTextColors("#Key-Block-text", Prime5 )
+
+  }
   function Footercolors(){
     setBackgroundColorM('#footer', Prime5)
     setBackgroundColorM('footer', Prime)
@@ -277,6 +284,7 @@ setTextColors("#top-num", Prime2 )
   AboutColors()
   Herocolors()
   blogbtnColors()
+  GridColors()
   Footercolors()
   MissionColors()
   visionColors()
@@ -422,16 +430,22 @@ BlogContent().then((data) => {
     renderValuesListWithIcons(About.Values.List, 'value-list');
 
   }
+  function rendergridcont(){
+    renderImage(About.Key.Imgs[0], "Grid-Img-1", "Grid-Img-1")
+    renderImage(About.Key.Imgs[1], "Grid-Img-1", "Grid-Img-2")
+    renderImage(About.Key.Imgs[2], "Grid-Img-1", "Grid-Img-3")
+  }
 
 
 
-aboutContent()
+  aboutContent()
   heroContent()
   renderMission()
   rendervision()
   renderGoal()
   renderDif()
   rendervalues()
+  rendergridcont()
 })
 
 document.getElementById('backBtn').addEventListener('click', function () {
