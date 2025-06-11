@@ -181,7 +181,43 @@ applyBranding().then((data) => {
 
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector(".job-form");
+  if (!form) {
+    console.warn("Form with class .job-form not found");
+    return;
+  }
 
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = form.name.value.trim();
+    const email = form.email.value.trim();
+    const portfolio = form.portfolio.value.trim();
+    const message = form.message.value.trim();
+
+    if (!name || !email) {
+      alert("Por favor completa los campos obligatorios.");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "CorsoSkillBusiness", "TBuInfo"), {
+        name,
+        email,
+        portfolio,
+        message,
+        submittedAt: Timestamp.now()
+      });
+
+      alert("✅ Tu postulación fue enviada con éxito.");
+
+    } catch (error) {
+      console.error("Error al enviar la postulación:", error);
+      alert("❌ Hubo un error al enviar tu postulación. Intenta nuevamente.");
+    }
+  });
+});
 async function BlogContent() {
   try {
     const docRef = doc(db, "CorsoSkillsWebsite", TBuInfo); // Ensure db and transferredInfo are initialized
@@ -344,49 +380,14 @@ function jobsContent() {
   renderAllJobs(Jobs.List, 'job-block');
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const form = document.querySelector(".job-form");
-    if (!form) {
-      console.warn("Form with class .job-form not found");
-      return;
-    }
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const name = form.name.value.trim();
-      const email = form.email.value.trim();
-      const portfolio = form.portfolio.value.trim();
-      const message = form.message.value.trim();
-
-      if (!name || !email) {
-        alert("Por favor completa los campos obligatorios.");
-        return;
-      }
-
-      try {
-        await addDoc(collection(db, "jobRequest"), {
-          name,
-          email,
-          portfolio,
-          message,
-          submittedAt: Timestamp.now()
-        });
-
-        alert("✅ Tu postulación fue enviada con éxito.");
-        form.reset();
-      } catch (error) {
-        console.error("Error al enviar la postulación:", error);
-        alert("❌ Hubo un error al enviar tu postulación. Intenta nuevamente.");
-      }
-    });
-  });
 
 jobsContent()
   heroContent()
 
 
 })
+
 
 document.getElementById("RefreshBtn").addEventListener("click", function () {
     location.reload();
