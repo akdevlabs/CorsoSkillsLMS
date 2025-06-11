@@ -199,97 +199,14 @@ applyBranding().then((data) => {
     setTextColors("#header", Prime2 )
     setBackgroundColorM("#header", Prime5 )
   }
-  function AboutColors(){
-    setBackgroundColorM(".About-Block", Base )
-    setTextColors("#About-Tittle", Prime5 )
-    setTextColors("#About-Text", Prime5 )
-  }
   function Herocolors(){
     setTextColors(".hero-text", Prime5 )
+    setBackgroundColorM(".hero", Base )
   }
-  function MissionColors(){
-    setBackgroundColorM("#Mission-Line", Prime2)
-    setTextColors("#Mission-Tittle", Prime3 )
-    setTextColors("#Mission-Text", Prime )
+  function GuideColors(){
+    
   }
-  function visionColors(){
-    setBackgroundColorM(".Vission-text", Prime5 )
-    setTextColors("#top-num", Prime2 )
-    const style = document.createElement('style');
-    style.textContent = `
-      .value-Block{
-        background-color: ${Prime5};
-      }
-      .icon {
-        color: ${Base};
-      }
-      .title {
-        color: ${Prime2}; 
-      }
-      .description {
-        color: ${Prime1}; 
-      }
 
-
-    `;
-    document.head.appendChild(style);
-
-  }
-  function blogbtnColors(){
-    function setBlogCardTheme({ bg, text, muted, mediaBg }) {
-      const root = document.documentElement;
-
-      if (bg) root.style.setProperty('--blog-bg', bg);
-      if (text) root.style.setProperty('--blog-text', text);
-      if (muted) root.style.setProperty('--blog-muted', muted);
-      if (mediaBg) root.style.setProperty('--media-bg', mediaBg);
-    }
-    setBlogCardTheme({
-      bg: Prime5,
-      text: Base,
-      muted: Prime3,
-      mediaBg: Prime1
-    });
-    function setPopupcolors() {
-      const style = document.createElement('style');
-      style.textContent = `
-        .popup {
-          background-color: ${Prime4};
-        }
-        .close-btn {
-          color: ${Prime2};
-        }
-        .close-btn:hover {
-          color: ${Prime2};
-        }
-        #popup-title {
-          color: ${Prime2};
-        }
-        #popup-description {
-          color:  ${Prime3};
-        }
-        #popup-content h3 {
-          color:  ${Prime4};
-        }
-        #popup-content blockquote {
-          background-color:  ${Prime3};
-          color: ${Prime5};
-        }
-      `;
-      document.head.appendChild(style);
-    }
-
-    // Call the function to inject the styles
-    setPopupcolors();
-
-  }
-  function GridColors(){
-    setBackgroundColorM("#Goal-Block", Prime1 )
-    setBackgroundColorM("#Key-Block-text", Prime )
-    setTextColors("#Goal-Block", Prime5 )
-    setTextColors("#Key-Block-text", Prime5 )
-
-  }
   function Footercolors(){
     setBackgroundColorM('#footer', Prime5)
     setBackgroundColorM('footer', Prime)
@@ -298,19 +215,15 @@ applyBranding().then((data) => {
 
   Bodycolors()
   Navcolors()
-  AboutColors()
   Herocolors()
-  blogbtnColors()
-  GridColors()
+
   Footercolors()
-  MissionColors()
-  visionColors()
+
 
 });
 
 
-
-async function BlogContent() {
+async function GuideContent() {
   try {
     const docRef = doc(db, "CorsoSkillsWebsite", TBuInfo); // Ensure db and transferredInfo are initialized
     const docSnap = await getDoc(docRef);
@@ -327,31 +240,12 @@ async function BlogContent() {
     return null;
   }
 }
-BlogContent().then((data) => {  
-   const About = data.Constent.About
+GuideContent().then((data) => {  
+   const guide = data.Constent.Guide
 
 
-  console.log(data)
-  function renderImage(imageUrl, altUrl, UrlId) {
-    const logoElement = document.getElementById(UrlId);
-    if (logoElement) {
-      logoElement.src = imageUrl;
-      logoElement.alt = altUrl;
-    } else {
-      console.error(`Element with ID '${UrlId}' not found.`);
-    }
-  }
-  function setHeroBackgroundImage(imageUrl,url) {
-    const heroSection = document.getElementById(url);
-    if (heroSection) {
-      heroSection.style.backgroundImage = `url('${imageUrl}')`;
-      heroSection.style.backgroundSize = 'cover';
-      heroSection.style.backgroundPosition = 'center';
-      heroSection.style.backgroundRepeat = 'no-repeat';
-    } else {
-      console.error("Element with ID 'Hero' not found.");
-    }
-  }
+  console.log(guide)
+  
   function renderTextSection(containerId, titleText, subtitleText) {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -370,101 +264,67 @@ BlogContent().then((data) => {
     if (!container) return;
     container.textContent = Text;
   }
-  function renderList(items, targetElementId) {
-    const ul = document.createElement('ul');
 
-    items.forEach(item => {
-      const li = document.createElement('li');
-      li.textContent = item;
-      ul.appendChild(li);
-    });
-
-    const target = document.getElementById(targetElementId);
-    if (target) {
-      target.appendChild(ul);
-    } else {
-      console.warn(`Element with ID "${targetElementId}" not found.`);
-    }
-  }
-  function renderValuesListWithIcons(data, targetElementId) {
-    const ul = document.createElement('ul');
-    ul.className = 'icon-list';
-
-    Object.values(data).forEach(([title, description, iconHTML]) => {
-      const li = document.createElement('li');
-
-      li.innerHTML = `
-        <span class="icon">${iconHTML}</span>
-        <div class="text-content">
-          <strong class="title">${title}</strong>: <span class="description">${description}</span>
-        </div>
-      `;
-
-      ul.appendChild(li);
-    });
-
-    const target = document.getElementById(targetElementId);
-    if (target) {
-      target.innerHTML = '';
-      target.appendChild(ul);
-    } else {
-      console.warn(`Element with ID "${targetElementId}" not found.`);
-    }
-  }
 
 
 
 
   function heroContent(){
+    renderTextSection("hero-tittle", guide.Hero.Tittle)
+    renderTextSection("hero-text", guide.Hero.Text)
+  }
+   
+ function pycContent(){
+   function createCourseHeader(titleText, paragraphText, urlId) {
+    const container = document.getElementById(urlId);
 
-    setHeroBackgroundImage( About.Hero.img,"hero")
-    renderTextSection("hero-tittle", About.Hero.tittle)
-    renderTextSection("hero-text", About.Hero.text)
-  }
-    function aboutContent(){
-    renderImage(About.about.img, "Old people","about-img")
-    renderTextSection("About-Tittle", About.about.tittle)
-    renderTextSection("About-Text", About.about.text)
-  }
-  function renderMission(){
-    renderTextSection('Mission-Tittle', About.Mission.tittle)
-    renderTextSection('Mission-Text', About.Mission.text)
-  }
-  function rendervision(){
-    renderImage(About.Vision.img, "Idea","Vission-img")
-    renderTextSection('Vission-Tittle', About.Vision.tittle)
-    renderTextSection('Vission-Text', About.Vision.text)
-  }
-  function renderGoal(){
-    renderTextSection('Goal-Tittle', About.Goal.tittle)
-    renderTextSection('Goal-Text', About.Goal.text)
-  }
-  function renderDif(){
-    renderTextSection('Key-Tittle', About.Key.Tittle)  
-    renderList(About.Key.list, "Key-list")
-  }
-  function rendervalues(){
-    renderTextSection('value-Tittle', About.Values.tittle) 
-    renderValuesListWithIcons(About.Values.List, 'value-list');
-    renderImage(About.Values.img, "Balence","value-Block-img")
-  }
-  function rendergridcont(){
-    renderImage(About.Key.Imgs[0], "Grid-Img-1", "Grid-Img-1")
-    renderImage(About.Key.Imgs[1], "Grid-Img-1", "Grid-Img-2")
-    renderImage(About.Key.Imgs[2], "Grid-Img-1", "Grid-Img-3")
-  }
+    if (!container) {
+      console.error(`Container with ID "${urlId}" not found.`);
+      return;
+    }
+
+    container.classList.add('course-toggle-container');
+
+    // Create h2 and p
+    const h2 = document.createElement('h2');
+    h2.textContent = titleText;
+
+    const p = document.createElement('p');
+    p.textContent = paragraphText;
 
 
+    // Toggle on container click
+    container.addEventListener('click', () => {
+      console.log("Clicked")
+      hiddenPYC()
+    });
 
-  aboutContent()
+    // Append elements
+    container.appendChild(h2);
+    container.appendChild(p);
+
+  }
+  
+  createCourseHeader(guide.PlanCourse.Btn.Tittle, guide.PlanCourse.Btn.Text, "PYC")
+ }
+
+ function hiddenPYC(){
+  console.log("Yellow")
+
+ }
+
+
+
+
+
   heroContent()
-  renderMission()
-  rendervision()
-  renderGoal()
-  renderDif()
-  rendervalues()
-  rendergridcont()
+  pycContent()
+
+
 })
+
+
+
 
 document.getElementById('backBtn').addEventListener('click', function () {
   window.location.href = "index.html";
