@@ -33,6 +33,12 @@ body{
   margin-top: 0.5rem;
 }
 
+
+
+
+
+
+
 /* Term Block Section */
 .Term-Block {
   padding: 2rem 1.5rem;
@@ -80,6 +86,9 @@ body{
 .Term-Block a:hover {
   text-decoration: underline;
 }
+
+
+
 
 
 

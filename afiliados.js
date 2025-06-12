@@ -174,111 +174,11 @@ applyBranding().then((data) => {
 });
 
 
-async function BlogContent() {
-  try {
-    const docRef = doc(db, "CorsoSkillsWebsite", TBuInfo); // Ensure db and transferredInfo are initialized
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data();
-      return documentData; // Return the document data
-    } else {
-      console.error("No such document!");
-      return null;
-    }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-    return null;
-  }
-}
-BlogContent().then((data) => {  
-  const Press = data.Constent.Press
- 
-  console.log(Press)
-
-  function renderTextSection(containerId, titleText, subtitleText) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-
-    const title = document.createElement('h2');
-    title.textContent = titleText;
-
-    const subtitle = document.createElement('p');
-    subtitle.textContent = subtitleText;
-
-    container.appendChild(title);
-    container.appendChild(subtitle);
-  }
 
 
-  function heroContent(){
-    renderTextSection("hero", Press.hero.Tittle, Press.hero.Text)
-  }
-  function mediaConten() {
-    // ✅ Render media-style card
-    function renderMediaCard(containerId, title, description, linkURL, linkText) {
-      const container = document.getElementById(containerId);
-      if (!container) {
-        console.error(`Container with id "${containerId}" not found.`);
-        return;
-      }
 
-      const card = document.createElement('div');
-      card.className = 'media-card';
 
-      card.innerHTML = `
-        <h4>📺 ${title}</h4>
-        <p>${description}</p>
-        <a href="${linkURL}" target="_blank" rel="noopener noreferrer">${linkText}</a>
-      `;
-
-      container.appendChild(card);
-    }
-
-    // ✅ Check if slot has at least one non-empty value
-    function isSlotFilled(slot) {
-      return Object.values(slot).some(value => {
-        if (Array.isArray(value)) return value.length > 0;
-        return value && value.toString().trim() !== '';
-      });
-    }
-
-    // ✅ Render all slots from Press.List
-    function renderAllMedia(jobsObj, containerId) {
-      if (!jobsObj || typeof jobsObj !== 'object') {
-        console.error('Invalid or undefined jobs object passed:', jobsObj);
-        return;
-      }
-
-      Object.keys(jobsObj).forEach(slotKey => {
-        const slot = jobsObj[slotKey];
-        if (typeof slot === 'object' && isSlotFilled(slot)) {
-          const { tittle, text, link, type } = slot;
-          renderMediaCard(containerId, tittle, text, link, type);
-        }
-      });
-    }
-
-    // ✅ Start rendering media cards
-    renderAllMedia(Press.list, 'media-section');
-  }
-  function setButtonLink(buttonId, newHref) {
-    const button = document.getElementById(buttonId);
-    if (button && button.tagName === 'A') {
-      button.setAttribute('href', newHref);
-    } else {
-      console.error(`Element with ID "${buttonId}" not found or is not an <a> tag.`);
-    }
-  }
-
-  heroContent()
-  mediaConten()
-  setButtonLink("kit-btn", Press.kit)
-
-})
 
 document.getElementById('backBtn').addEventListener('click', function () {
   window.location.href = "index.html";
 });
-
-

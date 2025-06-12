@@ -35,38 +35,27 @@ body{
 }
 
 
-/* Terms Section */
-.terms-section {
-  padding: 2rem 1.5rem;
-  max-width: 800px;
-  margin: 2rem auto;
-  text-align: left;
-  font-size: 0.9rem;
-  line-height: 1.6;
-  border-radius: 1rem;
-}
 
+
+
+/* Content */
+.terms-section {
+  margin: 2rem auto;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.486);
+}
 .terms-section h3 {
-  font-size: 1.2rem;
-  margin-top: 2rem;
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
   margin-bottom: 0.5rem;
 }
-
 .terms-section p {
   margin-bottom: 1rem;
 }
-
 .terms-section a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.terms-section a:hover {
   text-decoration: underline;
 }
-
-
-
 
 
 
@@ -77,8 +66,10 @@ body{
 /* Footer */
 #footer {
   display: flex;
-  font-size: .6rem;
+  font-size: 0.6rem;
   align-items: center;
   justify-content: center;
   text-align: center;
+  padding: 1rem;
+  flex-wrap: wrap;
 }
