@@ -22,123 +22,29 @@
   <link rel="stylesheet" href="faq.css">
 </head>
 <body>
-  <header class="Nav-Container" id="header">  
-    <img id="Main-logo" src="">
 
-    <nav class="nav-links">
-      <div class="main-nav-links">
-        <a class="nav-link"  href="index.html" >Inicio</a>
-        <a class="nav-link"  href="index1.html">Cursos</a>
-        <a class="nav-link"  href="index2.html">Comunidad</a>
-        <a class="nav-link"  href="index3.html">Precios</a> 
-      </div>
-      <div class="action-nav-links">
-        <a href="index4.html" class="ANLB" id="LoginSBtn">Alumno</a>
-        <a href="index4.html" class="ANLB" id="LoginTBtn">Docente</a>
-        <a href="index5.1.html" id="startBtn">Comenzar</a>
-      </div>
-    </nav>
-  </header>
-  <!-- Hamburger Button for Mobile -->
-  <button id="menuToggle" aria-label="Abrir menú">
-      <i class="fa-solid fa-bars" style="color: #991b1b;" id="menubtn"></i>
-  </button>
-
-  <!-- Side Navigation -->
-  <aside id="sideNav" class="side-nav">
-      <button id="closeNav" aria-label="Cerrar menú">
-        <i class="fa-regular fa-circle-xmark" style="color: #ffffff;"></i>
-      </button>
-      <nav class="side-nav-links">
-     
-        <a class="sideNav-link" href="index.html">
-          <i class="fa-solid fa-house"></i>  
-          Inicio
-        </a>
-      
-        <a class="sideNav-link" href="index1.html">
-          <i class="fa-solid fa-chalkboard-user"></i>
-          Cursos
-        </a>
-        
-        <a class="sideNav-link" href="index2.html">
-          <i class="fa-solid fa-people-group"></i>
-          Comunidad
-        </a>
-
-        <a class="sideNav-link"
-        href="index3.html">
-          <i class="fa-solid fa-tag"></i>
-          Precios
-        </a>
-
-        <a class="sideNav-link"
-        href="index4.html">
-          <i class="fa-solid fa-user-graduate"></i>
-          Alumno
-        </a>
-
-        <a class="sideNav-link"
-        href="index4.html">
-          <i class="fa-solid fa-user-tie"></i>
-          Docente
-        </a>
-
-        <a class="sideNav-link"
-        href="index6.html">
-          <i class="fa-solid fa-book-open"></i>
-          Comenzar
-        </a>
-      </nav>
-  </aside>
+  <div>
+    <header class="Nav-Container" id="header">
+      <i class="fa-regular fa-circle-left" id="backBtn"></i>
+      <img id="Main-logo" src="">
+      .
+    </header>
+  
+    <section class="hero" id="hero"></section>    
+  </div>
 
 
-  <main>
-    <!-- Hero -->
-  <section class="hero">
-    <div class="container">
-      <h2>Preguntas Frecuentes</h2>
-      <p>Encuentra respuestas rápidas a las dudas más comunes sobre nuestra plataforma.</p>
+
+  <section class="faq-section container" id="faq-section">
+    <div id="faq-container"></div>
+
+    <div id="faq-navigation">
+      <button id="prev-btn">Anterior</button>
+      <button id="next-btn">Siguiente</button>
     </div>
   </section>
-
-  <!-- FAQ -->
-  <section class="faq-section container">
-    <div class="faq-item">
-      <button class="faq-question">¿Cómo me inscribo a un curso?</button>
-      <div class="faq-answer">
-        <p>Solo debes crear una cuenta gratuita, buscar el curso que deseas y hacer clic en "Inscribirme". Si el curso es de pago, podrás pagar en línea fácilmente.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">¿Puedo acceder a los cursos desde mi celular?</button>
-      <div class="faq-answer">
-        <p>Sí, nuestra plataforma es totalmente responsive y funciona en computadoras, tablets y smartphones.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">¿Recibo un certificado al finalizar un curso?</button>
-      <div class="faq-answer">
-        <p>Claro. Todos los cursos finalizados con éxito incluyen un certificado digital que puedes descargar o compartir en LinkedIn.</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">¿Puedo crear y vender mis propios cursos?</button>
-      <div class="faq-answer">
-        <p>Sí. Si eres experto en algún área, puedes postularte como docente desde la sección "Conviértete en Docente".</p>
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <button class="faq-question">¿Qué métodos de pago aceptan?</button>
-      <div class="faq-answer">
-        <p>Aceptamos tarjetas de crédito, débito y pagos por plataformas como PayPal o Stripe, dependiendo de tu país.</p>
-      </div>
-    </div>
-  </section>
+   
+  
 
   <!-- CTA -->
   <section class="cta-section">
@@ -148,92 +54,10 @@
       <a href="#" class="btn">Ir al Centro de Ayuda</a>
     </div>
   </section>
-  
-  </main>
-
 
 
   <footer id="footer">
-    <div class="footer-line"></div>
-    <div class="footer-top">
-      <img id="footer-logo-Img">
-      <div class="footer-list">
-        <h1>Plataforma</h1>
-        <ul>
-          <a href="index3.html" class="footer-link"><li>Sobre Nosotros</li></a>
-          <a href="#" class="footer-link"><li>Oportunidades Laborales</li></a>
-          <a href="#" class="footer-link"><li>Prensa</li></a>
-          <a href="index7.html" class="footer-link"><li>Blog</li></a>
-          <a href="#" class="footer-link"><li>Afiliados</li></a>
-        </ul>
-  
-      </div>
-      <div class="footer-list">
-        <h1>Enseñanza</h1>
-        <ul>
-          <a href="#" class="footer-link"><li>Academia de Enseñanza</li></a>
-          <a href="#" class="footer-link"><li>Conviértete en Docente</li></a>
-          <a href="#" class="footer-link"><li>Guía del Docente</li></a>
-          <a href="#" class="footer-link"><li>Asociaciones</li></a>
-        </ul>
-      </div>
-      <div class="footer-list">
-        <h1>Recursos</h1>
-        <ul>
-          <a href="index3.html" class="footer-link"><li>Preguntas Frecuentes</li></a>
-          <a href="index4.html" class="footer-link"><li>Términos y Condiciones</li></a>
-          <a href="index5.html" class="footer-link"><li>Política de Privacidad</li></a>
-          <a href="index6.html" class="footer-link"><li>Política de Plataforma</li></a>
-        </ul>
-      </div>
-      <div class="footer-newsletter">
-
-    
-        
-        <div class="footer-newsletter-input">
-          
-         
-
-          <form class="footer-nav-center-right-top" method="POST" action="https://formsubmit.co/#" enctype="multipart/form-data">
-              
-            <label class="email-input" for="email-input">Suscríbete al boletín</label><br>
-  
-            <input 
-            id="email-input" 
-            type="email" 
-            name="email" 
-            placeholder="Ingresa tu correo electrónico">
-            <button type="submit">Enviar</button>
-  
-        </form>
-
-
-
-
-        </div>
-
-      </div>
-    </div>
-     <div class="footer-line"></div>
-    <div class="footer-bottom">
- 
-      <h1>© 2024 CorsoSkills. All rights reserved</h1>
-
-      <div class="Social-Media" id="Social-Media">
-        <a href="#" target="_blank"><i class="fa-brands fa-youtube" style="color: #B2D9BA;"></i></a> 
-  
-        <a href="#" target="_blank"><i class="fa-brands fa-x-twitter" style="color: #B2D9BA;"></i></a>  
-  
-        <a href="#" target="_blank"><i class="fa-brands fa-facebook-f" style="color: #B2D9BA;"></i></a>  
-
-        <a href="#" target="_blank"><i class="fa-brands fa-linkedin" style="color: #B2D9BA;"></i></a>  
-  
-        <a href="#" target="_blank"><i class="fa-brands fa-instagram" style="color: #B2D9BA;"></i></a>   
-  
-        <a href="#" target="_blank"><i class="fa-brands fa-tiktok" style="color: #B2D9BA;"></i></a>    
-      </div>
-  
-    </div> 
+    <h1>© 2024 CorsoSkills. All rights reserved</h1>
   </footer>
 
 

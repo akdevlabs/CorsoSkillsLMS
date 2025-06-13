@@ -87,7 +87,6 @@ applyBranding().then((data) => {
 
 
 
-
   function Bodycolors(){
     setBodyBackgroundColor(Prime4, Base)
   }
@@ -100,73 +99,72 @@ applyBranding().then((data) => {
     setTextColors("#hero", Prime5 )
     setBackgroundColorM(".hero", Prime )
   }
+
   function blogbtnColors(){
     function setPopupcolors() {
       const style = document.createElement('style');
       style.textContent = `
-        .benefits-section h3 {
-          color: ${Prime};
-        }
-        .benefit-card {
-          background: ${Prime5};
-        }
-        .benefit-card h4 {
-          color: ${Prime};
-        }
-        .benefit-card p {
+      #faq-section{
+        background-color: ${Prime5};
+      }
+      .faq-question {
         color: ${Prime};
-        }
-        .steps-section h3 {
-          color: ${Prime};
-        }
-        .steps-list li {
-          background: ${Prime5};
-        }
-        .steps-list li span {
-          background:  ${Prime3};
-          color: ${Prime5};
-        }
-        .cta-section {
-          background: ${Prime3};
-          color: ${Prime5};
-        }
-        .btn {
-          background: ${Prime5};
-          color:${Prime3};
-        }
-        .btn:hover {
-          background: #e2e8f0; 
-        }
+        background-color: ${Prime5};
+      }
+      .faq-question:hover {
+        color: ${Prime5};
+        background-color: ${Prime2};
+      }
+      .faq-answer {
+        color: ${Prime};
+        padding: 1rem 1.5rem;
+       border: 3px solid ${Prime2};
+      }
+
+      #faq-navigation button {
+
+        background-color: ${Base};
+        color: ${Prime5};
+      }
+      #faq-navigation button:disabled {
+        background-color: ${Prime1};
+        cursor: not-allowed;
+      }
+
+
+      /* CTA */
+      .cta-section {
+        background: ${Prime3};
+        color: white;
+        text-align: center;
+        padding: 3rem 0;
+      }
+
+      .cta-section h3 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .cta-section p {
+        margin-bottom: 1.5rem;
+      }
+
+      .btn {
+        background: ${Prime5};
+        color: ${Prime3};
+      }
+
+      .btn:hover {
+        color: ${Prime5};
+        background:  ${Prime2};
+      }
 
       `;
       document.head.appendChild(style);
     }
-    function kitcolors() {
-      const style = document.createElement('style');
-      style.textContent = `
-       /* Press Kit */
-        .presskit-section {
-          background-color: ${Prime5};
-        }
-        .presskit-section h3 {
-          color: ${Base};
-        }
-        .presskit-section p {
-          color: ${Prime1};
-        }  
-        .btn {
-          background-color: ${Base};
-          color: ${Prime5};
-        }
-        .btn:hover {
-          background-color:${Prime2};
-        }
-      `;
-      document.head.appendChild(style);
-    }
     setPopupcolors();
-    kitcolors()
-  }
+
+  }  
   function Footercolors(){
     setBackgroundColorM('#footer', Prime5)
     setBackgroundColorM('footer', Prime)
@@ -176,9 +174,9 @@ applyBranding().then((data) => {
   Bodycolors()
   Navcolors()
   Herocolors()
-  blogbtnColors()
-  Footercolors()
 
+  Footercolors()
+blogbtnColors()
 
 });
 
@@ -202,11 +200,11 @@ async function BlogContent() {
   }
 }
 BlogContent().then((data) => {  
-  const  Affiliates = data.Constent.Affiliates
+  const FAQ = data.FAQ
 
 
  
-  console.log(Affiliates)
+  console.log(FAQ)
 
   function renderTextSection(containerId, titleText, subtitleText) {
     const container = document.getElementById(containerId);
@@ -224,75 +222,66 @@ BlogContent().then((data) => {
 
 
   function heroContent(){
-    renderTextSection("hero", Affiliates.Hero.Tittle, Affiliates.Hero.Text)
+    renderTextSection("hero", FAQ.hero.Tittle, FAQ.hero.Text)
   }
 
+const questionsPerPage = 10;
+    let currentPage = 0;
 
+    function renderFAQPage(data, page) {
+      const container = document.getElementById("faq-container");
+      container.innerHTML = "";
 
-  function mediaConten() {
+      const allFAQs = Object.values(data);
+      const startIndex = page * questionsPerPage;
+      const endIndex = Math.min(startIndex + questionsPerPage, allFAQs.length);
+      const currentFAQs = allFAQs.slice(startIndex, endIndex);
 
-    function renderMediaCard(containerId, title, description, link) {
-      const container = document.getElementById(containerId);
-      if (!container) {
-        console.error(`Container with id "${containerId}" not found.`);
-        return;
+      currentFAQs.forEach(faq => {
+        const questionBtn = document.createElement("button");
+        questionBtn.className = "faq-question";
+        questionBtn.textContent = faq.Question;
+
+        const answerDiv = document.createElement("div");
+        answerDiv.className = "faq-answer";
+        answerDiv.textContent = faq.Answer;
+
+        questionBtn.addEventListener("click", () => {
+          answerDiv.style.display = answerDiv.style.display === "none" ? "block" : "none";
+        });
+
+        container.appendChild(questionBtn);
+        container.appendChild(answerDiv);
+      });
+
+      document.getElementById("prev-btn").disabled = currentPage === 0;
+      document.getElementById("next-btn").disabled = endIndex >= allFAQs.length;
+    }
+
+    document.getElementById("prev-btn").addEventListener("click", () => {
+      if (currentPage > 0) {
+        currentPage--;
+        renderFAQPage(FAQ.QuestionAnswers, currentPage);
       }
+    });
 
-      const card = document.createElement('div');
-      card.className = 'media-card';
-
-      // HTML structure with optional link
-      card.innerHTML = `
-        <h3>${title}</h3>
-        <p>${description}</p>
-        ${link ? `<a href="mailto:${link}" target="_blank" class="media-link">${link}</a>` : ''}
-      `;
-
-      container.appendChild(card);
-    }
-
-    // ✅ Check if slot has at least one non-empty value
-    function isSlotFilled(slot) {
-      return Object.values(slot).some(value => {
-        return value && value.toString().trim() !== '';
-      });
-    }
-
-    // ✅ Render all slots from List in sorted order
-    function renderAllMedia(jobsObj, containerId) {
-      if (!jobsObj || typeof jobsObj !== 'object') {
-        console.error('Invalid or undefined jobs object passed:', jobsObj);
-        return;
+    document.getElementById("next-btn").addEventListener("click", () => {
+      const totalQuestions = Object.keys(FAQ.QuestionAnswers).length;
+      if ((currentPage + 1) * questionsPerPage < totalQuestions) {
+        currentPage++;
+        renderFAQPage(FAQ.QuestionAnswers, currentPage);
       }
+    });
 
-      const sortedKeys = Object.keys(jobsObj).sort((a, b) => {
-        const aNum = parseInt(a.replace('slot', ''), 10);
-        const bNum = parseInt(b.replace('slot', ''), 10);
-        return aNum - bNum;
-      });
-
-      sortedKeys.forEach(slotKey => {
-        const slot = jobsObj[slotKey];
-        if (typeof slot === 'object' && isSlotFilled(slot)) {
-          const { Tittle, Text, link } = slot;
-          renderMediaCard('terms-section', Tittle, Text, link);
-        }
-      });
-    }
-
-
-    renderAllMedia(Terms.List, 'terms-section');
-  }
-
+    // Initial render
+    renderFAQPage(FAQ.QuestionAnswers, currentPage);
 
 
   heroContent()
-  mediaConten()
+
 
 
 })
-
-
 
 document.getElementById('backBtn').addEventListener('click', function () {
   window.location.href = "index.html";

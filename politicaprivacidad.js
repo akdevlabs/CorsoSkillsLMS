@@ -53,14 +53,6 @@ applyBranding().then((data) => {
     document.body.style.backgroundColor = backgroundColor;
     document.body.style.color = textColor;
   }
-  function setBackgroundColor(elementId, backgroundColor) {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.style.backgroundColor = backgroundColor;
-    } else {
-      console.error(`Element with ID '${elementId}' not found.`);
-    }
-  }
   function setBackgroundColorM(selector, backgroundColor) {
     const elements = document.querySelectorAll(selector);
 
@@ -92,103 +84,8 @@ applyBranding().then((data) => {
     console.error("Selector must start with '#' for ID or '.' for class.");
   }
   }
-  function setBorder(selector, borderStyle) {
-  const elements = document.querySelectorAll(selector);
 
-  if (elements.length === 0) {
-    console.error(`No elements found for selector '${selector}'.`);
-    return;
-  }
 
-  elements.forEach(element => {
-    element.style.border = borderStyle;
-  });
-}
-  function applyRightToLeftFade(elementId, hexColor, fadeStartPercent = 50, duration = 1000) {
-    const el = document.getElementById(elementId);
-    if (!el) return;
-
-    // Clamp percentage between 0 and 100
-    fadeStartPercent = Math.max(0, Math.min(100, fadeStartPercent));
-
-    // Create gradient: solid starts at 0%, starts fading at fadeStartPercent%, fully transparent at 100%
-    const gradient = `linear-gradient(to right, ${hexColor} 0%, ${hexColor} ${fadeStartPercent}%, transparent 100%)`;
-
-    // Set transition for smooth effect
-    el.style.transition = `background ${duration}ms ease-in-out`;
-
-    // Apply the gradient background
-    el.style.background = gradient;
-  }
-  function setHoverStyle(selector, primeColor) {
-    const elements = document.querySelectorAll(selector);
-
-    if (elements.length === 0) {
-      console.error(`No elements found for selector '${selector}'.`);
-      return;
-    }
-
-    elements.forEach(element => {
-      // Set default border and text color
-      element.style.border = `2px solid ${primeColor}`;
-      element.style.transition = 'all 0.3s ease'; // Smooth transition
-
-      // Mouse enter: highlight
-      element.addEventListener('mouseenter', () => {
-        element.style.color  = Prime2;
-        element.style.border = `2px solid ${Prime2}`;
-      });
-
-      // Mouse leave: revert
-      element.addEventListener('mouseleave', () => {
-        element.style.color = Prime3;
-        element.style.border =  `2px solid ${Prime3}`;
-      });
-    });
-  }
-  function applybottomFade(elementId, hexColor, fadeStartPercent = 50, duration = 1000) {
-    const el = document.getElementById(elementId);
-    if (!el) return;
-
-    // Clamp percentage between 0 and 100
-    fadeStartPercent = Math.max(0, Math.min(100, fadeStartPercent));
-
-    // Create gradient: solid starts at 0%, starts fading at fadeStartPercent%, fully transparent at 100%
-    const gradient = `linear-gradient(to top, ${hexColor} 0%, ${hexColor} ${fadeStartPercent}%, transparent 80%)`;
-
-    // Set transition for smooth effect
-    el.style.transition = `background ${duration}ms ease-in-out`;
-
-    // Apply the gradient background
-    el.style.background = gradient;
-  }
-  function applyGradientFade(selector, color1, color2, fadeStartPercent = 90, duration = 1000) {
-    // Clamp fadeStartPercent between 0 and 100
-    fadeStartPercent = Math.max(0, Math.min(100, fadeStartPercent));
-
-    // Build the gradient
-    const gradient = `
-      linear-gradient(to right,
-        ${color1} 0%,
-        ${color2} ${fadeStartPercent}%,
-        transparent 100%
-      )
-    `;
-
-    let elements = [];
-
-    if (selector.startsWith('#')) {
-      const el = document.getElementById(selector.slice(1));
-      if (el) elements.push(el);
-    } else if (selector.startsWith('.')) {
-      elements = Array.from(document.querySelectorAll(selector));
-    }
-
-    elements.forEach(el => {
-      el.style.transition = `background ${duration}ms ease-in-out`;
-      el.style.background = gradient;
-    });
-  }
 
 
   function Bodycolors(){
@@ -200,13 +97,31 @@ applyBranding().then((data) => {
     setBackgroundColorM("#header", Prime5 )
   }
   function Herocolors(){
-    setTextColors(".hero-text", Prime5 )
+    setTextColors("#hero", Prime5 )
     setBackgroundColorM(".hero", Prime )
   }
-  function PPcolors(){
-    setBackgroundColorM(".Term-Block", Prime5)
-    setTextColors(".Term-Block", Prime)
-  }  
+  function blogbtnColors(){
+    function setPopupcolors() {
+      const style = document.createElement('style');
+      style.textContent = `
+        .platform-section {
+          background: ${Prime5};
+        }
+        .platform-section h3 {
+          color: ${Base};
+        }
+        .platform-section p {
+          color: ${Prime1};
+        }
+        .platform-section a {
+          color: ${Prime2};
+        }
+      `;
+      document.head.appendChild(style);
+    }
+    setPopupcolors();
+
+  }
   function Footercolors(){
     setBackgroundColorM('#footer', Prime5)
     setBackgroundColorM('footer', Prime)
@@ -216,11 +131,131 @@ applyBranding().then((data) => {
   Bodycolors()
   Navcolors()
   Herocolors()
-PPcolors()
+  blogbtnColors()
   Footercolors()
 
 
 });
+
+async function BlogContent() {
+  try {
+    const docRef = doc(db, "CorsoSkillsWebsite", TBuInfo); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+BlogContent().then((data) => {  
+  const Privacy = data.Platform.Privacy
+
+  console.log(Privacy)
+
+  function renderTextSection(containerId, titleText, subtitleText) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const title = document.createElement('h2');
+    title.textContent = titleText;
+
+    const subtitle = document.createElement('p');
+    subtitle.textContent = subtitleText;
+
+    container.appendChild(title);
+    container.appendChild(subtitle);
+  }
+
+
+  function heroContent(){
+    renderTextSection("hero", Privacy.hero.Tittle, Privacy.hero.Text)
+  }
+
+
+
+function mediaConten() {
+  function renderMediaCard(containerId, title, description, points = {}, link = "") {
+    const container = document.getElementById(containerId);
+    if (!container) {
+      console.error(`Container with id "${containerId}" not found.`);
+      return;
+    }
+
+    const card = document.createElement('div');
+    card.className = 'term-card';
+
+    // Create inner HTML
+    let html = `<h2>${title}</h2><p>${description}</p>`;
+
+    // Render points if present
+    if (points && typeof points === 'object' && Object.keys(points).length > 0) {
+      html += `<ul class="point-list">`;
+      for (const key in points) {
+        const { Point, Text } = points[key];
+        html += `
+          <li>
+            <strong>${Point}</strong> ${Text}
+          </li>`;
+      }
+      html += `</ul>`;
+    }
+
+    // Optional email/contact link
+    if (link && link.trim() !== '') {
+      html += `<a href="mailto:${link}" target="_blank" class="media-link">${link}</a>`;
+    }
+
+    card.innerHTML = html;
+    container.appendChild(card);
+  }
+
+  function isSlotFilled(slot) {
+    return slot?.Tittle || slot?.Text || (slot?.Points && Object.keys(slot.Points).length > 0);
+  }
+
+  function renderAllMedia(jobsObj, containerId) {
+    if (!jobsObj || typeof jobsObj !== 'object') {
+      console.error('Invalid or undefined jobs object passed:', jobsObj);
+      return;
+    }
+
+    const sortedKeys = Object.keys(jobsObj).sort((a, b) => {
+      const aNum = parseInt(a.replace('slot', ''), 10);
+      const bNum = parseInt(b.replace('slot', ''), 10);
+      return aNum - bNum;
+    });
+
+    sortedKeys.forEach(slotKey => {
+      const slot = jobsObj[slotKey];
+      if (typeof slot === 'object' && isSlotFilled(slot)) {
+        const { Tittle, Text, Points, link } = slot;
+        renderMediaCard(containerId, Tittle, Text, Points, link);
+      }
+    });
+  }
+
+  renderAllMedia(Privacy.List, 'Term-Block');
+}
+
+
+
+
+  heroContent()
+  mediaConten()
+
+
+})
+
+
+
+
 
 document.getElementById('backBtn').addEventListener('click', function () {
   window.location.href = "index.html";
