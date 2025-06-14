@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.Nav-Container{
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  justify-content: space-between;
+}
+.Nav-Container i{
+  font-size: 1.5rem;
+}
+
+
+
+#Main-logo{
+  width: 10rem;
+}
+
+
+
+/* Hero Section */
+.hero {
+  padding: 3rem 0;
+  text-align: center;
+}
+.hero h2 {
+  font-size: 2.5rem;
+}
+.hero p {
+  margin-top: 0.5rem;
+}
+
+
+
+
+
+/* Footer */
+#footer {
+  display: flex;
+  font-size: .6rem;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
