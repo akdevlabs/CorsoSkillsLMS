@@ -3,60 +3,71 @@
   margin: 0;
   padding: 0;
 }
-body {
 
+body {
   color: #0d1b2a;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f7fa; /* optional soft background */
 }
 
-
-
-#header{
+/* Header */
+#header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: .5rem 2rem;
+  padding: 0.5rem 2rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
 }
-#Bulogos{
+
+#Bulogos,
+#header-logo {
   width: 10rem;
+  max-width: 100%;
 }
+
 .exit-link {
   text-decoration: none;
   font-weight: 600;
   padding: 6px 14px;
   border-radius: 6px;
 }
-#header-logo{
-  width: 10rem;
-}
 
-
-
-/*--------container -------*/
+/* Main Container */
 .container {
-  margin: 2rem 0;
+  margin: 2rem auto;
   text-align: center;
+  padding: 0 1rem;
+  max-width: 1000px;
 }
 
-.info-form{
+.info-form {
   display: flex;
-  align-items:center;
+  align-items: center;
   flex-direction: column;
 }
-.slot{
+
+/* Flexible layout block */
+.slot {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-
-.tittle-block{
+/* Title section */
+.tittle-block {
   margin-bottom: 1rem;
 }
-.IFBottom{
+
+.IFBottom {
   gap: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
 }
+
+/* Form layout */
 .form-group {
   width: 16rem;
   margin: 1rem;
@@ -84,11 +95,7 @@ body {
   box-shadow: 0 0 0 2px rgba(0, 86, 210, 0.2);
 }
 
-
-
-
-
-
+/* Button */
 .next-button {
   border: none;
   padding: 14px 28px;
@@ -98,12 +105,10 @@ body {
   cursor: pointer;
   transition: background 0.2s ease;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  margin-top: 1rem;
 }
 
-
-
-
-
+/* Toggle button group */
 .toggle-buttons {
   display: flex;
   align-items: center;
@@ -127,3 +132,31 @@ body {
   border-color: #007bff;
 }
 
+/* Responsive Behavior */
+@media (max-width: 768px) {
+  #header {
+    flex-direction: row;
+    gap: 1rem;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .form-group {
+    width: 100%;
+    max-width: 90vw;
+  }
+
+  .container {
+    margin: 1rem auto;
+    padding: 0 1rem;
+  }
+
+  .slot {
+    flex-direction: column;
+  }
+
+  .next-button {
+    width: 100%;
+    max-width: 300px;
+  }
+}

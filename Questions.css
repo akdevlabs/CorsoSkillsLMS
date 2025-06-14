@@ -3,57 +3,60 @@
   margin: 0;
   padding: 0;
 }
-body {
 
+body {
   color: #0d1b2a;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f6f8;
 }
 
-
-
-#header{
+/* Header */
+#header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: .5rem 2rem;
+  padding: 0.5rem 2rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
+  gap: 1rem;
 }
-#Bulogos{
+
+#Bulogos,
+#header-logo {
   width: 10rem;
+  max-width: 100%;
 }
+
 .exit-link {
   text-decoration: none;
   font-weight: 600;
   padding: 6px 14px;
   border-radius: 6px;
 }
-#header-logo{
-  width: 10rem;
-}
 
-
-
-/*--------container -------*/
+/* Container */
 .container {
-  margin: 2rem 0;
+  margin: 2rem auto;
   text-align: center;
+  padding: 0 1rem;
+  max-width: 1200px;
 }
 
-
-.IFTop{
+/* Top & Bottom Blocks */
+.IFTop,
+.IFBottom {
   gap: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
 }
-.tittle-block{
+
+.tittle-block {
   margin-bottom: 1rem;
 }
-.IFBottom{
-  gap: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
+/* Form Fields */
 .form-group {
   width: 16rem;
   margin: 1rem;
@@ -81,18 +84,22 @@ body {
   box-shadow: 0 0 0 2px rgba(0, 86, 210, 0.2);
 }
 
-.cards{
+/* Cards */
+.cards {
   gap: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 1rem 0;
+  flex-wrap: wrap;
 }
-.Card-Icons{
+
+.Card-Icons {
   font-size: 3rem;
   padding: 1.5rem 3.5rem;
   border-radius: 1rem;
 }
+
 .card.toggle-btn {
   gap: 1rem;
   display: flex;
@@ -102,12 +109,13 @@ body {
   transition: all 0.3s ease;
   border-radius: 1rem;
 }
-.card.toggle-btn span{
- 
+
+.card.toggle-btn span {
   font-weight: bold;
 }
 
-.hidden-Info-block{
+/* Hidden content */
+.hidden-Info-block {
   width: 50%;
   display: none;
   flex-wrap: wrap;
@@ -116,8 +124,7 @@ body {
   margin: 0 auto;
 }
 
-
-
+/* Buttons */
 .next-button {
   border: none;
   padding: 14px 28px;
@@ -127,11 +134,8 @@ body {
   cursor: pointer;
   transition: background 0.2s ease;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+  margin-top: 1rem;
 }
-
-
-
-
 
 .course-btn {
   margin: 5px;
@@ -151,4 +155,38 @@ body {
 .course-btn.selected {
   background-color: #4CAF50;
   color: white;
+}
+
+/* -------- Responsive Section -------- */
+@media (max-width: 768px) {
+  #header {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .form-group {
+    width: 100%;
+    max-width: 90vw;
+  }
+
+  .hidden-Info-block {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .next-button {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .Card-Icons {
+    padding: 1rem 2rem;
+    font-size: 2.5rem;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
 }

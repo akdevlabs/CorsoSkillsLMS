@@ -1,12 +1,21 @@
- * { 
+* { 
   box-sizing: border-box; 
   margin: 0; 
   padding: 0; 
 }
 
-    
-#Bulogo{
+body {   
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+#Bulogo {
   width: 10rem;
+  max-width: 100%;
 }
 
 a { 
@@ -14,47 +23,100 @@ a {
   color: inherit; 
 }
 
-   
+/* Login Box */
 .container { 
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   max-width: 400px; 
-  margin: 80px auto; 
-
-
+  margin: 80px auto;
   padding: 2rem; 
   border-radius: 12px; 
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.747); 
+  background-color: #fff;
 }
 
+/* Headings */
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
 
+/* Form */
+label { 
+  display: block; 
+  margin-bottom: 0.5rem; 
+  font-weight: 600; 
+  width: 100%;
+  text-align: left;
+}
 
-    h2 { text-align: center; margin-bottom: 1.5rem;  }
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid #4d4d4d;
+  border-radius: 8px;
+  font-size: 1rem;
+}
 
-    label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 0.75rem;
-      margin-bottom: 1.25rem;
-      border: 1px solid #4d4d4d;
-      border-radius: 8px;
-    }
-    .btn-primary {
-  
-   
-      padding: 0.75rem;
-      width: 100%;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-    }
+/* Button */
+.btn-primary {
+  padding: 0.75rem;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #004b87;
+  color: white;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+.btn-primary:hover {
+  background-color: #005da8;
+}
 
- 
-    .text-center { text-align: center; margin-top: 1rem; font-size: 0.9rem; }
-  
+/* Footer Text */
+.text-center {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
 
- 
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .container {
+    margin: 40px 1rem;
+    padding: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+  .container { 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 350px; 
+  margin: 80px auto;
+  padding: 2rem; 
+  border-radius: 12px; 
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.747); 
+  background-color: #fff;
+}
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  .btn-primary {
+    font-size: 0.95rem;
+  }
+
+  #Bulogo {
+    width: 8rem;
+  }
+}

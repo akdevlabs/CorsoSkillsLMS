@@ -4,7 +4,14 @@
   padding: 0; 
 }
 
-    
+ body {   
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}   
 #Bulogo{
   width: 10rem;
 }
@@ -56,3 +63,36 @@ a {
  
     .text-center { text-align: center; margin-top: 1rem; font-size: 0.9rem; }
   
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .container {
+    margin: 40px 1rem;
+    padding: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+  .container { 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 350px; 
+  margin: 80px auto;
+  padding: 2rem; 
+  border-radius: 12px; 
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.747); 
+  background-color: #fff;
+}
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  .btn-primary {
+    font-size: 0.95rem;
+  }
+
+  #Bulogo {
+    width: 8rem;
+  }
+}

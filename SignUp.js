@@ -139,11 +139,11 @@ applyBranding().then((data) => {
 
   function renderSignupColors() {
     renderImage(data.BuLogos.Icons[0], "Buissnes Logo", "Bulogo")
-    setBodyBackgroundColor(Base, Prime5);
-    setBackgroundColor("container", Prime4);
+    setBodyBackgroundColor(Prime4, Prime2)
+    setBackgroundColor("container", Prime5)
     setTextColors("container", Base);
     setTextColors("signupForm-btn", Prime5);
-    setBackgroundColor("signupForm-btn", Prime2);
+    setBackgroundColor("signupForm-btn", Base)
     setTextColors("add", Prime2);
   }
 

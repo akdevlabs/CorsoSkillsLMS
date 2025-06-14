@@ -3,11 +3,14 @@
   margin: 0; 
   padding: 0; 
 }
-body{   
-  font-family: 'Poppins', sans-serif; 
-  
-  color: #333; 
+body {   
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 
 #Bulogo{
   width: 10rem;
@@ -22,6 +25,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   max-width: 400px; 
   margin: 80px auto; 
   
@@ -87,3 +91,14 @@ input[type="password"] {
 }
 
 
+/* Small screen safety */
+@media (max-width: 420px) {
+  body {
+    padding: 1rem;
+  }
+  .container {
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+  }
+}

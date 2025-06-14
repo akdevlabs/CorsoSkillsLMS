@@ -101,125 +101,67 @@
     await loginWithEmailPassword(email, password);
   });
 
+  async function applyBranding() {
+    try {
+      const docRef = doc(db, "CorsoSkillBusiness", TBuInfo); // Ensure db and transferredInfo are initialized
+      const docSnap = await getDoc(docRef);
 
-
-
-
-
-
-
-
-
-async function applyBranding() {
-  try {
-    const docRef = doc(db, "CorsoSkillBusiness", TBuInfo); // Ensure db and transferredInfo are initialized
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data();
-      return documentData; // Return the document data
-    } else {
-      console.error("No such document!");
+      if (docSnap.exists()) {
+        const documentData = docSnap.data();
+        return documentData; // Return the document data
+      } else {
+        console.error("No such document!");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching document:", error);
       return null;
     }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-    return null;
   }
-}
-applyBranding().then((data) => {  
+  applyBranding().then((data) => {  
 
-  const {Base, Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
+    const {Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
 
-  function renderImage(imageUrl, altUrl, UrlId) {
-    const logoElement = document.getElementById(UrlId);
-    if (logoElement) {
-      logoElement.src = imageUrl;
-      logoElement.alt = altUrl;
-    } else {
-      console.error("Element with ID 'logo' not found.");
+    function renderImage(imageUrl, altUrl, UrlId) {
+      const logoElement = document.getElementById(UrlId);
+      if (logoElement) {
+        logoElement.src = imageUrl;
+        logoElement.alt = altUrl;
+      } else {
+        console.error("Element with ID 'logo' not found.");
+      }
     }
-  }
-  function setBodyBackgroundColor(backgroundColor, textColor) {
-    document.body.style.backgroundColor = backgroundColor;
-    document.body.style.color = textColor;
-  }
-  function setBackgroundColor(elementId, backgroundColor) {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.style.backgroundColor = backgroundColor;
-    } else {
-      console.error(`Element with ID '${elementId}' not found.`);
+    function setBodyBackgroundColor(backgroundColor, textColor) {
+      document.body.style.backgroundColor = backgroundColor;
+      document.body.style.color = textColor;
     }
-  }
-  function setBorderBottom(elementId, borderStyle) {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.style.borderBottom = borderStyle;
-    } else {
-      console.error(`Element with ID '${elementId}' not found.`);
+    function setBackgroundColor(elementId, backgroundColor) {
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.style.backgroundColor = backgroundColor;
+      } else {
+        console.error(`Element with ID '${elementId}' not found.`);
+      }
     }
-  }
-  function setBorder(elementId, borderStyle) {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.style.border = borderStyle;
-    } else {
-      console.error(`Element with ID '${elementId}' not found.`);
+    function setTextColors(elementId, Tcolor){
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.style.color = Tcolor;
+      } else {
+        console.error(`Element with ID '${elementId}' not found.`);
+      }
     }
-  }
-  function setTextColors(elementId, Tcolor){
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.style.color = Tcolor;
-    } else {
-      console.error(`Element with ID '${elementId}' not found.`);
+    function renderLoginColors(){
+      renderImage(data.BuLogos.Icons[0], "Bu logo" ,"Bulogo");
+      setBodyBackgroundColor(Prime4, Prime2)
+      setBackgroundColor("container", Prime5)
+      setTextColors("container", Base)
+      setTextColors("forgot", Prime2)
+      setTextColors("add", Prime2)      
+      setTextColors("loginForm", Base)
+      setTextColors("add", Prime)
+      setBackgroundColor("btn-primary", Base)
+      setTextColors("btn-primary", Prime5)
     }
-  }
-  function setBackgroundColorWithTransparency(elementId, colorName, alpha) {
-    const element = document.getElementById(elementId);
-    if (!element) {
-      console.error(`Element with ID '${elementId}' not found.`);
-      return;
-    }
-  
-    // Create temporary element to compute RGB value
-    const temp = document.createElement('div');
-    temp.style.color = colorName;
-    document.body.appendChild(temp);
-  
-    // Get computed RGB color
-    const computedColor = window.getComputedStyle(temp).color;
-    document.body.removeChild(temp);
-  
-    // Extract RGB values from string like "rgb(255, 0, 0)"
-    const rgbMatch = computedColor.match(/\d+/g);
-    if (rgbMatch && rgbMatch.length === 3) {
-      const [r, g, b] = rgbMatch;
-      element.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${alpha})`;
-    } else {
-      console.error(`Could not parse color: ${computedColor}`);
-    }
-  }
-  
-  function renderLoginColors(){
-    renderImage(data.BuLogos.Icons[0], "Bu logo" ,"Bulogo");
-    setBodyBackgroundColor(Base, Prime5)
-    setBackgroundColor("container", Prime4)
-    setTextColors("container", Prime3)
-
-    setTextColors("loginForm", Base)
-    setTextColors("add", Prime2)
-    setBackgroundColor("btn-primary", Prime2)
-    setTextColors("btn-primary", Prime5)
-  }
-
-
-
-
-
-
-  
- renderLoginColors()
-
-});
+  renderLoginColors()
+  });
