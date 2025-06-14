@@ -131,6 +131,22 @@ async function getStudentContent() {
     return null;
   }
 }
+async function getAffiliateContent() {
+  try {
+    const docRef = doc(db, "CorsoSkillsAffiliate", UserUidInfo);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.error("No such student document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching student document:", error);
+    return null;
+  }
+}
 async function getCorsoSkillAppContent() {
   try {
     const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
@@ -150,6 +166,7 @@ async function getCorsoSkillAppContent() {
 async function fetchAllContent() {
   const teacherData = await getTeacherContent();
   const StudentData = await getStudentContent();
+  const AffiliateData = await getAffiliateContent();
   const businessData = await getCorsoSkillAppContent();
 
   if (teacherData) {
@@ -157,11 +174,17 @@ async function fetchAllContent() {
   } else {
     console.log("No teacher data found.");
   }
-   if (StudentData) {
+  if (StudentData) {
     console.log("Student Document Data:", StudentData);
   } else {
     console.log("No teacher data found.");
   }
+  if (AffiliateData) {
+    console.log("Student Document Data:", AffiliateData);
+  } else {
+    console.log("No Affiliate data found.");
+  }
+
 
   if (businessData) {
     console.log("Business Document Data:", businessData);
@@ -180,6 +203,13 @@ async function fetchAllContent() {
           window.location.href = "index5.4.html";
         }
 
+      }else if (UserRole === "Affiliate"){
+         const completed = StudentData?.question;
+          if (completed === true) {
+          window.location.href = "index12.html";
+          } else {
+            window.location.href = "index5.6.html";
+          }
       }else{
          const completed = StudentData?.question;
           if (completed === true) {
@@ -188,6 +218,7 @@ async function fetchAllContent() {
             window.location.href = "index6.1.html";
           }
       }
+
     }, 3000);
   }
   checkRedirect()

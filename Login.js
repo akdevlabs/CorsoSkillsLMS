@@ -67,6 +67,8 @@
       // Check if the user is a student or a teacher
       const studentDoc = await getDoc(doc(db, "CorsoSkillsStudents", uid));
       const teacherDoc = await getDoc(doc(db, "CorsoSkillsTeacher", uid));
+      const AffiliateDoc = await getDoc(doc(db, "CorsoSkillsAffiliate", uid));
+
 
       if (studentDoc.exists()) {
         localStorage.setItem("UserRole", "student");
@@ -75,6 +77,10 @@
       } else if (teacherDoc.exists()) {
         localStorage.setItem("UserRole", "teacher");
         console.log("Logged in as Teacher");
+        window.location.href = "index5.html";
+      } else if (AffiliateDoc.exists()) {
+        localStorage.setItem("UserRole", "Affiliate");
+        console.log("Logged in as Affiliate");
         window.location.href = "index5.html";
       } else {
         alert("Este usuario no está registrado como estudiante ni como profesor.");
