@@ -1,0 +1,104 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+
+  color: #0d1b2a;
+}
+
+
+
+#header{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .5rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#Bulogos{
+  width: 10rem;
+}
+.exit-link {
+  text-decoration: none;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 6px;
+}
+#header-logo{
+  width: 10rem;
+}
+
+.container{
+  margin: 2rem 0;
+}
+.blocks{
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.block{
+  width: 100%;
+}
+.input-wrapper {
+  margin-bottom: 1rem;
+}
+.canal-input {
+  display: none;
+  margin-top: 0.25rem;
+}
+
+
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+}
+    form {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin: 1rem 0 0.5rem;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.7rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .checkbox-group {
+      margin-top: 0.5rem;
+    }
+    .checkbox-group label {
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+    }
+    .checkbox-group input {
+      margin-right: 0.5rem;
+      width: auto;
+    }
+button {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  font-size: 1rem;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #27ae60;
+}
+#Following-block{
+  display: none;
+}

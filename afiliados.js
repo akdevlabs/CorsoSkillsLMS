@@ -110,6 +110,9 @@ applyBranding().then((data) => {
         .benefit-card {
           background: ${Prime5};
         }
+        .benefit-card i {
+          color: ${Base};
+        }
         .benefit-card h4 {
           color: ${Prime};
         }
@@ -223,10 +226,33 @@ BlogContent().then((data) => {
   }
 
 
+
   function heroContent(){
     renderTextSection("hero", Affiliates.Hero.Tittle, Affiliates.Hero.Text)
   }
+  function benefitsContent(){
+     renderTextSection("card-1", Affiliates.Cards.Card1.Tittle,  Affiliates.Cards.Card1.Text) 
+     renderTextSection("card-2", Affiliates.Cards.Card2.Tittle,  Affiliates.Cards.Card2.Text) 
+     renderTextSection("card-3", Affiliates.Cards.Card3.Tittle,  Affiliates.Cards.Card3.Text) 
+     renderTextSection("card-4", Affiliates.Cards.Card4.Tittle,  Affiliates.Cards.Card4.Text) 
+  }
+  function stepContent(){
+    function renderStepsFromNestedObject(obj) {
+      const ul = document.getElementById("steps-list");
+      ul.innerHTML = ""; // Clear previous content
 
+      // Convert to array and sort by `num`
+      const sortedSlots = Object.values(obj).sort((a, b) => a.num - b.num);
+
+      // Create and append list items
+      sortedSlots.forEach((slot, index) => {
+        const li = document.createElement("li");
+        li.textContent = `Paso ${index + 1}: ${slot.Text}`;
+        ul.appendChild(li);
+      });
+    }
+    renderStepsFromNestedObject(Affiliates.Work)
+  }
 
 
   function mediaConten() {
@@ -287,11 +313,16 @@ BlogContent().then((data) => {
 
 
   heroContent()
-  mediaConten()
-
-
+ // mediaConten()
+  benefitsContent()
+  stepContent()
 })
 
+
+
+document.getElementById('goin-btn').addEventListener('click', function () {
+   window.location.href = "index5.5.html";
+});
 
 
 document.getElementById('backBtn').addEventListener('click', function () {

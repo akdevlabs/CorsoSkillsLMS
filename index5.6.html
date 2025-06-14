@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LearnHub - Descubre tu pasión y aprende a tu propio ritmo con cursos interactivos">
+  <!-- Fuentes y estilos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AffiliateQuestions|CorsoSkills</title>
+  <link rel="stylesheet" href="AffiliateQuestions.css">
+</head>
+<body>
+  <header id="header">
+    <img id="header-logo"/>
+  </header>
+
+  <main class="container" id="container">
+    <h1>Registro de Afiliados</h1>
+    <form class="info-form">
+
+      <div class="blocks">
+        <div class="block">
+          <label>Edad</label>
+          <input type="number" name="edad" min="16" max="100" required>          
+        </div>
+
+        <div class="block">
+          <label>Número de teléfono</label>
+          <input type="tel" name="telefono">
+        </div>
+
+        <div class="block">
+          <label>País y ciudad</label>
+          <input type="text" name="ubicacion">
+        </div>
+      </div> 
+
+      <div class="blocks">
+        <div class="block">
+          <label>Nombre de tu marca o negocio (opcional)</label>
+          <input type="text" name="marca">     
+        </div>
+
+        <div class="block">
+          <label>¿Tienes una comunidad activa?</label>
+          <select name="comunidad_activa" id="comunidad_activa">
+            <option value="">Selecciona una opción</option>
+            <option value="yes">Sí</option> 
+            <option value="no">No</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div id="Following-block">
+        <div class="blocks">
+          <div class="block">
+            <label>¿Dónde está tu comunidad?</label>
+            <select name="canales_comunidad" required>
+              <option value="">Selecciona una opción</option>
+              <option value="Instagram">Instagram</option>
+              <option value="Facebook">Facebook</option>
+              <option value="TikTok">TikTok</option>
+              <option value="YouTube">YouTube</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="X (Twitter)">X (Twitter)</option>
+              <option value="Telegram">Telegram</option>
+              <option value="Discord">Discord</option>
+              <option value="Email">Email marketing</option>
+              <option value="Blog o Web">Blog o Sitio Web</option>
+            </select> 
+          </div>
+
+          <div class="block">
+            <label>¿Cuántos seguidores tienes?</label>
+            <input type="number" name="seguidores" min="0" placeholder="Ej. 1000" required>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="blocks">
+        <div class="block">
+          <label>¿A qué nicho perteneces?</label>
+          <select name="nicho" required>
+            <option value="">Selecciona un nicho</option>
+            <option value="Educación">Educación</option>
+            <option value="Fitness y Bienestar">Fitness y Bienestar</option>
+            <option value="Negocios y Emprendimiento">Negocios y Emprendimiento</option>
+            <option value="Tecnología y Programación">Tecnología y Programación</option>
+            <option value="Marketing y Ventas">Marketing y Ventas</option>
+            <option value="Finanzas e Inversiones">Finanzas e Inversiones</option>
+            <option value="Desarrollo Personal">Desarrollo Personal</option>
+            <option value="Arte y Creatividad">Arte y Creatividad</option>
+            <option value="Idiomas">Idiomas</option>
+          </select>   
+        </div>
+
+        <div class="block">
+          <label>¿Cuál es tu objetivo como afiliado?</label>
+          <select name="objetivo">
+            <option value="ingresos">Generar ingresos extra</option>
+            <option value="valor">Ofrecer valor a mi audiencia</option>
+            <option value="promocionar">Promocionar productos educativos</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="blocks">
+        <div class="block">
+          <label>¿Dónde planeas promocionar CorsoSkills?</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="canales[]" value="Instagram"> Instagram</label>
+            <label><input type="checkbox" name="canales[]" value="Facebook"> Facebook</label>
+            <label><input type="checkbox" name="canales[]" value="YouTube"> YouTube</label>
+            <label><input type="checkbox" name="canales[]" value="TikTok"> TikTok</label>
+            <label><input type="checkbox" name="canales[]" value="Email"> Email marketing</label>
+            <label><input type="checkbox" name="canales[]" value="Web"> Blog / Sitio Web</label>
+          </div>  
+        </div>
+
+        <div class="block">
+          <label>¿Dónde planeas promocionar CorsoSkills?</label>
+          <div class="checkbox-group">
+            <div class="input-wrapper">
+              <label><input type="checkbox" value="Instagram"> Instagram</label>
+              <input type="text" name="canales[Instagram]" class="canal-input" placeholder="Ej. @tuusuario">
+            </div>
+            <div class="input-wrapper">
+              <label><input type="checkbox" value="Facebook"> Facebook</label>
+              <input type="text" name="canales[Facebook]" class="canal-input" placeholder="Ej. /tu.pagina">
+            </div>
+            <div class="input-wrapper">
+              <label><input type="checkbox" value="YouTube"> YouTube</label>
+              <input type="text" name="canales[YouTube]" class="canal-input" placeholder="Ej. TuCanalYT">
+            </div>
+            <div class="input-wrapper">
+              <label><input type="checkbox" value="TikTok"> TikTok</label>
+              <input type="text" name="canales[TikTok]" class="canal-input" placeholder="Ej. @tiktokusuario">
+            </div>
+            <div class="input-wrapper">
+              <label><input type="checkbox" value="Web"> Blog / Sitio Web</label>
+              <input type="text" name="canales[Web]" class="canal-input" placeholder="Ej. www.tusitio.com">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="blocks">
+        <div class="block">
+          <label>¿Tienes experiencia como afiliado?</label>
+          <select name="experiencia">
+            <option value="si">Sí</option>
+            <option value="no">No</option>
+          </select>   
+        </div>
+
+        <div class="block">
+          <label>¿Con qué marcas has trabajado? (opcional)</label>
+          <textarea name="marcas" rows="2"></textarea>
+        </div>
+
+      </div>
+
+      <div class="blocks">
+        <div class="block">
+          <label>Método de pago preferido</label>
+          <select name="pago">
+            <option value="paypal">PayPal</option>
+            <option value="transferencia">Transferencia bancaria</option>
+            <option value="otro">Otro</option>
+          </select>   
+        </div>
+
+        <div class="block">
+          <label>Datos para recibir tus comisiones</label>
+          <input type="text" name="datos_pago">
+        </div>
+
+      </div>
+
+      <!-- Consentimiento -->
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="terminos" required> Acepto los términos y condiciones</label>
+        <label><input type="checkbox" name="comunicacion"> Acepto recibir comunicaciones del programa</label>
+      </div>
+
+      <!-- Enviar -->
+      <button type="submit" class="next-button" id="next-button">Registrarme como Afiliado</button>
+    </form>
+  </main>
+</body>
+  <script  src="AffiliateQuestions.js" type="module"></script>
+</html>

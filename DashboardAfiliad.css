@@ -1,0 +1,147 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f1f5f9;
+  color: #1e293b;
+}
+
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  background-color: #1e293b;
+  color: white;
+  padding: 2rem 1rem;
+}
+
+.sidebar h2 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: #38bdf8;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar li {
+  margin-bottom: 1rem;
+}
+
+.sidebar a {
+  color: white;
+  padding: 0.5rem 1rem;
+  display: block;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: #334155;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 2rem;
+}
+
+.main-header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.main-header code {
+  background: #e2e8f0;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+/* METRICS */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+}
+
+.card h3 {
+  font-size: 1rem;
+  color: #64748b;
+}
+
+.card p {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #1e293b;
+}
+
+/* CHART */
+.chart-container {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+/* RESOURCES */
+.resources {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.resources ul {
+  margin-top: 1rem;
+  list-style: none;
+}
+
+.resources li {
+  margin: 0.5rem 0;
+}
+
+.resources a {
+  color: #0ea5e9;
+  font-weight: 500;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .sidebar ul {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .main {
+    padding: 1rem;
+  }
+}
