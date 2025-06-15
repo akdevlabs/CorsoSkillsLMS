@@ -96,7 +96,7 @@ applyBranding().then((data) => {
     setBackgroundColorM("#header", Prime5 )
   }
   function Herocolors(){
-    setTextColors("#hero", Prime5 )
+    setTextColors(".hero", Prime5)
     setBackgroundColorM(".hero", Prime )
   }
 
@@ -104,61 +104,103 @@ applyBranding().then((data) => {
     function setPopupcolors() {
       const style = document.createElement('style');
       style.textContent = `
-      #faq-section{
-        background-color: ${Prime5};
-      }
-      .faq-question {
-        color: ${Prime};
-        background-color: ${Prime5};
-      }
-      .faq-question:hover {
-        color: ${Prime5};
-        background-color: ${Prime2};
-      }
-      .faq-answer {
-        color: ${Prime};
-        padding: 1rem 1.5rem;
-       border: 3px solid ${Prime2};
-      }
+        .partner-section {
+          padding: 3rem 1rem;
+        }
+        .partner-section h3 {
+          font-size: 1.75rem;
+          margin-bottom: 2rem;
+          text-align: center;
+        }
+        .partner-grid {
+          width: 100%;
+          gap: 1rem;
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          justify-content: center;
+          margin: 0 auto;
+        }
+        .card {
+          background-color: ${Prime5};
+        }
+        .card i {
+          display: flex;
+          font-size: 3rem;
+          margin-bottom: 1rem;
+          align-items: center;
+          justify-content: center;
+        }
+        .card p {
+          font-size: 1.2rem;
+          margin: 1rem;
+        }
 
-      #faq-navigation button {
+        .steps-section {
+          padding: 3rem 1rem;
+        }
 
-        background-color: ${Base};
-        color: ${Prime5};
-      }
-      #faq-navigation button:disabled {
-        background-color: ${Prime1};
-        cursor: not-allowed;
-      }
+        .steps-section h3 {
+          font-size: 1.75rem;
+          margin-bottom: 1.5rem;
+          text-align: center;
+        }
 
+        .steps-list {
+          list-style: none;
+          max-width: 700px;
+          margin: 0 auto;
+          counter-reset: step;
+          padding: 0 1rem;
+        }
 
-      /* CTA */
-      .cta-section {
-        background: ${Prime3};
-        color: white;
-        text-align: center;
-        padding: 3rem 0;
-      }
+        .steps-list li {
+          background-color: ${Prime5};
+          margin-bottom: 1.5rem;
+          padding: 1.5rem 1.75rem;
+          border-radius: 12px;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.329);
+          font-weight: bold;
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+        }
 
-      .cta-section h3 {
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
-      }
+        .steps-list li span {
+          display: inline-block;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          text-align: center;
+          line-height: 32px;
+          margin-right: 0.75rem;
+        }
+        /* CTA */
+        .cta-section {
+          background: ${Prime3};
+          color:${Prime5};
+          text-align: center;
+          padding: 3rem 0;
+        }
 
-      .cta-section p {
-        margin-bottom: 1.5rem;
-      }
+        .cta-section h3 {
+          font-size: 2rem;
+          margin-bottom: 0.5rem;
+        }
 
-      .btn {
-        background: ${Prime5};
-        color: ${Prime3};
-      }
+        .cta-section p {
+          margin-bottom: 1.5rem;
+        }
 
-      .btn:hover {
-        color: ${Prime5};
-        background:  ${Prime2};
-      }
+        .btn {
+          background: ${Prime5};
+          color: ${Prime3};
+        }
 
+        .btn:hover {
+          color: ${Prime5};
+          background:  ${Prime2};
+        }
       `;
       document.head.appendChild(style);
     }
@@ -178,4 +220,103 @@ applyBranding().then((data) => {
   Footercolors()
 blogbtnColors()
 
+});
+
+
+
+
+async function BlogContent() {
+  try {
+    const docRef = doc(db, "CorsoSkillsWebsite", TBuInfo); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+BlogContent().then((data) => {  
+   const Associations = data.Constent.Associations
+
+
+  console.log(Associations.Cards.Card2.Text)
+  
+  function renderTextSection(containerId, titleText, subtitleText) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const title = document.createElement('h2');
+    title.textContent = titleText;
+
+    const subtitle = document.createElement('p');
+    subtitle.textContent = subtitleText;
+
+    container.appendChild(title);
+    container.appendChild(subtitle);
+  }
+
+  
+
+  function heroContent(){
+    renderTextSection("hero", Associations.hero.Tittle, Associations.hero.Text)
+  }
+  function benefitsContent(){
+     renderTextSection("card-1", Associations.Cards.Card1.Tittle,  Associations.Cards.Card1.Text) 
+     renderTextSection("card-2", Associations.Cards.Card2.Tittle,  Associations.Cards.Card2.Text) 
+     renderTextSection("card-3", Associations.Cards.Card3.Tittle,  Associations.Cards.Card3.Text) 
+     renderTextSection("card-4", Associations.Cards.Card4.Tittle,  Associations.Cards.Card4.Text) 
+  }
+  function stepContent(){
+    function renderStepsFromNestedObject(obj) {
+      const ul = document.getElementById("steps-list");
+      ul.innerHTML = ""; // Clear previous content
+
+      // Convert to array and sort by `num`
+      const sortedSlots = Object.values(obj).sort((a, b) => a.num - b.num);
+
+      // Create and append list items
+      sortedSlots.forEach((slot, index) => {
+        const li = document.createElement("li");
+        li.textContent = `🔹 ${slot.Text}`;
+        ul.appendChild(li);
+      });
+    }
+    renderStepsFromNestedObject(Associations.Work)
+  }
+
+
+
+  heroContent()
+  benefitsContent()
+  stepContent()
+
+})
+function redirectToWhatsApp(phoneNumber, message) {
+    const encodedMessage = encodeURIComponent(message);
+    const isMobile = /iPhone|Android|iPad/i.test(navigator.userAgent);
+
+    const baseURL = isMobile
+      ? `whatsapp://send?phone=${phoneNumber}&text=${encodedMessage}`
+      : `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+
+    window.location.href = baseURL;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const contactBtn = document.getElementById("contact-btn");
+    if (contactBtn) {
+      contactBtn.addEventListener("click", function () {
+        redirectToWhatsApp("5212221706782", "¡Hola! Estoy interesado en tu Asociaciones Estratégicas.");
+      });
+    }
+  });
+document.getElementById('backBtn').addEventListener('click', function () {
+  window.location.href = "index.html";
 });
