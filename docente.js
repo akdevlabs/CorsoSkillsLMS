@@ -179,3 +179,141 @@ applyBranding().then((data) => {
 blogbtnColors()
 
 });
+
+async function BlogContent() {
+  try {
+    const docRef = doc(db, "CorsoSkillsWebsite", TBuInfo); // Ensure db and transferredInfo are initialized
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const documentData = docSnap.data();
+      return documentData; // Return the document data
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+BlogContent().then((data) => {  
+  const  ConTeachers = data.Constent.ConTeachers
+
+
+ 
+  console.log(ConTeachers)
+
+  function renderTextSection(containerId, titleText, subtitleText) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const title = document.createElement('h2');
+    title.textContent = titleText;
+
+    const subtitle = document.createElement('p');
+    subtitle.textContent = subtitleText;
+
+    container.appendChild(title);
+    container.appendChild(subtitle);
+  }
+
+
+
+  function heroContent(){
+    renderTextSection("hero", ConTeachers.hero.Tittle, ConTeachers.hero.Text)
+  }
+  function benefitsContent(){
+     renderTextSection("card-1", ConTeachers.Cards.Card1.Tittle,  ConTeachers.Cards.Card1.Text) 
+     renderTextSection("card-2", ConTeachers.Cards.Card2.Tittle,  ConTeachers.Cards.Card2.Text) 
+     renderTextSection("card-3", ConTeachers.Cards.Card3.Tittle,  ConTeachers.Cards.Card3.Text) 
+     renderTextSection("card-4", ConTeachers.Cards.Card4.Tittle,  ConTeachers.Cards.Card4.Text) 
+  }
+  function stepContent(){
+    function renderStepsFromNestedObject(obj) {
+      const ul = document.getElementById("steps-list");
+      ul.innerHTML = ""; // Clear previous content
+
+      // Convert to array and sort by `num`
+      const sortedSlots = Object.values(obj).sort((a, b) => a.num - b.num);
+
+      // Create and append list items
+      sortedSlots.forEach((slot, index) => {
+        const li = document.createElement("li");
+        li.textContent = `Paso ${index + 1}: ${slot.Text}`;
+        ul.appendChild(li);
+      });
+    }
+    renderStepsFromNestedObject(Affiliates.Work)
+  }
+
+
+  function mediaConten() {
+
+    function renderMediaCard(containerId, title, description, link) {
+      const container = document.getElementById(containerId);
+      if (!container) {
+        console.error(`Container with id "${containerId}" not found.`);
+        return;
+      }
+
+      const card = document.createElement('div');
+      card.className = 'media-card';
+
+      // HTML structure with optional link
+      card.innerHTML = `
+        <h3>${title}</h3>
+        <p>${description}</p>
+        ${link ? `<a href="mailto:${link}" target="_blank" class="media-link">${link}</a>` : ''}
+      `;
+
+      container.appendChild(card);
+    }
+
+    // ✅ Check if slot has at least one non-empty value
+    function isSlotFilled(slot) {
+      return Object.values(slot).some(value => {
+        return value && value.toString().trim() !== '';
+      });
+    }
+
+    // ✅ Render all slots from List in sorted order
+    function renderAllMedia(jobsObj, containerId) {
+      if (!jobsObj || typeof jobsObj !== 'object') {
+        console.error('Invalid or undefined jobs object passed:', jobsObj);
+        return;
+      }
+
+      const sortedKeys = Object.keys(jobsObj).sort((a, b) => {
+        const aNum = parseInt(a.replace('slot', ''), 10);
+        const bNum = parseInt(b.replace('slot', ''), 10);
+        return aNum - bNum;
+      });
+
+      sortedKeys.forEach(slotKey => {
+        const slot = jobsObj[slotKey];
+        if (typeof slot === 'object' && isSlotFilled(slot)) {
+          const { Tittle, Text, link } = slot;
+          renderMediaCard('terms-section', Tittle, Text, link);
+        }
+      });
+    }
+
+
+    renderAllMedia(Terms.List, 'terms-section');
+  }
+
+
+
+  heroContent()
+ // mediaConten()
+  benefitsContent()
+  stepContent()
+})
+
+
+
+
+document.getElementById('backBtn').addEventListener('click', function () {
+  window.location.href = "index.html";
+})
