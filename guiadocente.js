@@ -200,11 +200,95 @@ applyBranding().then((data) => {
     setBackgroundColorM("#header", Prime5 )
   }
   function Herocolors(){
-    setTextColors(".hero-text", Prime5 )
+    setTextColors(".hero", Prime5 )
     setBackgroundColorM(".hero", Base )
   }
-  function GuideColors(){
-    
+  function GuideColors() {
+    const style = document.createElement('style');
+    style.textContent = `
+      .guide-section h3 {
+        color: ${Prime2};
+      }
+      .guide-step {
+        background: ${Prime5};
+      }
+      .guide-step i {
+        color: ${Base};
+      }  
+      .guide-step h2 {
+        color: ${Prime2};
+      }
+      .guide-step p {
+        color: ${Prime1};
+      }  
+      .guide-step h4 {
+
+        color: #111827;
+      }
+    `;
+
+    document.head.appendChild(style); // ✅ Append the style to apply it
+  }
+  function resourcesColors() {
+    const style = document.createElement('style');
+    style.textContent = `
+      .resources-section {
+        padding: 2rem 0;
+      }
+
+      .resources-section h3 {
+        text-align: center;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: #1f2937;
+      }
+
+      .resources-section ul {
+        list-style: none;
+        max-width: 600px;
+        margin: auto;
+      }
+
+      .resources-section ul li {
+        margin: 0.75rem 0;
+        text-align: center;
+      }
+
+      .resources-section a {
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .resources-section a:hover {
+        text-decoration: underline;
+      }
+    `;
+
+    document.head.appendChild(style); // ✅ Append the style to apply it
+  }
+  function ctaColors() {
+    const style = document.createElement('style');
+    style.textContent = `
+      .cta-section {
+        background:${Prime3};
+        color: ${Prime5};
+      }
+      .cta-section h3 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+      .btn {
+        background: ${Base};
+        color: ${Prime5};
+      }
+
+      .btn:hover {
+        background:${Prime2};
+      }
+    `;
+
+    document.head.appendChild(style); // ✅ Append the style to apply it
   }
 
   function Footercolors(){
@@ -216,7 +300,9 @@ applyBranding().then((data) => {
   Bodycolors()
   Navcolors()
   Herocolors()
-
+  GuideColors()
+  resourcesColors()
+  ctaColors()
   Footercolors()
 
 
@@ -241,87 +327,178 @@ async function GuideContent() {
   }
 }
 GuideContent().then((data) => {  
-   const guide = data.Constent.Guide
+   const Guide = data.Guide
 
 
-  console.log(guide)
+  console.log(Guide)
   
-  function renderTextSection(containerId, titleText, subtitleText) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-
-    const title = document.createElement('h2');
-    title.textContent = titleText;
-
-    const subtitle = document.createElement('p');
-    subtitle.textContent = subtitleText;
-
-    container.appendChild(title);
-    container.appendChild(subtitle);
-  }
+  
   function renderTextSection(containerId, Text) {
     const container = document.getElementById(containerId);
     if (!container) return;
     container.textContent = Text;
   }
 
+  function renderTextSection(containerId, titleText, subtitleText) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
 
+      const title = document.createElement('h2');
+      title.textContent = titleText;
 
+      const subtitle = document.createElement('p');
+      subtitle.textContent = subtitleText;
 
-
-  function heroContent(){
-    renderTextSection("hero-tittle", guide.Hero.Tittle)
-    renderTextSection("hero-text", guide.Hero.Text)
+      container.appendChild(title);
+      container.appendChild(subtitle);
   }
-   
- function pycContent(){
-   function createCourseHeader(titleText, paragraphText, urlId) {
-    const container = document.getElementById(urlId);
+  function renderPdfButtonWithPopupAndDownload(containerId, buttonText, pdfUrl) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
 
-    if (!container) {
-      console.error(`Container with ID "${urlId}" not found.`);
-      return;
-    }
+    // Create the "View PDF" button
+    const button = document.createElement('button');
+    button.textContent = buttonText;
+    button.style.padding = '0.75rem 1.5rem';
+    button.style.margin = '0.5rem';
+    button.style.border = 'none';
+    button.style.borderRadius = '8px';
+    button.style.backgroundColor = '#3b82f6';
+    button.style.color = '#fff';
+    button.style.cursor = 'pointer';
+    button.style.fontSize = '1rem';
 
-    container.classList.add('course-toggle-container');
+    // Modal overlay
+    const modalOverlay = document.createElement('div');
+    modalOverlay.style.position = 'fixed';
+    modalOverlay.style.top = 0;
+    modalOverlay.style.left = 0;
+    modalOverlay.style.width = '100vw';
+    modalOverlay.style.height = '100vh';
+    modalOverlay.style.background = 'rgba(0, 0, 0, 0.6)';
+    modalOverlay.style.display = 'none';
+    modalOverlay.style.justifyContent = 'center';
+    modalOverlay.style.alignItems = 'center';
+    modalOverlay.style.zIndex = 9999;
 
-    // Create h2 and p
-    const h2 = document.createElement('h2');
-    h2.textContent = titleText;
+    // Modal content
+    const modalContent = document.createElement('div');
+    modalContent.style.background = '#fff';
+    modalContent.style.padding = '1rem';
+    modalContent.style.borderRadius = '10px';
+    modalContent.style.width = '80%';
+    modalContent.style.height = '80%';
+    modalContent.style.display = 'flex';
+    modalContent.style.flexDirection = 'column';
+    modalContent.style.position = 'relative';
 
-    const p = document.createElement('p');
-    p.textContent = paragraphText;
+    // PDF iframe
+    const iframe = document.createElement('iframe');
+    iframe.src = pdfUrl;
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.border = 'none';
 
+    // Close button
+    const closeBtn = document.createElement('button');
+    closeBtn.textContent = 'Cerrar';
+    closeBtn.style.position = 'absolute';
+    closeBtn.style.top = '10px';
+    closeBtn.style.right = '10px';
+    closeBtn.style.padding = '0.5rem 1rem';
+    closeBtn.style.border = 'none';
+    closeBtn.style.borderRadius = '6px';
+    closeBtn.style.backgroundColor = '#ef4444';
+    closeBtn.style.color = '#fff';
+    closeBtn.style.cursor = 'pointer';
 
-    // Toggle on container click
-    container.addEventListener('click', () => {
-      console.log("Clicked")
-      hiddenPYC()
+    // Download button
+    const downloadBtn = document.createElement('a');
+    downloadBtn.textContent = 'Descargar PDF';
+    downloadBtn.href = pdfUrl;
+    downloadBtn.download = '';
+    downloadBtn.target = '_blank';
+    downloadBtn.style.position = 'absolute';
+    downloadBtn.style.top = '10px';
+    downloadBtn.style.left = '10px';
+    downloadBtn.style.padding = '0.5rem 1rem';
+    downloadBtn.style.border = 'none';
+    downloadBtn.style.borderRadius = '6px';
+    downloadBtn.style.backgroundColor = '#10b981'; // green-500
+    downloadBtn.style.color = '#fff';
+    downloadBtn.style.textDecoration = 'none';
+    downloadBtn.style.fontSize = '0.9rem';
+
+    // Button Events
+    closeBtn.addEventListener('click', () => {
+      modalOverlay.style.display = 'none';
     });
 
-    // Append elements
-    container.appendChild(h2);
-    container.appendChild(p);
+    button.addEventListener('click', () => {
+      modalOverlay.style.display = 'flex';
+    });
 
+    // Assemble modal
+    modalContent.appendChild(closeBtn);
+    modalContent.appendChild(downloadBtn);
+    modalContent.appendChild(iframe);
+    modalOverlay.appendChild(modalContent);
+
+    // Append to DOM
+    container.appendChild(button);
+    document.body.appendChild(modalOverlay);
   }
-  
-  createCourseHeader(guide.PlanCourse.Btn.Tittle, guide.PlanCourse.Btn.Text, "PYC")
- }
-
- function hiddenPYC(){
-  console.log("Yellow")
-
- }
 
 
 
 
 
-  heroContent()
-  pycContent()
+
+
+
+  function heroContent() {
+    renderTextSection("hero", Guide.hero.Tittle, Guide.hero.Text);
+  }
+  function cardsContent(){
+    renderTextSection("PYC", Guide.Plan.btn.Tittle, Guide.Plan.btn.Text)
+    renderTextSection("RV", Guide.Create.Btn.Tittle, Guide.Create.Btn.Text)
+    renderTextSection("UC", Guide.Upload.Btn.Tittle, Guide.Upload.Btn.Text)
+    renderTextSection("PC", Guide.Promos.Btn.Tittle, Guide.Promos.Btn.Text)
+    renderTextSection("PmC",Guide.Money.Btn.Tittle, Guide.Money.Btn.Text)   
+  }
+
+
+
+
+
+
+
+
+  heroContent();
+  cardsContent()
 
 
 })
+document.getElementById('PYC-btn').addEventListener('click', function () {
+  console.log("red")
+});
+document.getElementById('RV-btn').addEventListener('click', function () {
+  console.log("blue")
+});
+document.getElementById('UC-btn').addEventListener('click', function () {
+  console.log("yellow")
+});
+document.getElementById('PC-btn').addEventListener('click', function () {
+  console.log("black")
+});
+document.getElementById('PmC-btn').addEventListener('click', function () {
+  console.log("purple")
+});
+
+
+
+
+
 
 
 

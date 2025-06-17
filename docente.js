@@ -104,33 +104,22 @@ applyBranding().then((data) => {
     function setPopupcolors() {
       const style = document.createElement('style');
       style.textContent = `
-      #faq-section{
-        background-color: ${Prime5};
+      .about-section h2{
+        color: ${Prime2};
       }
-      .faq-question {
-        color: ${Prime};
-        background-color: ${Prime5};
-      }
-      .faq-question:hover {
-        color: ${Prime5};
-        background-color: ${Prime2};
-      }
-      .faq-answer {
-        color: ${Prime};
-        padding: 1rem 1.5rem;
-       border: 3px solid ${Prime2};
+      .about-section p{
+       color: ${Prime};
       }
 
-      #faq-navigation button {
-
-        background-color: ${Base};
-        color: ${Prime5};
+      .feature-card{
+        background: ${Prime5};
       }
-      #faq-navigation button:disabled {
-        background-color: ${Prime1};
-        cursor: not-allowed;
+      .feature-card h2{
+        color: ${Prime2};
       }
-
+      .feature-card p{
+        color: ${Prime1};
+      }
 
       /* CTA */
       .cta-section {
@@ -229,86 +218,19 @@ BlogContent().then((data) => {
      renderTextSection("card-3", ConTeachers.Cards.Card3.Tittle,  ConTeachers.Cards.Card3.Text) 
      renderTextSection("card-4", ConTeachers.Cards.Card4.Tittle,  ConTeachers.Cards.Card4.Text) 
   }
-  function stepContent(){
-    function renderStepsFromNestedObject(obj) {
-      const ul = document.getElementById("steps-list");
-      ul.innerHTML = ""; // Clear previous content
 
-      // Convert to array and sort by `num`
-      const sortedSlots = Object.values(obj).sort((a, b) => a.num - b.num);
-
-      // Create and append list items
-      sortedSlots.forEach((slot, index) => {
-        const li = document.createElement("li");
-        li.textContent = `Paso ${index + 1}: ${slot.Text}`;
-        ul.appendChild(li);
-      });
-    }
-    renderStepsFromNestedObject(Affiliates.Work)
+  function aboutcontent(){
+    renderTextSection("about", ConTeachers.about.Tittle, ConTeachers.about.Text)
   }
 
 
-  function mediaConten() {
-
-    function renderMediaCard(containerId, title, description, link) {
-      const container = document.getElementById(containerId);
-      if (!container) {
-        console.error(`Container with id "${containerId}" not found.`);
-        return;
-      }
-
-      const card = document.createElement('div');
-      card.className = 'media-card';
-
-      // HTML structure with optional link
-      card.innerHTML = `
-        <h3>${title}</h3>
-        <p>${description}</p>
-        ${link ? `<a href="mailto:${link}" target="_blank" class="media-link">${link}</a>` : ''}
-      `;
-
-      container.appendChild(card);
-    }
-
-    // ✅ Check if slot has at least one non-empty value
-    function isSlotFilled(slot) {
-      return Object.values(slot).some(value => {
-        return value && value.toString().trim() !== '';
-      });
-    }
-
-    // ✅ Render all slots from List in sorted order
-    function renderAllMedia(jobsObj, containerId) {
-      if (!jobsObj || typeof jobsObj !== 'object') {
-        console.error('Invalid or undefined jobs object passed:', jobsObj);
-        return;
-      }
-
-      const sortedKeys = Object.keys(jobsObj).sort((a, b) => {
-        const aNum = parseInt(a.replace('slot', ''), 10);
-        const bNum = parseInt(b.replace('slot', ''), 10);
-        return aNum - bNum;
-      });
-
-      sortedKeys.forEach(slotKey => {
-        const slot = jobsObj[slotKey];
-        if (typeof slot === 'object' && isSlotFilled(slot)) {
-          const { Tittle, Text, link } = slot;
-          renderMediaCard('terms-section', Tittle, Text, link);
-        }
-      });
-    }
-
-
-    renderAllMedia(Terms.List, 'terms-section');
-  }
 
 
 
   heroContent()
- // mediaConten()
+
   benefitsContent()
-  stepContent()
+aboutcontent()
 })
 
 
