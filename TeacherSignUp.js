@@ -118,19 +118,16 @@
       }
     }
   
-    function setBorder(elementId, borderStyle) {
-      const element = document.getElementById(elementId);
-      if (element) {
-        element.style.border = borderStyle;
-      }
-    }
-  
     function setTextColors(elementId, Tcolor){
       const element = document.getElementById(elementId);
       if (element) {
         element.style.color = Tcolor;
       }
     }
+    function setGlobalFont(fontFamily) {
+      document.body.style.fontFamily = fontFamily;
+    }
+    setGlobalFont(data.Font)
   
     function renderSignupColors() {
       renderImage(data.BuLogos.Icons[0], "Buissnes Logo", "Bulogo")

@@ -1,0 +1,15 @@
+{
+  "name": "CorsoSkills",
+  "short_name": "Corso",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "https://firebasestorage.googleapis.com/v0/b/corsoskills-1ba50.firebasestorage.app/o/BusinessUnits%2FCorsoSkills%2FLogos%2FIcons%2FFlowerIcon.webp?alt=media&token=936db0de-47e5-405b-827f-8568ef39b183",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

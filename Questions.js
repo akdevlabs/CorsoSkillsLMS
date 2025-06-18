@@ -89,31 +89,10 @@ applyBranding().then((data) => {
       console.error(`Element with ID '${elementId}' not found.`);
     }
   }
-  function setBackgroundColorWithTransparency(elementId, colorName, alpha) {
-    const element = document.getElementById(elementId);
-    if (!element) {
-      console.error(`Element with ID '${elementId}' not found.`);
-      return;
-    }
-  
-    // Create temporary element to compute RGB value
-    const temp = document.createElement('div');
-    temp.style.color = colorName;
-    document.body.appendChild(temp);
-  
-    // Get computed RGB color
-    const computedColor = window.getComputedStyle(temp).color;
-    document.body.removeChild(temp);
-  
-    // Extract RGB values from string like "rgb(255, 0, 0)"
-    const rgbMatch = computedColor.match(/\d+/g);
-    if (rgbMatch && rgbMatch.length === 3) {
-      const [r, g, b] = rgbMatch;
-      element.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${alpha})`;
-    } else {
-      console.error(`Could not parse color: ${computedColor}`);
-    }
+  function setGlobalFont(fontFamily) {
+    document.body.style.fontFamily = fontFamily;
   }
+  setGlobalFont(data.Font)
   
 
 

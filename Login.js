@@ -151,6 +151,10 @@
         console.error(`Element with ID '${elementId}' not found.`);
       }
     }
+    function setGlobalFont(fontFamily) {
+      document.body.style.fontFamily = fontFamily;
+    }
+    setGlobalFont(data.Font)
     function renderLoginColors(){
       renderImage(data.BuLogos.Icons[0], "Bu logo" ,"Bulogo");
       setBodyBackgroundColor(Prime4, Prime2)

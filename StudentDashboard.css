@@ -71,6 +71,51 @@ body {
   display: flex;
   flex-direction: column;
 }
+/*---------------- Main ----------------*/
+main{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin:2rem 3rem;
+}
+/*---------------- Main Top ----------------*/
+
+.Main-top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.Search-Block{
+  display: flex;
+}
+.search-input{
+  width: 20rem;
+  border: none;
+  padding: .5rem 1rem;  
+  border-radius: 1rem 0 0 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.397);
+}
+.search-btn{
+  border: none;
+  border-radius: 0 1rem  1rem 0;
+  padding:.3rem 1.5rem ;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.397);
+}
+.User-info-alerts{
+  gap: 1rem;
+  display: flex;
+
+}
+#bell-full, #full-Evalope{
+  display: none;
+}
+#Alert-Icons{
+  font-size: 1.2rem;
+}
+
+
+
+
 /*----------- Header ------------*/
 .Main-Content{
   width: 100%;

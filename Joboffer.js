@@ -84,9 +84,10 @@ applyBranding().then((data) => {
     console.error("Selector must start with '#' for ID or '.' for class.");
   }
   }
-
-
-
+  function setGlobalFont(fontFamily) {
+    document.body.style.fontFamily = fontFamily;
+  }
+  setGlobalFont(data.Font)
 
   function Bodycolors(){
     setBodyBackgroundColor(Prime4, Base)

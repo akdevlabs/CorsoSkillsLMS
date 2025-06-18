@@ -146,22 +146,6 @@ applyBranding().then((data) => {
       });
     });
   }
-  function applybottomFade(elementId, hexColor, fadeStartPercent = 50, duration = 1000) {
-    const el = document.getElementById(elementId);
-    if (!el) return;
-
-    // Clamp percentage between 0 and 100
-    fadeStartPercent = Math.max(0, Math.min(100, fadeStartPercent));
-
-    // Create gradient: solid starts at 0%, starts fading at fadeStartPercent%, fully transparent at 100%
-    const gradient = `linear-gradient(to top, ${hexColor} 0%, ${hexColor} ${fadeStartPercent}%, transparent 80%)`;
-
-    // Set transition for smooth effect
-    el.style.transition = `background ${duration}ms ease-in-out`;
-
-    // Apply the gradient background
-    el.style.background = gradient;
-  }
   function applyGradientFade(selector, color1, color2, fadeStartPercent = 90, duration = 1000) {
     // Clamp fadeStartPercent between 0 and 100
     fadeStartPercent = Math.max(0, Math.min(100, fadeStartPercent));
@@ -189,7 +173,10 @@ applyBranding().then((data) => {
       el.style.background = gradient;
     });
   }
-
+  function setGlobalFont(fontFamily) {
+    document.body.style.fontFamily = fontFamily;
+  }
+  setGlobalFont(data.Font)
 
   console.log(data)
   function SideNavcolors(){

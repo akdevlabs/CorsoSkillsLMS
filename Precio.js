@@ -19,6 +19,7 @@ const db = getFirestore(app);
 
 const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
 
+
 async function applyBranding() {
   try {
     const docRef = doc(db, "CorsoSkillBusiness", TBuInfo); // Ensure db and transferredInfo are initialized
@@ -93,34 +94,6 @@ applyBranding().then((data) => {
   }
   }
   function setBorder(selector, borderStyle) {
-  const elements = document.querySelectorAll(selector);
-
-  if (elements.length === 0) {
-    console.error(`No elements found for selector '${selector}'.`);
-    return;
-  }
-
-  elements.forEach(element => {
-    element.style.border = borderStyle;
-  });
-}
-  function applyRightToLeftFade(elementId, hexColor, fadeStartPercent = 50, duration = 1000) {
-    const el = document.getElementById(elementId);
-    if (!el) return;
-
-    // Clamp percentage between 0 and 100
-    fadeStartPercent = Math.max(0, Math.min(100, fadeStartPercent));
-
-    // Create gradient: solid starts at 0%, starts fading at fadeStartPercent%, fully transparent at 100%
-    const gradient = `linear-gradient(to right, ${hexColor} 0%, ${hexColor} ${fadeStartPercent}%, transparent 100%)`;
-
-    // Set transition for smooth effect
-    el.style.transition = `background ${duration}ms ease-in-out`;
-
-    // Apply the gradient background
-    el.style.background = gradient;
-  }
-  function setHoverStyle(selector, primeColor) {
     const elements = document.querySelectorAll(selector);
 
     if (elements.length === 0) {
@@ -129,42 +102,15 @@ applyBranding().then((data) => {
     }
 
     elements.forEach(element => {
-      // Set default border and text color
-      element.style.border = `2px solid ${primeColor}`;
-      element.style.transition = 'all 0.3s ease'; // Smooth transition
-
-      // Mouse enter: highlight
-      element.addEventListener('mouseenter', () => {
-        element.style.color  = Prime2;
-        element.style.border = `2px solid ${Prime2}`;
-      });
-
-      // Mouse leave: revert
-      element.addEventListener('mouseleave', () => {
-        element.style.color = Prime3;
-        element.style.border =  `2px solid ${Prime3}`;
-      });
+      element.style.border = borderStyle;
     });
   }
-  function applybottomFade(elementId, hexColor, fadeStartPercent = 50, duration = 1000) {
-    const el = document.getElementById(elementId);
-    if (!el) return;
-
-    // Clamp percentage between 0 and 100
-    fadeStartPercent = Math.max(0, Math.min(100, fadeStartPercent));
-
-    // Create gradient: solid starts at 0%, starts fading at fadeStartPercent%, fully transparent at 100%
-    const gradient = `linear-gradient(to top, ${hexColor} 0%, ${hexColor} ${fadeStartPercent}%, transparent 80%)`;
-
-    // Set transition for smooth effect
-    el.style.transition = `background ${duration}ms ease-in-out`;
-
-    // Apply the gradient background
-    el.style.background = gradient;
+  function setGlobalFont(fontFamily) {
+    document.body.style.fontFamily = fontFamily;
   }
-
+  setGlobalFont(data.Font)
   console.log(data)
- 
+  
   function NavBarColors(){
     renderImage(data.BuLogos.Simple[1], "Bu logo" ,"Main-logo");
     setBodyBackgroundColor(Prime4, Base)
@@ -275,60 +221,12 @@ Promise.all([RenderCoursesContent(), applyContent()]).then(([coursesData, websit
   console.log("Courses Data:", coursesData);
   console.log("Website Content Data:", websiteData);
 
-  function renderImage(imageUrl, altUrl, UrlId) {
-    const logoElement = document.getElementById(UrlId);
-    if (logoElement) {
-      logoElement.src = imageUrl;
-      logoElement.alt = altUrl;
-    } else {
-      console.error(`Element with ID '${UrlId}' not found.`);
-    }
-  }
-  function setHeroBackgroundImage(imageUrl) {
-    const heroSection = document.getElementById('Hero');
-    if (heroSection) {
-      heroSection.style.backgroundImage = `url('${imageUrl}')`;
-      heroSection.style.backgroundSize = 'cover';
-      heroSection.style.backgroundPosition = 'center';
-      heroSection.style.backgroundRepeat = 'no-repeat';
-    } else {
-      console.error("Element with ID 'Hero' not found.");
-    }
-  }
   function renderText(elementId, text) {
     const element = document.getElementById(elementId);
     if (element) {
       element.textContent = text;
     } else {
       console.error(`Element with ID '${elementId}' not found.`);
-    }
-  }
-  function renderCourseSlots(obj, containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) {
-      console.error(`Container with ID '${containerId}' not found.`);
-      return;
-    }
-  
-    container.innerHTML = ""; // Clear old content
-  
-    for (const key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        const { Tittle, Description } = obj[key];
-  
-        const card = document.createElement("div");
-        card.classList.add("course-card");
-  
-        const titleElement = document.createElement("h3");
-        titleElement.textContent = Tittle;
-  
-        const descElement = document.createElement("p");
-        descElement.textContent = Description;
-  
-        card.appendChild(titleElement);
-        card.appendChild(descElement);
-        container.appendChild(card);
-      }
     }
   }
   function renderFeatures(features, targetElementId) {
@@ -342,10 +240,6 @@ Promise.all([RenderCoursesContent(), applyContent()]).then(([coursesData, websit
     });
   } 
   
-  
-
-
-
   function RenderBasicPriceTier() {
     const Pricing = websiteData.Constent.Pricing;
     renderText("Basic-Tittle", Pricing.Starter.Tittle);
@@ -377,40 +271,6 @@ Promise.all([RenderCoursesContent(), applyContent()]).then(([coursesData, websit
  
 });
 
-
-
-document.getElementById("Basic-card").addEventListener("click", function () {
-  this.classList.toggle("selected");
-  localStorage.setItem("PriceType", "Basic");
-  const container = document.getElementById("container");
-  if (container.style.display === "none" || container.style.display === "") {
-    container.style.display = "block";
-  } else {
-    container.style.display = "none";
-  }
-});
-
-document.getElementById("Pro-card").addEventListener("click", function () {
-  this.classList.toggle("selected");
-  localStorage.setItem("PriceType", "Pro");
-  const container = document.getElementById("container");
-  if (container.style.display === "none" || container.style.display === "") {
-    container.style.display = "block";
-  } else {
-    container.style.display = "none";
-  }
-});
-
-document.getElementById("Anual-card").addEventListener("click", function () {
-  this.classList.toggle("selected");
-  localStorage.setItem("PriceType", "Yearly");
-  const container = document.getElementById("container");
-  if (container.style.display === "none" || container.style.display === "") {
-    container.style.display = "block";
-  } else {
-    container.style.display = "none";
-  }
-});
 
 
 
