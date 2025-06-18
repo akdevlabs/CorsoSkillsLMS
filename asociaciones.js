@@ -84,6 +84,10 @@ applyBranding().then((data) => {
     console.error("Selector must start with '#' for ID or '.' for class.");
   }
   }
+  function setGlobalFont(fontFamily) {
+    document.body.style.fontFamily = fontFamily;
+  }
+  setGlobalFont(data.Font)
 
 
 
@@ -298,16 +302,17 @@ BlogContent().then((data) => {
   stepContent()
 
 })
+
 function redirectToWhatsApp(phoneNumber, message) {
-    const encodedMessage = encodeURIComponent(message);
-    const isMobile = /iPhone|Android|iPad/i.test(navigator.userAgent);
+  const encodedMessage = encodeURIComponent(message);
+  const isMobile = /iPhone|Android|iPad/i.test(navigator.userAgent);
 
-    const baseURL = isMobile
-      ? `whatsapp://send?phone=${phoneNumber}&text=${encodedMessage}`
-      : `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+  const baseURL = isMobile
+    ? `whatsapp://send?phone=${phoneNumber}&text=${encodedMessage}`
+    : `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
 
-    window.location.href = baseURL;
-  }
+  window.open(baseURL, '_blank');
+}
 
   document.addEventListener("DOMContentLoaded", function () {
     const contactBtn = document.getElementById("contact-btn");

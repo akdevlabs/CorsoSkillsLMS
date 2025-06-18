@@ -42,7 +42,10 @@ async function applyBranding() {
 applyBranding().then((data) => {  
   console.log(data.BuLogos.Icons[0])
   const {Base, Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
-  
+  function setGlobalFont(fontFamily) {
+    document.body.style.fontFamily = fontFamily;
+  }
+  setGlobalFont(data.Font)
   function renderImage(imageUrl, altUrl, UrlId) {
     const logoElement = document.getElementById(UrlId);
     if (logoElement) {
@@ -59,14 +62,6 @@ applyBranding().then((data) => {
     const element = document.getElementById(elementId);
     if (element) {
       element.style.backgroundColor = backgroundColor;
-    } else {
-      console.error(`Element with ID '${elementId}' not found.`);
-    }
-  }
-  function setBorder(elementId, borderStyle) {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.style.border = borderStyle;
     } else {
       console.error(`Element with ID '${elementId}' not found.`);
     }

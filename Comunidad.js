@@ -135,59 +135,16 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase
       el.style.transition = `background ${duration}ms ease-in-out`;
       el.style.background = gradient;
     }
-    function setHoverStyle(selector, primeColor) {
-      const elements = document.querySelectorAll(selector);
-
-      if (elements.length === 0) {
-        console.error(`No elements found for selector '${selector}'.`);
-        return;
-      }
-
-      elements.forEach(element => {
-        // Set default border and text color
-        element.style.border = `2px solid ${primeColor}`;
-        element.style.transition = 'all 0.3s ease'; // Smooth transition
-
-        // Mouse enter: highlight
-        element.addEventListener('mouseenter', () => {
-          element.style.color  = Prime2;
-          element.style.border = `2px solid ${Prime2}`;
-        });
-
-        // Mouse leave: revert
-        element.addEventListener('mouseleave', () => {
-          element.style.color = Prime3;
-          element.style.border =  `2px solid ${Prime3}`;
-        });
-      });
-    }
-    function applybottomFade(elementId, hexColor, fadeStartPercent = 50, duration = 1000) {
-      const el = document.getElementById(elementId);
-      if (!el) return;
-
-      // Clamp percentage between 0 and 100
-      fadeStartPercent = Math.max(0, Math.min(100, fadeStartPercent));
-
-      // Create gradient: solid starts at 0%, starts fading at fadeStartPercent%, fully transparent at 100%
-      const gradient = `linear-gradient(to top, ${hexColor} 0%, ${hexColor} ${fadeStartPercent}%, transparent 80%)`;
-
-      // Set transition for smooth effect
-      el.style.transition = `background ${duration}ms ease-in-out`;
-
-      // Apply the gradient background
-      el.style.background = gradient;
-    }
     function getBoxShadow(color = 'rgba(78, 70, 229, 0.692)', intensity = 1) {
       const yOffset = 10 * intensity;
       const blurRadius = 30 * intensity;
       return `0 ${yOffset}px ${blurRadius}px ${color}`;
     }
-    function changeCloseNavColor(color) {
-      const closeNavBtn = document.getElementById('closeNav');
-      if (closeNavBtn) {
-        closeNavBtn.style.color = color;
-      }
+    function setGlobalFont(fontFamily) {
+      document.body.style.fontFamily = fontFamily;
     }
+    setGlobalFont(data.Font)
+
 
 
     function SideNavcolors(){

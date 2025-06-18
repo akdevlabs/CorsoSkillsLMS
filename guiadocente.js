@@ -53,14 +53,6 @@ applyBranding().then((data) => {
     document.body.style.backgroundColor = backgroundColor;
     document.body.style.color = textColor;
   }
-  function setBackgroundColor(elementId, backgroundColor) {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.style.backgroundColor = backgroundColor;
-    } else {
-      console.error(`Element with ID '${elementId}' not found.`);
-    }
-  }
   function setBackgroundColorM(selector, backgroundColor) {
     const elements = document.querySelectorAll(selector);
 
@@ -92,103 +84,10 @@ applyBranding().then((data) => {
     console.error("Selector must start with '#' for ID or '.' for class.");
   }
   }
-  function setBorder(selector, borderStyle) {
-  const elements = document.querySelectorAll(selector);
-
-  if (elements.length === 0) {
-    console.error(`No elements found for selector '${selector}'.`);
-    return;
+  function setGlobalFont(fontFamily) {
+    document.body.style.fontFamily = fontFamily;
   }
-
-  elements.forEach(element => {
-    element.style.border = borderStyle;
-  });
-}
-  function applyRightToLeftFade(elementId, hexColor, fadeStartPercent = 50, duration = 1000) {
-    const el = document.getElementById(elementId);
-    if (!el) return;
-
-    // Clamp percentage between 0 and 100
-    fadeStartPercent = Math.max(0, Math.min(100, fadeStartPercent));
-
-    // Create gradient: solid starts at 0%, starts fading at fadeStartPercent%, fully transparent at 100%
-    const gradient = `linear-gradient(to right, ${hexColor} 0%, ${hexColor} ${fadeStartPercent}%, transparent 100%)`;
-
-    // Set transition for smooth effect
-    el.style.transition = `background ${duration}ms ease-in-out`;
-
-    // Apply the gradient background
-    el.style.background = gradient;
-  }
-  function setHoverStyle(selector, primeColor) {
-    const elements = document.querySelectorAll(selector);
-
-    if (elements.length === 0) {
-      console.error(`No elements found for selector '${selector}'.`);
-      return;
-    }
-
-    elements.forEach(element => {
-      // Set default border and text color
-      element.style.border = `2px solid ${primeColor}`;
-      element.style.transition = 'all 0.3s ease'; // Smooth transition
-
-      // Mouse enter: highlight
-      element.addEventListener('mouseenter', () => {
-        element.style.color  = Prime2;
-        element.style.border = `2px solid ${Prime2}`;
-      });
-
-      // Mouse leave: revert
-      element.addEventListener('mouseleave', () => {
-        element.style.color = Prime3;
-        element.style.border =  `2px solid ${Prime3}`;
-      });
-    });
-  }
-  function applybottomFade(elementId, hexColor, fadeStartPercent = 50, duration = 1000) {
-    const el = document.getElementById(elementId);
-    if (!el) return;
-
-    // Clamp percentage between 0 and 100
-    fadeStartPercent = Math.max(0, Math.min(100, fadeStartPercent));
-
-    // Create gradient: solid starts at 0%, starts fading at fadeStartPercent%, fully transparent at 100%
-    const gradient = `linear-gradient(to top, ${hexColor} 0%, ${hexColor} ${fadeStartPercent}%, transparent 80%)`;
-
-    // Set transition for smooth effect
-    el.style.transition = `background ${duration}ms ease-in-out`;
-
-    // Apply the gradient background
-    el.style.background = gradient;
-  }
-  function applyGradientFade(selector, color1, color2, fadeStartPercent = 90, duration = 1000) {
-    // Clamp fadeStartPercent between 0 and 100
-    fadeStartPercent = Math.max(0, Math.min(100, fadeStartPercent));
-
-    // Build the gradient
-    const gradient = `
-      linear-gradient(to right,
-        ${color1} 0%,
-        ${color2} ${fadeStartPercent}%,
-        transparent 100%
-      )
-    `;
-
-    let elements = [];
-
-    if (selector.startsWith('#')) {
-      const el = document.getElementById(selector.slice(1));
-      if (el) elements.push(el);
-    } else if (selector.startsWith('.')) {
-      elements = Array.from(document.querySelectorAll(selector));
-    }
-
-    elements.forEach(el => {
-      el.style.transition = `background ${duration}ms ease-in-out`;
-      el.style.background = gradient;
-    });
-  }
+  setGlobalFont(data.Font)
 
 
   function Bodycolors(){
@@ -424,7 +323,7 @@ GuideContent().then((data) => {
     downloadBtn.style.padding = '0.5rem 1rem';
     downloadBtn.style.border = 'none';
     downloadBtn.style.borderRadius = '6px';
-    downloadBtn.style.backgroundColor = '#10b981'; // green-500
+    downloadBtn.style.backgroundColor = '#10b981';
     downloadBtn.style.color = '#fff';
     downloadBtn.style.textDecoration = 'none';
     downloadBtn.style.fontSize = '0.9rem';
@@ -449,6 +348,21 @@ GuideContent().then((data) => {
     document.body.appendChild(modalOverlay);
   }
 
+  // 🔁 NEW FUNCTION to render all from the Links object
+  function renderAllPdfButtons(containerId, linksObject) {
+    const container = document.getElementById(containerId);
+    if (!container || typeof linksObject !== 'object') return;
+
+    Object.values(linksObject).forEach(item => {
+      const title = item.Tittle?.trim();
+      const url = item.link?.trim();
+      if (title && url) {
+        renderPdfButtonWithPopupAndDownload(containerId, title, url);
+      }
+    });
+  }
+
+
 
 
 
@@ -466,7 +380,17 @@ GuideContent().then((data) => {
     renderTextSection("PC", Guide.Promos.Btn.Tittle, Guide.Promos.Btn.Text)
     renderTextSection("PmC",Guide.Money.Btn.Tittle, Guide.Money.Btn.Text)   
   }
+  function hiddenContent(){
+    renderAllPdfButtons("PYC-hidden", Guide.Plan.Links)
+    renderAllPdfButtons("RV-hidden", Guide.Create.Links)
+    renderAllPdfButtons("UC-hidden", Guide.Upload.Links)    
+    renderAllPdfButtons("PC-hidden", Guide.Promos.Links)
+    renderAllPdfButtons("PmC-hidden", Guide.Money.Links)
 
+
+
+
+  }
 
 
 
@@ -476,23 +400,43 @@ GuideContent().then((data) => {
 
   heroContent();
   cardsContent()
-
+  hiddenContent()
 
 })
+
+
+
 document.getElementById('PYC-btn').addEventListener('click', function () {
-  console.log("red")
+  const element = document.getElementById("PYC-hidden");
+  if (element) {
+    element.style.display = (element.style.display === 'flex') ? 'none' : 'flex';
+  }
 });
+
 document.getElementById('RV-btn').addEventListener('click', function () {
-  console.log("blue")
+  const element = document.getElementById("RV-hidden");
+  if (element) {
+    element.style.display = (element.style.display === 'flex') ? 'none' : 'flex';
+  }
 });
+
 document.getElementById('UC-btn').addEventListener('click', function () {
-  console.log("yellow")
+  const element = document.getElementById("UC-hidden");
+  if (element) {
+    element.style.display = (element.style.display === 'flex') ? 'none' : 'flex';
+  }
 });
 document.getElementById('PC-btn').addEventListener('click', function () {
-  console.log("black")
+  const element = document.getElementById("PC-hidden");
+  if (element) {
+    element.style.display = (element.style.display === 'flex') ? 'none' : 'flex';
+  }
 });
 document.getElementById('PmC-btn').addEventListener('click', function () {
-  console.log("purple")
+  const element = document.getElementById("PmC-hidden");
+  if (element) {
+    element.style.display = (element.style.display === 'flex') ? 'none' : 'flex';
+  }
 });
 
 
@@ -500,6 +444,25 @@ document.getElementById('PmC-btn').addEventListener('click', function () {
 
 
 
+function redirectToWhatsApp(phoneNumber, message) {
+  const encodedMessage = encodeURIComponent(message);
+  const isMobile = /iPhone|Android|iPad/i.test(navigator.userAgent);
+
+  const baseURL = isMobile
+    ? `whatsapp://send?phone=${phoneNumber}&text=${encodedMessage}`
+    : `https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+
+  window.open(baseURL, '_blank');
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const contactBtn = document.getElementById("contact-btn");
+  if (contactBtn) {
+    contactBtn.addEventListener("click", function () {
+      redirectToWhatsApp("5212221706782", "¡Hola! Estoy interesado en soporte de docente.");
+    });
+  }
+});
 
 
 

@@ -49,7 +49,9 @@ body {
   font-size: 1.2rem;
 
 }
-
+.hidden{
+  display: none;
+}
 /* Guide Section */
 .guide-section {
   padding: 3rem 1rem;

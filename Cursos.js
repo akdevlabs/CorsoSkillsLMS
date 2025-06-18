@@ -62,22 +62,6 @@ applyBranding().then((data) => {
       console.error(`Element with ID '${elementId}' not found.`);
     }
   }
-  function setBorderBottom(elementId, borderStyle) {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.style.borderBottom = borderStyle;
-    } else {
-      console.error(`Element with ID '${elementId}' not found.`);
-    }
-  }
-  function setBorder(elementId, borderStyle) {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.style.border = borderStyle;
-    } else {
-      console.error(`Element with ID '${elementId}' not found.`);
-    }
-  }
   function setTextColors(selector, Tcolor) {
   if (selector.startsWith('#')) {
     const element = document.getElementById(selector.slice(1));
@@ -97,32 +81,10 @@ applyBranding().then((data) => {
     console.error("Selector must start with '#' for ID or '.' for class.");
   }
   }
-  function setBackgroundColorWithTransparency(elementId, colorName, alpha) {
-    const element = document.getElementById(elementId);
-    if (!element) {
-      console.error(`Element with ID '${elementId}' not found.`);
-      return;
-    }
-  
-    // Create temporary element to compute RGB value
-    const temp = document.createElement('div');
-    temp.style.color = colorName;
-    document.body.appendChild(temp);
-  
-    // Get computed RGB color
-    const computedColor = window.getComputedStyle(temp).color;
-    document.body.removeChild(temp);
-  
-    // Extract RGB values from string like "rgb(255, 0, 0)"
-    const rgbMatch = computedColor.match(/\d+/g);
-    if (rgbMatch && rgbMatch.length === 3) {
-      const [r, g, b] = rgbMatch;
-      element.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${alpha})`;
-    } else {
-      console.error(`Could not parse color: ${computedColor}`);
-    }
+  function setGlobalFont(fontFamily) {
+    document.body.style.fontFamily = fontFamily;
   }
-  
+  setGlobalFont(data.Font)
   function SetMainColors(){
     renderImage(data.BuLogos.Icons[0], "BuLogo", "Bulogos")
     setBodyBackgroundColor(Prime4)

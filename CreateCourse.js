@@ -150,7 +150,10 @@ applyBranding().then((data) => {
       console.error(`No elements found with selector '${selector}'`);
     }
   }
-
+  function setGlobalFont(fontFamily) {
+    document.body.style.fontFamily = fontFamily;
+  }
+  setGlobalFont(data.Font)
 
 
 
