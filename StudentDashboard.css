@@ -5,7 +5,7 @@
   }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: sans-serif;
 
 
   display: flex;
@@ -102,8 +102,9 @@ main{
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.397);
 }
 .User-info-alerts{
-  gap: 1rem;
+  gap: 2rem;
   display: flex;
+  align-items: center;
 
 }
 #bell-full, #full-Evalope{
@@ -112,14 +113,69 @@ main{
 #Alert-Icons{
   font-size: 1.2rem;
 }
+#user-Img{
+  width: 3.5rem;
+  height: 3.5rem;
+  overflow: hidden;
+  object-fit: cover;
+  border-radius: 50%;
+}
+#Welcome{
+  width: 80rem;
+  margin: 0  5rem 0 0;
+}
+
+
+
+
+.Main-bottom{
+  display: flex;
+ 
+  margin: 1rem 0;
+}
+.Main-left-blocks{
+  padding: 1.8rem;
+  border-radius: 1rem;
+}
+.Welcome-Block{
+  gap: .7rem;
+  display: flex;
+  flex-direction: column;
+}
+#Name{
+  font-weight: bold;
+  font-size: 1.7rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 /*----------- Header ------------*/
-.Main-Content{
-  width: 100%;
-}
+
 #Wecome-banner{
   display:flex;
   align-items: center;
@@ -142,75 +198,75 @@ main{
   font-size: 1rem;
 
 }
- .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 30px 20px;
-    }
 
-    .header {
-      font-size: 26px;
-      font-weight: bold;
-      color: #003366;
-      margin-bottom: 30px;
-    }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 20px;
-    }
 
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-      position: relative;
-    }
 
-    .card h3 {
-      margin: 0 0 10px;
-      color: #003366;
-      font-size: 18px;
-    }
 
-    .card p {
-      margin: 6px 0;
-      color: #555;
-      font-size: 14px;
-    }
 
-    .card .icon {
-      font-size: 22px;
-      color: #3c8dbc;
-      margin-bottom: 10px;
-    }
 
-    .quick-links {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 15px;
-      margin-top: 30px;
-    }
 
-    .quick-link {
-      background-color: #3c8dbc;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 15px;
-      transition: background-color 0.2s ease;
-    }
 
-    .quick-link:hover {
-      background-color: #2a6e95;
-    }
 
-    .quick-link i {
-      display: block;
-      font-size: 20px;
-      margin-bottom: 6px;
-    }
+
+
+
+
+.calendar-container {
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.336);
+  width: 390px;
+  text-align: center;
+}
+.calendar-container h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+.calendar {
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.calendar-header button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+}
+.day-name {
+  font-weight: bold;
+}
+.day {
+  height: 2.5rem;
+  line-height: 2.5rem;
+  border-radius: 50%;
+}
+.day.active {
+  font-weight: bold;
+}
+.day.marked {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
