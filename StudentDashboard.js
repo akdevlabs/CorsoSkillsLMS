@@ -132,6 +132,7 @@ applyBranding().then((data) => {
 
   }
   function CalendarColors(){
+    setTextColors("#Calander-Tittle", Base)
     const style = document.createElement('style');
     style.textContent = `
       .calendar-container {
@@ -191,7 +192,76 @@ applyBranding().then((data) => {
     `;
     document.head.appendChild(style);
   }
+  function CoursesColors(){
+    setTextColors("#C-Progress", Base)
+    const style = document.createElement('style');
+    style.textContent = `
+      .slot-item {
+        background: ${Prime5};
+      }
+      .slot-title {
+        color:${Base};
+      }
+      .slot-prof {
+        color:${Prime};
+      }
+      .progress-bar {
+        background: ${Prime1};
+      }
+      .progress-bar-fill {
+        background: ${Prime2};
+      }
+      .progress-info {
+        color: ${Prime};
+      }
+      .course-Btns {
+        color: ${Prime5};
+        background: ${Base};
+      }
+      .course-Btns:hover { 
+        color: ${Prime5};
+        background: ${Prime2};
+      }
 
+    `;
+    document.head.appendChild(style);
+  }
+  function NewCoursesColors(){
+    setTextColors("#New-Course-Tittle", Base)
+    const style = document.createElement('style');
+    style.textContent = `
+      .custom-carousel-btn {
+        color: ${Prime5};
+        background: ${Base};
+      }
+      .custom-carousel-btn:hover {
+        color: ${Prime5};
+        background: ${Prime2};
+      }
+      .custom-course-card {
+        background-color:${Prime5};
+      }
+      .custom-course-title {
+        color:${Base};
+      }
+      .custom-course-instructor {
+       color:${Prime};
+      }
+      .custom-progress-bar {
+       background: ${Prime1};
+      }
+      .custom-progress-fill {
+        background: ${Prime2};
+      }
+      .custom-progress-info {
+        color:${Prime};
+      }
+    `;
+    document.head.appendChild(style); 
+  }
+
+
+  
  
 
 
@@ -203,8 +273,8 @@ applyBranding().then((data) => {
   MaintopColors()
   CalendarColors()
   TasksColors()
-
-
+  CoursesColors()
+  NewCoursesColors()
 
 
 });
@@ -351,13 +421,6 @@ async function fetchAllContent() {
 
     return highestProgress;
   }
-  function getNewestValue(arr) {
-    if (!Array.isArray(arr) || arr.length === 0) {
-      console.warn('Input is not a valid non-empty array.');
-      return null;
-    }
-    return arr[arr.length - 1];
-  }
   function renderTasks(tasksObject) {
     const tasksArray = Object.entries(tasksObject);
 
@@ -415,131 +478,23 @@ async function fetchAllContent() {
 
     document.getElementById("taskModal").style.display = "block";
   }
-
-
-
-
-
-
-
-
-
-
-
-
-  function getAllIds(data) {
-    const ids = [];
-    if (typeof data !== 'object' || data === null) {
-      console.warn('Input is not a valid object.');
-      return ids;
+  function getNewestValue(arr) {
+    if (!Array.isArray(arr) || arr.length === 0) {
+      console.warn('studentData.Streak is not a valid non-empty array.');
+      return 0; // Valor por defecto si no hay streak
     }
-
-    for (const key in data) {
-      if (data[key] && typeof data[key] === 'object' && 'Id' in data[key]) {
-        ids.push({ id: data[key].Id, slotName: key, progress: data[key].progress });
-      }
-    }
-    return ids;
+    return arr[arr.length - 1];
   }
 
-  function findCourseById(data, targetId) {
-    if (typeof data !== 'object' || data === null) {
-      console.warn('Input is not a valid object.');
-      return null;
-    }
 
-    for (const categoryKey in data) {
-      const category = data[categoryKey];
-      if (typeof category === 'object') {
-        for (const levelKey in category) {
-          const level = category[levelKey];
-          if (typeof level === 'object') {
-            for (const courseKey in level) {
-              const course = level[courseKey];
-              if (
-                typeof course === 'object' &&
-                course !== null &&
-                'Id' in course &&
-                course.Id === targetId
-              ) {
-                return {
-                  category: categoryKey,
-                  level: levelKey,
-                  courseKey: courseKey,
-                  ...course
-                };
-              }
-            }
-          }
-        }
-      }
-    }
 
-    return null; // Not found
-  }
 
-  function renderSlots(slots, limit = 5) {
-    const container = document.getElementById("results");
-    if (!container) return;
-    container.innerHTML = '';
 
-    const showMoreBtn = document.getElementById("show-more");
-    const visibleSlots = slots.slice(0, limit);
 
-    visibleSlots.forEach(slot => {
-      const div = document.createElement("div");
-      div.className = "slot-item";
-      div.innerHTML = `
-        <img src="${slot.CImg || 'https://via.placeholder.com/150'}" alt="${slot.Tittle || 'Curso'}" />
-        <div class="slot-title">${slot.Tittle || 'Sin título'}</div>
-        <div class="slot-prof">Prof. CorsoSkills</div>
-        <div class="progress-container">
-          <div class="progress-bar">
-            <div class="progress-bar-fill" style="width: ${slot.progress}%"></div>
-          </div>
-          <div class="progress-info">
-            <span>Lecciones: 3</span>
-            <span>${slot.progress}%</span>
-          </div>
-        </div>
-      `;
-      container.appendChild(div);
-    });
 
-    // Show or hide the "Show More" button safely
-    if (slots.length > limit) {
-      if (showMoreBtn) {
-        showMoreBtn.style.display = "flex";
-        showMoreBtn.onclick = () => renderSlots(slots, slots.length);
-      }
-    } else {
-      if (showMoreBtn) {
-        showMoreBtn.style.display = "none";
-        showMoreBtn.onclick = null;
-      }
-    }
-  }
 
-  function getAllSlotsByIds() {
-    const slotsWithIds = getAllIds(studentData.Courses);
-    const allResults = [];
+renderStreak()
 
-    slotsWithIds.forEach(slot => {
-      const foundCourse = findCourseById(businessData.Courses, slot.id);
-      if (foundCourse) {
-        allResults.push({
-          ...slot,
-          ...foundCourse
-        });
-      }
-    });
-
-    renderSlots(allResults);
-    return allResults;
-  }
-
-  // Initial call to render slots
-  getAllSlotsByIds();
 
 
 
@@ -553,46 +508,55 @@ async function fetchAllContent() {
     renderText(date, "Date")
   }
   function renderStreak() {
-    const Streak = getNewestValue(studentData.Streak); // Replace with dynamic logic later
-    const totalCourses = countObjectItems(studentData.Courses);
-    const progress = getHighestProgress(studentData.Courses);
+    const Streak =studentData?.Streak;
+    const totalCourses = countObjectItems(studentData?.Courses);
+    const progress = getHighestProgress(studentData?.Courses);
+
+    const name = studentData?.ShortName || "Estudiante";
+    const status = businessData?.Status || {};
+
+    // Asegúrate que cada categoría tenga al menos 2 elementos
+    const safeText = (section) => {
+      const messages = status?.[section];
+      return Array.isArray(messages) && messages.length >= 2 ? messages : ["¡Hola!", "Sigue aprendiendo."];
+    };
 
     if (totalCourses === 0) {
       if (Streak === 1) {
-        const welcome = `${businessData.Status.Start[0]}, ${studentData.ShortName}`;
-        renderText(welcome, "Name");
-        renderText(businessData.Status.Start[1], "Updates");
+        const [title, update] = safeText("Start");
+        renderText(`${title}, ${name}`, "Name");
+        renderText(update, "Updates");
       } else if (Streak === 2) {
-        const welcome = `${businessData.Status.Beginner[0]}, ${studentData.ShortName}`;
-        renderText(welcome, "Name");
-        renderText(businessData.Status.Beginner[1], "Updates");
+        const [title, update] = safeText("Beginner");
+        renderText(`${title}, ${name}`, "Name");
+        renderText(update, "Updates");
       } else if (Streak === 3) {
-        const welcome = `${businessData.Status.Intro[0]}, ${studentData.ShortName}`;
-        renderText(welcome, "Name");
-        renderText(businessData.Status.Intro[1], "Updates");
+        const [title, update] = safeText("Intro");
+        renderText(`${title}, ${name}`, "Name");
+        renderText(update, "Updates");
       }
     } else {
-      if (totalCourses <= 3) {
+      if (totalCourses <=13) {
         if (progress <= 10) {
-          const welcome = `${businessData.Status.Review[0]}, ${studentData.ShortName}`;
-          renderText(welcome, "Name");
-          renderText(businessData.Status.Review[1], "Updates");
+          const [title, update] = safeText("Review");
+          renderText(`${title}, ${name}`, "Name");
+          renderText(update, "Updates");
         } else if (progress <= 20) {
-          const welcome = `${businessData.Status.Twenty[0]}, ${studentData.ShortName}`;
-          renderText(welcome, "Name");
-          renderText(businessData.Status.Twenty[1], "Updates");
+          const [title, update] = safeText("Twenty");
+          renderText(`${title}, ${name}`, "Name");
+          renderText(update, "Updates");
         } else if (progress <= 50) {
-          const welcome = `${businessData.Status.Fifty[0]}, ${studentData.ShortName}`;
-          renderText(welcome, "Name");
-          renderText(businessData.Status.Fifty[1], "Updates");
+          const [title, update] = safeText("Fifty");
+          renderText(`${title}, ${name}`, "Name");
+          renderText(update, "Updates");
         } else if (progress <= 80) {
-          const welcome = `${businessData.Status.Eighty[0]}, ${studentData.ShortName}`;
-          renderText(welcome, "Name");
-          renderText(businessData.Status.Eighty[1], "Updates");
-        }else{
-          const welcome = `${businessData.Status.End1[0]}, ${studentData.ShortName}`;
-          renderText(welcome, "Name");
-          renderText(businessData.Status.End1[1], "Updates");          
+          const [title, update] = safeText("Eighty");
+          renderText(`${title}, ${name}`, "Name");
+          renderText(update, "Updates");
+        } else {
+          const [title, update] = safeText("End1");
+          renderText(`${title}, ${name}`, "Name");
+          renderText(update, "Updates");
         }
       }
     }
@@ -725,16 +689,291 @@ async function fetchAllContent() {
     const Tasks = studentData.Tasks
     renderTasks(Tasks)
   }
+function renderCourses() {
+  const limit = 4;
+  let currentStart = 0;
+  let allResults = [];
+
+  function getAllIds(data) {
+    const ids = [];
+    if (typeof data !== 'object' || data === null) {
+      console.warn('Input is not a valid object.');
+      return ids;
+    }
+
+    for (const key in data) {
+      if (data[key] && typeof data[key] === 'object' && 'Id' in data[key]) {
+        ids.push({ id: data[key].Id, slotName: key, progress: data[key].progress });
+      }
+    }
+    return ids;
+  }
+
+  function findCourseById(data, targetId) {
+    if (typeof data !== 'object' || data === null) {
+      console.warn('Input is not a valid object.');
+      return null;
+    }
+
+    for (const categoryKey in data) {
+      const category = data[categoryKey];
+      if (typeof category === 'object') {
+        for (const levelKey in category) {
+          const level = category[levelKey];
+          if (typeof level === 'object') {
+            for (const courseKey in level) {
+              const course = level[courseKey];
+              if (
+                typeof course === 'object' &&
+                course !== null &&
+                'Id' in course &&
+                course.Id === targetId
+              ) {
+                return {
+                  category: categoryKey,
+                  level: levelKey,
+                  courseKey: courseKey,
+                  ...course
+                };
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+  function renderSlots(slots) {
+    const container = document.getElementById("results");
+    if (!container) return;
+    container.innerHTML = '';
+
+    const end = Math.min(currentStart + limit, slots.length);
+    const visibleSlots = slots.slice(currentStart, end);
+
+    visibleSlots.forEach(slot => {
+      const div = document.createElement("div");
+      div.className = "slot-item";
+      div.style.cursor = "pointer"; // make it clickable
+
+      // Save and redirect on click
+      div.onclick = () => {
+        localStorage.setItem("selectedCourse", JSON.stringify(slot));
+        window.location.href = "index10.2.html"; // Change this to your target page
+      };
+
+      div.innerHTML = `
+        <img src="${slot.CImg}" alt="${slot.Tittle || 'Curso'}" />
+        <div class="slot-title">${slot.Tittle || 'Sin título'}</div>
+        <div class="slot-prof">Prof. CorsoSkills</div>
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-bar-fill" style="width: ${slot.progress}%"></div>
+          </div>
+          <div class="progress-info">
+            <span>Lecciones: 3</span>
+            <span>${slot.progress}%</span>
+          </div>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+
+    updateNavigationButtons(slots.length);
+  }
+
+  function updateNavigationButtons(total) {
+    const leftBtn = document.getElementById("Course-left-btn");
+    const rightBtn = document.getElementById("Course-right-btn");
+
+    if (leftBtn) {
+      leftBtn.style.display = currentStart > 0 ? "flex" : "none";
+      leftBtn.onclick = () => {
+        currentStart = Math.max(0, currentStart - limit);
+        renderSlots(allResults);
+      };
+    }
+
+    if (rightBtn) {
+      rightBtn.style.display = (currentStart + limit) < total ? "flex" : "none";
+      rightBtn.onclick = () => {
+        if ((currentStart + limit) < total) {
+          currentStart += limit;
+          renderSlots(allResults);
+        }
+      };
+    }
+  }
+
+  function getAllSlotsByIds() {
+    const slotsWithIds = getAllIds(studentData.Courses);
+    allResults = [];
+
+    slotsWithIds.forEach(slot => {
+      const foundCourse = findCourseById(businessData.Courses, slot.id);
+      if (foundCourse) {
+        allResults.push({
+          ...slot,
+          ...foundCourse
+        });
+      }
+    });
+
+    // Sort by highest progress first
+    allResults.sort((a, b) => b.progress - a.progress);
+
+    renderSlots(allResults);
+    return allResults;
+  }
+
+  // Start rendering
+  getAllSlotsByIds();
+}
+
+
+
+
+function newCourses() {
+  let currentStart = 0;
+  const limit = 4;
+  let currentSlots = [];
+
+  function getActiveCourses(coursesObj) {
+    const activeCourses = [];
+
+    if (typeof coursesObj !== 'object' || coursesObj === null) {
+      console.warn('Courses object is not valid:', coursesObj);
+      return activeCourses;
+    }
+
+    for (const category in coursesObj) {
+      const categoryData = coursesObj[category];
+      if (typeof categoryData !== 'object') continue;
+
+      for (const sub in categoryData) {
+        const subCategoryData = categoryData[sub];
+        if (typeof subCategoryData === 'object') {
+          for (const courseKey in subCategoryData) {
+            const course = subCategoryData[courseKey];
+            if (
+              course &&
+              typeof course === 'object' &&
+              course.Status === true &&
+              course.Id
+            ) {
+              if (!course.progress) course.progress = 0;
+              activeCourses.push(course);
+            }
+          }
+        }
+      }
+    }
+
+    return activeCourses;
+  }
+
+  function renderSlots(slots) {
+    const container = document.getElementById("custom-course-carousel");
+    if (!container) return;
+
+    container.innerHTML = '';
+    const end = Math.min(currentStart + limit, slots.length);
+    const visibleSlots = slots.slice(currentStart, end);
+
+    visibleSlots.forEach(slot => {
+      const div = document.createElement("div");
+      div.className = "custom-course-card";
+      div.style.cursor = "pointer";
+
+      div.onclick = () => {
+        localStorage.setItem("selectedCourse", JSON.stringify(slot));
+        window.location.href = "index10.2.html";
+      };
+
+      div.innerHTML = `
+        <img src="${slot.CImg || ''}" alt="${slot.Tittle || 'Curso'}" />
+        <div class="custom-course-title">${slot.Tittle || 'Sin título'}</div>
+        <div class="custom-course-instructor">Prof. CorsoSkills</div>
+        <div class="custom-progress-container">
+          <div class="custom-progress-bar">
+            <div class="custom-progress-fill" style="width: ${slot.progress || 0}%"></div>
+          </div>
+          <div class="custom-progress-info">
+            <span>Lecciones: 3</span>
+            <span>${slot.progress || 0}%</span>
+          </div>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+
+    updateNavigationButtons(slots.length);
+  }
+
+  function updateNavigationButtons(totalSlots) {
+    const leftBtn = document.getElementById("custom-carousel-left");
+    const rightBtn = document.getElementById("custom-carousel-right");
+
+    if (!leftBtn || !rightBtn) return;
+
+    leftBtn.style.visibility = currentStart > 0 ? "visible" : "hidden";
+    rightBtn.style.visibility = currentStart + limit < totalSlots ? "visible" : "hidden";
+  }
+
+  function setupNavigationButtons() {
+    const leftBtn = document.getElementById("custom-carousel-left");
+    const rightBtn = document.getElementById("custom-carousel-right");
+
+    if (leftBtn) {
+      leftBtn.addEventListener("click", () => {
+        if (currentStart - limit >= 0) {
+          currentStart -= limit;
+          renderSlots(currentSlots);
+        }
+      });
+    }
+
+    if (rightBtn) {
+      rightBtn.addEventListener("click", () => {
+        if (currentStart + limit < currentSlots.length) {
+          currentStart += limit;
+          renderSlots(currentSlots);
+        }
+      });
+    }
+  }
+
+  function init() {
+    if (typeof businessData === 'object' && businessData?.Courses) {
+      currentSlots = getActiveCourses(businessData.Courses);
+      currentStart = 0;
+      setupNavigationButtons();
+      renderSlots(currentSlots);
+    } else {
+      console.warn("⚠️ businessData.Courses is not defined or invalid.");
+    }
+  }
+
+  init();
+}
+
+
+
+newCourses();
+
+
+
 
 
 
 
   renderClander();
   renderStudentinfo()
-  renderStreak()
+
   renderTask()
-
-
+  renderCourses()
 
 
 }
