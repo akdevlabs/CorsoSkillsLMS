@@ -98,12 +98,48 @@
   </section>
 
   <main>
-    <div class="Main-top">
-      <div class="Search-Block">
-         <input type="text" id="search" class="search-input" placeholder="Buscar..."/>
-          <button class="search-btn" id="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <div class="Main-left">
+
+        <div class="Welcome-block" id="Welcome">
+            <div id="Date"></div>
+            <div id="Name"></div>
+            <div id="Updates"></div>  
+        </div>
+
+        <div class="Progress-blocks">
+         
+          <div class="coures-container">
+            <h2 id="C-Progress">Cursos En Progreso</h2>
+
+            <div class="Btns">
+              <div class="course-Btns" id="Course-left-btn">&lt;</div>
+              <div class="course-Btns" id="Course-right-btn">&gt;</div>
+            </div>
+          </div>  
+
+
+            <div id="results"></div>
+            
+          
+        </div>
+
+        <div class="New-blocks">
+          
+          <div class="coures-container">
+            <h2  id="New-Course-Tittle">Cursos Nuevos</h2>
+            <div class="Btns">
+              <div class="course-Btns" id="custom-carousel-left">&lt;</div>
+              <div class="course-Btns" id="custom-carousel-right">&gt;</div>
+            </div>
+
+          </div>
+
+          <div id="custom-course-carousel"></div>
+        </div>        
       </div>
-      <div class="User-info-alerts" id="Alert-Icons">
+
+      <div class="Main-right">
+        <div class="User-info-alerts" id="Alert-Icons">
         <div class="Evalopes">
           <i id="empty-Evalope" class="fa-solid fa-envelope-open"></i>
           <i id="full-Evalope" class="fa-solid fa-envelope-open-text"></i>
@@ -115,32 +151,10 @@
         <div class="Info">
           <img id="user-Img">
         </div>
-      </div>
-    </div>
-    <div class="Main-bottom">
-      <div class="Main-left">
-        <div class="Main-left-blocks" id="Welcome">
-          <div class="Welcome-Block">
-            <div id="Date"></div>
-            <div id="Name"></div>
-            <div id="Updates"></div>  
-          </div>
-          <div>
-            <img id="main-top-icons">
-          </div>
         </div>
 
-        <div class="Main-left-blocks">
-          <h2>Cursos En Progreso</h2>
-           <div id="results"></div>
-        </div>
-        <div class="Main-left-blocks"></div>        
-      </div>
-
-      <div class="Main-right">
-        <div class="Main-right-blocks" id="Schedule">
-          <div class="calendar-container">
-            <h2>Mi Calendario</h2>
+        <div class="calendar-container">
+            <h2 class="Tittles" id="Calander-Tittle">Mi Calendario</h2>
             <div class="calendar">
               <div class="calendar-header">
                 <button id="prev-month">&lt;</button>
@@ -149,9 +163,9 @@
               </div>
               <div class="calendar-grid" id="calendar-grid"></div>
             </div>
-          </div>
+        </div>
    
-          <div class="Main-right-blocks" id="Task-block">
+        <div class="Task-blocks" id="Task-block">
             <h2 class="Task-Tittle">Próximas Tareas</h2>
             <div id="taskContainer"></div>
 
@@ -163,9 +177,10 @@
                 <div id="modalContent"></div>
               </div>
             </div>
-          </div>
         </div>
-      </div>
+
+    
+      </div> 
   </main>  
 
 
