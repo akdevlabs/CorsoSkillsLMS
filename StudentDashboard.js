@@ -690,9 +690,18 @@ renderStreak()
     renderTasks(Tasks)
   }
 function renderCourses() {
-  const limit = 4;
+  let limit = 4; // Default
   let currentStart = 0;
   let allResults = [];
+
+  // ✅ Responsive limit based on screen width
+  if (window.innerWidth <= 825) {
+    limit = 2;
+  } else if (window.innerWidth <= 1208) {
+    limit = 3;
+  } else {
+    limit = 4;
+  }
 
   function getAllIds(data) {
     const ids = [];
@@ -756,12 +765,11 @@ function renderCourses() {
     visibleSlots.forEach(slot => {
       const div = document.createElement("div");
       div.className = "slot-item";
-      div.style.cursor = "pointer"; // make it clickable
+      div.style.cursor = "pointer";
 
-      // Save and redirect on click
       div.onclick = () => {
         localStorage.setItem("selectedCourse", JSON.stringify(slot));
-        window.location.href = "index10.2.html"; // Change this to your target page
+        window.location.href = "index10.2.html";
       };
 
       div.innerHTML = `
@@ -821,7 +829,6 @@ function renderCourses() {
       }
     });
 
-    // Sort by highest progress first
     allResults.sort((a, b) => b.progress - a.progress);
 
     renderSlots(allResults);
@@ -835,9 +842,11 @@ function renderCourses() {
 
 
 
+
+
 function newCourses() {
   let currentStart = 0;
-  const limit = 4;
+  let limit = 4; // Default
   let currentSlots = [];
 
   function getActiveCourses(coursesObj) {
@@ -946,6 +955,15 @@ function newCourses() {
   }
 
   function init() {
+    // ✅ Responsive limit based on screen width
+    if (window.innerWidth <= 825) {
+      limit = 2;
+    } else if (window.innerWidth <= 1208) {
+      limit = 3;
+    } else {
+      limit = 4;
+    }
+
     if (typeof businessData === 'object' && businessData?.Courses) {
       currentSlots = getActiveCourses(businessData.Courses);
       currentStart = 0;
@@ -958,6 +976,8 @@ function newCourses() {
 
   init();
 }
+
+
 
 
 
