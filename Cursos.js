@@ -40,7 +40,7 @@ async function applyBranding() {
 }
 applyBranding().then((data) => {  
   console.log(data.BuLogos.Icons[0])
-  const {Base, Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
+  const {Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
   
   function renderImage(imageUrl, altUrl, UrlId) {
     const logoElement = document.getElementById(UrlId);
@@ -85,12 +85,12 @@ applyBranding().then((data) => {
     document.body.style.fontFamily = fontFamily;
   }
   setGlobalFont(data.Font)
+
   function SetMainColors(){
     renderImage(data.BuLogos.Icons[0], "BuLogo", "Bulogos")
     setBodyBackgroundColor(Prime4)
     setBackgroundColor("sidebar", Prime5)
-    setBackgroundColor("Courese-block", Prime5)
-    setBackgroundColor("E-books-Block", Prime5)
+
     
   }
 
@@ -120,25 +120,120 @@ applyBranding().then((data) => {
 
   }
 
-  function headerColors(){
-    setBackgroundColor("Wecome-banner", Prime4)
-    setBackgroundColor("courses-in-progress", Prime4)
+  function CourseBtnColors(){
+    setBackgroundColor("Course-btn-block-text", Prime5)
+    setBackgroundColor("courseContainer", Prime5)
+  }
+  function CouresesColors(){
+    setBackgroundColor("Courses-Block", Prime5) 
+  }
+  function filtersColors(){
+    const style = document.createElement('style');
+    style.textContent = `
+      .calendar-container {
+        background: ${Prime5};
+      }
+      .filters select {
+        border: 2px solid ${Prime3};
+        background-color: ${Prime5};
+      }
 
+      .filters select:focus {
+        border-color: 1px solid ${Base};
+      }
+      .search-bar input {
+        border: 2px solid ${Prime3};
+      }
+      .search-bar button {
+        background-color: ${Base};
+        color: ${Prime5};
+      }
+      .search-bar button:hover {
+        background-color: ${Prime2};
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  function  searchBarColors(){
+    const style = document.createElement('style');
+    style.textContent = `
+      #Course-btn-block-text h1{
+        color:${Base};
+      }
+      #Course-btn-block-text h3{
+        color: ${Prime1};
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  function filtersColors(){
+    const style = document.createElement('style');
+    style.textContent = `
+      .calendar-container {
+        background: ${Prime5};
+      }
+      .filters select {
+        border: 2px solid ${Prime3};
+        background-color: ${Prime5};
+      }
 
+      .filters select:focus {
+        border-color: 1px solid ${Base};
+      }
+      .search-bar input {
+        border: 2px solid ${Prime3};
+      }
+      .search-bar button {
+        background-color: ${Base};
+        color: ${Prime5};
+      }
+      .search-bar button:hover {
+        background-color: ${Prime2};
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  function CourseCardColors(){
+    const style = document.createElement('style');
+    style.textContent = `
+      .course-card {
+        color: ${Prime}; 
+        background: ${Prime4}; 
+      }
+      .course-card h3 {
+        color: ${Base}; 
+      }
 
+      .course-card p {
+        color: ${Prime}; 
+      }
+      .course-card button {
+        background-color:${Base}; 
+        color: ${Prime5}; 
+      }
+      .course-card button:hover {
+        background-color: ${Prime2}; 
+      }
 
+    `;
+    document.head.appendChild(style);
   }
 
 
 
 
 
-SetMainColors()
-headerColors()
-sidebarcolors()
+
+
+  SetMainColors()
+  sidebarcolors()
+  CourseBtnColors()
+  CouresesColors()
+  filtersColors()
+  searchBarColors()
+  CourseCardColors()
 
 });
-
 
 
 
@@ -158,6 +253,7 @@ async function getstudentContent() {
     return null;
   }
 }
+
 async function getCorsoSkillAppContent() {
   try {
     const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
@@ -174,70 +270,162 @@ async function getCorsoSkillAppContent() {
     return null;
   }
 }
-async function fetchAllContent() {
-  const studentData = await getstudentContent();
-  const businessData = await getCorsoSkillAppContent();
 
-  if (studentData) {
-    console.log("Student Document Data:", studentData);
-  } else {
-    console.log("No student data found.");
-  }
+  async function fetchAllContent() {
+    try {
+      const studentData = await getstudentContent();
+      const businessData = await getCorsoSkillAppContent();
 
-  if (businessData) {
-    console.log("Business Document Data:", businessData);
-  } else {
-    console.log("No business data found.");
-  }
+      if (!studentData || !businessData) {
+        console.log("Missing data: studentData or businessData is null");
+        return;
+      }
 
-  function renderText(text, elementId) {
-    const element = document.getElementById(elementId);
+      console.log("Student Document Data:", studentData);
+      console.log("Business Document Data:", businessData);
 
-    if (element) {
-      element.textContent = text;
-    } else {
-      console.error(`Element with ID "${elementId}" not found.`);
+      async function getStudentData() {
+        // 🔁 Reemplaza con tu lógica real (Firebase, API, etc.)
+        return await fetchStudentDataFromFirebase();
+      }
+
+      async function getBusinessData() {
+        // 🔁 Reemplaza con tu lógica real
+        return await fetchBusinessDataFromFirebase();
+      }
+
+      function logCourseSlotIds(courses) {
+        const ids = [];
+        for (const key in courses) {
+          if (courses.hasOwnProperty(key) && courses[key].Id) {
+            ids.push(courses[key].Id);
+          }
+        }
+        return ids;
+      }
+
+      function renderNewCoursesOnly(courseArray, existingIds) {
+        const container = document.getElementById("course-grid");
+        container.innerHTML = "";
+
+        const newCourses = courseArray.filter(course => course.Id && !existingIds.includes(course.Id));
+
+        if (newCourses.length === 0) {
+          container.innerHTML = "<p>No hay cursos nuevos disponibles.</p>";
+          return;
+        }
+
+        newCourses.forEach(course => {
+          const card = document.createElement("div");
+          card.className = "course-card";
+          card.setAttribute("data-course-id", course.Id); // attach courseId as a data attribute
+          card.innerHTML = `
+            <div class="card">
+              <img src="${course.CImg || 'https://via.placeholder.com/320x180'}" alt="Imagen del curso" />
+              <h3>${course.Tittle}</h3>
+              <p><strong>Profesor:</strong> ${course.Teacher || 'No especificado'}</p>
+              <p><strong>Descripción:</strong> ${course.Description || 'Sin descripción'}</p>
+              <button class="view-more-btn">Ver más información</button>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      }
+
+      // Event delegation: listen for clicks on any "Ver más información" button
+      document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("view-more-btn")) {
+          const courseCard = e.target.closest(".course-card");
+          const courseId = courseCard.getAttribute("data-course-id");
+          if (courseId) {
+            localStorage.setItem("selectedCourseId", courseId);
+            window.location.href = "index10.2.1.html";
+          }
+        }
+      });
+
+
+      function CheckCourses() {
+        if (!studentData || !businessData) {
+          console.warn("❌ studentData o businessData no están disponibles.");
+          return;
+        }
+
+        const studentIds = logCourseSlotIds(studentData.Courses);
+        const category = document.getElementById("category-filter").value;
+        const level = document.getElementById("level-filter").value;
+        const price = document.getElementById("price-filter").value;
+        const sort = document.getElementById("sort-filter").value;
+        const searchQuery = document.getElementById("searchInput").value.toLowerCase();
+
+        const allCourses = businessData.Courses;
+        const levels = ["Beginner", "Intermediate", "Advanced"];
+        let collectedCourses = [];
+
+        for (let cat in allCourses) {
+          if (category !== "all" && cat !== category) continue;
+          const levelSet = allCourses[cat];
+          if (!levelSet) continue;
+
+          if (level === "all") {
+            levels.forEach(lvl => {
+              const courses = levelSet[lvl];
+              if (courses) collectedCourses.push(...Object.values(courses));
+            });
+          } else {
+            const courses = levelSet[level];
+            if (courses) collectedCourses.push(...Object.values(courses));
+          }
+        }
+
+        collectedCourses = collectedCourses.filter(course => {
+          const title = course.Tittle?.toLowerCase() || "";
+          const desc = course.Description?.toLowerCase() || "";
+          return title.includes(searchQuery) || desc.includes(searchQuery);
+        });
+
+        collectedCourses = collectedCourses.filter(course => {
+          if (price === "free") return course.Price === 0 || course.Free === true;
+          if (price === "paid") return course.Price > 0 || course.Free === false;
+          return true;
+        });
+
+        collectedCourses.sort((a, b) => {
+          if (sort === "latest") return (b.Timestamp || 0) - (a.Timestamp || 0);
+          if (sort === "popular") return (b.Popularity || 0) - (a.Popularity || 0);
+          if (sort === "rated") return (b.Rating || 0) - (a.Rating || 0);
+          return 0;
+        });
+
+        renderNewCoursesOnly(collectedCourses, studentIds);
+      }
+
+      // Detectar cambios en filtros
+      ["category-filter", "level-filter", "price-filter", "sort-filter"].forEach(id => {
+        document.getElementById(id).addEventListener("change", CheckCourses);
+      });
+
+      // Inicializar al cargar
+      document.addEventListener("DOMContentLoaded", async () => {
+        studentData = await getStudentData();
+        businessData = await getBusinessData();
+
+        document.getElementById("category-filter").value = "all";
+        document.getElementById("level-filter").value = "all";
+        document.getElementById("price-filter").value = "all";
+        document.getElementById("sort-filter").value = "relevance";
+        document.getElementById("searchInput").value = "";
+
+        CheckCourses();
+      });
+
+
+
+
+    } catch (err) {
+      console.error("Error in fetchAllContent:", err);
     }
   }
-  function setBackgroundColor(elementId, backgroundColor) {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.style.backgroundColor = backgroundColor;
-    } else {
-      console.error(`Element with ID '${elementId}' not found.`);
-    }
-  }
-
-
-
-
-  function renderWelcome(){
-    renderText("Welcome,"+" "+studentData.fullName,   "wecome-banner-tittle")
-    
-
-
-  }
-
-  renderWelcome()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
 
 // Run the fetch
 fetchAllContent();
@@ -269,3 +457,19 @@ fetchAllContent();
     // Initial state: hide all link names, show open button only
     hideSidebarText();
  });
+
+
+ document.getElementById("Home").addEventListener("click", function () {
+  window.location.href = "index10.html";
+});
+document.getElementById("Books").addEventListener("click", function () {
+  window.location.href = "index10.1.html";
+});
+document.getElementById("Videos").addEventListener("click", function () {
+  window.location.href = "index10.2.html";
+});
+document.getElementById("Trophy").addEventListener("click", function () {
+  window.location.href = "index10.3.html";
+});
+
+
