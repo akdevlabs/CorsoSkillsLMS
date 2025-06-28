@@ -22,84 +22,142 @@
 </head>
 <body>
   <section class="nav" id="sidebar">
-      
-      <div class="sidebar-content">
-        
-        <div class="sidebar-top">  
-          <img id="Bulogos"></img>
-          
-          <div class="Side-Btns" id="Home">
-            <i class="fa-solid fa-table-cells"></i>
-            <span class="linkName">Dashboard</span>
-          </div>
+    <div class="sidebar-content">
+      <div class="sidebar-top">  
+        <img id="Bulogos" src="logo.png" alt="CorsoSkills logo" />
 
-          <div class="Side-Btns" id="Books">
-            <i class="fa-solid fa-book-open"></i>
-            <span class="linkName">eBooks</span>
-          </div>
-
-          <div class="Side-Btns" id="Videos">
-            <i class="fa-solid fa-file-video"></i>
-            <span class="linkName">Cursos</span>
-          </div>
-
-          <div class="Side-Btns" id="Trophy">
-            <i class="fa-solid fa-trophy"></i>
-            <span class="linkName">Logros</span>
-          </div>
-
-          <div class="Side-Btns" id="Multi-User">    
-            <i class="fa-solid fa-users"></i>
-            <span class="linkName">Comunidad</span>
-          </div>
-
-          <div class="Side-Btns" id="carrer">    
-            <i class="fa-solid fa-graduation-cap"></i>
-            <span class="linkName">Ruta Profesional</span>
-          </div>
-
+        <div class="Side-Btns" id="Home">
+          <i class="fa-solid fa-table-cells"></i>
+          <span class="linkName">Dashboard</span>
         </div>
 
-        <div class="Side-Btns" class="sidebar-bottom">
-          <div class="profile">
-            <i class="fa-solid fa-user-tie"></i>
-            <span class="linkName">Profesor</span>
+        <div class="Side-Btns active" id="Books">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="linkName">eBooks</span>
         </div>
-        </div> 
-        
+
+        <div class="Side-Btns" id="Videos">
+          <i class="fa-solid fa-file-video"></i>
+          <span class="linkName">Cursos</span>
+        </div>
+
+        <div class="Side-Btns" id="Trophy">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="linkName">Logros</span>
+        </div>
+
+        <div class="Side-Btns" id="Multi-User">    
+          <i class="fa-solid fa-users"></i>
+          <span class="linkName">Comunidad</span>
+        </div>
+
+        <div class="Side-Btns" id="career">    
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span class="linkName">Ruta Profesional</span>
+        </div>
       </div>
 
-    
+      <div class="Side-Btns sidebar-bottom">
+        <div class="profile">
+          <i class="fa-solid fa-user-tie"></i>
+          <span class="linkName">Profesor</span>
+        </div>
+      </div> 
+    </div>
 
-    
-
-      <div class="Action-nav-btns">
-      
+    <div class="Action-nav-btns">
       <div class="Side-caret" id="open">
-          <i class="fa-solid fa-caret-right"></i>
+        <i class="fa-solid fa-caret-right"></i>
       </div>
-
       <div class="Side-caret" id="close">
-          <i class="fa-solid fa-caret-left"></i>
+        <i class="fa-solid fa-caret-left"></i>
       </div>
-
-      </div>
+    </div>
   </section>
 
-  <section class="Courese-block" id="Courese-block">
-        <div class="container">
-    <div class="header">Portal de eBooks y Contenidos</div>
+  <section class="Course-block" id="Course-block">
+    <div class="container">
+      <div class="header">📚 Biblioteca de eBooks</div>
 
+      <div class="filter-bar">
+        <input type="text" placeholder="🔍 Buscar eBook por nombre o curso..." />
+        <select>
+          <option>Todos los cursos</option>
+          <option>Curso en progreso</option>
+          <option>Curso finalizado</option>
+        </select>
+      </div>
+
+      <div class="ebook-grid">
+        <!-- Repeat cards dynamically -->
+        <div class="ebook-card">
+          <div>
+            <h4>Lección 1: Anatomía Básica</h4>
+            <p>Curso: Educación Física Nivel 1</p>
+            <p>Material: PDF - Introducción al cuerpo humano</p>
+          </div>
+          <div class="ebook-actions">
+            <a href="#"><i class="fas fa-book-open"></i> Ver PDF</a>
+            <span class="status pending">Pendiente</span>
+          </div>
+        </div>
+
+        <div class="ebook-card completed">
+          <div>
+            <h4>Lección 2: Postura Correcta</h4>
+            <p>Curso: Educación Física Nivel 1</p>
+            <p>Material: PDF - Guía de postura</p>
+          </div>
+          <div class="ebook-actions">
+            <a href="#"><i class="fas fa-book-open"></i> Ver PDF</a>
+            <span class="status completed">Completado</span>
+          </div>
+        </div>
+
+        <!-- Add more cards here -->
+      </div>
+    </div>
+  </section>
+  <section class="Course-block" id="Course-block">
+  <div class="container">
+
+    <div class="header">📚 Biblioteca de eBooks</div>
+
+    <!-- PROGRESS SUMMARY -->
+    <div class="progress-summary">
+      <div class="summary-box">
+        <h3>eBooks Completados</h3>
+        <span>8</span>
+      </div>
+      <div class="summary-box">
+        <h3>En Progreso</h3>
+        <span>3</span>
+      </div>
+      <div class="summary-box">
+        <h3>Total de eBooks</h3>
+        <span>15</span>
+      </div>
+    </div>
+
+    <!-- SEARCH AND FILTERS -->
     <div class="filter-bar">
+      <input type="text" placeholder="🔍 Buscar por título, curso o palabra clave..." />
       <select>
-        <option>Todos los cursos</option>
-        <option>Curso en progreso</option>
-        <option>Curso finalizado</option>
+        <option value="all">Todos</option>
+        <option value="pending">Pendiente</option>
+        <option value="completed">Completado</option>
+        <option value="progress">En Progreso</option>
+      </select>
+      <select>
+        <option value="recent">Más Recientes</option>
+        <option value="az">A - Z</option>
+        <option value="curso">Por Curso</option>
       </select>
     </div>
 
+    <!-- EBOOK CARDS -->
     <div class="ebook-grid">
-      <!-- CARD 1 -->
+      <!-- CARD TEMPLATE: use JS to populate dynamically -->
       <div class="ebook-card">
         <div>
           <h4>Lección 1: Anatomía Básica</h4>
@@ -107,60 +165,46 @@
           <p>Material: PDF - Introducción al cuerpo humano</p>
         </div>
         <div class="ebook-actions">
-          <a href="#" target="_blank"><i class="fas fa-book-open"></i> Ver PDF</a>
+          <a href="#"><i class="fas fa-book-open"></i> Ver PDF</a>
           <span class="status pending">Pendiente</span>
         </div>
       </div>
+      <!-- More cards -->
+    </div>
 
-      <!-- CARD 2 -->
+    <!-- FAVORITOS -->
+    <div class="section-header">⭐ Favoritos Guardados</div>
+    <div class="ebook-grid">
       <div class="ebook-card">
         <div>
-          <h4>Lección 2: Postura Correcta</h4>
-          <p>Curso: Educación Física Nivel 1</p>
-          <p>Material: PDF - Guía de postura</p>
-        </div>
-        <div class="ebook-actions">
-          <a href="#" target="_blank"><i class="fas fa-book-open"></i> Ver PDF</a>
-          <span class="status completed">Completado</span>
-        </div>
-      </div>
-
-      <!-- CARD 3 -->
-      <div class="ebook-card">
-        <div>
-          <h4>Lección 3: Respiración y Movimiento</h4>
+          <h4>Respiración y Movimiento</h4>
           <p>Curso: Yoga para Principiantes</p>
           <p>Material: Video + PDF</p>
         </div>
         <div class="ebook-actions">
-          <a href="#" target="_blank"><i class="fas fa-book-open"></i> Ver Contenido</a>
+          <a href="#"><i class="fas fa-book-open"></i> Ver Contenido</a>
           <span class="status pending">Pendiente</span>
         </div>
       </div>
+    </div>
 
-      <!-- CARD 4 -->
+    <!-- RECOMMENDED SECTION -->
+    <div class="section-header">🔁 Recomendado para ti</div>
+    <div class="ebook-grid">
       <div class="ebook-card">
         <div>
           <h4>Lección Final: Evaluación</h4>
-          <p>Curso: Yoga para Principiantes</p>
-          <p>Material: PDF - Test y resumen</p>
+          <p>Curso: Nutrición Deportiva</p>
+          <p>Material: PDF - Test Final</p>
         </div>
         <div class="ebook-actions">
-          <a href="#" target="_blank"><i class="fas fa-book-open"></i> Ver PDF</a>
+          <a href="#"><i class="fas fa-book-open"></i> Ver PDF</a>
           <span class="status completed">Completado</span>
         </div>
       </div>
     </div>
   </div>
+</section>
 
-  </section>
-
-
-
-  
-
-
- 
-  <script  src="eBooks.js" type="module"></script>
+  <script src="eBooks.js" type="module"></script>
 </body>
-</html>

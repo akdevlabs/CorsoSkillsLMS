@@ -720,6 +720,17 @@ main {
   justify-content: space-between;
   margin: 1rem 0;
 }
+
+  /*----------- Calendar ------------*/
+.calendar-container {
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.65);
+  width: 8rem;
+  height: 8rem;
+  background-color: #ffffff;
+  transition: all 0.3s ease-in-out;
+}
 /*----------- Carousel Section ------------*/
 .custom-carousel-wrapper {
   display: flex;

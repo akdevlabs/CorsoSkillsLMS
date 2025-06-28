@@ -1,0 +1,72 @@
+/* Reset and Global */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+/*----------- Navigation ------------*/
+.nav {
+  padding: 1rem;
+  display: flex;
+  margin: 1rem;
+  border-radius: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+#Bulogos {
+  width: 3rem;
+}
+.sidebar-top {
+  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.Side-caret {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+.Action-nav-btns,
+.Side-Btns {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.Side-Btns i {
+  font-size: 1.5rem;
+}
+.linkName {
+  font-size: 0.8rem;
+}
+#open {
+  margin: 0 -1.3rem;
+}
+.sidebar-bottom {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+
+
