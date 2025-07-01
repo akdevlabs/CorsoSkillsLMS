@@ -17,8 +17,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RutaProfesional|StudentDashboard|CorsoSkills</title>
-  <link rel="stylesheet" href="RutaProfesional.css">
+  <title>Classroom|StudentDashboard|CorsoSkills</title>
+  <link rel="stylesheet" href="Classroom.css">
 </head>
 <body>
   <section class="nav" id="sidebar">
@@ -91,86 +91,85 @@
       </div>
   </section>
 
-  <section class="course">
-
-  </section>
-
-  <section class="Course-Content-block" id="Course-Content-block">
- <div class="container">
-  <h1>Mi Ruta de Carrera</h1>
-
-  <div class="card-grid">
-    <!-- Completed -->
-    <div class="card completed">
-      <div class="status">✅ Completado</div>
-      <h3>Curso 1: Fundamentos del Movimiento</h3>
-      <p>Finalizado con éxito</p>
-      <div class="icon-row">
-        <div class="icon"><i class="fa-solid fa-certificate"></i></div>
-        <div class="icon"><i class="fa-solid fa-book"></i></div>
+  <section class="Content" id="Course-Content">
+    <div class="Top-Course-Content" id="Top-Course-Content">
+      <div class="Course-Nav" id="breadcrumb">
+        <span>Mis Cursos</span> > <span id="Type">Mastering Illustration</span> > <span id="current">Course</span>
       </div>
+      <h1 id="Courese-Tittle"></h1>      
     </div>
 
-    <!-- In Progress -->
-    <div class="card in-progress">
-      <div class="status">⏳ En progreso</div>
-      <h3>Curso 2: Anatomía Funcional</h3>
-      <p>2 semanas restantes</p>
-      <div class="icon-row">
-        <div class="icon"><i class="fa-solid fa-hourglass-half"></i></div>
-        <div class="icon"><i class="fa-solid fa-book-open"></i></div>
-      </div>
-    </div>
-
-    <!-- Pending -->
-    <div class="card pending">
-      <div class="status">🕗 Pendiente</div>
-      <h3>Curso 3: Estrategias de Entrenamiento</h3>
-      <p>Aún no iniciado</p>
-      <div class="icon-row">
-        <div class="icon"><i class="fa-regular fa-clock"></i></div>
-        <div class="icon"><i class="fa-solid fa-lock"></i></div>
-      </div>
-    </div>
-
-    <!-- Pending -->
-    <div class="card pending">
-      <div class="status">🕗 Pendiente</div>
-      <h3>Curso 4: Negocios en Educación Física</h3>
-      <p>Próximo módulo</p>
-      <div class="icon-row">
-        <div class="icon"><i class="fa-regular fa-calendar-days"></i></div>
-        <div class="icon"><i class="fa-solid fa-lock"></i></div>
-      </div>
-    </div>
-
-    <!-- Upcoming -->
-    <div class="card pending">
-      <div class="status">🕗 Pendiente</div>
-      <h3>Curso 5: Nutrición y Rendimiento</h3>
-      <p>Comienza en junio</p>
-      <div class="icon-row">
-        <div class="icon"><i class="fa-regular fa-clock"></i></div>
-        <div class="icon"><i class="fa-solid fa-apple-whole"></i></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer">
-    ¡Ya completaste <strong>1 de 5</strong> cursos! 🌟 Mantén el enfoque y sigue avanzando.
-  </div>
+<div class="video-player" id="videoContainer">
+  <img src="https://via.placeholder.com/720x400.png?text=Course+Video" alt="Course Video" />
+  <div class="video-time">12:30 / 20:00</div>
 </div>
-    
 
 
-
-
-
-
+    <div class="bottom-Course-Content" id="bottom-Course-Content">
+      <div class="mentor-info">
+        <img id="Mentor-Photo" />
+        <div>
+          <div id="Teacher-Name"></div>
+          <div id="Teacher-Subtitle"></div>
+        </div>
+      </div>
+      <div class="course-description">
+        <h3>Acerca de este curso</h3>
+        <div class="About-Course">
+          <div id="About-Course-1"></div>
+          <div id="About-Course-2"></div>
+        </div>
+        <a id="showMoreLink">Show more</a>
+      </div>
+      <div class="course-suit" id="resultados-aprendizaje"></div>
+    </div>
   </section>
+
+  <div id="course-grid"></div>
+
+ <div class="container">
+
+
+    <!-- Main Content -->
+    <main class="course-content">
+
+
+
+
+    </main>
+
+        <!-- Sidebar Progress -->
+    <aside class="sidebar">
+      <div class="progress-section">
+        <h4>Your Study Progress <span>4%</span></h4>
+        <div class="progress-bar">
+          <div class="progress" style="width: 4%;"></div>
+        </div>
+        <p>Great Job! You're on the path to becoming a certified Mastering Illustration. Finish strong!</p>
+      </div>
+
+      <div class="course-completion">
+        <h4>Course Completion <span>1/25</span></h4>
+        <ul>
+          <li class="completed">
+            <i class="fas fa-check-circle"></i> Introduction <span>20 min</span>
+          </li>
+          <li class="active">
+            <i class="fas fa-play-circle"></i> Mastering Tools <span>1 hour 20 min</span>
+          </li>
+          <li><i class="far fa-circle"></i> Mastering Adobe Illustrator <span>2 hour 10 min</span></li>
+          <li><i class="far fa-circle"></i> Create Simple Shape <span>40 min</span></li>
+          <li><i class="far fa-circle"></i> Typography <span>40 min</span></li>
+          <li><i class="far fa-circle"></i> Mastering Pen Tool <span>1 hour 40 min</span></li>
+          <li><i class="far fa-circle"></i> Mastering Pro Create <span>2 hour</span></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+  
 
 
  
-  <script  src="RutaProfesional.js" type="module"></script>
+  <script  src="Classroom.js" type="module"></script>
 </body>
 </html>

@@ -1,9 +1,79 @@
-  body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #f7f9fc;
-      color: #333;
-    }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  }
+
+body {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/*----------- nav ------------*/
+.nav {
+  padding: 1rem ;
+  display: flex;
+  margin: 1rem 0 1rem 1rem ;
+  border-radius: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+.sidebar-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:space-between;
+}
+#Bulogos{
+  width: 3rem;
+  display: flex;
+  align-items: left;
+}
+.sidebar-top{
+  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+}
+.Side-caret{
+  display: flex;
+  align-items: flex-end;
+  justify-content: right;
+  font-size: 1.5rem;
+
+}
+.Action-nav-btns{
+  display: flex;
+  align-items: center;
+
+}
+.Side-Btns{
+  gap:.5rem;
+  display: flex;
+  align-items: center;
+
+}
+.Side-Btns i{
+  font-size: 1.5rem;
+}
+.linkName{
+  font-size: .8rem;
+}
+#open{
+  margin: 0 -1.3rem;
+}
+.sidebar-bottom{
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+#Course-Container-Block {
+  width: 100%;
+  margin: 2rem 1rem;
+}
+
 
     .container {
       max-width: 1200px;
