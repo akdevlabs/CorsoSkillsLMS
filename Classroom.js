@@ -20,7 +20,10 @@ const db = getFirestore(app);
 const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
 const UserUidInfo = localStorage.getItem("UserUidInfo");
 
+const courseId = localStorage.getItem("selectedCourseId");
+
 console.log(UserUidInfo)
+console.log(courseId)
 async function applyBranding() {
   try {
     const docRef = doc(db, "CorsoSkillBusiness", TBuInfo); // Ensure db and transferredInfo are initialized
@@ -86,6 +89,12 @@ applyBranding().then((data) => {
   }
   setGlobalFont(data.Font)
 
+
+
+
+
+
+
   function SetMainColors(){
     renderImage(data.BuLogos.Icons[0], "BuLogo", "Bulogos")
     setBodyBackgroundColor(Prime4)
@@ -93,7 +102,6 @@ applyBranding().then((data) => {
 
     
   }
-
   function sidebarcolors(){
     setTextColors(".Side-Btns", Base)
     setTextColors(".fa-solid", Base)
@@ -119,11 +127,14 @@ applyBranding().then((data) => {
 
 
   }
-
-  function CourseBtnColors(){
-    setBackgroundColor("Course-btn-block-text", Prime5)
-    setBackgroundColor("courseContainer", Prime5)
+  function CourseContentColors(){
+    setBackgroundColor("Top-Course-Content", Prime5)
+    setBackgroundColor("bottom-Course-Content", Prime5)
   }
+
+
+ 
+
   function CouresesColors(){
     setBackgroundColor("Courses-Block", Prime5) 
   }
@@ -227,11 +238,10 @@ applyBranding().then((data) => {
 
   SetMainColors()
   sidebarcolors()
-  CourseBtnColors()
-  CouresesColors()
-  filtersColors()
-  searchBarColors()
-  CourseCardColors()
+  CourseContentColors()
+
+
+
 
 });
 
@@ -253,7 +263,6 @@ async function getstudentContent() {
     return null;
   }
 }
-
 async function getCorsoSkillAppContent() {
   try {
     const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
@@ -271,168 +280,165 @@ async function getCorsoSkillAppContent() {
   }
 }
 
-  async function fetchAllContent() {
-    try {
-      const studentData = await getstudentContent();
-      const businessData = await getCorsoSkillAppContent();
-
-      if (!studentData || !businessData) {
-        console.log("Missing data: studentData or businessData is null");
+async function fetchAllContent() {
+  try {
+    const studentData = await getstudentContent();
+    const businessData = await getCorsoSkillAppContent();
+    const courseData = businessData.Courses;
+    if (!studentData || !businessData) {
+      console.log("Missing data: studentData or businessData is null");
         return;
+    }
+
+    console.log("Student Document Data:", studentData);
+    console.log("Business Document Data:", businessData);
+    
+    function renderImage(imageUrl, altUrl, UrlId) {
+      const logoElement = document.getElementById(UrlId);
+      if (logoElement) {
+        logoElement.src = imageUrl;
+        logoElement.alt = altUrl;
+      } else {
+        console.error("Element with ID 'logo' not found.");
+      }
+    }
+    function renderText(text, elementId) {
+      const element = document.getElementById(elementId);
+
+      if (element) {
+        element.textContent = text;
+      } else {
+        console.error(`Element with ID "${elementId}" not found.`);
+      }
+    }
+    function findCourseById(courseData) {
+      const selectedId = localStorage.getItem("selectedCourseId");
+      if (!selectedId) {
+        console.warn("No selectedCourseId in localStorage");
+        return null;
       }
 
-      console.log("Student Document Data:", studentData);
-      console.log("Business Document Data:", businessData);
+      const categories = Object.values(courseData); // AI, Business, Design, etc.
 
-      async function getStudentData() {
-        // 🔁 Reemplaza con tu lógica real (Firebase, API, etc.)
-        return await fetchStudentDataFromFirebase();
-      }
+      for (const category of categories) {
+        if (typeof category !== "object" || Array.isArray(category)) continue;
 
-      async function getBusinessData() {
-        // 🔁 Reemplaza con tu lógica real
-        return await fetchBusinessDataFromFirebase();
-      }
-
-      function logCourseSlotIds(courses) {
-        const ids = [];
-        for (const key in courses) {
-          if (courses.hasOwnProperty(key) && courses[key].Id) {
-            ids.push(courses[key].Id);
-          }
-        }
-        return ids;
-      }
-
-      function renderNewCoursesOnly(courseArray, existingIds) {
-        const container = document.getElementById("course-grid");
-        container.innerHTML = "";
-
-        const newCourses = courseArray.filter(course => course.Id && !existingIds.includes(course.Id));
-
-        if (newCourses.length === 0) {
-          container.innerHTML = "<p>No hay cursos nuevos disponibles.</p>";
-          return;
-        }
-
-        newCourses.forEach(course => {
-          const card = document.createElement("div");
-          card.className = "course-card";
-          card.setAttribute("data-course-id", course.Id); // attach courseId as a data attribute
-          card.innerHTML = `
-            <div class="card">
-              <img src="${course.CImg || 'https://via.placeholder.com/320x180'}" alt="Imagen del curso" />
-              <h3>${course.Tittle}</h3>
-              <p><strong>Profesor:</strong> ${course.Teacher || 'No especificado'}</p>
-              <p><strong>Descripción:</strong> ${course.Description || 'Sin descripción'}</p>
-              <button class="view-more-btn">Ver más información</button>
-            </div>
-          `;
-          container.appendChild(card);
-        });
-      }
-
-      // Event delegation: listen for clicks on any "Ver más información" button
-      document.addEventListener("click", function (e) {
-        if (e.target.classList.contains("view-more-btn")) {
-          const courseCard = e.target.closest(".course-card");
-          const courseId = courseCard.getAttribute("data-course-id");
-          if (courseId) {
-            localStorage.setItem("selectedCourseId", courseId);
-            window.location.href = "index10.7.html";
-          }
-        }
-      });
-
-
-      function CheckCourses() {
-        if (!studentData || !businessData) {
-          console.warn("❌ studentData o businessData no están disponibles.");
-          return;
-        }
-
-        const studentIds = logCourseSlotIds(studentData.Courses);
-        const category = document.getElementById("category-filter").value;
-        const level = document.getElementById("level-filter").value;
-        const price = document.getElementById("price-filter").value;
-        const sort = document.getElementById("sort-filter").value;
-        const searchQuery = document.getElementById("searchInput").value.toLowerCase();
-
-        const allCourses = businessData.Courses;
         const levels = ["Beginner", "Intermediate", "Advanced"];
-        let collectedCourses = [];
-
-        for (let cat in allCourses) {
-          if (category !== "all" && cat !== category) continue;
-          const levelSet = allCourses[cat];
-          if (!levelSet) continue;
-
-          if (level === "all") {
-            levels.forEach(lvl => {
-              const courses = levelSet[lvl];
-              if (courses) collectedCourses.push(...Object.values(courses));
-            });
-          } else {
-            const courses = levelSet[level];
-            if (courses) collectedCourses.push(...Object.values(courses));
+        for (const level of levels) {
+          const levelGroup = category[level];
+          if (levelGroup && typeof levelGroup === "object") {
+            for (const course of Object.values(levelGroup)) {
+              if (course && course.Id === selectedId) {
+                console.log("Matched Course:", course);
+                return course; // ✅ Return the single matched object
+              }
+            }
           }
         }
-
-        collectedCourses = collectedCourses.filter(course => {
-          const title = course.Tittle?.toLowerCase() || "";
-          const desc = course.Description?.toLowerCase() || "";
-          return title.includes(searchQuery) || desc.includes(searchQuery);
-        });
-
-        collectedCourses = collectedCourses.filter(course => {
-          if (price === "free") return course.Price === 0 || course.Free === true;
-          if (price === "paid") return course.Price > 0 || course.Free === false;
-          return true;
-        });
-
-        collectedCourses.sort((a, b) => {
-          if (sort === "latest") return (b.Timestamp || 0) - (a.Timestamp || 0);
-          if (sort === "popular") return (b.Popularity || 0) - (a.Popularity || 0);
-          if (sort === "rated") return (b.Rating || 0) - (a.Rating || 0);
-          return 0;
-        });
-
-        renderNewCoursesOnly(collectedCourses, studentIds);
       }
 
-      // Detectar cambios en filtros
-      ["category-filter", "level-filter", "price-filter", "sort-filter"].forEach(id => {
-        document.getElementById(id).addEventListener("change", CheckCourses);
-      });
+      console.warn("No course found with ID:", selectedId);
+      return null;
+    }
 
-      // Inicializar al cargar
-      document.addEventListener("DOMContentLoaded", async () => {
-        studentData = await getStudentData();
-        businessData = await getBusinessData();
+    function renderResultadosAprendizaje({ Tittle, SubTittle, List }, containerId = "resultados-aprendizaje") {
+      const container = document.getElementById(containerId);
+      if (!container || !Array.isArray(List)) return;
 
-        document.getElementById("category-filter").value = "all";
-        document.getElementById("level-filter").value = "all";
-        document.getElementById("price-filter").value = "all";
-        document.getElementById("sort-filter").value = "relevance";
-        document.getElementById("searchInput").value = "";
+      container.innerHTML = `
+        <h2>${Tittle}</h2>
+        <p>${SubTittle}</p>
+        <ul>
+          ${List.map(item => `<li>${item}</li>`).join("")}
+        </ul>
+      `;
+    }
+document.addEventListener("DOMContentLoaded", function () {
+  const loadVideoBtn = document.getElementById("loadVideoBtn");
 
-        CheckCourses();
-      });
+  loadVideoBtn.addEventListener("click", function () {
+    addVideoToPlayer("https://www.w3schools.com/html/mov_bbb.mp4");
+  });
+});
+
+function addVideoToPlayer(videoUrl) {
+  const container = document.getElementById("videoContainer");
+
+  // Clear existing content
+  container.innerHTML = "";
+
+  // Create video element
+  const video = document.createElement("video");
+  video.setAttribute("controls", true);
+  video.setAttribute("width", "100%");
+  video.src = videoUrl;
+
+  // Create and update time display
+  const timeDisplay = document.createElement("div");
+  timeDisplay.className = "video-time";
+  timeDisplay.textContent = "0:00 / 0:00";
+
+  video.addEventListener("loadedmetadata", () => {
+    timeDisplay.textContent = `0:00 / ${formatTime(video.duration)}`;
+  });
+
+  video.addEventListener("timeupdate", () => {
+    timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
+  });
+
+  container.appendChild(video);
+  container.appendChild(timeDisplay);
+}
+
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${s < 10 ? "0" : ""}${s}`;
+}
 
 
 
+    const CouresIdInfo = findCourseById(courseData);
 
-    } catch (err) {
+    renderText(CouresIdInfo.Type, "Type")
+    renderText(CouresIdInfo.Level, "current")
+    renderText(CouresIdInfo.Tittle, "Courese-Tittle")
+
+    renderImage(CouresIdInfo.Teacher.Img, "Mentor Photo", "Mentor-Photo")
+    renderText(CouresIdInfo.Teacher.Name, "Teacher-Name")
+    renderText(CouresIdInfo.Teacher.Subtitle, "Teacher-Subtitle")
+
+    renderText(CouresIdInfo.Description[0], "About-Course-1")
+    renderText(CouresIdInfo.Description[1], "About-Course-2")
+    renderResultadosAprendizaje(CouresIdInfo.Points)
+
+
+   addVideoToPlayer(CouresIdInfo.Modules.Intro.Video);
+
+//Description
+
+  } catch (err) {
       console.error("Error in fetchAllContent:", err);
     }
-  }
+}
 
-// Run the fetch
+
 fetchAllContent();
 
+document.addEventListener("DOMContentLoaded", function () {
+  const openBtn = document.getElementById("showMoreLink");
+  const Info = document.getElementById("About-Course-2");
+
+  function showSidebarText() {
+    openBtn.style.display = "none";
+    Info.style.display = "flex";
+  }
 
 
 
+  openBtn.addEventListener("click", showSidebarText);
+
+});
 
  document.addEventListener("DOMContentLoaded", function () {
     const openBtn = document.getElementById("open");
@@ -457,7 +463,6 @@ fetchAllContent();
     // Initial state: hide all link names, show open button only
     hideSidebarText();
  });
-
 
  document.getElementById("Home").addEventListener("click", function () {
   window.location.href = "index10.html";
