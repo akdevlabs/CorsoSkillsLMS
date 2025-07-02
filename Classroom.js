@@ -131,111 +131,148 @@ applyBranding().then((data) => {
     setBackgroundColor("Top-Course-Content", Prime5)
     setBackgroundColor("bottom-Course-Content", Prime5)
   }
-
-
- 
-
-  function CouresesColors(){
-    setBackgroundColor("Courses-Block", Prime5) 
-  }
-  function filtersColors(){
+  function SkrollColors(){
     const style = document.createElement('style');
     style.textContent = `
-      .calendar-container {
-        background: ${Prime5};
+      .Content::-webkit-scrollbar-track {
+        background:${Prime5};
       }
-      .filters select {
-        border: 2px solid ${Prime3};
+      .Content::-webkit-scrollbar-thumb {
+        background: ${Base};
+      }
+      .Content::-webkit-scrollbar-thumb:hover {
+        background: ${Base};
+      }
+    `;
+    document.head.appendChild(style);
+  }
+  function breadcrumbColors(){
+    const style = document.createElement('style');
+    style.textContent = `
+    #Courese-Tittle{
+      color: ${Base};
+    }
+    #breadcrumb {
+      color: ${Prime1};
+    }
+    #breadcrumb #current {
+      color: ${Prime2};
+    }
+    `;
+    document.head.appendChild(style);
+  }
+  function TopColors(){
+    const style = document.createElement('style');
+    style.textContent = `
+    .nav {
+      border: 2px solid ${Prime};
+    }
+    .video-player {
+      background-color: ${Prime};
+    }
+    .bottom-Course-Content {
+      border: 2px solid ${Prime};
+    }
+    .Top-Course-Content {
+     border: 2px solid ${Prime};
+    }
+    .sidebar {
+      border: 2px solid ${Prime};
+    }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function CorurseContentColors() {
+    const style = document.createElement('style');
+    style.textContent = `
+      .mentor-info img {
+        border: 2px solid ${Prime2};
+      }
+      #Teacher-Name {
+        color: ${Prime2};
+      }
+      #Teacher-Subtitle {
+        color: ${Base};
+      }
+      .course-description h3 {
+        color: ${Base};
+      }
+      #About-Course-1{
+        color: ${Base};
+      }
+      #About-Course-2{
+        color: ${Base};
+      }
+      .course-description a {
+        color: ${Prime2};
+      }
+      .course-suit ul {
+        color: ${Prime3};
+      }
+      #resultados-aprendizaje h2 {
+        color: ${Base};
+      }
+      #resultados-aprendizaje p {
+        color:${Prime3};
+      }
+      #resultados-aprendizaje li {
+        color: ${Prime};
+      }
+      #resultados-aprendizaje li::before {
+        color: ${Prime2};
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function sidebarconColors(){
+    const style = document.createElement('style');
+    style.textContent = `
+      .sidebar {
         background-color: ${Prime5};
       }
-
-      .filters select:focus {
-        border-color: 1px solid ${Base};
+      .progress-section span {
+        color: #6c63ff;
       }
-      .search-bar input {
-        border: 2px solid ${Prime3};
+      .progress-bar {
+        background: #eee;
       }
-      .search-bar button {
-        background-color: ${Base};
-        color: ${Prime5};
+      .progress {
+        background: #6c63ff;
       }
-      .search-bar button:hover {
-        background-color: ${Prime2};
+      .sidebar p {
+        color: #666;
       }
-    `;
-    document.head.appendChild(style);
-  }
-  function  searchBarColors(){
-    const style = document.createElement('style');
-    style.textContent = `
-      #Course-btn-block-text h1{
-        color:${Base};
+      .course-completion li {
+        background-color: #f8f8ff;
+        color: #555;
       }
-      #Course-btn-block-text h3{
-        color: ${Prime1};
+      .course-completion li i {
+        color: #6c63ff;
       }
-    `;
-    document.head.appendChild(style);
-  }
-  function filtersColors(){
-    const style = document.createElement('style');
-    style.textContent = `
-      .calendar-container {
-        background: ${Prime5};
+      .course-completion li.completed {
+        color: green;
+        background-color: #e6f7ea;
       }
-      .filters select {
-        border: 2px solid ${Prime3};
-        background-color: ${Prime5};
-      }
-
-      .filters select:focus {
-        border-color: 1px solid ${Base};
-      }
-      .search-bar input {
-        border: 2px solid ${Prime3};
-      }
-      .search-bar button {
-        background-color: ${Base};
-        color: ${Prime5};
-      }
-      .search-bar button:hover {
-        background-color: ${Prime2};
+      .course-completion li.active {
+        background-color: #efefff;
+        color: #333;
       }
     `;
     document.head.appendChild(style);
   }
-  function CourseCardColors(){
-    const style = document.createElement('style');
-    style.textContent = `
-      .course-card {
-        color: ${Prime}; 
-        background: ${Prime4}; 
-      }
-      .course-card h3 {
-        color: ${Base}; 
-      }
-
-      .course-card p {
-        color: ${Prime}; 
-      }
-      .course-card button {
-        background-color:${Base}; 
-        color: ${Prime5}; 
-      }
-      .course-card button:hover {
-        background-color: ${Prime2}; 
-      }
-
-    `;
-    document.head.appendChild(style);
-  }
 
 
 
 
+TopColors()
 
+CorurseContentColors()
+SkrollColors()
+breadcrumbColors()
 
-
+sidebarconColors()
   SetMainColors()
   sidebarcolors()
   CourseContentColors()
@@ -353,69 +390,124 @@ async function fetchAllContent() {
         </ul>
       `;
     }
-document.addEventListener("DOMContentLoaded", function () {
-  const loadVideoBtn = document.getElementById("loadVideoBtn");
+    document.addEventListener("DOMContentLoaded", function () {
+      const loadVideoBtn = document.getElementById("loadVideoBtn");
 
-  loadVideoBtn.addEventListener("click", function () {
-    addVideoToPlayer("https://www.w3schools.com/html/mov_bbb.mp4");
-  });
-});
+      loadVideoBtn.addEventListener("click", function () {
+        addVideoToPlayer("https://www.w3schools.com/html/mov_bbb.mp4");
+      });
+    });
 
-function addVideoToPlayer(videoUrl) {
-  const container = document.getElementById("videoContainer");
+    function setVideoSource(videoUrl) {
+      const videoContainer = document.getElementById("videoContainer");
 
-  // Clear existing content
-  container.innerHTML = "";
+      // Find or create the video element
+      let video = videoContainer.querySelector("video");
+      if (!video) {
+        video = document.createElement("video");
+        video.controls = true;
+        videoContainer.innerHTML = ''; // Clear any previous content
+        videoContainer.appendChild(video);
+      }
 
-  // Create video element
-  const video = document.createElement("video");
-  video.setAttribute("controls", true);
-  video.setAttribute("width", "100%");
-  video.src = videoUrl;
+      // Create and set the <source> tag
+      video.innerHTML = ''; // Clear previous sources
+      const source = document.createElement("source");
+      source.src = videoUrl;
+      source.type = "video/mp4";
 
-  // Create and update time display
-  const timeDisplay = document.createElement("div");
-  timeDisplay.className = "video-time";
-  timeDisplay.textContent = "0:00 / 0:00";
+      video.appendChild(source);
+      video.load(); // Refresh the video element
+    }
+    function renderStarsToElement(elementId, rating) {
+      const maxStars = 5;
+      let starsHTML = '';
 
-  video.addEventListener("loadedmetadata", () => {
-    timeDisplay.textContent = `0:00 / ${formatTime(video.duration)}`;
-  });
+      for (let i = 1; i <= maxStars; i++) {
+        if (i <= rating) {
+          starsHTML += '<i class="fas fa-star"></i>'; // filled
+        } else {
+          starsHTML += '<i class="far fa-star"></i>'; // outline
+        }
+      }
 
-  video.addEventListener("timeupdate", () => {
-    timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration)}`;
-  });
+      const container = document.getElementById(elementId);
+      if (container) container.innerHTML = starsHTML;
+    }
+    function renderHoursMinutes(durationObj) {
+      const durationDiv = document.getElementById("Duration");
 
-  container.appendChild(video);
-  container.appendChild(timeDisplay);
-}
+      // Extract hours and minutes (strings)
+      const hoursStr = durationObj.Hours || "";
+      const minutesStr = durationObj.Min || "";
 
-function formatTime(seconds) {
-  const m = Math.floor(seconds / 60);
-  const s = Math.floor(seconds % 60);
-  return `${m}:${s < 10 ? "0" : ""}${s}`;
-}
+      // Parse numbers safely, default to 0 if empty or invalid
+      const hours = parseInt(hoursStr) || 0;
+      const minutes = parseInt(minutesStr) || 0;
+
+      // Build the duration string
+      let result = "";
+      if (hours > 0) result += `${hours} hr${hours > 1 ? 's' : ''} `;
+      if (minutes > 0) result += `${minutes} min`;
+
+      // If both zero, show "0 min"
+      if (result.trim() === "") result = "0 min";
+
+      durationDiv.textContent = result.trim();
+    }
+    function renderLanguages(obj) {
+      const container = document.getElementById("Language");
+      if (!container) {
+        console.error("No element with id 'Language' found");
+        return;
+      }
+
+      container.innerHTML = ""; // Clear existing content
+
+      if (Array.isArray(obj.Language)) {
+        obj.Language.forEach(lang => {
+          const p = document.createElement("p");
+          p.textContent = lang;
+          container.appendChild(p);
+        });
+      } else {
+        console.error("'Language' is not an array");
+      }
+    }
+
 
 
 
     const CouresIdInfo = findCourseById(courseData);
 
-    renderText(CouresIdInfo.Type, "Type")
-    renderText(CouresIdInfo.Level, "current")
-    renderText(CouresIdInfo.Tittle, "Courese-Tittle")
+    console.log(CouresIdInfo)
+    function RenderBottomContent(){
+      renderText(CouresIdInfo.Type, "Type")
+      renderText(CouresIdInfo.Level, "current")
+      renderText(CouresIdInfo.Tittle, "Courese-Tittle")
 
-    renderImage(CouresIdInfo.Teacher.Img, "Mentor Photo", "Mentor-Photo")
-    renderText(CouresIdInfo.Teacher.Name, "Teacher-Name")
-    renderText(CouresIdInfo.Teacher.Subtitle, "Teacher-Subtitle")
+      renderImage(CouresIdInfo.Teacher.Img, "Mentor Photo", "Mentor-Photo")
+      renderText(CouresIdInfo.Teacher.Name, "Teacher-Name")
+      renderText(CouresIdInfo.Teacher.Subtitle, "Teacher-Subtitle")
 
-    renderText(CouresIdInfo.Description[0], "About-Course-1")
-    renderText(CouresIdInfo.Description[1], "About-Course-2")
-    renderResultadosAprendizaje(CouresIdInfo.Points)
+      renderText(CouresIdInfo.Description[0], "About-Course-1")
+      renderText(CouresIdInfo.Description[1], "About-Course-2")
+      renderResultadosAprendizaje(CouresIdInfo.Points)
+
+      setVideoSource(CouresIdInfo.Modules.Intro.Video);
+    }
+    function RenderSidebarContent(){
+      renderStarsToElement("Review-Stars", CouresIdInfo.Reviews.Average)
+      renderHoursMinutes(CouresIdInfo.Duration)
+      renderText(CouresIdInfo.Level, "Skill-Level")
+      renderLanguages(CouresIdInfo)
+      renderText(CouresIdInfo.SignUps, "Views")
+    }
 
 
-   addVideoToPlayer(CouresIdInfo.Modules.Intro.Video);
+    RenderBottomContent()
+    RenderSidebarContent()
 
-//Description
 
   } catch (err) {
       console.error("Error in fetchAllContent:", err);

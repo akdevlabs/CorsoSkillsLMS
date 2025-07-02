@@ -323,8 +323,8 @@ async function getCorsoSkillAppContent() {
             <div class="card">
               <img src="${course.CImg || 'https://via.placeholder.com/320x180'}" alt="Imagen del curso" />
               <h3>${course.Tittle}</h3>
-              <p><strong>Profesor:</strong> ${course.Teacher || 'No especificado'}</p>
-              <p><strong>Descripción:</strong> ${course.Description || 'Sin descripción'}</p>
+              <p><strong>Profesor:</strong> ${course.Teacher?.Name || 'No especificado'}</p>
+              <p><strong>Descripción:</strong> ${course.Description[0]  || 'Sin descripción'}</p>
               <button class="view-more-btn">Ver más información</button>
             </div>
           `;
@@ -380,7 +380,7 @@ async function getCorsoSkillAppContent() {
 
         collectedCourses = collectedCourses.filter(course => {
           const title = course.Tittle?.toLowerCase() || "";
-          const desc = course.Description?.toLowerCase() || "";
+          const desc = course.Description[0]?.toLowerCase() || "";
           return title.includes(searchQuery) || desc.includes(searchQuery);
         });
 

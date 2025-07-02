@@ -100,55 +100,75 @@
     </div>
 
 <div class="video-player" id="videoContainer">
-  <img src="https://via.placeholder.com/720x400.png?text=Course+Video" alt="Course Video" />
-  <div class="video-time">12:30 / 20:00</div>
+  <video controls>
+    <source src="" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
 </div>
 
 
     <div class="bottom-Course-Content" id="bottom-Course-Content">
-      <div class="mentor-info">
-        <img id="Mentor-Photo" />
-        <div>
-          <div id="Teacher-Name"></div>
-          <div id="Teacher-Subtitle"></div>
+      <div class="Teacher-About-block">
+        <div class="mentor-info">
+          <img id="Mentor-Photo" />
+          <div class="Teacher-Text">
+            <div id="Teacher-Name"></div>
+            <div id="Teacher-Subtitle"></div>
+          </div>
         </div>
+        <div class="course-suit" id="resultados-aprendizaje"></div>
       </div>
       <div class="course-description">
-        <h3>Acerca de este curso</h3>
-        <div class="About-Course">
-          <div id="About-Course-1"></div>
-          <div id="About-Course-2"></div>
-        </div>
-        <a id="showMoreLink">Show more</a>
-      </div>
-      <div class="course-suit" id="resultados-aprendizaje"></div>
+          <h3>Acerca de este curso</h3>
+          <div class="About-Course">
+            <div id="About-Course-1"></div>
+            <div id="About-Course-2"></div>
+          </div>
+          <a id="showMoreLink">Show more</a>
+      </div> 
     </div>
   </section>
 
-  <div id="course-grid"></div>
+  <section class="sidebar" id="container">
+    <div class="Details-block">
+      <div class="Review-Stars">
+        <h1>Calificación</h1>        
+        <div id="Review-Stars"></div>
+      </div>
+      <div class="Detail-points">
 
- <div class="container">
+        <div class="Duration">
+          <i class="fa-solid fa-hourglass-start"></i>
+          <div id="Duration"></div>
+        </div>
 
+        <div class="Skill-Level">
+          <i class="fa-solid fa-ranking-star"></i>
+          <div id="Skill-Level"></div>
+        </div>
 
-    <!-- Main Content -->
-    <main class="course-content">
+        <div class="Language">
+          <i class="fa-solid fa-address-card"></i>
+          <div id="Language"></div>
+        </div>
 
+        <div class="Views">
+          <i class="fa-solid fa-signature"></i>
+          <div id="Views"></div>
+        </div>        
+      </div>
 
+    </div>
 
-
-    </main>
-
-        <!-- Sidebar Progress -->
-    <aside class="sidebar">
-      <div class="progress-section">
+    <div class="progress-section">
         <h4>Your Study Progress <span>4%</span></h4>
         <div class="progress-bar">
           <div class="progress" style="width: 4%;"></div>
         </div>
         <p>Great Job! You're on the path to becoming a certified Mastering Illustration. Finish strong!</p>
-      </div>
+    </div>
 
-      <div class="course-completion">
+    <div class="course-completion">
         <h4>Course Completion <span>1/25</span></h4>
         <ul>
           <li class="completed">
@@ -163,9 +183,18 @@
           <li><i class="far fa-circle"></i> Mastering Pen Tool <span>1 hour 40 min</span></li>
           <li><i class="far fa-circle"></i> Mastering Pro Create <span>2 hour</span></li>
         </ul>
-      </div>
-    </aside>
-  </div>
+    </div>
+
+    <div id="Enroll-block"></div>
+    <div id="Pay-block"></div>
+
+    <div id="suggeston-block"></div>
+
+
+
+     
+
+  </section>
   
 
 
