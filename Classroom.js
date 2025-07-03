@@ -475,12 +475,22 @@ async function fetchAllContent() {
       }
     }
 
+    function renderNewCoursesOnly(courseArray, existingIds) {
+        const newCourses = courseArray.filter(course => course.Id && !existingIds.includes(course.Id));
+
+        if (newCourses.length === 0) {
+            console.log("No hay cursos nuevos disponibles.");
+        } else {
+            console.log(`Hay ${newCourses.length} curso(s) nuevo(s) disponible(s).`, newCourses);
+        }
+    }
+
 
 
 
     const CouresIdInfo = findCourseById(courseData);
 
-    console.log(CouresIdInfo)
+
     function RenderBottomContent(){
       renderText(CouresIdInfo.Type, "Type")
       renderText(CouresIdInfo.Level, "current")
@@ -503,11 +513,225 @@ async function fetchAllContent() {
       renderLanguages(CouresIdInfo)
       renderText(CouresIdInfo.SignUps, "Views")
     }
+    function renderCouresSignupContent(){
+      function logCourseSlotIds(courses) {
+        const ids = [];
+        for (const key in courses) {
+          if (courses.hasOwnProperty(key) && courses[key].Id) {
+            ids.push(courses[key].Id);
+          }
+        }
+        return ids;
+      }
+      function FindFilter(){
+        const Level = CouresIdInfo.Level
+        if (Level === 'Principiante') {
+           return ("Beginner")
+        }else if(Level === 'Intermedio') {
+           return ("Intermediate")
+        }else if(Level === 'Avanzado') {
+           return ("Advanced")
 
+        }
+      }
+      function CourseType() {
+        const Type = CouresIdInfo.Type;
+     
+        if (Type === 'Inteligencia Artificial') {
+          return 'AI';
+        } else if (Type === 'Negocios') {
+          return 'Business';
+        } else if (Type === 'Diseño')  {
+          return 'Design';
+        } else if (Type === 'Finanzas'){
+           return 'Finance';
+        } else if (Type === 'Idiomas'){
+           return 'Languages';
+        } else if (Type === 'Liderazgo'){
+           return 'Leadership';
+        } else if (Type === 'Marketing'){
+           return 'Marketing';
+        } else if (Type === 'Productividad'){
+           return 'Productivity';
+        } else if (Type === 'Programación'){
+           return 'Programming';
+        } else if (Type === 'Ventas'){
+           return 'Sales';
+        } else if (Type === 'Tecnología'){
+           return 'Technology';
+        } else if (Type === 'Bienestar'){
+           return 'Wellness';
+        }
+
+         
+      }
+      function checkIfCourseIdExists(courseObj, idToFind) {
+        let found = false;
+
+        for (const key in courseObj) {
+          if (courseObj[key]?.Id === idToFind) {
+            return true
+          }
+        }
+
+        if (!found) {
+          return false
+        }
+      }
+
+
+      const studentCoureses = logCourseSlotIds(studentData.Courses)
+      const StuCour = studentData.Courses;
+      const Type = CourseType(); 
+      const level = FindFilter(); 
+      const Id = CouresIdInfo.Id
+
+         
+
+  
+
+
+      const AllCourses = businessData?.Courses?.[Type]?.[level];
+
+     // console.log("Level:", AllCourses);
+
+
+    console.log(checkIfCourseIdExists(StuCour, Id));
+
+    function EnrolledType() {
+      const Enrolled = studentData.Enrolled;
+      const enroll = document.getElementById("enroll-container");
+      const Upgrade = document.getElementById("Upgrade-container");
+      const Pay = document.getElementById("Pay-block");
+      const MySub = businessData.Settings.Offersubscriptions;
+
+      if (Enrolled === 'Monthly' || Enrolled === 'Yearly') {
+        enroll.style.display = "block";
+        Upgrade.style.display = "none";
+        Pay.style.display = "none";
+
+      } else if (Enrolled === 'Trial') {
+        if (Slot <= 3) {
+          enroll.style.display = "block";
+          Upgrade.style.display = "none";
+        } else {
+          enroll.style.display = "none";
+          Upgrade.style.display = "block";
+        }
+        Pay.style.display = "none";
+
+      } else if (Enrolled === 'Payper') {
+        enroll.style.display = "none";
+        Pay.style.display = "block";
+
+        if (MySub === true) {
+          Upgrade.style.display = "block";
+        } else {
+          Upgrade.style.display = "none";
+        }
+      }
+    }
+
+    function CheckACourse() {
+      const checker = checkIfCourseIdExists(StuCour, Id);
+      const Details = document.getElementById("Details-block");
+      const progress = document.getElementById("progress-section");
+      const view = document.getElementById("Module-view");
+      const List = document.getElementById("Module-List");
+      const enroll = document.getElementById("enroll-container");
+      const Upgrade = document.getElementById("Upgrade-container");
+      const Pay = document.getElementById("Pay-block");
+      const Trailer = document.getElementById("bottom-Course-Content");   
+      const Active = document.getElementById("Active-bottom-Course-Content");     
+
+      if (checker === true) {
+        // If already enrolled in course, override all UI
+        enroll.style.display = "none";
+        Upgrade.style.display = "none";
+        Pay.style.display = "none";
+        Details.style.display = "none";
+        progress.style.display = "block";
+        view.style.display = "none";
+        List.style.display = "block";
+        Trailer.style.display = "none";
+        Active.style.display ="block";
+
+      } else {
+        // If not enrolled, show default view according to subscription
+        EnrolledType(); // <<< make sure we run this here
+
+        Details.style.display = "block";
+        progress.style.display = "none";
+        view.style.display ="block";
+        List.style.display = "none";
+        Trailer.style.display = "flex";
+        Active.style.display = "none";
+      }
+      
+    }
+
+    // Call only the main entry function
+    CheckACourse();
+
+      
+
+    function countSlots(obj) {
+      return Object.keys(obj).filter(key => key.startsWith("Slot")).length;
+    }
+    function addNewSlot(obj, newCourseId) {
+      const slotCount = countSlots(obj);
+      const newSlotKey = `Slot${slotCount + 1}`;
+
+      const newSlot = {
+        Id: newCourseId,
+        progress: 0
+      };
+
+      obj[newSlotKey] = newSlot;
+
+      console.log(`Added ${newSlotKey}:`, newSlot);
+
+      return { [newSlotKey]: newSlot }; // Return new slot wrapped in key
+    }
+    function createEnrollButton(studentCourses, studentId, UserUidInfo, newCourseId) {
+      const btn = document.getElementById("enroll-container");
+
+      btn.addEventListener("click", async () => {
+        try {
+          // Add the slot locally
+          const newSlotData = addNewSlot(studentCourses, newCourseId);
+
+          // Upload only the new slot to Firestore under the nested "Courses"
+          const docRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+          await setDoc(docRef, { Courses: newSlotData }, { merge: true });
+
+          btn.textContent = "Inscrito ✔️";
+          btn.disabled = true;
+
+          alert("Información guardada correctamente.");
+
+          // Delay the reload by 2 seconds (2000ms)
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
+
+        } catch (error) {
+          console.error("Error al inscribirse:", error);
+          alert("Hubo un error al inscribirse. Intenta nuevamente.");
+        }
+      });
+    }
+    const newCourseId = Id            // <-- ID of course being enrolled in
+    const studentId = newCourseId;         // You can use same or different ID
+
+    createEnrollButton(StuCour, studentId, UserUidInfo, newCourseId);
+
+  }
+    
 
     RenderBottomContent()
     RenderSidebarContent()
-
+    renderCouresSignupContent()
 
   } catch (err) {
       console.error("Error in fetchAllContent:", err);

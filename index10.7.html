@@ -99,12 +99,12 @@
       <h1 id="Courese-Tittle"></h1>      
     </div>
 
-<div class="video-player" id="videoContainer">
-  <video controls>
-    <source src="" type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
-</div>
+    <div class="video-player" id="videoContainer">
+      <video controls>
+        <source src="" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
 
 
     <div class="bottom-Course-Content" id="bottom-Course-Content">
@@ -127,10 +127,19 @@
           <a id="showMoreLink">Show more</a>
       </div> 
     </div>
+
+    <div class="bottom-Course-Content" id="Active-bottom-Course-Content">
+      <div class="Active-Nav-Btns">
+        <button>Resources</button>
+        <button>Homework</button>
+        <button></button>
+      </div>
+
+    </div>
   </section>
 
   <section class="sidebar" id="container">
-    <div class="Details-block">
+    <div class="Details-block" id="Details-block">
       <div class="Review-Stars">
         <h1>Calificación</h1>        
         <div id="Review-Stars"></div>
@@ -160,7 +169,7 @@
 
     </div>
 
-    <div class="progress-section">
+    <div class="progress-section" id="progress-section">
         <h4>Your Study Progress <span>4%</span></h4>
         <div class="progress-bar">
           <div class="progress" style="width: 4%;"></div>
@@ -168,7 +177,20 @@
         <p>Great Job! You're on the path to becoming a certified Mastering Illustration. Finish strong!</p>
     </div>
 
-    <div class="course-completion">
+    <div class="course-completion" id="Module-view">
+        <h4>Course Completion</h4>
+        <ul>
+          <li class="completed"><span>Introduction</span><span>20 min</span></li>
+          <li><span>Mastering Tools</span><span>1 hour 20 min</span></li>
+          <li><span>Mastering Adobe Illustrator</span><span>2 hour 10 min</span></li>
+          <li><span>Create Simple Shape</span><span>40 min</span></li>
+          <li><span>Typography</span><span>40 min</span></li>
+          <li><span>Mastering Pen Tool</span><span>1 hour 40 min</span></li>
+          <li><span>Mastering Pro Create</span><span>2 hour</span></li>
+        </ul>
+    </div>
+
+    <div class="course-completion" id="Module-List">
         <h4>Course Completion <span>1/25</span></h4>
         <ul>
           <li class="completed">
@@ -185,8 +207,12 @@
         </ul>
     </div>
 
-    <div id="Enroll-block"></div>
-    <div id="Pay-block"></div>
+    <button class="Action-btns" id="enroll-container">inscribirse</button>
+    <button class="Action-btns" id="Upgrade-container">Obtener acceso ilimitado</button>
+    <div class="Pay-block" id="Pay-block">
+      <div id="Pay-info"></div>
+      <button class="Action-btns">Pagar</button>
+    </div>
 
     <div id="suggeston-block"></div>
 
