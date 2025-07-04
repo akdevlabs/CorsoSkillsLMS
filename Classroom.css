@@ -145,7 +145,10 @@ body {
   border-radius: 1rem;
 }
 /*----------- Bottom Course Section ------------*/
-.bottom-Course-Content {
+.bottom-Course-Content{
+  border-radius: 1rem;
+}
+#detials {
   gap: 1rem;
   display: flex;
   flex-direction: row;
@@ -153,6 +156,20 @@ body {
   border-radius: 1rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
+.Active-Nav-Btns{
+  gap: 2rem;
+  display: flex;
+  margin: 2rem 1.5rem 0 1.5rem;
+
+}
+.ANB{
+  font-weight: bold;
+  padding: .3rem 1rem;
+  border-radius: .5rem;
+  border: none;
+
+}
+
 .Teacher-About-block {
   width: 90rem;
   display: flex;
@@ -217,7 +234,44 @@ body {
   content: "✔";
   margin-right: 0.7rem;
 }
+/*----------- Active-bottom-Course-Content ------------*/
 
+
+
+
+/*----------- Resources ------------*/
+#Resources {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 10px;
+
+}
+#Resources-main-tittle{
+  font-size: 20px;
+  font-weight: bold;
+  margin: 1rem 2rem 0 2rem;
+}
+#Resourcesbtns {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  padding: 10px;
+  margin: 1rem;
+
+}
+.resource-download-btn {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: fit-content;
+  
+}
 
 
 

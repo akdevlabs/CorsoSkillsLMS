@@ -225,7 +225,45 @@ applyBranding().then((data) => {
     `;
     document.head.appendChild(style);
   }
+  function setActiveContent(){
+    //setBackgroundColor("Active-bottom-Course-Content", Prime5)
+    const style = document.createElement('style');
+    style.textContent = `
+    .ANB{
+      color:${Prime5};
+      background-color: ${Base};
+    }
+  
+    `;
+    document.head.appendChild(style);
+  }
+  function ResourcesColors(){
+    const style = document.createElement('style');
+    style.textContent = `
+      #Resources-main-tittle{
+        color: ${Base};
+      }
 
+      .resource-download-btn {
+        border: 2px solid ${Prime};
+        color:${Prime};
+      }
+
+      .resource-download-btn:hover {
+        border: none;
+        background-color:${Prime3};
+        color:${Prime5};
+      }
+
+      .resource-download-btn:active {
+        border: none;
+        background-color: ${Prime3};
+        color:${Prime5};
+      }
+
+    `;
+    document.head.appendChild(style);
+  }
   function sidebarconColors(){
     const style = document.createElement('style');
     style.textContent = `
@@ -271,12 +309,12 @@ TopColors()
 CorurseContentColors()
 SkrollColors()
 breadcrumbColors()
-
+setActiveContent()
 sidebarconColors()
   SetMainColors()
   sidebarcolors()
   CourseContentColors()
-
+ResourcesColors()
 
 
 
@@ -489,7 +527,7 @@ async function fetchAllContent() {
 
 
     const CouresIdInfo = findCourseById(courseData);
-
+    console.log(CouresIdInfo.Resources)
 
     function RenderBottomContent(){
       renderText(CouresIdInfo.Type, "Type")
@@ -596,142 +634,173 @@ async function fetchAllContent() {
      // console.log("Level:", AllCourses);
 
 
-    console.log(checkIfCourseIdExists(StuCour, Id));
+      console.log(checkIfCourseIdExists(StuCour, Id));
 
-    function EnrolledType() {
-      const Enrolled = studentData.Enrolled;
-      const enroll = document.getElementById("enroll-container");
-      const Upgrade = document.getElementById("Upgrade-container");
-      const Pay = document.getElementById("Pay-block");
-      const MySub = businessData.Settings.Offersubscriptions;
+      function EnrolledType() {
+        const Enrolled = studentData.Enrolled;
+        const enroll = document.getElementById("enroll-container");
+        const Upgrade = document.getElementById("Upgrade-container");
+        const Pay = document.getElementById("Pay-block");
+        const MySub = businessData.Settings.Offersubscriptions;
 
-      if (Enrolled === 'Monthly' || Enrolled === 'Yearly') {
-        enroll.style.display = "block";
-        Upgrade.style.display = "none";
-        Pay.style.display = "none";
-
-      } else if (Enrolled === 'Trial') {
-        if (Slot <= 3) {
+        if (Enrolled === 'Monthly' || Enrolled === 'Yearly') {
           enroll.style.display = "block";
           Upgrade.style.display = "none";
-        } else {
+          Pay.style.display = "none";
+
+        } else if (Enrolled === 'Trial') {
+          if (Slot <= 3) {
+            enroll.style.display = "block";
+            Upgrade.style.display = "none";
+          } else {
+            enroll.style.display = "none";
+            Upgrade.style.display = "block";
+          }
+          Pay.style.display = "none";
+
+        } else if (Enrolled === 'Payper') {
           enroll.style.display = "none";
-          Upgrade.style.display = "block";
+          Pay.style.display = "block";
+
+          if (MySub === true) {
+            Upgrade.style.display = "block";
+          } else {
+            Upgrade.style.display = "none";
+          }
         }
-        Pay.style.display = "none";
+      }
 
-      } else if (Enrolled === 'Payper') {
-        enroll.style.display = "none";
-        Pay.style.display = "block";
+      function CheckACourse() {
+        const checker = checkIfCourseIdExists(StuCour, Id);
+        const Details = document.getElementById("Details-block");
+        const progress = document.getElementById("progress-section");
+        const view = document.getElementById("Module-view");
+        const List = document.getElementById("Module-List");
+        const enroll = document.getElementById("enroll-container");
+        const Upgrade = document.getElementById("Upgrade-container");
+        const Pay = document.getElementById("Pay-block");
+        const Active = document.getElementById("Active-Nav-Btns");   
+        
 
-        if (MySub === true) {
-          Upgrade.style.display = "block";
-        } else {
+        if (checker === true) {
+          // If already enrolled in course, override all UI
+          enroll.style.display = "none";
           Upgrade.style.display = "none";
+          Pay.style.display = "none";
+          Details.style.display = "none";
+          progress.style.display = "block";
+          view.style.display = "none";
+          List.style.display = "block";
+          Active.style.display = "flex";
+
+        } else {
+          // If not enrolled, show default view according to subscription
+          EnrolledType(); // <<< make sure we run this here
+
+          Details.style.display = "block";
+          progress.style.display = "none";
+          view.style.display ="block";
+          List.style.display = "none";
+          Active.style.display = "none";
         }
+        
       }
-    }
 
-    function CheckACourse() {
-      const checker = checkIfCourseIdExists(StuCour, Id);
-      const Details = document.getElementById("Details-block");
-      const progress = document.getElementById("progress-section");
-      const view = document.getElementById("Module-view");
-      const List = document.getElementById("Module-List");
-      const enroll = document.getElementById("enroll-container");
-      const Upgrade = document.getElementById("Upgrade-container");
-      const Pay = document.getElementById("Pay-block");
-      const Trailer = document.getElementById("bottom-Course-Content");   
-      const Active = document.getElementById("Active-bottom-Course-Content");     
+      // Call only the main entry function
+      CheckACourse();
 
-      if (checker === true) {
-        // If already enrolled in course, override all UI
-        enroll.style.display = "none";
-        Upgrade.style.display = "none";
-        Pay.style.display = "none";
-        Details.style.display = "none";
-        progress.style.display = "block";
-        view.style.display = "none";
-        List.style.display = "block";
-        Trailer.style.display = "none";
-        Active.style.display ="block";
+        
 
-      } else {
-        // If not enrolled, show default view according to subscription
-        EnrolledType(); // <<< make sure we run this here
-
-        Details.style.display = "block";
-        progress.style.display = "none";
-        view.style.display ="block";
-        List.style.display = "none";
-        Trailer.style.display = "flex";
-        Active.style.display = "none";
+      function countSlots(obj) {
+        return Object.keys(obj).filter(key => key.startsWith("Slot")).length;
       }
+      function addNewSlot(obj, newCourseId) {
+        const slotCount = countSlots(obj);
+        const newSlotKey = `Slot${slotCount + 1}`;
+
+        const newSlot = {
+          Id: newCourseId,
+          progress: 0
+        };
+
+        obj[newSlotKey] = newSlot;
+
+        console.log(`Added ${newSlotKey}:`, newSlot);
+
+        return { [newSlotKey]: newSlot }; // Return new slot wrapped in key
+      }
+      function createEnrollButton(studentCourses, studentId, UserUidInfo, newCourseId) {
+        const btn = document.getElementById("enroll-container");
+
+        btn.addEventListener("click", async () => {
+          try {
+            // Add the slot locally
+            const newSlotData = addNewSlot(studentCourses, newCourseId);
+
+            // Upload only the new slot to Firestore under the nested "Courses"
+            const docRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+            await setDoc(docRef, { Courses: newSlotData }, { merge: true });
+
+            btn.textContent = "Inscrito ✔️";
+            btn.disabled = true;
+
+            alert("Información guardada correctamente.");
+
+            // Delay the reload by 2 seconds (2000ms)
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
+
+          } catch (error) {
+            console.error("Error al inscribirse:", error);
+            alert("Hubo un error al inscribirse. Intenta nuevamente.");
+          }
+        });
+      }
+      const newCourseId = Id            // <-- ID of course being enrolled in
+      const studentId = newCourseId;         // You can use same or different ID
+
+      createEnrollButton(StuCour, studentId, UserUidInfo, newCourseId);
+
+    }
+    function renderResourcesContent(){
       
+      function renderDownloadButtons(resourcesObj) {
+        const container = document.getElementById("Resourcesbtns");
+        container.innerHTML = ""; // Clear previous content
+
+        Object.keys(resourcesObj).forEach((key) => {
+          const resource = resourcesObj[key];
+
+          const btn = document.createElement("button");
+          btn.textContent = resource.Tittle;
+          btn.className = "resource-download-btn";
+
+          btn.addEventListener("click", () => {
+            const a = document.createElement("a");
+            a.href = resource.Link;
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+            a.click();
+          });
+
+          container.appendChild(btn);
+        });
+      }
+
+      renderDownloadButtons(CouresIdInfo.Resources)
+
+
+
     }
 
-    // Call only the main entry function
-    CheckACourse();
 
-      
 
-    function countSlots(obj) {
-      return Object.keys(obj).filter(key => key.startsWith("Slot")).length;
-    }
-    function addNewSlot(obj, newCourseId) {
-      const slotCount = countSlots(obj);
-      const newSlotKey = `Slot${slotCount + 1}`;
-
-      const newSlot = {
-        Id: newCourseId,
-        progress: 0
-      };
-
-      obj[newSlotKey] = newSlot;
-
-      console.log(`Added ${newSlotKey}:`, newSlot);
-
-      return { [newSlotKey]: newSlot }; // Return new slot wrapped in key
-    }
-    function createEnrollButton(studentCourses, studentId, UserUidInfo, newCourseId) {
-      const btn = document.getElementById("enroll-container");
-
-      btn.addEventListener("click", async () => {
-        try {
-          // Add the slot locally
-          const newSlotData = addNewSlot(studentCourses, newCourseId);
-
-          // Upload only the new slot to Firestore under the nested "Courses"
-          const docRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-          await setDoc(docRef, { Courses: newSlotData }, { merge: true });
-
-          btn.textContent = "Inscrito ✔️";
-          btn.disabled = true;
-
-          alert("Información guardada correctamente.");
-
-          // Delay the reload by 2 seconds (2000ms)
-          setTimeout(() => {
-            location.reload();
-          }, 1000);
-
-        } catch (error) {
-          console.error("Error al inscribirse:", error);
-          alert("Hubo un error al inscribirse. Intenta nuevamente.");
-        }
-      });
-    }
-    const newCourseId = Id            // <-- ID of course being enrolled in
-    const studentId = newCourseId;         // You can use same or different ID
-
-    createEnrollButton(StuCour, studentId, UserUidInfo, newCourseId);
-
-  }
-    
 
     RenderBottomContent()
     RenderSidebarContent()
     renderCouresSignupContent()
+    renderResourcesContent()
 
   } catch (err) {
       console.error("Error in fetchAllContent:", err);
@@ -756,7 +825,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
- document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     const openBtn = document.getElementById("open");
     const closeBtn = document.getElementById("close");
     const linkNames = document.querySelectorAll(".linkName");
@@ -778,9 +847,83 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initial state: hide all link names, show open button only
     hideSidebarText();
- });
+});
 
- document.getElementById("Home").addEventListener("click", function () {
+
+
+
+async function applyActiveNavBtns() {
+  try {
+    const docRef = doc(db, "CorsoSkillBusiness", TBuInfo); // Asegúrate de que db y TBuInfo estén definidos
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data(); // Retorna los datos del documento
+    } else {
+      console.error("No such document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching document:", error);
+    return null;
+  }
+}
+document.addEventListener("DOMContentLoaded", function () {
+  applyActiveNavBtns().then((data) => {
+    if (!data) return;
+
+    console.log(data.BuLogos.Icons[0]);
+
+    const { Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5 } = data.BuColors.Colors;
+
+    const DetialsBtn = document.getElementById("Detials-btn");
+    const ResourcesBtn = document.getElementById("Resources-btn");
+    const HomeworkBtn = document.getElementById("Homework-btn");
+    const ExamBtn = document.getElementById("Exam-btn");
+    const RequirementBtn = document.getElementById("Requirement-btn");   
+
+    const detials = document.getElementById("detials");
+    const Resources = document.getElementById("Resources");
+    const Homework = document.getElementById("Homework");
+    const Exam = document.getElementById("Exam");
+    const Requirement = document.getElementById("Requirement");
+
+    const sections = [detials, Resources, Homework, Exam, Requirement];
+    const buttons = [DetialsBtn, ResourcesBtn, HomeworkBtn, ExamBtn, RequirementBtn];
+
+    function hideAllSections() {
+      sections.forEach((section) => {
+        section.style.display = "none";
+      });
+      buttons.forEach((btn) => {
+        btn.style.backgroundColor = "";
+        btn.style.color = "";
+      });
+    }
+
+    function showSection(section, activeBtn) {
+      hideAllSections();
+      section.style.display = "flex";
+      activeBtn.style.backgroundColor = Prime2;
+      activeBtn.style.color = Prime5;
+    }
+
+    // Event listeners
+    DetialsBtn.addEventListener("click", () => showSection(detials, DetialsBtn));
+    ResourcesBtn.addEventListener("click", () => showSection(Resources, ResourcesBtn));
+    HomeworkBtn.addEventListener("click", () => showSection(Homework, HomeworkBtn));
+    ExamBtn.addEventListener("click", () => showSection(Exam, ExamBtn));
+    RequirementBtn.addEventListener("click", () => showSection(Requirement, RequirementBtn));
+
+    // Mostrar por defecto la sección "Details"
+    showSection(detials, DetialsBtn);
+  });
+
+
+});
+
+
+document.getElementById("Home").addEventListener("click", function () {
   window.location.href = "index10.html";
 });
 document.getElementById("Books").addEventListener("click", function () {
