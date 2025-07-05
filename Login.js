@@ -1,8 +1,11 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
   import {
-    getFirestore,
-    doc,
-    getDoc
+  getFirestore,
+  doc,
+  getDoc,
+  updateDoc,
+  serverTimestamp,
+  arrayUnion
   } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
   import {
     getAuth,
@@ -55,42 +58,61 @@
   });
 
   // Login handler with role detection
-  async function loginWithEmailPassword(email, password) {
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      const uid = user.uid;
+async function loginWithEmailPassword(email, password) {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    const uid = user.uid;
 
-      localStorage.setItem("ActiveLogedin", "true");
-      localStorage.setItem("UserUidInfo", uid);
+    localStorage.setItem("ActiveLogedin", "true");
+    localStorage.setItem("UserUidInfo", uid);
 
-      // Check if the user is a student or a teacher
-      const studentDoc = await getDoc(doc(db, "CorsoSkillsStudents", uid));
-      const teacherDoc = await getDoc(doc(db, "CorsoSkillsTeacher", uid));
-      const AffiliateDoc = await getDoc(doc(db, "CorsoSkillsAffiliate", uid));
+    // Check if the user is a student or a teacher or affiliate
+    const studentDocRef = doc(db, "CorsoSkillsStudents", uid);
+    const teacherDocRef = doc(db, "CorsoSkillsTeacher", uid);
+    const affiliateDocRef = doc(db, "CorsoSkillsAffiliate", uid);
 
+    const [studentDoc, teacherDoc, affiliateDoc] = await Promise.all([
+      getDoc(studentDocRef),
+      getDoc(teacherDocRef),
+      getDoc(affiliateDocRef)
+    ]);
 
-      if (studentDoc.exists()) {
-        localStorage.setItem("UserRole", "student");
-        console.log("Logged in as Student");
-         window.location.href = "index5.html";
-      } else if (teacherDoc.exists()) {
-        localStorage.setItem("UserRole", "teacher");
-        console.log("Logged in as Teacher");
-        window.location.href = "index5.html";
-      } else if (AffiliateDoc.exists()) {
-        localStorage.setItem("UserRole", "Affiliate");
-        console.log("Logged in as Affiliate");
-        window.location.href = "index5.html";
-      } else {
-        alert("Este usuario no está registrado como estudiante ni como profesor.");
-      }
+    let role = null;
+    let roleRef = null;
 
-    } catch (error) {
-      alert("Usuario o contraseña incorrectos");
-      console.error("Login error:", error.message);
+    if (studentDoc.exists()) {
+      role = "student";
+      roleRef = studentDocRef;
+    } else if (teacherDoc.exists()) {
+      role = "teacher";
+      roleRef = teacherDocRef;
+    } else if (affiliateDoc.exists()) {
+      role = "Affiliate";
+      roleRef = affiliateDocRef;
+    } else {
+      alert("Este usuario no está registrado como estudiante ni como profesor.");
+      return;
     }
+
+    // Store role and redirect
+    localStorage.setItem("UserRole", role);
+    console.log(`Logged in as ${role}`);
+
+    // ✅ Log the login timestamp
+    await updateDoc(roleRef, {
+      lastLogin: serverTimestamp(),
+      loginHistory: arrayUnion(new Date().toISOString())
+    });
+
+    // Redirect
+    window.location.href = "index5.html";
+
+  } catch (error) {
+    alert("Usuario o contraseña incorrectos");
+    console.error("Login error:", error.message);
   }
+}
 
   
   // Form submit listener

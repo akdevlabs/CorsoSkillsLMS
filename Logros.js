@@ -119,7 +119,7 @@ applyBranding().then((data) => {
   }
   function trophieBlockColors(){
     setBackgroundColor(".trophie-Contaiener", Prime5)
-    setTextColors("#Tittle", Base)
+  
    
   }
 
@@ -223,19 +223,80 @@ async function fetchAllContent() {
   } else {
     console.log("No business data found.");
   }
- 
-  function RendertrophieContent(){
-    const  Task  = "True"
-    const  Trophy = businessData.Trophies
 
-    function renderTextSection(containerId, Text) {
-      const container = document.getElementById(containerId);
-      if (!container) return;
-      container.textContent = Text;
+  const  Trophy = businessData.Trophies
+
+  function hasItems(obj) {
+    return Object.keys(obj).length > 0;
+  }
+  function checkIfCourseIdExists(courseObj, idToFind) {
+    let found = false;
+
+    for (const key in courseObj) {
+      if (courseObj[key]?.progress === idToFind) {
+        return true
+      }
     }
 
-    function renderImage(imageUrl, altText, elementId) {
-      const target = document.getElementById(elementId);
+    if (!found) {
+      return false
+    }
+  }
+  function hasThreeOrMoreUniqueTypes(courses) {
+    const typeSet = new Set();
+
+    for (let key in courses) {
+      const course = courses[key];
+      if (course.Type) {
+        typeSet.add(course.Type);
+      }
+    }
+
+    return typeSet.size >= 3;
+  }
+  function checkIfProgressOccursFiveTimes(courseObj, progressToFind) {
+    let count = 0;
+
+    for (const key in courseObj) {
+      if (courseObj[key]?.progress === progressToFind) {
+        count++;
+      }
+    }
+
+    return count >= 5;
+  }
+  function checkIfProgressOccursTenTimes(courseObj, progressToFind) {
+    let count = 0;
+
+    for (const key in courseObj) {
+      if (courseObj[key]?.progress === progressToFind) {
+        count++;
+      }
+    }
+
+    return count >=  10;
+  }
+  function checkIfProgressOccursTwentyTimes(courseObj, progressToFind) {
+    let count = 0;
+
+    for (const key in courseObj) {
+      if (courseObj[key]?.progress === progressToFind) {
+        count++;
+      }
+    }
+
+    return count >=  20;
+  }
+  
+  
+  
+  function RenderTextSection(containerId, Text) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.textContent = Text;
+  }
+  function renderImage(imageUrl, altText, elementId) {
+     const target = document.getElementById(elementId);
 
       if (!target) {
         console.error(`Element with ID '${elementId}' not found.`);
@@ -245,7 +306,7 @@ async function fetchAllContent() {
       // Clear previous content
       target.innerHTML = '';
 
-      if (imageUrl.endsWith('.svg')) {
+    if (imageUrl.endsWith('.svg')) {
         // Create and insert an <object> element for SVG
         const object = document.createElement('object');
         object.type = 'image/svg+xml';
@@ -254,7 +315,7 @@ async function fetchAllContent() {
         object.height = '100%';
         object.setAttribute('aria-label', altText);
         target.appendChild(object);
-      } else {
+    }else {
         // Create and insert a standard <img> element
         const img = document.createElement('img');
         img.src = imageUrl;
@@ -262,41 +323,106 @@ async function fetchAllContent() {
         img.style.width = '100%';
         img.style.height = 'auto';
         target.appendChild(img);
+    }
+  }
+
+// 
+
+  function RenderallTrophies(){
+
+    function FCAS1(){
+      const Count = hasItems(studentData.Courses)
+      
+      if(Count === true){
+        renderImage(Trophy.T1.Icons[0], "trophie-Block-S1", "trophie-Block-S1")
+      }else{
+        renderImage(Trophy.T1.Icons[1], "trophie-Block-S1", "trophie-Block-S1")
+      }
+      RenderTextSection("Tittle-S1",Trophy.T1.Tittle)
+    }
+    function FFCCS2(){
+      const progress = 100
+      const completed = checkIfCourseIdExists(studentData.Courses, progress)
+      if(completed === true){
+        renderImage(Trophy.T2.Icons[0], "trophie-Block-S2", "trophie-Block-S2")
+      }else{
+        renderImage(Trophy.T2.Icons[1], "trophie-Block-S2", "trophie-Block-S2")
+      }
+      RenderTextSection("Tittle-S2",Trophy.T2.Tittle)
+    }
+    function FFCCS3(){
+      const progress = 100
+      const completed = checkIfProgressOccursFiveTimes(studentData.Courses, progress)
+      if(completed === true){
+        renderImage(Trophy.T3.Icons[0], "trophie-Block-S3", "trophie-Block-S3")
+      }else{
+        renderImage(Trophy.T3.Icons[1], "trophie-Block-S3", "trophie-Block-S3")
+      }
+      RenderTextSection("Tittle-S3",Trophy.T3.Tittle)
+    }
+    function TFCCS4(){
+      const progress = 100
+      const completed = checkIfProgressOccursTenTimes(studentData.Courses, progress)
+      if(completed === true){
+        renderImage(Trophy.T4.Icons[0], "trophie-Block-S4", "trophie-Block-S4")
+      }else{
+        renderImage(Trophy.T4.Icons[1], "trophie-Block-S4", "trophie-Block-S4")
+      }
+      RenderTextSection("Tittle-S4",Trophy.T4.Tittle)
+    }
+    function TFCCS5(){
+      const progress = 100
+      const completed = checkIfProgressOccursTwentyTimes(studentData.Courses, progress)
+      if(completed === true){
+        renderImage(Trophy.T5.Icons[0], "trophie-Block-S5", "trophie-Block-S5")
+      }else{
+        renderImage(Trophy.T5.Icons[1], "trophie-Block-S5", "trophie-Block-S5")
+      }
+      RenderTextSection("Tittle-S5",Trophy.T5.Tittle)
+    }
+  //  function 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function MCCS12(){
+      const completed = hasThreeOrMoreUniqueTypes(studentData.Courses)
+      if(completed === true){
+        renderImage(Trophy.T3.Icons[0], "trophie-Block-S3", "trophie-Block-S3")
+      }else{
+        renderImage(Trophy.T3.Icons[1], "trophie-Block-S3", "trophie-Block-S3")
       }
     }
-    renderTextSection("Tittle", "Text")
 
 
 
 
 
-    
-
-     if (Prgress === 100) {
-       renderImage(Trophy.T1.Icons[0], "trophie-Block", "trophie-Block")
-     }else{
-
-     } 
 
 
 
 
-    if (Task === "True") {
-      renderImage(Trophy.T1.Icons[0], "trophie-Block", "trophie-Block")
 
-
-    }else{
-
-
-
-    }
+    FCAS1()
+    FFCCS2()
+    FFCCS3()
+    TFCCS4()
+    TFCCS5()
 
 
 
   }
 
-
-RendertrophieContent()
+  RenderallTrophies()
 
 
 }

@@ -264,6 +264,59 @@ applyBranding().then((data) => {
     `;
     document.head.appendChild(style);
   }
+  function ExamColors(){
+    const style = document.createElement('style');
+    style.textContent = `
+      .question-block {
+        margin-top: 20px;
+      }
+      .question-block h3 {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+        color: ${Prime1};
+      }
+      .question-block p {
+        color: ${Prime3};
+      }
+      #next-btn,
+      #submit-exam,
+      #retake-btn {
+        background-color: ${Prime1};
+        color: ${Prime5};
+      }
+      #next-btn:hover,
+      #submit-exam:hover,
+      #retake-btn:hover {
+        background-color: ${Prime3};
+        color: ${Prime5};
+      }
+      #Exam-Portal em {
+        color: #0b1af0;
+      }
+
+      #Exam-Portal strong {
+        color: ${Prime3};
+      }
+
+      #Exam-Portal h2 {
+        margin-top: 0;
+        color: #08e213;
+        font-size: 1.8rem;
+      }
+
+      .question-block label {
+        color: ${Base};
+      }
+
+
+
+      .question-block input[type="radio"] {
+        accent-color: ${Prime2};
+      }
+
+    `;
+    document.head.appendChild(style);
+  }
   function sidebarconColors(){
     const style = document.createElement('style');
     style.textContent = `
@@ -314,6 +367,7 @@ sidebarconColors()
   SetMainColors()
   sidebarcolors()
   CourseContentColors()
+  ExamColors()
 ResourcesColors()
 
 
@@ -527,7 +581,7 @@ async function fetchAllContent() {
 
 
     const CouresIdInfo = findCourseById(courseData);
-    console.log(CouresIdInfo.Resources)
+    console.log(CouresIdInfo)
 
     function RenderBottomContent(){
       renderText(CouresIdInfo.Type, "Type")
@@ -717,10 +771,13 @@ async function fetchAllContent() {
       function addNewSlot(obj, newCourseId) {
         const slotCount = countSlots(obj);
         const newSlotKey = `Slot${slotCount + 1}`;
-
+        const CInfo = CouresIdInfo
+ 
         const newSlot = {
           Id: newCourseId,
-          progress: 0
+          progress: 0,
+          Type:CInfo.Type
+
         };
 
         obj[newSlotKey] = newSlot;
@@ -793,6 +850,172 @@ async function fetchAllContent() {
 
 
     }
+    function renderHomeworkContent(){
+      
+      function renderDownloadButtons(resourcesObj) {
+        const container = document.getElementById("Homeworkbtns");
+        container.innerHTML = ""; // Clear previous content
+
+        Object.keys(resourcesObj).forEach((key) => {
+          const resource = resourcesObj[key];
+
+          const btn = document.createElement("button");
+          btn.textContent = resource.Tittle;
+          btn.className = "resource-download-btn";
+
+          btn.addEventListener("click", () => {
+            const a = document.createElement("a");
+            a.href = resource.Link;
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+            a.click();
+          });
+
+          container.appendChild(btn);
+        });
+      }
+
+      renderDownloadButtons(CouresIdInfo.Assessment.Tareas)
+
+
+
+    }
+    function renderExamContent() {
+      const examData = CouresIdInfo.Assessment.Examen;
+      const portal = document.getElementById("Exam-Portal");
+
+      if (!portal || !examData) {
+        console.error("❌ Exam portal o data no disponible.");
+        return;
+      }
+
+      let currentQuestion = 0;
+      const userAnswers = [];
+      const questions = Object.entries(examData);
+      console.log(questions)
+      function renderHeader() {
+        return `
+          <div style="text-align: right;">
+            <button id="close-exam" style="background: none; border: none; font-size: 18px; cursor: pointer;">❌ Cerrar</button>
+          </div>
+        `;
+      }
+
+      function setupCloseButton() {
+        const closeBtn = document.getElementById("close-exam");
+        if (closeBtn) {
+          closeBtn.addEventListener("click", () => {
+            portal.style.display = "none";
+            portal.innerHTML = "";
+          });
+        }
+      }
+
+      function renderQuestion(index) {
+        const [key, q] = questions[index];
+        portal.innerHTML = `
+          ${renderHeader()}
+          <div class="question-block">
+            <h3>Pregunta ${index + 1} de ${questions.length}:</h3>
+            <p>${q.Question}</p>
+            ${q.Options.map((opt, i) => `
+              <label>
+                <input type="radio" name="answer" value="${i}" ${userAnswers[index] === i ? 'checked' : ''}>
+                ${opt}
+              </label><br>
+            `).join('')}
+            <button id="next-btn">${index === questions.length - 1 ? 'Revisar respuestas' : 'Siguiente'}</button>
+          </div>
+        `;
+        setupCloseButton();
+
+        document.getElementById("next-btn").onclick = () => {
+          const selected = document.querySelector('input[name="answer"]:checked');
+          if (!selected) {
+            alert("Por favor selecciona una opción.");
+            return;
+          }
+          userAnswers[index] = parseInt(selected.value);
+          currentQuestion++;
+          if (currentQuestion < questions.length) {
+            renderQuestion(currentQuestion);
+          } else {
+            renderReview();
+          }
+        };
+      }
+
+      function renderReview() {
+        portal.innerHTML = `
+          ${renderHeader()}
+          <h3>Revisión de respuestas:</h3>
+          <ol>
+            ${questions.map(([key, q], i) => {
+              const userIndex = userAnswers[i];
+              const userText = userIndex !== undefined ? q.Options[userIndex] : "No respondida";
+              return `
+                <li>
+                  <strong>${q.Question}</strong><br>
+                  <em>Tu respuesta:</em> ${userText}<br>
+                </li>
+              `;
+            }).join('')}
+          </ol>
+          <button id="submit-exam">Enviar examen</button>
+        `;
+        setupCloseButton();
+
+        document.getElementById("submit-exam").onclick = gradeExam;
+      }
+
+      function gradeExam() {
+        let correct = 0;
+        questions.forEach(([key, q], i) => {
+          const correctAnswer = q.Answer;
+          const selectedAnswer = userAnswers[i];
+          if (selectedAnswer === correctAnswer) {
+            correct++;
+          }
+        });
+
+        const total = questions.length;
+        const percent = Math.round((correct / total) * 100);
+
+        portal.innerHTML = `
+          ${renderHeader()}
+          <h2>Resultados del examen</h2>
+          <p>Tu calificación: <strong>${percent}%</strong></p>
+        `;
+        setupCloseButton();
+
+        if (percent >= 80) {
+          portal.innerHTML += `<p style="color: green;">✅ ¡Felicidades! Has aprobado el examen.</p>`;
+          console.log("passed exam");
+        } else {
+          portal.innerHTML += `
+            <p style="color: red;">❌ No alcanzaste el 80%. Puedes volver a intentarlo.</p>
+            <button id="retake-btn">Reintentar examen</button>
+          `;
+          document.getElementById("retake-btn").onclick = () => {
+            currentQuestion = 0;
+            userAnswers.length = 0;
+            renderQuestion(currentQuestion);
+          };
+        }
+      }
+
+      // 🚀 Iniciar examen
+      currentQuestion = 0;
+      userAnswers.length = 0;
+      renderQuestion(currentQuestion);
+
+      
+    }
+
+ 
+
+
+
 
 
 
@@ -801,6 +1024,10 @@ async function fetchAllContent() {
     RenderSidebarContent()
     renderCouresSignupContent()
     renderResourcesContent()
+    renderHomeworkContent()
+    renderExamContent()
+
+
 
   } catch (err) {
       console.error("Error in fetchAllContent:", err);
@@ -849,7 +1076,18 @@ document.addEventListener("DOMContentLoaded", function () {
     hideSidebarText();
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+      const examBtn = document.getElementById("Exam-btn");
+      const portal = document.getElementById("Exam-Portal");
 
+      if (examBtn && portal) {
+        portal.style.display = "none"; // oculto al inicio
+        examBtn.addEventListener("click", function () {
+          portal.style.display = "block";
+          
+        });
+      }
+});
 
 
 async function applyActiveNavBtns() {

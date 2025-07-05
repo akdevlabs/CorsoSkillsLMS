@@ -270,35 +270,97 @@ body {
   cursor: pointer;
   transition: background-color 0.2s ease;
   width: fit-content;
-  
+}
+/*----------- Resources ------------*/
+#Homework{
+  display: flex;
+  flex-direction: column;
+}
+#Homeworkbtns{
+  gap: 1rem;
+  display: flex;
+  margin: 1rem;
 }
 
-
-
-
-
-
-
+/*----------- Exam ------------*/
+#Exam-Portal {
+  width: 100%;
+  padding: .8rem;
+  margin: 0 2rem;
+}
+.question-block {
+  margin-top: 20px;
+}
+.question-block h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+.question-block p {
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+}
+.question-block label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.question-block input[type="radio"] {
+  margin-right: 10px;
+}
+#next-btn,
+#submit-exam,
+#retake-btn {
+  border: none;
+  padding: .3rem 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#close-exam {
+  display: none;
+}
+#Exam-Portal ol {
+  padding-left: 20px;
+}
+#Exam-Portal li {
+  margin-bottom: 16px;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+#Exam-Portal h2 {
+  margin-top: 0;
+  font-size: 1.8rem;
+}
+.question-block label {
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+}
+.question-block input[type="radio"] {
+  margin-right: 12px;
+  transform: scale(1.2);
+}
+/*----------------- Requirement -----------------*/
+#Requirement-Block{
+  display: none;
+}
 
 /*----------------- SIDEBAR -----------------*/
 
 
 #container {
+  gap: 2rem;  
   display: flex;
-  height: 100vh;
+  flex-direction: column;  
+  height: 96vh;
+  width: 25rem;  
   overflow: hidden;
-  padding: 1rem;
-  gap: 2rem;
-}
-.sidebar {
-  width: 25rem;
-  padding: 1.5rem;
+  margin: 1rem;
+  padding: 2rem 1.5rem;
   border-radius: 1rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-  margin:0 1rem;
 }
 .progress-section{
   display: none;
@@ -311,7 +373,6 @@ body {
   font-size: 1.4rem;
    margin-right: 0.2rem;
 }
-
 .Detail-points{
   display: flex;
   
@@ -319,7 +380,6 @@ body {
   margin: 1rem ;
 
 }
-
 .Action-btns{
   background-color: #007bff;
   color: white;
@@ -330,7 +390,6 @@ body {
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
-
 .Action-btns:hover {
   background-color: #499bf3;
 }

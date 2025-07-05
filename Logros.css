@@ -69,4 +69,14 @@ body {
 
 
 
+.trophie-Contaiener{
+  width:100%;
 
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin:1rem;
+}
+.trophie-Img{
+  width:5rem;
+}
