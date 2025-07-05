@@ -769,7 +769,7 @@ function renderCourses() {
 
       div.onclick = () => {
         localStorage.setItem("selectedCourse", JSON.stringify(slot));
-        window.location.href = "index10.2.html";
+        window.location.href = "index10.7.html";
       };
 
       div.innerHTML = `
