@@ -100,12 +100,10 @@
     </div>
 
     <div class="video-player" id="videoContainer">
-      <video controls>
+      <video id="courseVideo" controls>
         <source src="" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-
-      
     </div>
 
 
@@ -208,42 +206,24 @@
     </div>
 
     <div class="progress-section" id="progress-section">
-        <h4>Your Study Progress <span>4%</span></h4>
+        <h4>Así va tu camino de aprendizaje<span id="progress-percent">0%</span></h4>
         <div class="progress-bar">
-          <div class="progress" style="width: 4%;"></div>
+          <div class="progress" id="progress-bar-fill" style="width:0%;"></div>
         </div>
-        <p>Great Job! You're on the path to becoming a certified Mastering Illustration. Finish strong!</p>
+        <p id="Quotes-block"></p>
     </div>
 
-    <div class="course-completion" id="Module-view">
-        <h4>Course Completion</h4>
-        <ul>
-          <li class="completed"><span>Introduction</span><span>20 min</span></li>
-          <li><span>Mastering Tools</span><span>1 hour 20 min</span></li>
-          <li><span>Mastering Adobe Illustrator</span><span>2 hour 10 min</span></li>
-          <li><span>Create Simple Shape</span><span>40 min</span></li>
-          <li><span>Typography</span><span>40 min</span></li>
-          <li><span>Mastering Pen Tool</span><span>1 hour 40 min</span></li>
-          <li><span>Mastering Pro Create</span><span>2 hour</span></li>
-        </ul>
-    </div>
+<div class="course-completion" id="Module-view">
+  <h4>Course Completion</h4>
+  <ul id="module-list">
+    <!-- modules will render here -->
+  </ul>
+</div>
 
-    <div class="course-completion" id="Module-List">
-        <h4>Course Completion <span>1/25</span></h4>
-        <ul>
-          <li class="completed">
-            <i class="fas fa-check-circle"></i> Introduction <span>20 min</span>
-          </li>
-          <li class="active">
-            <i class="fas fa-play-circle"></i> Mastering Tools <span>1 hour 20 min</span>
-          </li>
-          <li><i class="far fa-circle"></i> Mastering Adobe Illustrator <span>2 hour 10 min</span></li>
-          <li><i class="far fa-circle"></i> Create Simple Shape <span>40 min</span></li>
-          <li><i class="far fa-circle"></i> Typography <span>40 min</span></li>
-          <li><i class="far fa-circle"></i> Mastering Pen Tool <span>1 hour 40 min</span></li>
-          <li><i class="far fa-circle"></i> Mastering Pro Create <span>2 hour</span></li>
-        </ul>
-    </div>
+<div class="course-completion" id="Module-List">
+  <h4>Course Completion <span>1/6</span></h4>
+  <ul></ul>
+</div>
 
     <button class="Action-btns" id="enroll-container">inscribirse</button>
     <button class="Action-btns" id="Upgrade-container">Obtener acceso ilimitado</button>

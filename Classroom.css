@@ -350,6 +350,7 @@ body {
 /*----------------- SIDEBAR -----------------*/
 
 
+
 #container {
   gap: 2rem;  
   display: flex;
@@ -444,3 +445,34 @@ body {
 .course-completion li.active {
   font-weight: bold;
 }
+
+
+
+
+
+
+  .course-completion ul {
+    list-style: none;
+    padding: 0;
+  }
+  .course-completion li {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 10px;
+    border-bottom: 1px solid #ddd;
+    user-select: none;
+  }
+  .course-completion li i {
+    margin-right: 8px;
+    width: 18px;
+    text-align: center;
+  }
+  .course-completion li.completed {
+    color: green;
+  }
+  .course-completion li.active {
+    color: #007bff;
+    font-weight: bold;
+  }

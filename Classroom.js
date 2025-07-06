@@ -581,7 +581,7 @@ async function fetchAllContent() {
 
 
     const CouresIdInfo = findCourseById(courseData);
-    console.log(CouresIdInfo)
+
 
     function RenderBottomContent(){
       renderText(CouresIdInfo.Type, "Type")
@@ -596,7 +596,7 @@ async function fetchAllContent() {
       renderText(CouresIdInfo.Description[1], "About-Course-2")
       renderResultadosAprendizaje(CouresIdInfo.Points)
 
-      setVideoSource(CouresIdInfo.Modules.Intro.Video);
+
     }
     function RenderSidebarContent(){
       renderStarsToElement("Review-Stars", CouresIdInfo.Reviews.Average)
@@ -1011,10 +1011,213 @@ async function fetchAllContent() {
 
       
     }
+    function RenderProgressContent(){
+      function getCourseProgressById(coursesObj, targetId) {
+        for (const slotKey in coursesObj) {
+          if (coursesObj.hasOwnProperty(slotKey)) {
+            const course = coursesObj[slotKey];
+            if (course.Id === targetId) {
+              return course.progress;
+            }
+          }
+        }
+        return null; // Not found
+      }
+      const amount = getCourseProgressById(studentData.Courses, CouresIdInfo.Id)
+      console.log(amount)
+      function renderStudyProgress(percent) {
+        const clampedPercent = Math.max(0, Math.min(100, percent));
+        const percentText = document.getElementById("progress-percent");
+        const progressFill = document.getElementById("progress-bar-fill");
 
- 
+        if (percentText && progressFill) {
+          percentText.textContent = `${clampedPercent}%`;
+          requestAnimationFrame(() => {
+            progressFill.style.width = `${clampedPercent}%`;
+          });
+        } else {
+          console.warn("Progress elements not found.");
+        }
+      }
+      setTimeout(() => {
+        renderStudyProgress(amount); // Or any dynamic value
+      }, 2000);
+      
+
+      function renderaLLText(text, targetElement) {
+        if (targetElement) {
+          targetElement.textContent = text;
+        } else {
+          console.error("Target element not found.");
+        }
+      }
+
+      function RenderQuotes() {
+        const Quotes = businessData.Quotes;
+        const Quotesid = document.getElementById("Quotes-block");
+
+        if (!Quotes || !Array.isArray(Quotes) || Quotes.length === 0) {
+          console.error("Quotes data is missing or invalid.");
+          return;
+        }
+
+        // Ensure 'amount' is defined and within expected range
+        const index = Math.floor(amount / 10); // Convert 0–100 to 0–10
+
+        if (index >= 0 && index < Quotes.length) {
+          renderaLLText(Quotes[index], Quotesid);
+        } else {
+          console.warn("No quote available for this progress level.");
+        }
+      }
+
+      // Call it
+      RenderQuotes();
+
+    }
 
 
+    function RenderViedoLineup(){
+      setVideoSource(CouresIdInfo.Modules.Intro.Video);
+      function trackVideoCompletion(videoId, onComplete) {
+        const video = document.getElementById(videoId);
+
+        if (!video) {
+          console.error("Video element not found.");
+          return;
+        }
+
+        video.addEventListener("ended", () => {
+          console.log("Video has been watched completely.");
+          if (typeof onComplete === "function") {
+            onComplete(); // Trigger any action after completion
+          }
+        });
+      }
+
+      trackVideoCompletion("courseVideo", () => {
+        // Callback when video ends
+        alert("¡Felicidades! Completaste el video.");
+        // Or mark as completed in Firebase/localStorage
+      });
+
+      function renderCourseModules(modulesObj) {
+          const moduleList = document.getElementById("module-list");
+          if (!moduleList) {
+            console.error("Module list container not found.");
+            return;
+          }
+
+          moduleList.innerHTML = ""; // Clear existing content
+
+          // Format time from number to readable string
+          const formatTime = (time) => {
+            const hours = Math.floor(time);
+            const minutes = Math.round((time - hours) * 60);
+            let result = "";
+            if (hours > 0) {
+              result += `${hours} hour${hours > 1 ? "s" : ""}`;
+            }
+            if (minutes > 0) {
+              if (result) result += " ";
+              result += `${minutes} min`;
+            }
+            return result || "0 min";
+          };
+
+          for (const key in modulesObj) {
+            if (modulesObj.hasOwnProperty(key)) {
+              const module = modulesObj[key];
+              const title = module.Tittle || "Sin título";
+              const time = module.Time || 0;
+
+              const li = document.createElement("li");
+              const spanTitle = document.createElement("span");
+              const spanTime = document.createElement("span");
+
+              spanTitle.textContent = title;
+              spanTime.textContent = formatTime(time);
+
+              li.appendChild(spanTitle);
+              li.appendChild(spanTime);
+
+              moduleList.appendChild(li);
+            }
+          }
+      }
+
+      // Call the function to render modules
+      renderCourseModules(CouresIdInfo.Modules);
+
+      function renderactivemodule(){
+         function formatTime(time) {
+    const hours = Math.floor(time);
+    const minutes = Math.round((time - hours) * 60);
+    let result = "";
+    if (hours > 0) result += `${hours} hour${hours > 1 ? "s" : ""}`;
+    if (minutes > 0) result += (result ? " " : "") + `${minutes} min`;
+    return result || "0 min";
+  }
+
+  // Render modules into #Module-List ul, with icon logic and selection
+  function renderModules(modulesObj, selectedIdx = 0) {
+    const ul = document.querySelector("#Module-List ul");
+    const progressCount = document.querySelector("#Module-List h4 span");
+    if (!ul || !progressCount) {
+      console.error("Container elements not found");
+      return;
+    }
+    ul.innerHTML = "";
+
+    const keys = Object.keys(modulesObj);
+    keys.forEach((key, i) => {
+      const mod = modulesObj[key];
+      const li = document.createElement("li");
+      if (i < selectedIdx) {
+        li.classList.add("completed");
+      } else if (i === selectedIdx) {
+        li.classList.add("active");
+      }
+
+      const icon = document.createElement("i");
+      if (i < selectedIdx) {
+        icon.className = "fas fa-check-circle";
+      } else if (i === selectedIdx) {
+        icon.className = "fas fa-play-circle";
+      } else {
+        icon.className = "far fa-circle";
+      }
+      li.appendChild(icon);
+
+      // Title text node (with a space after icon)
+      li.appendChild(document.createTextNode(" " + (mod.Tittle || "Sin título") + " "));
+
+      const timeSpan = document.createElement("span");
+      timeSpan.textContent = formatTime(mod.Time || 0);
+      li.appendChild(timeSpan);
+
+      li.style.cursor = "pointer";
+
+      li.addEventListener("click", () => {
+        renderModules(modulesObj, i);
+        console.log(`Selected module: ${mod.Tittle}`);
+        // Place your additional logic here, e.g. load video player
+      });
+
+      ul.appendChild(li);
+    });
+
+    progressCount.textContent = `${selectedIdx + 1}/${keys.length}`;
+  }
+
+  // Initial render
+  renderModules(CouresIdInfo.Modules);
+      }
+      renderactivemodule()
+
+
+
+    } 
 
 
 
@@ -1026,11 +1229,11 @@ async function fetchAllContent() {
     renderResourcesContent()
     renderHomeworkContent()
     renderExamContent()
+    RenderProgressContent()
+    RenderViedoLineup()
 
-
-
-  } catch (err) {
-      console.error("Error in fetchAllContent:", err);
+  } catch (error) {
+      console.error("Error in fetchAllContent:", error);
     }
 }
 
