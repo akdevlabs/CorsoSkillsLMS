@@ -1077,147 +1077,141 @@ async function fetchAllContent() {
     }
 
 
-    function RenderViedoLineup(){
-      setVideoSource(CouresIdInfo.Modules.Intro.Video);
-      function trackVideoCompletion(videoId, onComplete) {
-        const video = document.getElementById(videoId);
 
-        if (!video) {
-          console.error("Video element not found.");
-          return;
-        }
 
-        video.addEventListener("ended", () => {
-          console.log("Video has been watched completely.");
-          if (typeof onComplete === "function") {
-            onComplete(); // Trigger any action after completion
-          }
-        });
-      }
 
-      trackVideoCompletion("courseVideo", () => {
-        // Callback when video ends
-        alert("¡Felicidades! Completaste el video.");
-        // Or mark as completed in Firebase/localStorage
-      });
 
-      function renderCourseModules(modulesObj) {
-          const moduleList = document.getElementById("module-list");
-          if (!moduleList) {
-            console.error("Module list container not found.");
-            return;
-          }
+function RenderViedoLineup() {
+  const videoElement = document.getElementById("courseVideo");
+  const moduleList = document.querySelector("#Module-List ul");
+  const progressCount = document.querySelector("#Module-List h4 span");
 
-          moduleList.innerHTML = ""; // Clear existing content
+  if (!videoElement || !moduleList || !progressCount) {
+    console.error("Required DOM elements not found.");
+    return;
+  }
 
-          // Format time from number to readable string
-          const formatTime = (time) => {
-            const hours = Math.floor(time);
-            const minutes = Math.round((time - hours) * 60);
-            let result = "";
-            if (hours > 0) {
-              result += `${hours} hour${hours > 1 ? "s" : ""}`;
-            }
-            if (minutes > 0) {
-              if (result) result += " ";
-              result += `${minutes} min`;
-            }
-            return result || "0 min";
-          };
-
-          for (const key in modulesObj) {
-            if (modulesObj.hasOwnProperty(key)) {
-              const module = modulesObj[key];
-              const title = module.Tittle || "Sin título";
-              const time = module.Time || 0;
-
-              const li = document.createElement("li");
-              const spanTitle = document.createElement("span");
-              const spanTime = document.createElement("span");
-
-              spanTitle.textContent = title;
-              spanTime.textContent = formatTime(time);
-
-              li.appendChild(spanTitle);
-              li.appendChild(spanTime);
-
-              moduleList.appendChild(li);
-            }
-          }
-      }
-
-      // Call the function to render modules
-      renderCourseModules(CouresIdInfo.Modules);
-
-      function renderactivemodule(){
-         function formatTime(time) {
+  function formatTime(time) {
     const hours = Math.floor(time);
     const minutes = Math.round((time - hours) * 60);
     let result = "";
-    if (hours > 0) result += `${hours} hour${hours > 1 ? "s" : ""}`;
+    if (hours > 0) result += `${hours} hora${hours > 1 ? "s" : ""}`;
     if (minutes > 0) result += (result ? " " : "") + `${minutes} min`;
     return result || "0 min";
   }
 
-  // Render modules into #Module-List ul, with icon logic and selection
-  function renderModules(modulesObj, selectedIdx = 0) {
-    const ul = document.querySelector("#Module-List ul");
-    const progressCount = document.querySelector("#Module-List h4 span");
-    if (!ul || !progressCount) {
-      console.error("Container elements not found");
+  const orderedKeys = Object.keys(CouresIdInfo.Modules).sort((a, b) => {
+    if (a === "Intro") return -1;
+    if (b === "Intro") return 1;
+    return parseInt(a.replace("M", "")) - parseInt(b.replace("M", ""));
+  });
+
+  let currentModuleIndex = 0;
+  const watchedModules = new Set(); // Track watched modules
+
+  function calculateProgress() {
+    const percent = Math.round((watchedModules.size / orderedKeys.length) * 100);
+    console.log(`Progreso: ${percent}%`);
+  }
+
+  function loadVideoByIndex(index) {
+    const key = orderedKeys[index];
+    const module = CouresIdInfo.Modules[key];
+
+    if (!module || !module.Video) {
+      console.warn("No video found for module", key);
       return;
     }
-    ul.innerHTML = "";
 
-    const keys = Object.keys(modulesObj);
-    keys.forEach((key, i) => {
-      const mod = modulesObj[key];
-      const li = document.createElement("li");
-      if (i < selectedIdx) {
-        li.classList.add("completed");
-      } else if (i === selectedIdx) {
-        li.classList.add("active");
+    currentModuleIndex = index;
+
+    // Replace video to reset listeners
+    videoElement.replaceWith(videoElement.cloneNode(true));
+    const newVideoElement = document.getElementById("courseVideo");
+    newVideoElement.src = module.Video;
+
+    newVideoElement.addEventListener("loadedmetadata", () => {
+      newVideoElement.play().catch((err) => {
+        console.warn("Playback error:", err);
+      });
+    });
+
+    newVideoElement.addEventListener("ended", () => {
+      watchedModules.add(index); // Mark this module as watched
+      calculateProgress();
+
+      const nextIndex = index + 1;
+      if (nextIndex < orderedKeys.length) {
+        loadVideoByIndex(nextIndex);
+      } else {
+        alert("🎉 ¡Has completado todos los módulos!");
       }
+    });
+
+    renderModules(index);
+  }
+
+  function renderModules(selectedIdx = 0) {
+    moduleList.innerHTML = "";
+
+    orderedKeys.forEach((key, i) => {
+      const mod = CouresIdInfo.Modules[key];
+      const li = document.createElement("li");
+
+      if (i < selectedIdx) li.classList.add("completed");
+      else if (i === selectedIdx) li.classList.add("active");
 
       const icon = document.createElement("i");
-      if (i < selectedIdx) {
-        icon.className = "fas fa-check-circle";
-      } else if (i === selectedIdx) {
-        icon.className = "fas fa-play-circle";
-      } else {
-        icon.className = "far fa-circle";
-      }
-      li.appendChild(icon);
+      icon.className =
+        i < selectedIdx
+          ? "fas fa-check-circle"
+          : i === selectedIdx
+          ? "fas fa-play-circle"
+          : "far fa-circle";
 
-      // Title text node (with a space after icon)
-      li.appendChild(document.createTextNode(" " + (mod.Tittle || "Sin título") + " "));
-
+      const title = document.createTextNode(" " + (mod.Tittle || "Sin título") + " ");
       const timeSpan = document.createElement("span");
       timeSpan.textContent = formatTime(mod.Time || 0);
-      li.appendChild(timeSpan);
 
+      li.appendChild(icon);
+      li.appendChild(title);
+      li.appendChild(timeSpan);
       li.style.cursor = "pointer";
 
       li.addEventListener("click", () => {
-        renderModules(modulesObj, i);
-        console.log(`Selected module: ${mod.Tittle}`);
-        // Place your additional logic here, e.g. load video player
+        loadVideoByIndex(i);
       });
 
-      ul.appendChild(li);
+      moduleList.appendChild(li);
     });
 
-    progressCount.textContent = `${selectedIdx + 1}/${keys.length}`;
+    progressCount.textContent = `${selectedIdx + 1}/${orderedKeys.length}`;
   }
 
-  // Initial render
-  renderModules(CouresIdInfo.Modules);
-      }
-      renderactivemodule()
+  loadVideoByIndex(0); // Start from first video
+}
 
 
 
-    } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+RenderViedoLineup() 
+
+
+
+
+
 
 
 
@@ -1230,7 +1224,8 @@ async function fetchAllContent() {
     renderHomeworkContent()
     renderExamContent()
     RenderProgressContent()
-    RenderViedoLineup()
+
+
 
   } catch (error) {
       console.error("Error in fetchAllContent:", error);
