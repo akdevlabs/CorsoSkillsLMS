@@ -120,13 +120,8 @@ applyBranding().then((data) => {
 
   }
 
-  function CourseBtnColors(){
-    setBackgroundColor("Course-btn-block-text", Prime5)
-    setBackgroundColor("courseContainer", Prime5)
-  }
-  function CouresesColors(){
-    setBackgroundColor("Courses-Block", Prime5) 
-  }
+
+
   function filtersColors(){
     const style = document.createElement('style');
     style.textContent = `
@@ -154,70 +149,7 @@ applyBranding().then((data) => {
     `;
     document.head.appendChild(style);
   }
-  function  searchBarColors(){
-    const style = document.createElement('style');
-    style.textContent = `
-      #Course-btn-block-text h1{
-        color:${Base};
-      }
-      #Course-btn-block-text h3{
-        color: ${Prime1};
-      }
-    `;
-    document.head.appendChild(style);
-  }
-  function filtersColors(){
-    const style = document.createElement('style');
-    style.textContent = `
-      .calendar-container {
-        background: ${Prime5};
-      }
-      .filters select {
-        border: 2px solid ${Prime3};
-        background-color: ${Prime5};
-      }
 
-      .filters select:focus {
-        border-color: 1px solid ${Base};
-      }
-      .search-bar input {
-        border: 2px solid ${Prime3};
-      }
-      .search-bar button {
-        background-color: ${Base};
-        color: ${Prime5};
-      }
-      .search-bar button:hover {
-        background-color: ${Prime2};
-      }
-    `;
-    document.head.appendChild(style);
-  }
-  function CourseCardColors(){
-    const style = document.createElement('style');
-    style.textContent = `
-      .course-card {
-        color: ${Prime}; 
-        background: ${Prime4}; 
-      }
-      .course-card h3 {
-        color: ${Base}; 
-      }
-
-      .course-card p {
-        color: ${Prime}; 
-      }
-      .course-card button {
-        background-color:${Base}; 
-        color: ${Prime5}; 
-      }
-      .course-card button:hover {
-        background-color: ${Prime2}; 
-      }
-
-    `;
-    document.head.appendChild(style);
-  }
 
 
 
@@ -227,11 +159,11 @@ applyBranding().then((data) => {
 
   SetMainColors()
   sidebarcolors()
-  CourseBtnColors()
-  CouresesColors()
-  filtersColors()
-  searchBarColors()
-  CourseCardColors()
+
+
+
+
+
 
 });
 
@@ -253,7 +185,6 @@ async function getstudentContent() {
     return null;
   }
 }
-
 async function getCorsoSkillAppContent() {
   try {
     const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
@@ -270,8 +201,7 @@ async function getCorsoSkillAppContent() {
     return null;
   }
 }
-
-  async function fetchAllContent() {
+async function fetchAllContent() {
     try {
       const studentData = await getstudentContent();
       const businessData = await getCorsoSkillAppContent();
@@ -294,138 +224,127 @@ async function getCorsoSkillAppContent() {
         return await fetchBusinessDataFromFirebase();
       }
 
-      function logCourseSlotIds(courses) {
-        const ids = [];
-        for (const key in courses) {
-          if (courses.hasOwnProperty(key) && courses[key].Id) {
-            ids.push(courses[key].Id);
+      function findCourseById(careerData, CId) {
+        if (!CId) {
+          console.warn("No course ID provided.");
+          return null;
+        }
+
+        if (!careerData || typeof careerData !== "object") {
+          console.warn("Invalid 'careerData' input.");
+          return null;
+        }
+
+        for (const [careerKey, careerBlock] of Object.entries(careerData)) {
+          // 🔍 1. Check if the career itself matches by Cid
+          if (careerBlock?.Cid === CId) {
+            console.log("📦 Career Data:", careerBlock);
+            return careerBlock;
           }
-        }
-        return ids;
-      }
 
-      function renderNewCoursesOnly(courseArray, existingIds) {
-        const container = document.getElementById("course-grid");
-        container.innerHTML = "";
-
-        const newCourses = courseArray.filter(course => course.Id && !existingIds.includes(course.Id));
-
-        if (newCourses.length === 0) {
-          container.innerHTML = "<p>No hay cursos nuevos disponibles.</p>";
-          return;
-        }
-
-        newCourses.forEach(course => {
-          const card = document.createElement("div");
-          card.className = "course-card";
-          card.setAttribute("data-course-id", course.Id); // attach courseId as a data attribute
-          card.innerHTML = `
-            <div class="card">
-              <img src="${course.CImg || 'https://via.placeholder.com/320x180'}" alt="Imagen del curso" />
-              <h3>${course.Tittle}</h3>
-              <p><strong>Profesor:</strong> ${course.Teacher || 'No especificado'}</p>
-              <p><strong>Descripción:</strong> ${course.Description || 'Sin descripción'}</p>
-              <button class="view-more-btn">Ver más información</button>
-            </div>
-          `;
-          container.appendChild(card);
-        });
-      }
-
-      // Event delegation: listen for clicks on any "Ver más información" button
-      document.addEventListener("click", function (e) {
-        if (e.target.classList.contains("view-more-btn")) {
-          const courseCard = e.target.closest(".course-card");
-          const courseId = courseCard.getAttribute("data-course-id");
-          if (courseId) {
-            localStorage.setItem("selectedCourseId", courseId);
-            window.location.href = "index10.2.1.html";
-          }
-        }
-      });
-
-
-      function CheckCourses() {
-        if (!studentData || !businessData) {
-          console.warn("❌ studentData o businessData no están disponibles.");
-          return;
-        }
-
-        const studentIds = logCourseSlotIds(studentData.Courses);
-        const category = document.getElementById("category-filter").value;
-        const level = document.getElementById("level-filter").value;
-        const price = document.getElementById("price-filter").value;
-        const sort = document.getElementById("sort-filter").value;
-        const searchQuery = document.getElementById("searchInput").value.toLowerCase();
-
-        const allCourses = businessData.Courses;
-        const levels = ["Beginner", "Intermediate", "Advanced"];
-        let collectedCourses = [];
-
-        for (let cat in allCourses) {
-          if (category !== "all" && cat !== category) continue;
-          const levelSet = allCourses[cat];
-          if (!levelSet) continue;
-
-          if (level === "all") {
-            levels.forEach(lvl => {
-              const courses = levelSet[lvl];
-              if (courses) collectedCourses.push(...Object.values(courses));
-            });
-          } else {
-            const courses = levelSet[level];
-            if (courses) collectedCourses.push(...Object.values(courses));
+          // 🔍 2. Search inside the CList
+          const courseList = careerBlock?.CList;
+          if (Array.isArray(courseList)) {
+            for (const course of courseList) {
+              if (course?.Id === CId) {
+                console.log("✅ Found Course ID:", CId);
+                console.log("📁 In Career:", careerKey);
+                console.log("📦 Career Data:", careerBlock);
+                return careerBlock;
+              }
+            }
           }
         }
 
-        collectedCourses = collectedCourses.filter(course => {
-          const title = course.Tittle?.toLowerCase() || "";
-          const desc = course.Description?.toLowerCase() || "";
-          return title.includes(searchQuery) || desc.includes(searchQuery);
-        });
+        console.warn("Course ID not found:", CId);
+        return null;
+      }
+      function findAllCourseById(courseData, CId) {
+        const selectedId = CId;
+        if (!selectedId) {
+          console.warn("No selectedCourseId in localStorage");
+          return null;
+        }
 
-        collectedCourses = collectedCourses.filter(course => {
-          if (price === "free") return course.Price === 0 || course.Free === true;
-          if (price === "paid") return course.Price > 0 || course.Free === false;
-          return true;
-        });
+        const categories = Object.values(courseData); // AI, Business, Design, etc.
 
-        collectedCourses.sort((a, b) => {
-          if (sort === "latest") return (b.Timestamp || 0) - (a.Timestamp || 0);
-          if (sort === "popular") return (b.Popularity || 0) - (a.Popularity || 0);
-          if (sort === "rated") return (b.Rating || 0) - (a.Rating || 0);
-          return 0;
-        });
+        for (const category of categories) {
+          if (typeof category !== "object" || Array.isArray(category)) continue;
 
-        renderNewCoursesOnly(collectedCourses, studentIds);
+          const levels = ["Beginner", "Intermediate", "Advanced"];
+          for (const level of levels) {
+            const levelGroup = category[level];
+            if (levelGroup && typeof levelGroup === "object") {
+              for (const course of Object.values(levelGroup)) {
+                if (course && course.Id === selectedId) {
+                  console.log("Matched Course:", course);
+                  return course; // ✅ Return the single matched object
+                }
+              }
+            }
+          }
+        }
+
+        console.warn("No course found with ID:", selectedId);
+        return null;
       }
 
-      // Detectar cambios en filtros
-      ["category-filter", "level-filter", "price-filter", "sort-filter"].forEach(id => {
-        document.getElementById(id).addEventListener("change", CheckCourses);
-      });
+      function renderCarrerPathBtns() {
+        function createDropdown(array, containerId, selectId = 'myDropdown') {
+          // Create the label
+          const label = document.createElement('label');
+          label.htmlFor = selectId;
+          label.textContent = 'Carrera';
+          label.style.display = 'block';
+          label.style.marginBottom = '5px';
+          label.style.fontWeight = 'bold';
 
-      // Inicializar al cargar
-      document.addEventListener("DOMContentLoaded", async () => {
-        studentData = await getStudentData();
-        businessData = await getBusinessData();
+          // Create the <select> element
+          const select = document.createElement('select');
+          select.id = selectId;
 
-        document.getElementById("category-filter").value = "all";
-        document.getElementById("level-filter").value = "all";
-        document.getElementById("price-filter").value = "all";
-        document.getElementById("sort-filter").value = "relevance";
-        document.getElementById("searchInput").value = "";
+          // Create <option> elements using Tittle as label and Id as value
+          array.forEach((item, index) => {
+            const option = document.createElement('option');
+            option.value = item.Id;
+            option.textContent = item.Tittle;
+            if (index === 0) option.selected = true; // Default to first
+            select.appendChild(option);
+          });
 
-        CheckCourses();
-      });
+          // Append to the container
+          const container = document.getElementById(containerId);
+          container.innerHTML = ''; // Clear previous
+          container.appendChild(label);
+          container.appendChild(select);
+
+          // Event listener to capture change
+          select.addEventListener('change', () => {
+            const selectedValue = select.value; // This is the Id
+            console.log('Selected ID:', selectedValue);
+          });
+
+          return select.value; // Return default selected Id
+        }
+
+        // Example usage
+        const optionsArray = studentData.Path;
+       
+        const selectedId = createDropdown(optionsArray, 'dropdown-container');
+        console.log('Default selected ID:', selectedId);
+        findCourseById(businessData.Careers, selectedId)
+
+      }
 
 
 
 
+   
+      renderCarrerPathBtns()
     } catch (err) {
       console.error("Error in fetchAllContent:", err);
     }
-  }
+}
 
 // Run the fetch
 fetchAllContent();
@@ -456,17 +375,31 @@ fetchAllContent();
     hideSidebarText();
  });
 
- document.getElementById("Home").addEventListener("click", function () {
+document.getElementById("Home").addEventListener("click", function () {
   window.location.href = "index10.html";
 });
 document.getElementById("Books").addEventListener("click", function () {
   window.location.href = "index10.1.html";
 });
+
+
 document.getElementById("Videos").addEventListener("click", function () {
   window.location.href = "index10.2.html";
 });
 document.getElementById("Trophy").addEventListener("click", function () {
   window.location.href = "index10.3.html";
 });
+document.getElementById("profile").addEventListener("click", function () {
+  window.location.href = "index10.8.html";
+});   
+document.getElementById("carrer").addEventListener("click", function () {
+  window.location.href = "index10.5.html";
+});
+document.getElementById("Settings").addEventListener("click", function () {
+  window.location.href = "index10.6.html";
+}); 
+document.getElementById("Logout").addEventListener("click", function () {
+  window.location.href = "index4.html";
+});  
 
 
