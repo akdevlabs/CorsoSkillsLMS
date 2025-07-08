@@ -17,11 +17,10 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TeacherMensajes|CorsoSkills</title>
-  <link rel="stylesheet" href="TeacherMensajes.css">
-
+  <title>Dashboard|StudentDashboard|CorsoSkills</title>
+  <link rel="stylesheet" href="StudentDashboard.css">
 </head>
-<body>  
+<body>
   <section class="nav" id="sidebar">
       
       <div class="sidebar-content">
@@ -103,117 +102,98 @@
       </div>
   </section>
 
+  <main>
+      <div class="Main-left">
 
-  <section class="main" id="main">
-    <div class="header" id="header">
-      <h1 id="wecome-banner-tittle"></h1>
-      <div id="profile-Icon"></div>
-    </div>
-
-    <div class="Cursos-Ofrecidos-block">
-      <div class="Cursos-Ofrecidos-block-top">
-        <h1 class="COB-tittle">Cursos Ofrecidos</h1>
-        
-      </div>
-      <div class="tabs-wrapper">
-        <div class="Level-Btns-blocks">
-          <button class="Level-Btns" id="Beginner">Principiante</button>
-          <button class="Level-Btns" id="Intermediate">Intermedio</button>
-          <button class="Level-Btns" id="Advanced">Avanzado</button>
-          <div id="line"></div>
+        <div class="Welcome-block" id="Welcome">
+            <div id="Date"></div>
+            <div id="Name"></div>
+            <div id="Updates"></div>  
         </div>
-        
-        <div class="tabs-container">
-          <div class="tabs" id="tabs"></div>
-          <div>
-            <button class="scroll-btn" id="scroll-left"><</button>
-            <button class="scroll-btn" id="scroll-right">></button>
+
+        <div class="Progress-blocks">
+         
+          <div class="coures-container">
+            <h2 id="C-Progress">Cursos En Progreso</h2>
+
+            <div class="Btns">
+              <div class="course-Btns" id="Course-left-btn">&lt;</div>
+              <div class="course-Btns" id="Course-right-btn">&gt;</div>
+            </div>
+          </div>  
+
+
+            <div id="results"></div>
+            
+          
+        </div>
+
+        <div class="New-blocks">
+          
+          <div class="coures-container">
+            <h2  id="New-Course-Tittle">Cursos Nuevos</h2>
+            <div class="Btns">
+              <div class="course-Btns" id="custom-carousel-left">&lt;</div>
+              <div class="course-Btns" id="custom-carousel-right">&gt;</div>
+            </div>
+
           </div>
+
+          <div id="custom-course-carousel"></div>
+        </div>        
+      </div>
+
+      <div class="Main-right">
+        <div class="User-info-alerts" id="Alert-Icons">
+        <div class="Evalopes">
+          <i id="empty-Evalope" class="fa-solid fa-envelope-open"></i>
+          <i id="full-Evalope" class="fa-solid fa-envelope-open-text"></i>
         </div>
-      </div>
-    </div>
+        <div class="Bells">
+          <i class="fa-regular fa-bell" id="bell-empty"></i>
+          <i class="fa-solid fa-bell" id="bell-full"></i>
+        </div>
+        <div class="Info">
+          <img id="user-Img">
+        </div>
+        </div>
 
-    <div class="stats">
+        <div class="calendar-container">
+            <h2 class="Tittles" id="Calander-Tittle">Mi Calendario</h2>
+            <div class="calendar">
+              <div class="calendar-header">
+                <button id="prev-month">&lt;</button>
+                <span id="month-name">Mes</span>
+                <button id="next-month">&gt;</button>
+              </div>
+              <div class="calendar-grid" id="calendar-grid"></div>
+            </div>
+        </div>
+   
+        <div class="Task-blocks" id="Task-block">
+            <h2 class="Task-Tittle">Próximas Tareas</h2>
+            <div id="taskContainer"></div>
 
-      <div class="card" id="Student-card">
-        <h3>Students</h3>
-        <p class="Alerts" id="amount-of-students">88</p>
-        <small id="new-students">3 new</small>
-      </div>
+            <!-- Modal -->
+            <div id="taskModal" class="modal">
+              <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Todas las tareas</h2>
+                <div id="modalContent"></div>
+              </div>
+            </div>
+        </div>
 
-      <div class="card" id="Classes-card">
-        <h3>Classes</h3>
-        <p class="Alerts" id="amount-of-Classes">10</p>
-        <small id="new-Classes">2 new</small>
-      </div>
-
-      <div class="card" id="Submissions-card">
-        <h3>Submissions</h3>
-        <p class="Alerts" id="amount-of-Submissions">10</p>
-      </div>  
-
-      <div class="card" id="Tasks-card">
-        <h3>Pending Tasks</h3>
-        <p class="Alerts" id="amount-of-Tasks">10</p>
-      </div>
-
-      <div class="card" id="Messages-card">
-        <h3>Messages</h3>
-        <p class="Alerts" id="amount-of-Messages">2</p>
-      </div>
-
-    </div>  
-
-    <div class="Action-btns">
-      <div class="Action-btns-card" id="lesson-Btn">
-        <p>Subir una nueva lección</p>
-      </div>
-      <div class="Action-btns-card" id="Course-Btn">
-        <p>Crear un nuevo curso</p>
-      </div>
-    </div>
-
-    <div class="charts">
-      <div class="chart-block" id="student-chart">
-        <h3>Estudiantes Inscritos</h3>
-        <canvas id="chart1"></canvas>
-      </div>
-      <div class="chart-block" id="Cursos-chart">
-        <h3>Rendimiento De Cursos Promedio</h3>
-        <canvas id="chart2"></canvas>
-      </div>
-    </div>
+    
+      </div> 
+  </main>  
 
 
-    <div class="overview-section">
-      <div class="card">
-        <h3>Total Students</h3>
-        <p>72,056</p>
-        <small style="color:green">+12.05%</small>
-      </div>
-      <div class="card">
-        <h3>Total Courses</h3>
-        <p>12,056</p>
-        <small style="color:red">-12.25%</small>
-      </div>
-      <div class="card">
-        <h3>Total Videos</h3>
-        <p>31,056</p>
-        <small style="color:green">+25.21%</small>
-      </div>
-      <div class="card">
-        <h3>Total Earnings</h3>
-        <p>$8,05,056</p>
-        <small style="color:green">+25.21%</small>
-      </div>
-    </div>
-  </div>
 
-      
-  </div>
+  <div id="Popup-info-request"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <script  src="TeacherMensajes.js" type="module"></script>
+ 
+  <script  src="StudentDashboard.js" type="module"></script>
 </body>
 </html>
