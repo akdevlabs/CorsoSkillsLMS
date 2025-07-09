@@ -121,8 +121,7 @@ applyBranding().then((data) => {
   }
 
   function CourseBtnColors(){
-    setBackgroundColor("Course-btn-block-text", Prime5)
-    setBackgroundColor("courseContainer", Prime5)
+   setBackgroundColor("Course-btn-block-text", Prime5)
   }
   function CouresesColors(){
     setBackgroundColor("Courses-Block", Prime5) 
@@ -284,6 +283,7 @@ async function getCorsoSkillAppContent() {
       console.log("Student Document Data:", studentData);
       console.log("Business Document Data:", businessData);
 
+
       async function getStudentData() {
         // 🔁 Reemplaza con tu lógica real (Firebase, API, etc.)
         return await fetchStudentDataFromFirebase();
@@ -293,6 +293,142 @@ async function getCorsoSkillAppContent() {
         // 🔁 Reemplaza con tu lógica real
         return await fetchBusinessDataFromFirebase();
       }
+
+
+function renderText(text, elementId) {
+  const container = document.getElementById(elementId);
+  if (!container) {
+    console.error(`Element with id '${elementId}' not found.`);
+    return;
+  }
+  container.textContent = text;
+}
+
+function RenderCarrersDirect(courseArray) {
+  const container = document.getElementById("course-grid");
+  container.innerHTML = "";
+
+  if (courseArray.length === 0) {
+    container.innerHTML = "<p>No hay carreras disponibles.</p>";
+    return;
+  }
+
+  const typeLabels = {
+    AI: "Inteligencia Artificial",
+    Business: "Negocios",
+    Design: "Diseño",
+    Finance: "Finanzas",
+    Languages: "Idiomas",
+    Leadership: "Liderazgo",
+    Marketing: "Marketing",
+    Productivity: "Productividad",
+    Programming: "Programación",
+    Sales: "Ventas",
+    Technology: "Tecnología"
+  };
+
+  courseArray.forEach(course => {
+    const translatedType = typeLabels[course.Type] || "No especificado";
+
+    const card = document.createElement("div");
+    card.className = "course-card";
+    card.setAttribute("data-course-id", course.Cid);
+
+    card.innerHTML = `
+      <div class="card">
+        <img src="${course.Img || 'https://via.placeholder.com/320x180'}" alt="Imagen de la carrera" />
+        <h3>${course.Tittle}</h3>
+        <p><strong>Tipo:</strong> ${translatedType}</p>
+        <button class="view-All-Coureses-btn" data-id="${course.Cid}">Explorar todos los cursos</button>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+// 👇 Esta es la función con callback cuando cambie el filtro
+function getSelectedCareer(onChangeCallback) {
+  const selectElement = document.getElementById("Careers-filter");
+
+  if (!selectElement) return;
+
+  selectElement.addEventListener("change", function () {
+    const selectedValue = selectElement.value || "Popular";
+    console.log("Carrera seleccionada (cambio):", selectedValue);
+    renderText(getLabelForType(selectedValue), "Course-Tittle");
+
+    if (typeof onChangeCallback === "function") {
+      onChangeCallback(selectedValue);
+    }
+  });
+
+  // Valor inicial
+  return selectElement.value || "Popular";
+}
+
+// 🔎 Filtro popular o por tipo
+function FindPopularOrFilter(selectedCareer) {
+  const AllCareers = businessData.Careers;
+  const courseArray = Object.values(AllCareers);
+
+  if (selectedCareer === "Popular") {
+    const popularCourses = courseArray.filter(c => c.Popular === true && c.Cid);
+    RenderCarrersDirect(popularCourses);
+  } else {
+    const filteredCourses = courseArray.filter(c => c.Type === selectedCareer && c.Cid);
+    RenderCarrersDirect(filteredCourses);
+  }
+}
+
+// 🎯 Traductor de etiqueta para mostrar texto bonito
+function getLabelForType(typeKey) {
+  const labels = {
+    Popular: "Carreras Populares",
+    AI: "Inteligencia Artificial",
+    Business: "Negocios",
+    Design: "Diseño",
+    Finance: "Finanzas",
+    Languages: "Idiomas",
+    Leadership: "Liderazgo",
+    Marketing: "Marketing",
+    Productivity: "Productividad",
+    Programming: "Programación",
+    Sales: "Ventas",
+    Technology: "Tecnología"
+  };
+
+  return labels[typeKey] || typeKey;
+}
+
+// 🚀 Inicializar filtro y render inicial
+function initCareerFilter() {
+  const selectedCareer = getSelectedCareer(FindPopularOrFilter);
+
+  renderText(getLabelForType(selectedCareer), "Course-Tittle");
+
+  const selectElement = document.getElementById("Careers-filter");
+  if (selectElement) {
+    selectElement.value = selectedCareer;
+  }
+
+  FindPopularOrFilter(selectedCareer);
+}
+
+initCareerFilter();
+
+
+
+
+
+   
+
+
+
+
+
+
+
 
       function logCourseSlotIds(courses) {
         const ids = [];
