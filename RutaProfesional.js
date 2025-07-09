@@ -122,34 +122,34 @@ applyBranding().then((data) => {
 
 
 
-  function filtersColors(){
+  function CarrerColors(){
+    setTextColors("#CPB-Tittle", Base)
     const style = document.createElement('style');
     style.textContent = `
-      .calendar-container {
+      .Carrer-Path {
         background: ${Prime5};
       }
-      .filters select {
-        border: 2px solid ${Prime3};
-        background-color: ${Prime5};
+      #course-output h3 {
+        color: ${Prime1};
       }
-
-      .filters select:focus {
-        border-color: 1px solid ${Base};
-      }
-      .search-bar input {
+      #dropdown-container select {
         border: 2px solid ${Prime3};
       }
-      .search-bar button {
-        background-color: ${Base};
-        color: ${Prime5};
-      }
-      .search-bar button:hover {
-        background-color: ${Prime2};
+      #dropdown-container select:focus {
+        border-color: ${Prime2};
+        outline: none;
       }
     `;
     document.head.appendChild(style);
   }
+  function KeysColors(){
+    setBackgroundColor("Full", Prime2)
+    setBackgroundColor("Almost", Prime3)
+    setBackgroundColor("Half", Base)
+    setBackgroundColor("Nothing", Prime4)
 
+
+  }
 
 
 
@@ -159,7 +159,8 @@ applyBranding().then((data) => {
 
   SetMainColors()
   sidebarcolors()
-
+  CarrerColors()
+  KeysColors()
 
 
 
@@ -202,149 +203,190 @@ async function getCorsoSkillAppContent() {
   }
 }
 async function fetchAllContent() {
-    try {
-      const studentData = await getstudentContent();
-      const businessData = await getCorsoSkillAppContent();
-
-      if (!studentData || !businessData) {
-        console.log("Missing data: studentData or businessData is null");
-        return;
-      }
-
-      console.log("Student Document Data:", studentData);
-      console.log("Business Document Data:", businessData);
-
-      async function getStudentData() {
-        // 🔁 Reemplaza con tu lógica real (Firebase, API, etc.)
-        return await fetchStudentDataFromFirebase();
-      }
-
-      async function getBusinessData() {
-        // 🔁 Reemplaza con tu lógica real
-        return await fetchBusinessDataFromFirebase();
-      }
-
-      function findCourseById(careerData, CId) {
-        if (!CId) {
-          console.warn("No course ID provided.");
-          return null;
-        }
-
-        if (!careerData || typeof careerData !== "object") {
-          console.warn("Invalid 'careerData' input.");
-          return null;
-        }
-
-        for (const [careerKey, careerBlock] of Object.entries(careerData)) {
-          // 🔍 1. Check if the career itself matches by Cid
-          if (careerBlock?.Cid === CId) {
-            console.log("📦 Career Data:", careerBlock);
-            return careerBlock;
-          }
-
-          // 🔍 2. Search inside the CList
-          const courseList = careerBlock?.CList;
-          if (Array.isArray(courseList)) {
-            for (const course of courseList) {
-              if (course?.Id === CId) {
-                console.log("✅ Found Course ID:", CId);
-                console.log("📁 In Career:", careerKey);
-                console.log("📦 Career Data:", careerBlock);
-                return careerBlock;
-              }
-            }
-          }
-        }
-
-        console.warn("Course ID not found:", CId);
-        return null;
-      }
-      function findAllCourseById(courseData, CId) {
-        const selectedId = CId;
-        if (!selectedId) {
-          console.warn("No selectedCourseId in localStorage");
-          return null;
-        }
-
-        const categories = Object.values(courseData); // AI, Business, Design, etc.
-
-        for (const category of categories) {
-          if (typeof category !== "object" || Array.isArray(category)) continue;
-
-          const levels = ["Beginner", "Intermediate", "Advanced"];
-          for (const level of levels) {
-            const levelGroup = category[level];
-            if (levelGroup && typeof levelGroup === "object") {
-              for (const course of Object.values(levelGroup)) {
-                if (course && course.Id === selectedId) {
-                  console.log("Matched Course:", course);
-                  return course; // ✅ Return the single matched object
-                }
-              }
-            }
-          }
-        }
-
-        console.warn("No course found with ID:", selectedId);
-        return null;
-      }
-
-      function renderCarrerPathBtns() {
-        function createDropdown(array, containerId, selectId = 'myDropdown') {
-          // Create the label
-          const label = document.createElement('label');
-          label.htmlFor = selectId;
-          label.textContent = 'Carrera';
-          label.style.display = 'block';
-          label.style.marginBottom = '5px';
-          label.style.fontWeight = 'bold';
-
-          // Create the <select> element
-          const select = document.createElement('select');
-          select.id = selectId;
-
-          // Create <option> elements using Tittle as label and Id as value
-          array.forEach((item, index) => {
-            const option = document.createElement('option');
-            option.value = item.Id;
-            option.textContent = item.Tittle;
-            if (index === 0) option.selected = true; // Default to first
-            select.appendChild(option);
-          });
-
-          // Append to the container
-          const container = document.getElementById(containerId);
-          container.innerHTML = ''; // Clear previous
-          container.appendChild(label);
-          container.appendChild(select);
-
-          // Event listener to capture change
-          select.addEventListener('change', () => {
-            const selectedValue = select.value; // This is the Id
-            console.log('Selected ID:', selectedValue);
-          });
-
-          return select.value; // Return default selected Id
-        }
-
-        // Example usage
-        const optionsArray = studentData.Path;
-       
-        const selectedId = createDropdown(optionsArray, 'dropdown-container');
-        console.log('Default selected ID:', selectedId);
-        findCourseById(businessData.Careers, selectedId)
-
-      }
-
-
-
-
-   
-      renderCarrerPathBtns()
-    } catch (err) {
-      console.error("Error in fetchAllContent:", err);
+  try {
+    const studentData = await getstudentContent();
+    const businessData = await getCorsoSkillAppContent();
+    const {Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5} = businessData.BuColors.Colors;
+    if (!studentData || !businessData) {
+      console.log("Missing data: studentData or businessData is null");
+      return;
     }
+
+    console.log("Student Document Data:", studentData);
+    console.log("Business Document Data:", businessData);
+
+    function RenderKeys(){
+
+    }
+    RenderKeys()
+    function findCourseById(careerData, CId) {
+      if (!CId) return null;
+
+      for (const [careerKey, careerBlock] of Object.entries(careerData)) {
+        if (careerBlock?.Cid === CId) return careerBlock;
+
+        const courseList = careerBlock?.CList;
+        if (Array.isArray(courseList)) {
+          for (const course of courseList) {
+            if (course?.Id === CId) return careerBlock;
+          }
+        }
+      }
+      return null;
+    }
+
+    function findAllCoursesByIds(courseData, CIds) {
+      const matchedCourses = [];
+      const categories = Object.values(courseData);
+
+      for (const category of categories) {
+        if (typeof category !== "object") continue;
+
+        const levels = ["Beginner", "Intermediate", "Advanced"];
+        for (const level of levels) {
+          const levelGroup = category[level];
+          if (!levelGroup) continue;
+
+          for (const course of Object.values(levelGroup)) {
+            if (CIds.includes(course.Id)) matchedCourses.push(course);
+          }
+        }
+      }
+      return matchedCourses;
+    }
+
+    function extractIds(CList) {
+      return CList.map(item => item.Id);
+    }
+
+    function renderSlotBlocks(cList, fullCourses, courseProgressData) {
+      const slotMap = {};
+
+      // Group course Ids by slot
+      cList.forEach(item => {
+        if (!slotMap[item.Slot]) slotMap[item.Slot] = [];
+        slotMap[item.Slot].push(item.Id);
+      });
+
+      const container = document.getElementById("course-output");
+      container.innerHTML = '';
+
+      Object.keys(slotMap).sort((a, b) => a - b).forEach(slot => {
+        const weekBlock = document.createElement('div');
+        weekBlock.style.marginBottom = '20px';
+
+        const heading = document.createElement('h3');
+        heading.textContent = `Semana ${slot}`;
+        heading.style.marginBottom = '8px';
+        heading.style.color = '#333';
+        weekBlock.appendChild(heading);
+
+        const ul = document.createElement('ul');
+        slotMap[slot].forEach(courseId => {
+          const course = fullCourses.find(c => c.Id === courseId);
+          if (course) {
+            const li = document.createElement('li');
+            li.textContent = course.Tittle;
+
+            // Apply color based on progress
+            const progressEntry = Object.values(courseProgressData).find(p => p.Id === courseId);
+            const progress = progressEntry?.progress;
+
+            if (progress === 100) {
+              li.style.color = Prime5;
+              li.style.backgroundColor = Prime2;
+            } else if (progress === 80) {
+              li.style.color = Prime5;
+              li.style.backgroundColor = Prime3;
+            } else if (progress === 50) {
+              li.style.color = Prime5;
+              li.style.backgroundColor = Base;
+            } else {
+              li.style.color = Prime;
+              li.style.backgroundColor = Prime4;
+            }
+
+            ul.appendChild(li);
+          }
+        });
+
+        weekBlock.appendChild(ul);
+        container.appendChild(weekBlock);
+      });
+    }
+
+    // Optional: For console log tracking
+    function checkCourseProgress(Courses) {
+      Object.values(Courses).forEach((slot) => {
+        const { Id, progress } = slot;
+
+        if (progress === 50) {
+          console.log(`1 - ${Id}`);
+        } else if (progress === 80) {
+          console.log(`2 - ${Id}`);
+        } else if (progress === 100) {
+          console.log(`3 - ${Id}`);
+        }
+      });
+    }
+
+    checkCourseProgress(studentData.Courses);
+
+    function renderCarrerPathBtns() {
+      function createDropdown(array, containerId, selectId = 'myDropdown') {
+        const label = document.createElement('label');
+        label.htmlFor = selectId;
+        label.textContent = 'Carrera';
+        label.style.display = 'block';
+        label.style.marginBottom = '5px';
+        label.style.fontWeight = 'bold';
+
+        const select = document.createElement('select');
+        select.id = selectId;
+
+        array.forEach((item, index) => {
+          const option = document.createElement('option');
+          option.value = item.Id;
+          option.textContent = item.Tittle;
+          if (index === 0) option.selected = true;
+          select.appendChild(option);
+        });
+
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+        container.appendChild(label);
+        container.appendChild(select);
+
+        select.addEventListener('change', () => {
+          const selectedValue = select.value;
+          renderCareerPath(selectedValue);
+        });
+
+        return select.value;
+      }
+
+      const optionsArray = studentData.Path;
+      const defaultId = createDropdown(optionsArray, 'dropdown-container');
+      renderCareerPath(defaultId);
+    }
+
+    function renderCareerPath(selectedId) {
+      const career = findCourseById(businessData.Careers, selectedId);
+      if (!career) return;
+
+      const selectedCourseIds = extractIds(career.CList);
+      const allCourses = findAllCoursesByIds(businessData.Courses, selectedCourseIds);
+
+      renderSlotBlocks(career.CList, allCourses, studentData.Courses);
+    }
+
+    renderCarrerPathBtns();
+  } catch (err) {
+    console.error("Error in fetchAllContent:", err);
+  }
 }
+
+
 
 // Run the fetch
 fetchAllContent();
