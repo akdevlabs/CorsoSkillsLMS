@@ -308,3 +308,37 @@ document.getElementById('closeNav').addEventListener('click', () => {
   document.getElementById('sideNav').classList.remove('open');
    sideNav.style.display = 'block';
 });
+
+document.getElementById("Home").addEventListener("click", function () {
+  window.location.href = "index10.html";
+});
+document.getElementById("Books").addEventListener("click", function () {
+  window.location.href = "index10.1.html";
+});
+document.getElementById("Videos").addEventListener("click", function () {
+  window.location.href = "index10.2.html";
+});
+document.getElementById("Classroom").addEventListener("click", function () {
+  window.location.href = "index10.7.html";
+});
+document.getElementById("Trophy").addEventListener("click", function () {
+  window.location.href = "index10.3.html";
+});
+document.getElementById("Multi-User").addEventListener("click", function () {
+  window.location.href = "index10.8.html";
+});
+document.getElementById("carrer").addEventListener("click", function () {
+  window.location.href = "index10.5.html";
+});
+
+
+document.getElementById("Settings").addEventListener("click", function () {
+  window.location.href = "index10.6.html";
+}); 
+document.getElementById("profile").addEventListener("click", function () {
+  window.location.href = "index10.4.html";
+});   
+document.getElementById("Logout").addEventListener("click", function () {
+  window.location.href = "index4.html";
+});  
+ 

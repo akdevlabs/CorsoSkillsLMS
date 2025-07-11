@@ -1359,6 +1359,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+
+
+
+
 document.getElementById("Home").addEventListener("click", function () {
   window.location.href = "index10.html";
 });
@@ -1371,5 +1375,23 @@ document.getElementById("Videos").addEventListener("click", function () {
 document.getElementById("Trophy").addEventListener("click", function () {
   window.location.href = "index10.3.html";
 });
+document.getElementById("Multi-User").addEventListener("click", function () {
+  window.location.href = "index10.8.html";
+});
+document.getElementById("carrer").addEventListener("click", function () {
+  window.location.href = "index10.5.html";
+});
+
+
+document.getElementById("Settings").addEventListener("click", function () {
+  window.location.href = "index10.6.html";
+}); 
+document.getElementById("profile").addEventListener("click", function () {
+  window.location.href = "index10.4.html";
+});   
+document.getElementById("Logout").addEventListener("click", function () {
+  window.location.href = "index4.html";
+});   
+
 
 
