@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 import { getFirestore, doc, getDoc, collection, addDoc, setDoc, Timestamp, deleteField, updateDoc} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
-
+import { getAuth,  sendPasswordResetEmail, confirmPasswordReset, applyActionCode } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
 // Configuración Firebase (tuya)
 const firebaseConfig = {
   apiKey: "AIzaSyD2w5sXCGRBxne-23FRCTAXQrMwHt4nHTY",
@@ -18,50 +18,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
+const auth = getAuth(app);
 
- const fileInput = document.getElementById("file");
-  const btn = document.getElementById("btn");
-  let file;
-
-  fileInput.addEventListener("change", (e) => {
-    file = e.target.files[0];
-    btn.disabled = !file;
-  });
-
-  btn.addEventListener("click", async () => {
-    if (!file) return alert("Selecciona archivo");
-
-    const fileRef = ref(storage, `testUploads/${Date.now()}_${file.name}`);
-
-    try {
-      const snapshot = await uploadBytes(fileRef, file);
-      const url = await getDownloadURL(snapshot.ref);
-      alert("Subido! URL:\n" + url);
-      console.log(url);
-    } catch(e) {
-      console.error(e);
-      alert("Error al subir. Mira consola.");
-    }
-  });
-
-
-
-
-
-
-
-
-
-
-
-
-
+console.log(auth)
 
 const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
 const UserUidInfo = localStorage.getItem("UserUidInfo");
 
 
-console.log(UserUidInfo)
 
 
 
@@ -153,9 +117,85 @@ applyBranding().then((data) => {
 
   }
   function mainColors(){
-    setBackgroundColor("#main", Prime5)
+    setBackgroundColor("#header", Prime5)
   }
+  function CenterColors(){
+    const style = document.createElement('style');
+    style.textContent = `
+  
+    .header {
+      color: ${Base};
+    }
+    .card {
+      background-color: ${Prime5};
+    }
+    .card h3, .card h2 {
+      color:${Prime};
+    }
+    .card i {
+      color: ${Prime3};
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea,
+    select {
+      background-color: ${Prime5};
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color:${Prime3};
+    }
+    .btn, .btn-sm {
+      background-color: ${Base};
+      color: ${Prime5};
+    }
+    .btn:hover, .btn-sm:hover {
+      background-color:${Prime2};
+    }
+    .payment-card {
+      background: ${Prime5};
+      border: 1.5px solid ${Prime2};
+    }
+    .payment-card h4 {
+      color: ${Prime2};
+    }
+    .payment-card p {
+      color: ${Base};
+    }
+    .payment-card p strong {
+      color: ${Prime};
+    }
+    .Renderd {
+      border: 1px solid  ${Prime};
+    }
+    .Pay-Info {
+      color: ${Base};
+    }
+    #User-Img i {
+      color:${Prime2};
+    }
+    .card-left-btn{
+      background-color: ${Prime5};
+    }
+    .card-left-btn  h3, .card-left-btn h2 {
+      color:${Prime};
+    }
+    .card-left-btn i {
+      color: ${Prime3};
+    }
 
+
+
+
+
+
+
+
+
+    `;
+    document.head.appendChild(style);
+
+  }
 
 
   
@@ -167,7 +207,7 @@ applyBranding().then((data) => {
   SideBarColors()
   SetMainColors()
   mainColors()  
-
+  CenterColors()
 
 });
 
@@ -220,17 +260,52 @@ async function fetchAllContent() {
   } else {
     console.log("No business data found.");
   }
-  function renderText(elementId, text) {
-    const element = document.getElementById(elementId);
-    if (!element) {
-      console.error(`Element with id "${elementId}" not found.`);
-      return;
+  function renderText(text, elementId) {
+    const container = document.getElementById(elementId);
+    if (container) {
+      container.textContent = text; // or use .innerHTML if you want to include HTML tags
+    } else {
+      console.error(`Element with ID '${elementId}' not found.`);
     }
-    element.textContent = text;
-  }  
+  }
+  function formatTimestampToSpanishDate(seconds, nanoseconds) {
+    // Convert to milliseconds
+    const totalMilliseconds = seconds * 1000 + Math.floor(nanoseconds / 1_000_000);
+    
+    // Create date object
+    const date = new Date(totalMilliseconds);
+    
+    // Format in Spanish
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const formatted = date.toLocaleDateString('es-ES', options);
+    
+    return formatted;
+  }
+  function renderTextOrFallback(elementId, contentId, value, buttonId ,SaveId) {
+    const button = document.getElementById(buttonId);
+    const container = document.getElementById(elementId);
+    const content = document.getElementById(contentId);
+    const Save = document.getElementById(SaveId);    
+
+    if (value && value.trim() !== "") {
+      container.textContent = value;
+      content.style.display = "none"; // Hide the editable content if there's already a value
+
+    } else {
+      content.style.display = "block"; // Show content (e.g., input) if value is missing
+      Save.style.display = "block";
+    }
+
+    if (button) {
+      button.addEventListener("click", () => {
+        content.style.display = "block"; // Always show content when edit button is clicked
+        Save.style.display = "block";
+      });
+    }
+  }
   function renderUserImage() {
       const container = document.getElementById("User-Img");
-      const imageUrl = //studentData.profileImg;
+      const imageUrl = studentData.profileImg;
 
       container.innerHTML = ""; // Clear any existing content
 
@@ -243,61 +318,144 @@ async function fetchAllContent() {
         container.innerHTML = '<i class="fa-solid fa-user"></i>';
       }
   }
-
   function RenderProfileInfo(){
-    renderText("Full-Name", studentData.fullName)
+    renderTextOrFallback("Full-Name" ,"Full-Name-Content" , studentData.fullName, "Full-Name-btn", "save-Content")
+    renderTextOrFallback("nick-name" ,"nick-name-Content" , studentData.ShortName, "nick-name-btn", "save-Content")
+    renderTextOrFallback("bio-R" ,"Bio-Content" , studentData.bio, "Bio-btn", "save-Content",)  
+
+   // renderTextOrFallback("Email-Text" ,"email-Content" , studentData.email, "Email-btn", "save-2-Content")  
+   // renderTextOrFallback("password-Text" ,"New-password-Content" , studentData.password, "password-btn", "save-2-Content")  
+
+  }
+  function RenderFacturaInfo(){
+
+    const date = formatTimestampToSpanishDate(studentData.Subscription.Nextpayment.seconds, studentData.Subscription.Nextpayment.nanoseconds)
+    renderText(studentData.Subscription.Plan, "Active-plan")
+    renderText(date, "Payments")
+  
+
+
+  }
+  function renderPayments() {
+  const container = document.getElementById("payments-container");
+  const paymentsArray = studentData.Subscription.Payments;
+
+  container.innerHTML = "";
+
+  if (!paymentsArray.length) {
+    container.innerHTML = "<p>No hay pagos registrados.</p>";
+    return;
   }
 
+  paymentsArray.forEach(payment => {
+    const fullDate = formatTimestampToSpanishDate(payment.Date.seconds, payment.Date.nanoseconds)
+    const card = document.createElement("div");
+    card.className = "payment-card";
+    card.innerHTML = `
+      <h4>Pago ID: ${payment.Id}</h4>
+      <p><strong>Monto:</strong> $${payment.Amount}</p>
+      <p><strong>Fecha:</strong> ${fullDate}</p>
+    `;
+    container.appendChild(card);
+  });
+}
 
 
-document.getElementById("saveNotif").addEventListener("click", async () => {
-  const emailNotif = document.getElementById("emailNotif").checked;
-  const platformNotif = document.getElementById("platformNotif").checked;
-  const classReminder = document.getElementById("classReminder").checked;
 
-  try {
-    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
 
-    await updateDoc(studentRef, {
-      notifications: {
-        emailNotifi: emailNotif,
-        platformnNtifi: platformNotif,
-        classReminderNotifi: classReminder
+
+
+
+
+
+  document.getElementById("User-Img").addEventListener("click", async () => {
+    const Img = document.getElementById("Img-Content")
+   
+        Img.style.display = "block"; 
+  });
+
+  document.getElementById("saveProfile").addEventListener("click", async () => {
+    const fullName = document.getElementById("fullName").value.trim();
+    const ShortName = document.getElementById("nickname").value.trim();
+    const bio = document.getElementById("bio").value.trim();
+
+    try {
+      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+
+      // Only update filled fields
+      const updatedFields = {};
+
+      if (fullName) {
+        updatedFields.fullName = fullName;
+        document.getElementById("Full-Name").innerText = fullName;
+        document.getElementById("Full-Name-Content").style.display = "none";
       }
-    });
 
-    alert("Preferencias guardadas exitosamente.");
-  } catch (error) {
-    console.error("Error al guardar configuración:", error);
-    alert("Hubo un error al guardar la configuración.");
-  }
-});
+      if (ShortName) {
+        updatedFields.ShortName = ShortName;
+        document.getElementById("nick-name").innerText = ShortName;
+        document.getElementById("nick-name-Content").style.display = "none";
+      }
+
+      if (bio) {
+        updatedFields.bio = bio;
+        document.getElementById("bio-R").innerText = bio;
+        document.getElementById("Bio-Content").style.display = "none";
+      }
+
+      if (Object.keys(updatedFields).length > 0) {
+        await updateDoc(studentRef, updatedFields);
+        alert("Perfil actualizado exitosamente.");
+
+        // Refresh after slight delay
+        setTimeout(() => {
+          location.reload();
+        }, 800);
+      } else {
+        alert("No se ingresaron nuevos datos para actualizar.");
+      }
+
+    } catch (error) {
+      console.error("Error al guardar el perfil:", error);
+      alert("Hubo un error al guardar el perfil.");
+    }
+  });
+  document.getElementById("saveNotif").addEventListener("click", async () => {
+    const emailNotif = document.getElementById("emailNotif").checked;
+    const platformNotif = document.getElementById("platformNotif").checked;
+    const classReminder = document.getElementById("classReminder").checked;
+
+    try {
+      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+
+      await updateDoc(studentRef, {
+        notifications: {
+          emailNotifi: emailNotif,
+          platformnNtifi: platformNotif,
+          classReminderNotifi: classReminder
+        }
+      });
+
+      alert("Preferencias guardadas exitosamente.");
+    } catch (error) {
+      console.error("Error al guardar configuración:", error);
+      alert("Hubo un error al guardar la configuración.");
+    }
+  });
+
+  document.getElementById("pay-history-btn").addEventListener("click", async () => {
+    renderPayments()
+  });
 
 
-document.getElementById("saveProfile").addEventListener("click", async () => {
-  const fullName = document.getElementById("fullName").value.trim();
-  const ShortName = document.getElementById("nickname").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const bio = document.getElementById("bio").value.trim();
 
-  try {
-    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
 
-    await updateDoc(studentRef, {
-    
-        fullName,
-        ShortName,
-        email,
-        bio
-     
-    });
 
-    alert("Perfil actualizado exitosamente.");
-  } catch (error) {
-    console.error("Error al guardar el perfil:", error);
-    alert("Hubo un error al guardar el perfil.");
-  }
-});
+
+
+
+
+
 
 
 
@@ -313,6 +471,32 @@ document.getElementById("saveProfile").addEventListener("click", async () => {
 
   renderUserImage()
   RenderProfileInfo()
+  RenderFacturaInfo()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -320,41 +504,6 @@ document.getElementById("saveProfile").addEventListener("click", async () => {
 
 // Run the fetch
 fetchAllContent()
-
-
-
-
-
-
-
-
-function setupShowContentOnClick(buttonId, contentId) {
-  const button = document.getElementById(buttonId);
-  const content = document.getElementById(contentId);
-
-  if (!button) {
-    console.error(`Button with id "${buttonId}" not found.`);
-    return;
-  }
-  if (!content) {
-    console.error(`Content with id "${contentId}" not found.`);
-    return;
-  }
-
-  button.addEventListener("click", () => {
-    content.style.display = "block";  // Show the content
-  });
-}
-
-// Call the function to attach the event
-setupShowContentOnClick("Full-Name-btn", "Full-Name-Content");
-
-
-
-
-
-
-
 
 
 
