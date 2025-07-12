@@ -99,92 +99,119 @@
 
   <section class="Central" id="main">
     <div class="Card-Block">
-      <div class="header">Portal de Configuración</div>
+      <div class="header" id="header" >Portal de Configuración</div>
+
+  
+
 
         <div class="card">
-          <h3><i class="fas fa-user"></i> Perfil</h3>
-          <div class="flex-row">
-            <div id="User-Img"></div>
-              <h2>Subir Imagen a Firebase Storage en BusinessUnits</h2>
-              <input type="file" id="file" />
-              <button id="btn" disabled>Subir</button>
-            </div>
-        </div>  
-
-        <div class="card">
+          <div class="Card-Left">
             <h3><i class="fas fa-user"></i> Perfil</h3>
 
-            <div class="Content-block" id="Full-Name-block">
-              <label for="Full-Name">Nombre completo:</label>
-              <div class="Renderd">
-                <h1 id="Full-Name"></h1><i class="fa-solid fa-pencil" id="Full-Name-btn"></i>
+            <div class="Blocks" id="Img-section">
+              <div class="Content-block" id="Img-block">
+                <div id="User-Img"></div>
+              </div>
+        
+              <div class="Hidden-Input" id="Img-Content">
+                <label for="file">Nombre completo nuevo:</label>
+                <input type="file" id="file" />
+                <button id="Img-btn" disabled>Subir</button>  
+              </div>               
+            </div>
+
+            <div class="Blocks">
+              <div class="Content-block" id="Full-Name-block">
+                <label for="Full-Name">Nombre completo:</label>
+                <div class="Renderd">
+                  <h1 class="Info" id="Full-Name"></h1><i class="fa-solid fa-pencil" id="Full-Name-btn"></i>
+                </div>
+              </div>
+
+              <div class="Hidden-Input" id="Full-Name-Content">
+                <label for="fullName">Nombre completo nuevo:</label>
+                <input type="text" id="fullName" placeholder="Ej. María Pérez">   
+              </div>    
+            </div>
+ 
+            <div class="Blocks">
+              <div class="Content-block" id="nickname-block">
+                <label for="nick-name">Nombre preferido:</label>
+                <div class="Renderd">
+                  <h1 class="Info" id="nick-name"></h1><i class="fa-solid fa-pencil" id="nick-name-btn"></i>
+                </div>
+              </div>
+
+              <div class="Hidden-Input" id="nick-name-Content">
+                <label for="nickname">Apodo preferido nuevo:</label>
+                <input type="text" id="nickname" placeholder="Ej. Mari, MP, etc.">
               </div>
             </div>
 
-             <div class="Hidden-Input" id="Full-Name-Content">
-              <label for="fullName">Nombre completo:</label>
-              <input type="text" id="fullName" placeholder="Ej. María Pérez">   
-            </div>     
+            <div class="Blocks">
+              <div class="Content-block" id="Bio-block">
+                <label for="bio-R">Biografía:</label>
+                <div class="Renderd">
+                  <h1  class="Info" id="bio-R"></h1><i class="fa-solid fa-pencil" id="Bio-btn"></i>
+                </div>
+              </div>
 
-            <div class="nickname-block" id="nickname-block">
-              <label for="nick-name">nick-name:</label>
-              <div class="Renderd">
-                <h1 id="nick-name"></h1><i class="fa-solid fa-pencil" id="nick-name-btn"></i>
+              <div class="Hidden-Input" id="Bio-Content">
+                <label for="Bio">Biografía nueva:</label>
+                <textarea id="bio" rows="3" placeholder="Cuéntanos sobre ti..."></textarea>
               </div>
             </div>
 
-            <div class="Hidden-Input" id="nick-name-Content">
-              <label for="nickname">Apodo preferido:</label>
-              <input type="text" id="nickname" placeholder="Ej. Mari, MP, etc.">
+            <div class="Blocks">
+              <div class="Hidden-Input" id="save-Content">
+                <button class="btn" id="saveProfile"><i class="fas fa-save"></i> Guardar cambios</button>              
+              </div>
             </div>
 
 
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" placeholder="Ej. maria@example.com">
-
-            <label for="bio">Biografía:</label>
-            <textarea id="bio" rows="3" placeholder="Cuéntanos sobre ti..."></textarea>
-
-            <button class="btn" id="saveProfile"><i class="fas fa-save"></i> Guardar cambios</button>
+          </div>
+          <div class="Card-Right">
+            <h2>Restablecer contraseña</h2>
+            <input type="email" id="resetEmail" placeholder="Ingresa tu correo" />
+            <button onclick="sendResetEmail()">Enviar correo de recuperación</button>
+          </div>
+          
         </div>
 
         <div class="card">
-          <h3><i class="fas fa-lock"></i> Seguridad</h3>
-          <label>Contraseña actual:</label>
-          <input type="password">
+          <div class="Card-Left">
+            <h3><i class="fas fa-credit-card"></i>Facturación</h3>
 
-          <label>Nueva contraseña:</label>
-          <input type="password">
+            <label for="Active-plan">Plan actual:</label>
+            <h1 class="Pay-Info" id="Active-plan"></h1>
 
-          <label>Confirmar nueva contraseña:</label>
-          <input type="password">
+            <label for="Payments">Próximo cobro:</label>
+            <h1 class="Pay-Info" id="Payments"></h1>    
 
-          <button class="btn"><i class="fas fa-key"></i> Cambiar contraseña</button>
-        </div> 
+            <div class="Pay-Btns-Block">
+              <button class="btn" id="pay-history-btn"><i class="fas fa-receipt"></i> Ver historial de pagos</button>
+              <button class="btn"><i class="fas fa-sync-alt"></i> Cambiar plan</button>               
+            </div>
+           
+          </div>
 
-        <div class="card">
-          <h3><i class="fas fa-credit-card"></i> Facturación</h3>
-          <p>Plan actual: <strong>Premium Mensual</strong></p>
-          <p>Próximo cobro: 15 de julio de 2025</p>
-          <button class="btn"><i class="fas fa-receipt"></i> Ver historial de pagos</button>
-          <button class="btn"><i class="fas fa-sync-alt"></i> Cambiar plan</button>
+          <div class="Card-Right">
+            <div id="payments-container"></div>
+          </div>
+          
         </div>
         
 
 
-        <div class="card">
-          <h3><i class="fas fa-user-slash"></i> Cuenta</h3>
-          <button class="btn" style="background-color: #e74c3c;"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
-          <button class="btn" style="background-color: #c0392b;"><i class="fas fa-trash-alt"></i> Eliminar cuenta</button>
-        </div>
+ 
 
     </div>  
 
   </section>
   <section class="Left" id="Left">
     <div class="Card-Block">
-      <div class="card">
+      <div class="card-left">
         <div class="Left-Btn" id="Certification-Btn">
           <h3><i class="fas fa-certificate"></i> Mis Certificados</h3>
         </div>
@@ -200,7 +227,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card-left-btn">
         <div class="Left-Btn" id="Notifications-Btn">
           <h3><i class="fas fa-bell"></i> Notificaciones</h3>
         </div>
@@ -230,7 +257,7 @@
         </div>
       </div>      
 
-      <div class="card">
+     <div class="card-left-btn">
         <div class="Left-Btn" id="Devices-Btn">
           <h3><i class="fas fa-desktop"></i> Dispositivos Conectados</h3>
         </div>
@@ -241,7 +268,7 @@
         </div>
       </div>   
 
-      <div class="card">
+      <div class="card-left-btn">
         <div class="Left-Btn" id="Comunicacion-Btn">
           <h3><i class="fas fa-envelope-open-text"></i> Comunicación</h3>
         </div>
@@ -264,7 +291,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card-left-btn">
         <div class="Left-Btn" id="Privacidad-Btn">
           <h3><i class="fas fa-user-shield"></i> Privacidad</h3>
         </div>
@@ -279,7 +306,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card-left-btn">
         <div class="Left-Btn" id="Agenda-Btn">
           <h3><i class="fas fa-calendar-alt"></i> Agenda Personal</h3>
         </div>
@@ -295,7 +322,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card-left-btn">
         <div class="Left-Btn" id="Redes-Btn">
           <h3><i class="fab fa-linkedin"></i> Redes Sociales Vinculadas</h3>
         </div>
@@ -313,7 +340,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card-left-btn">
         <div class="Left-Btn" id="Referidos-Btn">
           <h3><i class="fas fa-user-friends"></i> Programa de Referidos</h3>
         </div>
