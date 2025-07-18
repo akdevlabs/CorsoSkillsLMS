@@ -467,18 +467,21 @@ initCareerFilter();
           container.appendChild(card);
         });
       }
-
+function updateSelectedCourseId(newCourseId) {
+  if (!newCourseId) return;
+  localStorage.setItem("selectedCourseId", newCourseId);
+}
       // Event delegation: listen for clicks on any "Ver más información" button
-      document.addEventListener("click", function (e) {
-        if (e.target.classList.contains("view-more-btn")) {
-          const courseCard = e.target.closest(".course-card");
-          const courseId = courseCard.getAttribute("data-course-id");
-          if (courseId) {
-            localStorage.setItem("selectedCourseId", courseId);
-            window.location.href = "index10.7.html";
-          }
-        }
-      });
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("view-more-btn")) {
+    const courseCard = e.target.closest(".course-card");
+    const courseId = courseCard.getAttribute("data-course-id");
+    if (courseId) {
+      updateSelectedCourseId(courseId);
+      window.location.href = "index10.7.html";
+    }
+  }
+});
 
 
       function CheckCourses() {

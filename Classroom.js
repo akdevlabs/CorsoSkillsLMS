@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getFirestore, doc, getDoc, collection, addDoc, setDoc, Timestamp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc, collection, addDoc, setDoc, Timestamp, updateDoc } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -763,7 +763,7 @@ async function fetchAllContent() {
       // Call only the main entry function
       CheckACourse();
 
-        
+      
 
       function countSlots(obj) {
         return Object.keys(obj).filter(key => key.startsWith("Slot")).length;
@@ -772,11 +772,19 @@ async function fetchAllContent() {
         const slotCount = countSlots(obj);
         const newSlotKey = `Slot${slotCount + 1}`;
         const CInfo = CouresIdInfo
+        const Teacher = CouresIdInfo.Teacher.Name
+        const OCTime = CouresIdInfo.Teacher.Time
+        const TId = CouresIdInfo.Teacher.TeacherId
+
+
  
         const newSlot = {
           Id: newCourseId,
           progress: 0,
-          Type:CInfo.Type
+          Type:CInfo.Type,
+          Teacher:Teacher,
+          Time:OCTime,
+          TeacherId:TId
 
         };
 
@@ -786,6 +794,7 @@ async function fetchAllContent() {
 
         return { [newSlotKey]: newSlot }; // Return new slot wrapped in key
       }
+      
       function createEnrollButton(studentCourses, studentId, UserUidInfo, newCourseId) {
         const btn = document.getElementById("enroll-container");
 
@@ -818,6 +827,255 @@ async function fetchAllContent() {
       const studentId = newCourseId;         // You can use same or different ID
 
       createEnrollButton(StuCour, studentId, UserUidInfo, newCourseId);
+
+
+
+function RenderViedoLineup() {
+  const ActiveCourse = checkIfCourseIdExists(StuCour, Id);
+  const videoElement = document.getElementById("courseVideo");
+  const moduleList = document.querySelector("#Module-List ul");
+  const progressCount = document.querySelector("#Module-List h4 span");
+
+  if (!videoElement || !moduleList || !progressCount) {
+    console.error("Required DOM elements not found.");
+    return;
+  }
+
+  function formatTime(time) {
+    const hours = Math.floor(time);
+    const minutes = Math.round((time - hours) * 60);
+    let result = "";
+    if (hours > 0) result += `${hours} hora${hours > 1 ? "s" : ""}`;
+    if (minutes > 0) result += (result ? " " : "") + `${minutes} min`;
+    return result || "0 min";
+  }
+
+  const orderedKeys = Object.keys(CouresIdInfo.Modules).sort((a, b) => {
+    if (a === "Intro") return -1;
+    if (b === "Intro") return 1;
+    return parseInt(a.replace("M", "")) - parseInt(b.replace("M", ""));
+  });
+
+  let currentModuleIndex = 0;
+  const watchedModules = new Set();
+
+  function findCourseSlotById(courseSlots, targetId) {
+    for (const slotName in courseSlots) {
+      const slot = courseSlots[slotName];
+      if (slot.Id === targetId) {
+        return {
+          found: true,
+          slotName: slotName,
+          slotData: slot
+        };
+      }
+    }
+    return {
+      found: false,
+      slotName: null,
+      slotData: null
+    };
+  }
+
+  function getFirstUnwatchedVideoIndex(studentCourses, courseId) {
+    const courseObject = findCourseSlotById(studentCourses, courseId);
+    const videoHistory = courseObject.found && courseObject.slotData.videoHistory
+      ? courseObject.slotData.videoHistory
+      : {};
+
+    for (let i = 0; i < orderedKeys.length; i++) {
+      const moduleKey = orderedKeys[i];
+      if (!videoHistory.hasOwnProperty(moduleKey)) {
+        return i;
+      }
+    }
+
+    return -1; // Todos los módulos completados
+  }
+
+  function loadVideoByIndex(index, autoplay = ActiveCourse) {
+    const key = orderedKeys[index];
+    const module = CouresIdInfo.Modules[key];
+
+    if (!module || !module.Video) {
+      console.warn("No video found for module", key);
+      return;
+    }
+
+    currentModuleIndex = index;
+
+    const videoParent = document.getElementById("courseVideo").parentNode;
+    const newVideo = document.createElement("video");
+    newVideo.setAttribute("id", "courseVideo");
+    newVideo.setAttribute("controls", "true");
+    newVideo.src = module.Video;
+
+    console.log(`▶️ Reproduciendo: Módulo ${index + 1} - "${module.Tittle || "Sin título"}"`);
+
+    newVideo.addEventListener("ended", async () => {
+      if (!ActiveCourse) return;
+
+      const isVideoFullyWatched = Math.abs(newVideo.currentTime - newVideo.duration) < 1;
+      if (!isVideoFullyWatched) {
+        console.warn("⚠️ El video no se vio completamente. No se guardará el progreso.");
+        return;
+      }
+
+      const moduleKey = orderedKeys[index];
+      const completedModule = CouresIdInfo.Modules[moduleKey];
+      const moduleTitle = completedModule.Tittle || "Sin título";
+
+      if (!watchedModules.has(index)) {
+        watchedModules.add(index);
+      }
+
+      const percent = Math.round((watchedModules.size / orderedKeys.length) * 100);
+      console.log(`✅ Video completado: Módulo ${index + 1} - "${moduleTitle}"`);
+      console.log(`📊 Progreso actual: ${percent}%`);
+
+      const StudentVideo = studentData.Courses;
+      const ScObject = findCourseSlotById(StudentVideo, Id);
+
+      if (ScObject.found && ScObject.slotName) {
+        try {
+          const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+          const currentDate = new Date().toISOString();
+
+          const currentHistory = ScObject.slotData.videoHistory || {};
+          const alreadyCompleted = currentHistory[moduleKey]?.completedAt;
+
+          if (!alreadyCompleted) {
+            const updatedVideoHistory = {
+              ...currentHistory,
+              [moduleKey]: {
+                title: moduleTitle,
+                completedAt: currentDate,
+                progress: percent
+              }
+            };
+
+            const updatedSlot = {
+              ...ScObject.slotData,
+              progress: percent,
+              videos: {
+                ...(ScObject.slotData.videos || {}),
+                [moduleKey]: "completed"
+              },
+              videoHistory: updatedVideoHistory
+            };
+
+            const updatedCourses = {
+              ...studentData.Courses,
+              [ScObject.slotName]: updatedSlot
+            };
+
+            await updateDoc(studentRef, {
+              Courses: updatedCourses
+            });
+
+            console.log("📁 Progreso y video actualizado en Firestore.");
+          } else {
+            console.log("⚠️ Este módulo ya había sido registrado como completado.");
+          }
+        } catch (error) {
+          console.error("❌ Error al actualizar Firestore:", error);
+          alert("Hubo un error al guardar el progreso.");
+        }
+      }
+
+      const nextIndex = index + 1;
+      if (nextIndex < orderedKeys.length) {
+        const nextTitle = CouresIdInfo.Modules[orderedKeys[nextIndex]].Tittle || "Sin título";
+        console.log(`▶️ Reproduciendo: Módulo ${nextIndex + 1} - "${nextTitle}"`);
+        loadVideoByIndex(nextIndex, true);
+      } else {
+        alert("🎉 ¡Has completado todos los módulos!");
+      }
+    });
+
+    newVideo.addEventListener("loadedmetadata", () => {
+      if (autoplay) {
+        newVideo.play().catch((err) => {
+          console.warn("Autoplay bloqueado o falló:", err);
+        });
+      }
+    });
+
+    const oldVideo = document.getElementById("courseVideo");
+    if (videoParent && oldVideo) {
+      videoParent.replaceChild(newVideo, oldVideo);
+    }
+
+    renderModules(index);
+  }
+
+  function renderModules(selectedIdx = 0) {
+    moduleList.innerHTML = "";
+
+    const ScObject = findCourseSlotById(studentData.Courses, Id);
+    const videoHistory = ScObject.found && ScObject.slotData.videoHistory
+      ? ScObject.slotData.videoHistory
+      : {};
+
+    orderedKeys.forEach((key, i) => {
+      const mod = CouresIdInfo.Modules[key];
+      const li = document.createElement("li");
+
+      const icon = document.createElement("i");
+      const title = document.createTextNode(" " + (mod.Tittle || "Sin título") + " ");
+      const timeSpan = document.createElement("span");
+      timeSpan.textContent = formatTime(mod.Time || 0);
+
+      const isCompleted = !!videoHistory[key];
+
+      if (i === selectedIdx) {
+        li.classList.add("active");
+        icon.className = "fas fa-play-circle";
+      } else if (isCompleted) {
+        li.classList.add("completed");
+        icon.className = "fas fa-check-circle";
+      } else {
+        icon.className = ActiveCourse ? "far fa-circle" : "fas fa-lock";
+      }
+
+      if (ActiveCourse) {
+        li.style.cursor = "pointer";
+        li.addEventListener("click", () => loadVideoByIndex(i, true));
+      } else {
+        li.style.cursor = i === 0 ? "pointer" : "not-allowed";
+        if (i === 0) {
+          li.addEventListener("click", () => loadVideoByIndex(0, true));
+        }
+      }
+
+      li.appendChild(icon);
+      li.appendChild(title);
+      li.appendChild(timeSpan);
+      moduleList.appendChild(li);
+    });
+
+    progressCount.textContent = `${selectedIdx + 1}/${orderedKeys.length}`;
+  }
+
+  // ⏯ Reproducir primer módulo NO completado
+  const nextUnwatchedIndex = getFirstUnwatchedVideoIndex(studentData.Courses, Id);
+
+  if (nextUnwatchedIndex >= 0 && nextUnwatchedIndex < orderedKeys.length) {
+    loadVideoByIndex(nextUnwatchedIndex, ActiveCourse);
+  } else {
+    alert("🎉 ¡Has completado todos los módulos!");
+  }
+}
+
+
+
+
+
+
+
+
+      RenderViedoLineup() 
+
 
     }
     function renderResourcesContent(){
@@ -1081,132 +1339,7 @@ async function fetchAllContent() {
 
 
 
-function RenderViedoLineup() {
-  const videoElement = document.getElementById("courseVideo");
-  const moduleList = document.querySelector("#Module-List ul");
-  const progressCount = document.querySelector("#Module-List h4 span");
 
-  if (!videoElement || !moduleList || !progressCount) {
-    console.error("Required DOM elements not found.");
-    return;
-  }
-
-  function formatTime(time) {
-    const hours = Math.floor(time);
-    const minutes = Math.round((time - hours) * 60);
-    let result = "";
-    if (hours > 0) result += `${hours} hora${hours > 1 ? "s" : ""}`;
-    if (minutes > 0) result += (result ? " " : "") + `${minutes} min`;
-    return result || "0 min";
-  }
-
-  const orderedKeys = Object.keys(CouresIdInfo.Modules).sort((a, b) => {
-    if (a === "Intro") return -1;
-    if (b === "Intro") return 1;
-    return parseInt(a.replace("M", "")) - parseInt(b.replace("M", ""));
-  });
-
-  let currentModuleIndex = 0;
-  const watchedModules = new Set(); // Track watched modules
-
-  function calculateProgress() {
-    const percent = Math.round((watchedModules.size / orderedKeys.length) * 100);
-    console.log(`Progreso: ${percent}%`);
-  }
-
-  function loadVideoByIndex(index) {
-    const key = orderedKeys[index];
-    const module = CouresIdInfo.Modules[key];
-
-    if (!module || !module.Video) {
-      console.warn("No video found for module", key);
-      return;
-    }
-
-    currentModuleIndex = index;
-
-    // Replace video to reset listeners
-    videoElement.replaceWith(videoElement.cloneNode(true));
-    const newVideoElement = document.getElementById("courseVideo");
-    newVideoElement.src = module.Video;
-
-    newVideoElement.addEventListener("loadedmetadata", () => {
-      newVideoElement.play().catch((err) => {
-        console.warn("Playback error:", err);
-      });
-    });
-
-    newVideoElement.addEventListener("ended", () => {
-      watchedModules.add(index); // Mark this module as watched
-      calculateProgress();
-
-      const nextIndex = index + 1;
-      if (nextIndex < orderedKeys.length) {
-        loadVideoByIndex(nextIndex);
-      } else {
-        alert("🎉 ¡Has completado todos los módulos!");
-      }
-    });
-
-    renderModules(index);
-  }
-
-  function renderModules(selectedIdx = 0) {
-    moduleList.innerHTML = "";
-
-    orderedKeys.forEach((key, i) => {
-      const mod = CouresIdInfo.Modules[key];
-      const li = document.createElement("li");
-
-      if (i < selectedIdx) li.classList.add("completed");
-      else if (i === selectedIdx) li.classList.add("active");
-
-      const icon = document.createElement("i");
-      icon.className =
-        i < selectedIdx
-          ? "fas fa-check-circle"
-          : i === selectedIdx
-          ? "fas fa-play-circle"
-          : "far fa-circle";
-
-      const title = document.createTextNode(" " + (mod.Tittle || "Sin título") + " ");
-      const timeSpan = document.createElement("span");
-      timeSpan.textContent = formatTime(mod.Time || 0);
-
-      li.appendChild(icon);
-      li.appendChild(title);
-      li.appendChild(timeSpan);
-      li.style.cursor = "pointer";
-
-      li.addEventListener("click", () => {
-        loadVideoByIndex(i);
-      });
-
-      moduleList.appendChild(li);
-    });
-
-    progressCount.textContent = `${selectedIdx + 1}/${orderedKeys.length}`;
-  }
-
-  loadVideoByIndex(0); // Start from first video
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-RenderViedoLineup() 
 
 
 
@@ -1382,16 +1515,6 @@ document.getElementById("carrer").addEventListener("click", function () {
   window.location.href = "index10.5.html";
 });
 
-
-document.getElementById("Settings").addEventListener("click", function () {
-  window.location.href = "index10.6.html";
-}); 
-document.getElementById("profile").addEventListener("click", function () {
-  window.location.href = "index10.4.html";
-});   
-document.getElementById("Logout").addEventListener("click", function () {
-  window.location.href = "index4.html";
-});   
 
 
 

@@ -18,7 +18,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Comunidad|StudentDashboard|CorsoSkills</title>
-  <link rel="stylesheet" href="Comunidad.css">
+  <link rel="stylesheet" href="Profesor.css">
 </head>
 <body>
   <section class="nav" id="sidebar">
@@ -37,7 +37,7 @@
             <i class="fa-solid fa-book-open"></i>
             <span class="linkName">eBooks</span>
           </div>
-
+          
           <div class="Side-Btns" id="Videos">
             <i class="fa-solid fa-school"></i>
             <span class="linkName">Cursos</span>
@@ -65,11 +65,22 @@
 
         </div>
 
-        <div class="Side-Btns" class="sidebar-bottom">
-          <div class="profile">
-            <i class="fa-solid fa-user-tie" style="color: #991b1b;"></i>
+        <div class="sidebar-bottom">
+
+          <div class="Side-Btns" id="Settings">
+            <i class="fa-solid fa-gear"></i>
+            <span class="linkName">Settings</span>
+          </div>
+   
+          <div class="Side-Btns" id="Teacher">
+            <i class="fa-solid fa-user-tie"></i>
             <span class="linkName">Profesor</span>
-        </div>
+          </div>
+
+          <div class="Side-Btns" id="Logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="linkName">Cerrar sesión</span>
+          </div>
         </div> 
         
       </div>
@@ -81,43 +92,116 @@
       <div class="Action-nav-btns">
       
       <div class="Side-caret" id="open">
-          <i class="fa-solid fa-caret-right" style="color: #991b1b;"></i>
+          <i class="fa-solid fa-caret-right"></i>
       </div>
 
       <div class="Side-caret" id="close">
-          <i class="fa-solid fa-caret-left" style="color: #991b1b;"></i>
+          <i class="fa-solid fa-caret-left"></i>
       </div>
 
       </div>
   </section>
 
-  <section class="course">
 
-  </section>
+  <section class="Main">
 
-  <section class="Course-Content-block" id="Course-Content-block">
+    <h1 id="Tittle">Conecta con tu Profesor</h1>
+    <div class="main-nav">
+      
+      <div class="Input-Block">
+        <select id="Category-select">
+          <option>Elige Categoria</option>
+        </select>
+      </div> 
+      
+      <div class="Input-Block">
+        <select id="Type-select">
+            <option>Elige Nivel</option>
+        </select>
+      </div> 
+
+      <div class="Input-Block">
+        <select id="Course-select">
+            <option>Elige Courso</option>
+        </select>
+      </div>  
+
+    </div>
+
+    <div class="Block">
+      <div class="content" id="faq">
+        <h2>Preguntas Frecuentes</h2>
+        <ul class="faq-list">
+
+          <li><strong>¿Cómo uso el portal?</strong><br>Primero debes elegir una categoría en el menú desplegable, luego seleccionar el nivel y después el curso. Así podrás ver toda la información del curso y también enviar tareas y mensajes al profesor correspondiente.</li>
+
+
+
+          <li><strong>¿Cómo envío mis tareas?</strong><br>Desde la sección "Enviar Tarea" en el menú.</li>
+
+
+
+
+          <li><strong>¿Dónde veo mis calificaciones?</strong><br>En la sección "Mi Progreso".</li>
+          <li><strong>¿Puedo contactar al profesor?</strong><br>Sí, usa el botón "Mensaje al Profesor".</li>
+        </ul>
+      </div>
+
+
+    <div class="content" id="announcements">
+      <h2>Latest Announcements</h2>
+      <div id="announcement-container"></div>
+    </div>
+    </div>
+
+    <div class="Block">
+      <div class="content" id="messages">
+
+        <h2>Enviar mensaje a tu profesor</h2>
+        <div class="message-container">
+          <textarea id="teacher-message" placeholder="Escribe tu mensaje..."></textarea>
+          <button class="send-btn" id="teacher-message-btn">Enviar mensaje</button>
+        </div>
+
+      </div>
+
+      <div class="content" id="teacher-info">
+        <h2>Información del Profesor</h2>
+        <div class="Teacher-points">
+          <span id="Teacher-Name"><strong>Nombre:</strong></span>
+          <span id="Teacher-Email"><strong>Email:</strong></span>
+          <span id="Teacher-Time"><strong>Horario de atención:</strong></span>          
+        </div>
+
+      </div>
     
-    <div class="Header-Course-Content">
-
     </div>
 
-    <div class="Main-Course-Content">
+    <div class="Block">
+      <div class="content" id="submit-homework">
+        <h2>Submit Homework</h2>
+        <input type="text" placeholder="Homework Title" />
+        <input type="file" />
+        <button class="send-btn">Upload Homework</button>
+      </div>
 
+      <div class="content" id="stats">
+        <h2>Your Stats</h2>
+        <ul class="stats-list">
+          <li><strong>Assignments Submitted:</strong> 4</li>
+          <li><strong>Messages Sent:</strong> 8</li>
+          <li><strong>Attendance:</strong> 92%</li>
+        </ul>
+      </div>
     </div>
-    
-    <div  class="Main-Course-Content-timeline">
 
-    </div>
+</section>
 
 
 
-
-
-
-  </section>
 
 
  
-  <script  src="Comunidad.js" type="module"></script>
+  <script  src="Profesor.js" type="module"></script>
 </body>
 </html>
