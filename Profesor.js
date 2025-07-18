@@ -1,55 +1,64 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getFirestore, doc, getDoc, collection, addDoc, setDoc, Timestamp, deleteField, updateDoc} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
-import { getAuth,  sendPasswordResetEmail, confirmPasswordReset, applyActionCode } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
-// Configuración Firebase (tuya)
-const firebaseConfig = {
-  apiKey: "AIzaSyD2w5sXCGRBxne-23FRCTAXQrMwHt4nHTY",
-  authDomain: "corsoskills-1ba50.firebaseapp.com",
-  projectId: "corsoskills-1ba50",
-  storageBucket: "corsoskills-1ba50.appspot.com",
-  messagingSenderId: "813928863826",
-  appId: "1:813928863826:web:771cd8ad820570441fa78b",
-  measurementId: "G-MYT63ZNNCC"
-};
+  import {
+    getFirestore,
+    doc,
+    getDoc,
+    getDocs,
+    collection,
+    addDoc, 
+    updateDoc,
+    setDoc,
+    arrayUnion,
+    serverTimestamp
+    
+  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    sendPasswordResetEmail,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyD2w5sXCGRBxne-23FRCTAXQrMwHt4nHTY",
+    authDomain: "corsoskills-1ba50.firebaseapp.com",
+    projectId: "corsoskills-1ba50",
+    storageBucket: "corsoskills-1ba50.appspot.com",
+    messagingSenderId: "813928863826",
+    appId: "1:813928863826:web:771cd8ad820570441fa78b",
+    measurementId: "G-MYT63ZNNCC"
+  };
 
-// Inicializar Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const storage = getStorage(app);
-const auth = getAuth(app);
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
 
-console.log(auth)
+  const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
+  const UserUidInfo = localStorage.getItem("UserUidInfo");
+  console.log(UserUidInfo)
+  const courseId = localStorage.getItem("selectedCourseId");
 
-const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
-const UserUidInfo = localStorage.getItem("UserUidInfo");
+  async function applyBranding() {
+    try {
+      const docRef = doc(db, "CorsoSkillBusiness", TBuInfo); // Ensure db and transferredInfo are initialized
+      const docSnap = await getDoc(docRef);
 
-
-
-
-
-async function applyBranding() {
-  try {
-    const docRef = doc(db, "CorsoSkillBusiness", TBuInfo); // Ensure db and transferredInfo are initialized
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      const documentData = docSnap.data();
-      return documentData; // Return the document data
-    } else {
-      console.error("No such document!");
+      if (docSnap.exists()) {
+        const documentData = docSnap.data();
+        return documentData; // Return the document data
+      } else {
+        console.error("No such document!");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching document:", error);
       return null;
     }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-    return null;
   }
-}
-applyBranding().then((data) => {  
-  console.log(data.BuLogos.Icons[0])
-  const {Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
-  
+  applyBranding().then((data) => {  
+
+    const {Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
+    
   function renderImage(imageUrl, altUrl, UrlId) {
     const logoElement = document.getElementById(UrlId);
     if (logoElement) {
@@ -89,436 +98,696 @@ applyBranding().then((data) => {
   
 
 
-  function SideBarColors(){
-        const style = document.createElement('style');
-    style.textContent = `
-      .Side-Btns i{
-        color: ${Base}
-      }
-      .linkName{
-        color: ${Base}
-      }
+    function SideBarColors(){
+          const style = document.createElement('style');
+      style.textContent = `
+        .Side-Btns i{
+          color: ${Base}
+        }
+        .linkName{
+          color: ${Base}
+        }
 
-      .Side-Btns i:hover {
-        color: ${Prime2}
-      }
-      .Side-caret i{
-        color: ${Base}
-      }
+        .Side-Btns i:hover {
+          color: ${Prime2}
+        }
+        .Side-caret i{
+          color: ${Base}
+        }
 
-    `;
-    document.head.appendChild(style);
+      `;
+      document.head.appendChild(style);
 
-  }
-  function SetMainColors(){
-    renderImage(data.BuLogos.Icons[0], "BuLogo", "Bulogos")
-    setBodyBackgroundColor(Prime4)
-    setBackgroundColor("#sidebar", Prime5)
+    }
+    function SetMainColors(){
+      renderImage(data.BuLogos.Icons[0], "BuLogo", "Bulogos")
+      setBodyBackgroundColor(Prime4)
+      setBackgroundColor("#sidebar", Prime5)
 
-  }
-  function mainColors(){
-    setBackgroundColor("#header", Prime5)
-  }
-  function CenterColors(){
-    const style = document.createElement('style');
-    style.textContent = `
+    }
+
+
+
+
+
+    SideBarColors()
+    SetMainColors()
+
+
+
+
+
+
+  });
+
+
+
+
+
+
+  async function getstudentContent() {
+    try {
+      const docRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+      const docSnap = await getDoc(docRef);
   
-    .header {
-      color: ${Base};
-    }
-    .card {
-      background-color: ${Prime5};
-    }
-    .card h3, .card h2 {
-      color:${Prime};
-    }
-    .card i {
-      color: ${Prime3};
-    }
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    textarea,
-    select {
-      background-color: ${Prime5};
-    }
-    input:focus, textarea:focus, select:focus {
-      border-color:${Prime3};
-    }
-    .btn, .btn-sm {
-      background-color: ${Base};
-      color: ${Prime5};
-    }
-    .btn:hover, .btn-sm:hover {
-      background-color:${Prime2};
-    }
-    .payment-card {
-      background: ${Prime5};
-      border: 1.5px solid ${Prime2};
-    }
-    .payment-card h4 {
-      color: ${Prime2};
-    }
-    .payment-card p {
-      color: ${Base};
-    }
-    .payment-card p strong {
-      color: ${Prime};
-    }
-    .Renderd {
-      border: 1px solid  ${Prime};
-    }
-    .Pay-Info {
-      color: ${Base};
-    }
-    #User-Img i {
-      color:${Prime2};
-    }
-    .card-left-btn{
-      background-color: ${Prime5};
-    }
-    .card-left-btn  h3, .card-left-btn h2 {
-      color:${Prime};
-    }
-    .card-left-btn i {
-      color: ${Prime3};
-    }
-
-
-
-
-
-
-
-
-
-    `;
-    document.head.appendChild(style);
-
-  }
-
-
-  
- 
-
-
-
-
-  SideBarColors()
-  SetMainColors()
-  mainColors()  
-  CenterColors()
-
-});
-
-
-async function getstudentContent() {
-  try {
-    const docRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      return docSnap.data();
-    } else {
-      console.error("No such student document!");
+      if (docSnap.exists()) {
+        return docSnap.data();
+      } else {
+        console.error("No such student document!");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching student document:", error);
       return null;
     }
-  } catch (error) {
-    console.error("Error fetching student document:", error);
-    return null;
   }
-}
-async function getCorsoSkillAppContent() {
-  try {
-    const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      return docSnap.data();
-    } else {
-      console.error("No such business document!");
+  async function getCorsoSkillAppContent() {
+    try {
+      const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
+      const docSnap = await getDoc(docRef);
+  
+      if (docSnap.exists()) {
+        return docSnap.data();
+      } else {
+        console.error("No such business document!");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching business document:", error);
       return null;
     }
-  } catch (error) {
-    console.error("Error fetching business document:", error);
-    return null;
   }
-}
-async function fetchAllContent() {
-  const studentData = await getstudentContent();
-  const businessData = await getCorsoSkillAppContent();
-
-  if (studentData) {
-    console.log("Student Document Data:", studentData);
-  } else {
-    console.log("No student data found.");
-    return;
-  }
-
-  if (businessData) {
-    console.log("Business Document Data:", businessData);
-  } else {
-    console.log("No business data found.");
-  }
-  function renderText(text, elementId) {
-    const container = document.getElementById(elementId);
-    if (container) {
-      container.textContent = text; // or use .innerHTML if you want to include HTML tags
+  async function fetchAllContent() {
+    const studentData = await getstudentContent();
+    const businessData = await getCorsoSkillAppContent();
+  
+    if (studentData) {
+      console.log("Student Document Data:", studentData);
     } else {
-      console.error(`Element with ID '${elementId}' not found.`);
+      console.log("No student data found.");
+      return;
     }
-  }
-  function formatTimestampToSpanishDate(seconds, nanoseconds) {
-    // Convert to milliseconds
-    const totalMilliseconds = seconds * 1000 + Math.floor(nanoseconds / 1_000_000);
-    
-    // Create date object
-    const date = new Date(totalMilliseconds);
-    
-    // Format in Spanish
-    const options = { day: 'numeric', month: 'long', year: 'numeric' };
-    const formatted = date.toLocaleDateString('es-ES', options);
-    
-    return formatted;
-  }
-  function renderTextOrFallback(elementId, contentId, value, buttonId ,SaveId) {
-    const button = document.getElementById(buttonId);
-    const container = document.getElementById(elementId);
-    const content = document.getElementById(contentId);
-    const Save = document.getElementById(SaveId);    
-
-    if (value && value.trim() !== "") {
-      container.textContent = value;
-      content.style.display = "none"; // Hide the editable content if there's already a value
-
+  
+    if (businessData) {
+      console.log("Business Document Data:", businessData);
     } else {
-      content.style.display = "block"; // Show content (e.g., input) if value is missing
-      Save.style.display = "block";
+      console.log("No business data found.");
+    }
+  
+    function renderImage(imageUrl, altUrl, UrlId) {
+      const logoElement = document.getElementById(UrlId);
+      if (logoElement) {
+        logoElement.src = imageUrl;
+        logoElement.alt = altUrl;
+      } else {
+        console.error("Element with ID 'logo' not found.");
+      }
+    }
+    function renderText(text, elementId) {
+      const element = document.getElementById(elementId);
+  
+      if (element) {
+        element.textContent = text;
+      } else {
+        console.error(`Element with ID "${elementId}" not found.`);
+      }
+    }
+    function setBackgroundColor(elementId, backgroundColor) {
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.style.backgroundColor = backgroundColor;
+      } else {
+        console.error(`Element with ID '${elementId}' not found.`);
+      }
     }
 
-    if (button) {
-      button.addEventListener("click", () => {
-        content.style.display = "block"; // Always show content when edit button is clicked
-        Save.style.display = "block";
+
+    function populateCourseCategories(courses) {
+      const select = document.getElementById("Category-select");
+      if (!select) return;
+
+      // Clear old options except the first one
+      select.length = 1;
+
+      const sortedCategories = Object.keys(courses).sort();
+
+      sortedCategories.forEach(category => {
+        const option = document.createElement("option");
+        option.value = category;
+        option.textContent = category;
+        select.appendChild(option);
       });
     }
-  }
-  function renderUserImage() {
-      const container = document.getElementById("User-Img");
-      const imageUrl = studentData.profileImg;
 
-      container.innerHTML = ""; // Clear any existing content
 
-      if (imageUrl && imageUrl.trim() !== "") {
-        const img = document.createElement("img");
-        img.src = imageUrl;
-        img.alt = "User Image";
-        container.appendChild(img);
-      } else {
-        container.innerHTML = '<i class="fa-solid fa-user"></i>';
+
+    function populateCourseLevels(courses) {
+      const select = document.getElementById("Type-select");
+      if (!select) return;
+
+      // Clear old options except the first one
+      select.length = 1;
+
+      const levelSet = new Set();
+
+      Object.values(courses).forEach(category => {
+        Object.entries(category).forEach(([level, value]) => {
+          // Exclude 'Info' and empty levels
+          if (
+            level !== "Info" &&
+            value &&
+            typeof value === "object" &&
+            Object.keys(value).length > 0
+          ) {
+            levelSet.add(level);
+          }
+        });
+      });
+
+      // Optional: order levels
+      const orderedLevels = ["Beginner", "Intermediate", "Advanced"];
+      const finalLevels = orderedLevels.filter(l => levelSet.has(l)).concat(
+        [...levelSet].filter(l => !orderedLevels.includes(l))
+      );
+
+      finalLevels.forEach(level => {
+        const option = document.createElement("option");
+        option.value = level;
+        option.textContent = level;
+        select.appendChild(option);
+      });
+    }
+
+
+    function getAllTeacherNames(courses) {
+      const teacherNames = [];
+
+      for (const key in courses) {
+        const slot = courses[key];
+        if (slot.Teacher) {
+          teacherNames.push(slot.Teacher);
+        }
       }
+
+      // Optional: remove duplicates
+      return [...new Set(teacherNames)];
+    }
+    function addStudentOptions(teachers) {
+      const select = document.getElementById("student-select");
+      if (!select) return;
+
+      // Clear old options except the first (placeholder)
+      select.length = 1;
+
+      teachers.forEach((teacher, index) => {
+        const option = document.createElement("option");
+        option.value = `teacher-${index}`;
+        option.textContent = teacher;
+        select.appendChild(option);
+      });
+    }
+    function formatBusinessHours(timeMap) {
+      const dayTranslations = {
+        Monday: "L",
+        Tuesday: "M",
+        Wednesday: "X",
+        Thursday: "J",
+        Friday: "V",
+        Saturday: "S",
+        Sunday: "D",
+      };
+
+      const hoursByDay = Object.entries(timeMap).map(([day, info]) => {
+        const open = `${info.Open[0]}${info.Open[1]}`;
+        const close = `${info.Close[0]}${info.Close[1]}`;
+        return { day, open, close };
+      });
+
+      const grouped = {};
+      for (const { day, open, close } of hoursByDay) {
+        const key = `${open}-${close}`;
+        if (!grouped[key]) grouped[key] = [];
+        grouped[key].push(dayTranslations[day]);
+      }
+
+      const result = [];
+      for (const [timeRange, days] of Object.entries(grouped)) {
+        const order = ["L", "M", "X", "J", "V", "S", "D"];
+        days.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+
+        const ranges = [];
+        let start = days[0], end = days[0];
+        for (let i = 1; i < days.length; i++) {
+          const prevIndex = order.indexOf(end);
+          const currentIndex = order.indexOf(days[i]);
+          if (currentIndex === prevIndex + 1) {
+            end = days[i];
+          } else {
+            ranges.push(start === end ? start : `${start}-${end}`);
+            start = end = days[i];
+          }
+        }
+        ranges.push(start === end ? start : `${start}-${end}`);
+        const [open, close] = timeRange.split("-");
+        result.push(`${ranges.join(", ")} ${open} - ${close}`);
+      }
+
+      return result.join(", ");
+    }
+
+    async function RenderMainNavcontent() {
+      // Populate selects
+      populateCourseCategories(businessData.Courses);
+      populateCourseLevels(businessData.Courses);
+
+      const categorySelect = document.getElementById("Category-select");
+      const typeSelect = document.getElementById("Type-select");
+      const courseSelect = document.getElementById("Course-select");
+
+      const teacherNameSpan = document.getElementById("Teacher-Name");
+      const teacherEmailSpan = document.getElementById("Teacher-Email");
+      const teacherTimeSpan = document.getElementById("Teacher-Time");
+
+      const courses = businessData.Courses;
+      let currentCourseData = null;
+      let selectedCourseId = null;
+
+      function formatBusinessHours(timeMap) {
+        const dayTranslations = {
+          Monday: "L", Tuesday: "M", Wednesday: "X", Thursday: "J",
+          Friday: "V", Saturday: "S", Sunday: "D",
+        };
+
+        const hoursByDay = Object.entries(timeMap).map(([day, info]) => {
+          const open = `${info.Open[0]}${info.Open[1]}`;
+          const close = `${info.Close[0]}${info.Close[1]}`;
+          return { day, open, close };
+        });
+
+        const grouped = {};
+        for (const { day, open, close } of hoursByDay) {
+          const key = `${open}-${close}`;
+          if (!grouped[key]) grouped[key] = [];
+          grouped[key].push(dayTranslations[day]);
+        }
+
+        const result = [];
+        for (const [timeRange, days] of Object.entries(grouped)) {
+          const order = ["L", "M", "X", "J", "V", "S", "D"];
+          days.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+
+          const ranges = [];
+          let start = days[0], end = days[0];
+          for (let i = 1; i < days.length; i++) {
+            const prevIndex = order.indexOf(end);
+            const currentIndex = order.indexOf(days[i]);
+            if (currentIndex === prevIndex + 1) {
+              end = days[i];
+            } else {
+              ranges.push(start === end ? start : `${start}-${end}`);
+              start = end = days[i];
+            }
+          }
+          ranges.push(start === end ? start : `${start}-${end}`);
+          const [open, close] = timeRange.split("-");
+          result.push(`${ranges.join(", ")} ${open} - ${close}`);
+        }
+
+        return result.join(", ");
+      }
+
+      function checkAndSearch() {
+        const selectedCategory = categorySelect.value;
+        const selectedType = typeSelect.value;
+
+        if (selectedCategory !== "Elige Categoria" && selectedType !== "Elige Nivel") {
+          const courseData = courses[selectedCategory]?.[selectedType];
+          currentCourseData = courseData;
+          courseSelect.innerHTML = '<option>Elige Curso</option>';
+          
+
+          if (courseData) {
+            Object.values(courseData).forEach(course => {
+              if (course && course.Tittle && course.Id) {
+                
+                const option = document.createElement("option");
+                option.value = course.Id;
+                option.textContent = course.Tittle;
+                courseSelect.appendChild(option);
+           
+              }
+            });
+          }
+        } else {
+          courseSelect.innerHTML = '<option>Elige Curso</option>';
+        }
+
+        // Reset teacher info
+        teacherNameSpan.innerHTML = "<strong>Nombre:</strong>";
+        teacherEmailSpan.innerHTML = "<strong>Email:</strong>";
+        teacherTimeSpan.innerHTML = "<strong>Horario de atención:</strong>";
+        selectedCourseId = null;
+      }
+
+      // Get extra teacher data from Firebase
+      async function getTeacherContent(TId) {
+        try {
+          const docRef = doc(db, "CorsoSkillsTeacher", TId);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            return docSnap.data();
+          } else {
+            console.error("No se encontró el documento del profesor.");
+            return null;
+          }
+        } catch (error) {
+          console.error("Error obteniendo datos del profesor:", error);
+          return null;
+        }
+      }
+
+      // Clear previous event listeners
+      function clearPreviousClickListeners(button) {
+        const newButton = button.cloneNode(true);
+        button.parentNode.replaceChild(newButton, button);
+        return newButton;
+      }
+
+      // On course change
+      async function onCourseSelectChange() {
+        const selectedId = courseSelect.value;
+        selectedCourseId = selectedId;
+        console.log("✔️ Selected Course ID:", selectedId);
+        localStorage.setItem("courseIdsaved", selectedId);
+        if (currentCourseData) {
+          const course = Object.values(currentCourseData).find(c => c.Id === selectedId);
+
+          if (course?.Teacher) {
+            const { Name, Email, Time, TeacherId } = course.Teacher;
+
+            teacherNameSpan.innerHTML = `<strong>Nombre:</strong> ${Name || "N/A"}`;
+            teacherEmailSpan.innerHTML = `<strong>Email:</strong> ${Email || "N/A"}`;
+            teacherTimeSpan.innerHTML = `<strong>Horario de atención:</strong> ${
+              Time ? formatBusinessHours(Time) : "N/A"
+            }`;
+
+            const teacherData = await getTeacherContent(TeacherId);
+            
+
+            // ✅ Save teacherData to localStorage
+            localStorage.setItem("selectedTeacherData", JSON.stringify(teacherData));
+          }
+        }
+      }
+
+
+      // Event listeners
+      categorySelect?.addEventListener("change", checkAndSearch);
+      typeSelect?.addEventListener("change", checkAndSearch);
+      courseSelect?.addEventListener("change", onCourseSelectChange);
+
+      // Optional: expose data access
+      return {
+        getSelectedCourseId: () => selectedCourseId
+      };
+    }
+
+    RenderMainNavcontent()
+
+
+
   }
-  function RenderProfileInfo(){
-    renderTextOrFallback("Full-Name" ,"Full-Name-Content" , studentData.fullName, "Full-Name-btn", "save-Content")
-    renderTextOrFallback("nick-name" ,"nick-name-Content" , studentData.ShortName, "nick-name-btn", "save-Content")
-    renderTextOrFallback("bio-R" ,"Bio-Content" , studentData.bio, "Bio-btn", "save-Content",)  
+  
 
-   // renderTextOrFallback("Email-Text" ,"email-Content" , studentData.email, "Email-btn", "save-2-Content")  
-   // renderTextOrFallback("password-Text" ,"New-password-Content" , studentData.password, "password-btn", "save-2-Content")  
-
-  }
-  function RenderFacturaInfo(){
-
-    const date = formatTimestampToSpanishDate(studentData.Subscription.Nextpayment.seconds, studentData.Subscription.Nextpayment.nanoseconds)
-    renderText(studentData.Subscription.Plan, "Active-plan")
-    renderText(date, "Payments")
+  // Run the fetch
+  fetchAllContent()
   
 
 
-  }
-  function renderPayments() {
-  const container = document.getElementById("payments-container");
-  const paymentsArray = studentData.Subscription.Payments;
 
-  container.innerHTML = "";
 
-  if (!paymentsArray.length) {
-    container.innerHTML = "<p>No hay pagos registrados.</p>";
+
+async function addMessagesToDB() {
+  const button = document.getElementById("teacher-message-btn");
+  const textarea = document.getElementById("teacher-message");
+  const messagesContainer = document.getElementById("messages-container");
+
+  if (!button || !textarea) {
+    console.error("❌ Botón o textarea no encontrado.");
     return;
   }
 
-  paymentsArray.forEach(payment => {
-    const fullDate = formatTimestampToSpanishDate(payment.Date.seconds, payment.Date.nanoseconds)
-    const card = document.createElement("div");
-    card.className = "payment-card";
-    card.innerHTML = `
-      <h4>Pago ID: ${payment.Id}</h4>
-      <p><strong>Monto:</strong> $${payment.Amount}</p>
-      <p><strong>Fecha:</strong> ${fullDate}</p>
-    `;
-    container.appendChild(card);
-  });
-}
+  button.addEventListener("click", async function () {
+    const savedCId = localStorage.getItem("courseIdsaved"); // ✅ actualizado aquí
+    const message = textarea.value.trim();
 
-
-
-
-
-
-
-
-
-  document.getElementById("User-Img").addEventListener("click", async () => {
-    const Img = document.getElementById("Img-Content")
-   
-        Img.style.display = "block"; 
-  });
-
-  document.getElementById("saveProfile").addEventListener("click", async () => {
-    const fullName = document.getElementById("fullName").value.trim();
-    const ShortName = document.getElementById("nickname").value.trim();
-    const bio = document.getElementById("bio").value.trim();
-
-    try {
-      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-
-      // Only update filled fields
-      const updatedFields = {};
-
-      if (fullName) {
-        updatedFields.fullName = fullName;
-        document.getElementById("Full-Name").innerText = fullName;
-        document.getElementById("Full-Name-Content").style.display = "none";
-      }
-
-      if (ShortName) {
-        updatedFields.ShortName = ShortName;
-        document.getElementById("nick-name").innerText = ShortName;
-        document.getElementById("nick-name-Content").style.display = "none";
-      }
-
-      if (bio) {
-        updatedFields.bio = bio;
-        document.getElementById("bio-R").innerText = bio;
-        document.getElementById("Bio-Content").style.display = "none";
-      }
-
-      if (Object.keys(updatedFields).length > 0) {
-        await updateDoc(studentRef, updatedFields);
-        alert("Perfil actualizado exitosamente.");
-
-        // Refresh after slight delay
-        setTimeout(() => {
-          location.reload();
-        }, 800);
-      } else {
-        alert("No se ingresaron nuevos datos para actualizar.");
-      }
-
-    } catch (error) {
-      console.error("Error al guardar el perfil:", error);
-      alert("Hubo un error al guardar el perfil.");
+    if (!message || !savedCId || !UserUidInfo) {
+      console.warn("⚠️ Mensaje, curso o usuario no disponible.");
+      return;
     }
-  });
-  document.getElementById("saveNotif").addEventListener("click", async () => {
-    const emailNotif = document.getElementById("emailNotif").checked;
-    const platformNotif = document.getElementById("platformNotif").checked;
-    const classReminder = document.getElementById("classReminder").checked;
+
+    console.log("📌 Guardando mensaje en curso:", savedCId);
 
     try {
-      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+      const colRef = collection(db, "CorsoSkillMessages");
+      const snapshot = await getDocs(colRef);
 
-      await updateDoc(studentRef, {
-        notifications: {
-          emailNotifi: emailNotif,
-          platformnNtifi: platformNotif,
-          classReminderNotifi: classReminder
+      let targetDoc = null;
+
+      // 🔍 Buscar documento con mismo curso y usuario
+      snapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        if (data[savedCId]?.[UserUidInfo]) {
+          targetDoc = { id: docSnap.id, data };
         }
       });
 
-      alert("Preferencias guardadas exitosamente.");
-    } catch (error) {
-      console.error("Error al guardar configuración:", error);
-      alert("Hubo un error al guardar la configuración.");
+      const newMessage = {
+        message: message,
+        timestamp: new Date()
+      };
+
+      if (targetDoc) {
+        // ✅ Agregar mensaje a usuario existente
+        const docRef = doc(db, "CorsoSkillMessages", targetDoc.id);
+        const currentMessages =
+          targetDoc.data[savedCId][UserUidInfo].STMessages || [];
+
+        await updateDoc(docRef, {
+          [`${savedCId}.${UserUidInfo}.STMessages`]: [...currentMessages, newMessage]
+        });
+
+        console.log("✅ Mensaje agregado a usuario existente:", targetDoc.id);
+      } else {
+        // ⚠️ Ver si ya existe un documento con solo el curso (pero sin este usuario)
+        let courseOnlyDoc = null;
+
+        snapshot.forEach(docSnap => {
+          const data = docSnap.data();
+          if (data[savedCId] && !data[savedCId][UserUidInfo]) {
+            courseOnlyDoc = { id: docSnap.id };
+          }
+        });
+
+        if (courseOnlyDoc) {
+          // ➕ Agregar usuario nuevo bajo curso existente
+          const docRef = doc(db, "CorsoSkillMessages", courseOnlyDoc.id);
+
+          await updateDoc(docRef, {
+            [`${savedCId}.${UserUidInfo}`]: {
+              STMessages: [newMessage]
+            }
+          });
+
+          console.log("➕ Usuario agregado al curso existente:", courseOnlyDoc.id);
+          localStorage.setItem("MessagerId", courseOnlyDoc.id);
+        } else {
+          // 🆕 Crear documento nuevo con curso y usuario
+          const newDocRef = await addDoc(colRef, {
+            [savedCId]: {
+              [UserUidInfo]: {
+                STMessages: [newMessage]
+              }
+            }
+          });
+
+          console.log("🆕 Nuevo documento creado para curso:", savedCId);
+        }
+      }
+
+      textarea.value = "";
+      await loadMessages(); // recargar mensajes después de guardar
+      location.reload();
+    } catch (err) {
+      console.error("❌ Error al guardar mensaje:", err);
     }
   });
 
-  document.getElementById("pay-history-btn").addEventListener("click", async () => {
-    renderPayments()
-  });
+  // 📥 Cargar mensajes al iniciar
+  await loadMessages();
 
+  async function loadMessages() {
+    const savedCId = localStorage.getItem("courseIdsaved");
+    if (!savedCId || !UserUidInfo || !messagesContainer) return;
 
+    messagesContainer.innerHTML = "⌛ Cargando mensajes...";
 
+    try {
+      const snapshot = await getDocs(collection(db, "CorsoSkillMessages"));
 
+      let messages = [];
 
+      snapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        const docMessages = data?.[savedCId]?.[UserUidInfo]?.STMessages;
+        if (Array.isArray(docMessages)) {
+          messages = docMessages;
+        }
+      });
 
+      if (!messages.length) {
+        messagesContainer.innerHTML = "<p>Sin mensajes aún.</p>";
+        return;
+      }
 
+      // Ordenar cronológicamente
+      messages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  renderUserImage()
-  RenderProfileInfo()
-  RenderFacturaInfo()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      // Mostrar mensajes
+      messagesContainer.innerHTML = messages
+        .map(
+          msg => `
+            <div class="msg">
+              <p>${msg.message}</p>
+              <small>${new Date(msg.timestamp).toLocaleString()}</small>
+            </div>
+          `
+        )
+        .join("");
+    } catch (err) {
+      messagesContainer.innerHTML = "❌ Error al cargar mensajes.";
+      console.error(err);
+    }
+  }
 }
 
-// Run the fetch
-fetchAllContent()
+ const MessagerId = localStorage.getItem("MessagerId");
+console.log(MessagerId)
 
 
 
 
 
-document.querySelectorAll('.Left-Btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const contentId = btn.id.replace('-Btn', '-Content');
-    const content = document.getElementById(contentId);
-    content.classList.toggle('show'); // Asegúrate que el CSS use .show para visibilidad
+
+
+
+
+
+async function getAllCorsoSkillMessages() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "CorsoSkillMessages"));
+    const messages = [];
+
+    querySnapshot.forEach((doc) => {
+      messages.push({
+        id: doc.id,
+        data: doc.data()
+      });
+    });
+
+    //console.log("📩 CorsoSkillMessages:", messages);
+    return messages;
+  } catch (error) {
+   // console.error("❌ Error fetching messages:", error);
+    return [];
+  }
+}
+getAllCorsoSkillMessages().then((data) => {
+  const courseSelect = document.getElementById("Course-select");
+
+  function renderUpcomingAnnouncements(announcementsObj, containerId) {
+    const ul = document.createElement("ul");
+    const now = Date.now(); // current time in milliseconds
+
+    const announcementEntries = Object.values(announcementsObj)
+      .map(announcement => {
+        const timestampMs = announcement.Date.seconds * 1000;
+        return {
+          ...announcement,
+          timestampMs
+        };
+      })
+      .filter(announcement => announcement.timestampMs >= now) // Only future or today
+      .sort((a, b) => a.timestampMs - b.timestampMs); // Closest date first
+
+    if (announcementEntries.length === 0) {
+      ul.innerHTML = "<li>No upcoming announcements.</li>";
+    } else {
+      announcementEntries.forEach(announcement => {
+        const date = new Date(announcement.timestampMs);
+        const formattedDate = date.toLocaleDateString("en-US", {
+          month: "long",
+          day: "numeric"
+        }); // e.g., "July 18"
+
+        const li = document.createElement("li");
+        li.textContent = `${formattedDate}: ${announcement.Tittle}`;
+        ul.appendChild(li);
+      });
+    }
+
+    const container = document.getElementById(containerId);
+    container.innerHTML = ""; // Clear previous content
+    container.appendChild(ul);
+  }
+
+
+
+
+  courseSelect.addEventListener("change", function () {
+    const selectedValue = courseSelect.value; // This is your courseId (e.g. "BB05")
+    const courseId = selectedValue;
+    const MessageData = data; // Array of message objects
+    const StudentIdData = UserUidInfo; // Example: "O4fomNmpPVRsVEChnPWXBumw5qL2"
+
+    console.log("🔍 Selected course:", courseId);
+    console.log("🧍‍♂️ Student UID:", StudentIdData);
+    console.log("🧾 Message Data Array:", MessageData);
+
+    // Search for the object where courseId exists as a key
+    for (const item of MessageData) {
+      const messageObj = item.data;
+
+      if (messageObj.hasOwnProperty(courseId)) {
+        const courseData = messageObj[courseId];
+
+        if (courseData.hasOwnProperty(StudentIdData)) {
+          const studentMessages = courseData[StudentIdData];
+
+          renderUpcomingAnnouncements(studentMessages.Announcements, "announcement-container");
+
+
+
+
+          console.log("📥 Messages for selected course and student:", studentMessages);
+        } else {
+          console.warn("⚠️ No messages found for this student in selected course.");
+        }
+
+        return; // Found the course, no need to continue loop
+      }
+    }
+
+    console.warn("⚠️ No data found for selected course.");
   });
 });
 
 
- document.addEventListener("DOMContentLoaded", function () {
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
     const openBtn = document.getElementById("open");
     const closeBtn = document.getElementById("close");
     const linkNames = document.querySelectorAll(".linkName");
@@ -540,8 +809,7 @@ document.querySelectorAll('.Left-Btn').forEach(btn => {
 
     // Initial state: hide all link names, show open button only
     hideSidebarText();
- });
-
+});
 
 
 document.getElementById("Home").addEventListener("click", function () {
@@ -567,9 +835,9 @@ document.getElementById("carrer").addEventListener("click", function () {
 });
 
 
-document.getElementById("profile").addEventListener("click", function () {
-  window.location.href = "index10.4.html";
-});   
+document.getElementById("Settings").addEventListener("click", function () {
+  window.location.href = "index10.6.html";
+}); 
 document.getElementById("Logout").addEventListener("click", function () {
   window.location.href = "index4.html";
-});  
+}); 

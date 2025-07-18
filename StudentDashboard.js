@@ -109,12 +109,6 @@ applyBranding().then((data) => {
 
 
 
-  function SetMainColors(){
-    renderImage(data.BuLogos.Icons[0], "BuLogo", "Bulogos")
-    setBodyBackgroundColor(Base)
-    setBackgroundColor("#sidebar", Prime4)
-
-  }
   function headerColors(){
     setTextColors("#Welcome", Prime5)
     setBackgroundColor("#Welcome", Prime3)
@@ -126,8 +120,7 @@ applyBranding().then((data) => {
 
   }
   function MaintopColors(){
-    setTextColors("#search-btn", Prime5)
-    setBackgroundColor("#search-btn", Base)
+
     setTextColors("#Alert-Icons", Base)
 
   }
@@ -768,8 +761,11 @@ function renderCourses() {
       div.style.cursor = "pointer";
 
       div.onclick = () => {
+ 
+        localStorage.setItem("selectedCourseId", (slot.Id));
         localStorage.setItem("selectedCourse", JSON.stringify(slot));
-        window.location.href = "index10.7.html";
+        console.log(slot)
+      window.location.href = "index10.7.html";
       };
 
       div.innerHTML = `
@@ -883,6 +879,11 @@ function newCourses() {
     return activeCourses;
   }
 
+
+
+
+
+  
   function renderSlots(slots) {
     const container = document.getElementById("custom-course-carousel");
     if (!container) return;
@@ -898,7 +899,8 @@ function newCourses() {
 
       div.onclick = () => {
         localStorage.setItem("selectedCourse", JSON.stringify(slot));
-        window.location.href = "index10.2.html";
+        localStorage.setItem("selectedCourseId", (slot.Id));
+        window.location.href = "index10.7.html";
       };
 
       div.innerHTML = `
@@ -920,6 +922,10 @@ function newCourses() {
 
     updateNavigationButtons(slots.length);
   }
+
+
+
+
 
   function updateNavigationButtons(totalSlots) {
     const leftBtn = document.getElementById("custom-carousel-left");
@@ -1042,8 +1048,11 @@ document.getElementById("profile").addEventListener("click", function () {
   window.location.href = "index10.4.html";
 });   
 document.getElementById("Logout").addEventListener("click", function () {
+  // Clear localStorage (optional: also clear sessionStorage if used)
+  localStorage.clear();
+  sessionStorage.clear();
   window.location.href = "index4.html";
-});   
+});
 
 
 
