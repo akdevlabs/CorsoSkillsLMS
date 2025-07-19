@@ -1,4 +1,4 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
   import {
     getFirestore,
     doc,
@@ -10,8 +10,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase
     setDoc,
     arrayUnion,
     serverTimestamp
-    
   } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+
   import {
     getAuth,
     signInWithEmailAndPassword,
@@ -19,6 +19,15 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase
     sendPasswordResetEmail,
     signOut
   } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+
+  import {
+    getStorage,
+    ref,
+    listAll,
+    uploadBytes,
+    getDownloadURL
+  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
+
   const firebaseConfig = {
     apiKey: "AIzaSyD2w5sXCGRBxne-23FRCTAXQrMwHt4nHTY",
     authDomain: "corsoskills-1ba50.firebaseapp.com",
@@ -32,11 +41,63 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   const auth = getAuth(app);
+  
+const storage = getStorage(app, 'gs://corsoskills-1ba50.firebasestorage.app');
 
   const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
   const UserUidInfo = localStorage.getItem("UserUidInfo");
   console.log(UserUidInfo)
   const courseId = localStorage.getItem("selectedCourseId");
+
+console.log(storage)
+
+// Reference to root or a folder inside the bucket
+const folderRef = ref(storage, "BusinessUnits/");  // for example, list files inside BusinessUnits/
+
+const testEmail = "test3@gmail.com";      // Replace with your test email
+const testPassword = "123456789";  // Replace with your test password
+
+
+async function listFilesInFolder() {
+  try {
+    // Sign in the user first
+    const userCredential = await signInWithEmailAndPassword(auth, testEmail, testPassword);
+    console.log("✅ Signed in as:", userCredential.user.email);
+
+    // Reference your deep folder inside the bucket
+    const folderRef = ref(storage, "BusinessUnits/CorsoSkills/Careers/BC01/");
+
+    // List all files in the folder
+    const res = await listAll(folderRef);
+
+    if (res.items.length === 0) {
+      console.log("⚠️ No files found in the folder.");
+      return;
+    }
+
+    console.log(`📂 Found ${res.items.length} files:`);
+
+    // Loop through files and log URL + add clickable link
+    for (const itemRef of res.items) {
+      const url = await getDownloadURL(itemRef);
+      console.log("🔗", itemRef.name, url);
+
+      // Optional: create clickable link in the page
+      const a = document.createElement("a");
+      a.href = url;
+      a.textContent = itemRef.name;
+      a.target = "_blank";
+      document.body.appendChild(a);
+      document.body.appendChild(document.createElement("br"));
+    }
+  } catch (error) {
+    console.error("❌ Error:", error);
+  }
+}
+
+listFilesInFolder();
+
+
 
   async function applyBranding() {
     try {
@@ -81,16 +142,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase
       console.error(`No elements found for selector '${selector}'.`);
     }
   }
-  function setTextColors(selector, Tcolor) {
-    const elements = document.querySelectorAll(selector);
-    if (elements.length > 0) {
-      elements.forEach(element => {
-        element.style.color = Tcolor;
-      });
-    } else {
-      console.error(`No elements found for selector '${selector}'.`);
-    }
-  }
   function setGlobalFont(fontFamily) {
     document.body.style.fontFamily = fontFamily;
   }
@@ -125,15 +176,123 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase
       setBackgroundColor("#sidebar", Prime5)
 
     }
+    function NavColors(){
+      const style = document.createElement('style');
+      style.textContent = `
+        #Tittle{
+          color: ${Base};
+        }
+        .Input-Block select {
+          padding: 10px 12px;
+          font-size: 16px;
+          border: 1px solid  ${Prime3};
+          border-radius: 8px;
+          background-color: ${Prime5};
+          transition: border-color 0.2s, box-shadow 0.2s;
+          appearance: none;
+          cursor: pointer;
+        }
+
+        .Input-Block select:hover {
+          border-color:${Base};
+          
+        }
+
+        .Input-Block select:focus {
+          outline: none;
+          border-color:${Prime3};
+         
+        }
+
+      `;
+      document.head.appendChild(style);
+
+    }
+    function Allcolors(){
+      const style = document.createElement('style');
+      style.textContent = `
+        .content {
+          background: ${Prime5};
+        }
+        .Faq-Q-tittle{
+          color: ${Prime3};
+          border: 1px solid ${Prime3};
+        }
+        .Faq-Q-tittle:hover{
+          color: ${Prime5};
+          background: ${Prime2};
+          border: none; 
+        }
+        .hidden-faq-text {
+          color: ${Base};
+        }
+        #faq::-webkit-scrollbar-thumb {
+          background-color: ${Prime2};
+        }
+        #faq::-webkit-scrollbar-thumb:hover {
+          background-color: ${Prime3};
+        }
+        #announcement-container li {
+          border-left: 4px solid ${Prime3};
+        }
+        #announcement-container li:hover {
+          color: ${Prime5};
+          background-color:${Prime2};
+          border-left: 4px solid ${Prime1};
+        }
+        #announcement-container li strong {
+          color: ${Prime3};
+        }
+        /*----------- Messages --------------*/
+        .content-tittle{
+        color: ${Base};
+        }
+        #teacher-message{
+          color:${Prime2};
+          border: 1px solid ${Prime3};
+        }
+        .send-btn {
+          background-color: ${Base};
+          color: ${Prime5};
+        }
+        .send-btn:hover {
+          background-color:${Prime2};
+        }
+        /*----------- teacher-info --------------*/
+        #teacher-info .content-tittle {
+          color:${Base};
+        }
+        .Teacher-points span {
+          color: ${Base};
+        }
+        .Teacher-points strong {
+          color:${Prime3};
+        }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+      `;
+      document.head.appendChild(style);
+
+    }
 
 
 
     SideBarColors()
     SetMainColors()
-
-
+    NavColors()
+    Allcolors()
 
 
 
@@ -670,7 +829,7 @@ async function addMessagesToDB() {
     }
   }
 }
-
+addMessagesToDB()
  const MessagerId = localStorage.getItem("MessagerId");
 console.log(MessagerId)
 
@@ -785,6 +944,26 @@ getAllCorsoSkillMessages().then((data) => {
 
 
 
+
+
+
+
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const questions = document.querySelectorAll(".Faq-Q-tittle");
+
+    questions.forEach((question) => {
+      question.addEventListener("click", function () {
+        const questionId = question.id;
+        const index = questionId.split("-")[1]; // Get number from ID like Faq-1-questions
+        const answer = document.getElementById(`Faq-${index}-answer`);
+
+        if (answer) {
+          answer.classList.toggle("show");
+        }
+      });
+    });
+  });
 
 
 document.addEventListener("DOMContentLoaded", function () {
