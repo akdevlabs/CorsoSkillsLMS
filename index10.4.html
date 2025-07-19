@@ -130,34 +130,85 @@
 
     <div class="Block">
       <div class="content" id="faq">
-        <h2>Preguntas Frecuentes</h2>
-        <ul class="faq-list">
+        <h2 class="content-tittle">Preguntas Frecuentes</h2>
 
-          <li><strong>¿Cómo uso el portal?</strong><br>Primero debes elegir una categoría en el menú desplegable, luego seleccionar el nivel y después el curso. Así podrás ver toda la información del curso y también enviar tareas y mensajes al profesor correspondiente.</li>
+        <div class="Block-set">
+          <div class="Faq-block">
+            <h1 class="Faq-Q-tittle" id="Faq-1-questions">¿Cómo uso el portal?</h1>
+            <p class="hidden-faq-text" id="Faq-1-answer">
+              Primero elige una categoría, luego el nivel, y después selecciona el curso. Una vez hecho esto, tendrás acceso al contenido, tareas y comunicación con el profesor.
+            </p>
+          </div>
+
+          <div class="Faq-block">
+            <h1 class="Faq-Q-tittle" id="Faq-2-questions">¿Dónde veo mis eBooks?</h1>
+            <p class="hidden-faq-text" id="Faq-2-answer">
+              Dirígete a la sección eBooks desde el menú lateral. Ahí encontrarás los libros disponibles según tu curso y nivel.
+            </p>
+          </div>
+        </div>
+
+        <div class="Block-set">
+          <div class="Faq-block">
+            <h1 class="Faq-Q-tittle" id="Faq-3-questions">¿Cómo accedo a mis cursos en video?</h1>
+            <p class="hidden-faq-text" id="Faq-3-answer">
+              En el menú lateral, haz clic en Cursos. Verás todos los módulos disponibles para ti con sus respectivos videos.
+            </p>
+          </div>
+
+          <div class="Faq-block">
+            <h1 class="Faq-Q-tittle" id="Faq-4-questions">¿Qué es el salón virtual?</h1>
+            <p class="hidden-faq-text" id="Faq-4-answer">
+              El Salón es un espacio donde puedes ver clases en vivo, grabaciones, y participar en actividades virtuales organizadas por el profesor.
+            </p>
+          </div>
+        </div>
+
+        <div class="Block-set">
+          <div class="Faq-block">
+            <h1 class="Faq-Q-tittle" id="Faq-5-questions">¿Cómo veo mis logros?</h1>
+            <p class="hidden-faq-text" id="Faq-5-answer">
+              Puedes ver tus insignias y logros obtenidos haciendo clic en la sección Logros del menú. Ahí se muestran tus progresos y premios.
+            </p>
+          </div>
+
+          <div class="Faq-block">
+            <h1 class="Faq-Q-tittle" id="Faq-6-questions">¿Cómo interactúo con otros estudiantes?</h1>
+            <p class="hidden-faq-text" id="Faq-6-answer">
+              Entra a la sección Comunidad para conectarte con otros estudiantes, compartir dudas o experiencias, y participar en foros de discusión.
+            </p>
+          </div>
+        </div>
+
+        <div class="Block-set">
+          <div class="Faq-block">
+            <h1 class="Faq-Q-tittle" id="Faq-7-questions">¿Qué es la Ruta Profesional?</h1>
+            <p class="hidden-faq-text" id="Faq-7-answer">
+              Es una guía paso a paso con cursos y actividades recomendadas para ayudarte a crecer profesionalmente dentro de tu área de interés.
+            </p>
+          </div>
+
+          <div class="Faq-block">
+            <h1 class="Faq-Q-tittle" id="Faq-8-questions">¿Cómo configuro mi cuenta?</h1>
+            <p class="hidden-faq-text" id="Faq-8-answer">
+              Ve a Settings desde el menú para editar tu información personal, cambiar tu contraseña o ajustar notificaciones.
+            </p>
+          </div>
+        </div>
 
 
-
-          <li><strong>¿Cómo envío mis tareas?</strong><br>Desde la sección "Enviar Tarea" en el menú.</li>
-
-
-
-
-          <li><strong>¿Dónde veo mis calificaciones?</strong><br>En la sección "Mi Progreso".</li>
-          <li><strong>¿Puedo contactar al profesor?</strong><br>Sí, usa el botón "Mensaje al Profesor".</li>
-        </ul>
       </div>
 
 
     <div class="content" id="announcements">
-      <h2>Latest Announcements</h2>
+      <h2 class="content-tittle">Últimos Anuncios</h2>
       <div id="announcement-container"></div>
     </div>
     </div>
 
     <div class="Block">
       <div class="content" id="messages">
-
-        <h2>Enviar mensaje a tu profesor</h2>
+        <h2 class="content-tittle">Enviar mensaje a tu profesor</h2>
         <div class="message-container">
           <textarea id="teacher-message" placeholder="Escribe tu mensaje..."></textarea>
           <button class="send-btn" id="teacher-message-btn">Enviar mensaje</button>
@@ -166,7 +217,7 @@
       </div>
 
       <div class="content" id="teacher-info">
-        <h2>Información del Profesor</h2>
+        <h2 class="content-tittle">Información del Profesor</h2>
         <div class="Teacher-points">
           <span id="Teacher-Name"><strong>Nombre:</strong></span>
           <span id="Teacher-Email"><strong>Email:</strong></span>
@@ -179,14 +230,14 @@
 
     <div class="Block">
       <div class="content" id="submit-homework">
-        <h2>Submit Homework</h2>
+        <h2 class="content-tittle">Submit Homework</h2>
         <input type="text" placeholder="Homework Title" />
         <input type="file" />
         <button class="send-btn">Upload Homework</button>
       </div>
 
       <div class="content" id="stats">
-        <h2>Your Stats</h2>
+        <h2 class="content-tittle">Your Stats</h2>
         <ul class="stats-list">
           <li><strong>Assignments Submitted:</strong> 4</li>
           <li><strong>Messages Sent:</strong> 8</li>
@@ -195,6 +246,11 @@
       </div>
     </div>
 
+
+    <input type="file" id="fileInput" />
+<button id="firebase storage:bucket
+gsfirebase storage:bucket
+gsutil cors set cors.json gs://<tu-bucket>">Subir Archivo</button>
 </section>
 
 

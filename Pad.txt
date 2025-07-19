@@ -1,0 +1,389 @@
+Pad
+
+
+
+          <li><strong>¿Cómo envío mis tareas?</strong><br>Desde la sección "Enviar Tarea" en el menú.</li>
+
+
+
+
+          <li><strong>¿Dónde veo mis calificaciones?</strong><br>En la sección "Mi Progreso".</li>
+          <li><strong>¿Puedo contactar al profesor?</strong><br>Sí, usa el botón "Mensaje al Profesor".</li>
+
+
+
+
+
+/* FAQ Block Style */
+
+
+
+/* Question title */
+.Faq-Q-tittle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+/* Answer text (hidden by default) */
+.hidden-faq-text {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+  opacity: 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+/* Show answer */
+.Faq-block.active .hidden-faq-text {
+  max-height: 500px; /* Enough to show most answers */
+  opacity: 1;
+  margin-top: 0.5rem;
+}
+
+/* Scrollbar customization */
+#faq::-webkit-scrollbar {
+  width: 8px;
+}
+
+
+
+
+
+
+
+
+.content h2 {
+  margin-bottom: 1rem;
+}
+.message-container,
+.content textarea,
+.content input[type="text"],
+.content input[type="file"] {
+  width: 100%;
+  margin: 0.5rem 0 1rem 0;
+  padding: 0.7rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+
+
+.student-list {
+  list-style: none;
+}
+
+.student-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.stats-list li {
+  padding: 0.5rem 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+  import {
+    getFirestore,
+    doc,
+    getDoc,
+    getDocs,
+    collection,
+    addDoc, 
+    updateDoc,
+    setDoc,
+    arrayUnion,
+    serverTimestamp,
+    
+  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    sendPasswordResetEmail,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+
+  import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD2w5sXCGRBxne-23FRCTAXQrMwHt4nHTY",
+    authDomain: "corsoskills-1ba50.firebaseapp.com",
+    projectId: "corsoskills-1ba50",
+    storageBucket: "corsoskills-1ba50.appspot.com",
+    messagingSenderId: "813928863826",
+    appId: "1:813928863826:web:771cd8ad820570441fa78b",
+    measurementId: "G-MYT63ZNNCC"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
+  const UserUidInfo = localStorage.getItem("UserUidInfo");
+  console.log(UserUidInfo)
+  const courseId = localStorage.getItem("selectedCourseId");
+
+
+
+async function uploadFileToFirebaseStorage(file, storagePath, callback) {
+  try {
+    const storage = getStorage(); // Assumes Firebase is already initialized
+    const storageRef = ref(storage, storagePath);
+
+    // Upload file
+    const snapshot = await uploadBytes(storageRef, file);
+
+    console.log("✅ File uploaded successfully:", snapshot.metadata.fullPath);
+
+    // Get download URL
+    const downloadURL = await getDownloadURL(snapshot.ref);
+
+    console.log("🔗 Download URL:", downloadURL);
+
+    // Run callback with download URL
+    if (callback) callback(downloadURL);
+
+    return downloadURL;
+  } catch (error) {
+    console.error("❌ Upload failed:", error);
+    throw error;
+  }
+}
+
+async function handleFileUpload() {
+  const fileInput = document.getElementById("fileInput");
+  const file = fileInput.files[0];
+
+  if (!file) {
+    alert("Por favor selecciona un archivo.");
+    return;
+  }
+
+  const path = `uploads/${Date.now()}_${file.name}`; // You can customize this path
+
+  await uploadFileToFirebaseStorage(file, path, (url) => {
+    console.log("✅ Archivo subido. URL de descarga:", url);
+    // Aquí puedes guardar la URL en Firestore o mostrarla en la UI
+  });
+}
+
+document.getElementById("upload-btn").addEventListener("click", function () {
+  handleFileUpload()
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*----------- stat --------------*/
+#stats {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Título de sección */
+#stats .content-tittle {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+/* Lista de estadísticas */
+.stats-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.stats-list li {
+  font-size: 1.05rem;
+  color: #34495e;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eaeaea;
+  display: flex;
+  justify-content: space-between;
+}
+
+.stats-list li:last-child {
+  border-bottom: none;
+}
+
+/* Textos destacados */
+.stats-list li strong {
+  color: #2d86ff;
+  font-weight: 600;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <div class="Card-Right">
+            <h3><i class="fas fa-lock"></i> Seguridad</h3>
+
+            <div class="Content-block" id="Email-Text-block">
+              <label for="email">Email:</label>
+              <div class="Renderd">
+                <h1 class="Info" id="Email-Text"></h1><i class="fa-solid fa-pencil" id="Email-btn"></i>
+              </div>
+            </div>
+
+            <div class="Hidden-Input" id="email-Content">
+              <label for="email">Email:</label>
+              <input type="email" id="email" placeholder="Ej. maria@example.com">
+              
+              <label for="current-password">Contraseña actual:</label>
+              <input type="password" id="current-password" placeholder="Contraseña actual">
+
+              <button onclick="handleEmailUpdate()">Guardar</button>
+            </div>
+         
+            <div class="Content-block" id="password-Text-block">
+              <label for="password">Contraseña actual:</label>
+              <div class="Renderd">
+                <h1 class="Info" id="password-Text"></h1><i class="fa-solid fa-pencil" id="password-btn"></i>
+              </div>
+            </div>
+
+            <div class="Hidden-Input" id="New-password-Content">
+              <label for="New-password">Contraseña nueva:</label>
+              <input type="password" id="New-password">
+            </div> 
+
+
+
+            <label>Contraseña actual:</label>
+            <input type="password">
+
+            <label>Nueva contraseña:</label>
+            <input type="password">
+
+            <label>Confirmar nueva contraseña:</label>
+            <input type="password">
+
+
+            <div class="Hidden-Input" id="save-2-Content">
+              <button class="Seguridad-btn"><i class="fas fa-key"></i> Cambiar contraseña</button>             
+            </div>
+              
+          </div>
+
+
+
+
+       <div class="Content-block" id="password-Text-block">
+              <label for="password">Contraseña actual:</label>
+              <div class="Renderd">
+                <h1 class="Info" id="password-Text"></h1><i class="fa-solid fa-pencil" id="password-btn"></i>
+              </div>
+            </div>
+
+            <div class="Hidden-Input" id="New-password-Content">
+              <label for="New-password">Contraseña nueva:</label>
+              <input type="password" id="New-password">
+            </div> 
+
+
+
+            <label>Contraseña actual:</label>
+            <input type="password">
+
+            <label>Nueva contraseña:</label>
+            <input type="password">
+
+            <label>Confirmar nueva contraseña:</label>
+            <input type="password">
+
+        <div class="Hidden-Input" id="save-2-Content">
+              <button class="Seguridad-btn"><i class="fas fa-key"></i> Cambiar contraseña</button>             
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.getElementById("Settings").addEventListener("click", function () {
+  window.location.href = "index10.6.html";
+}); 
+
+
+
+
+document.getElementById("profile").addEventListener("click", function () {
+  window.location.href = "index10.4.html";
+});   
+document.getElementById("Logout").addEventListener("click", function () {
+  window.location.href = "index4.html";
+});   
+
+
+
+
