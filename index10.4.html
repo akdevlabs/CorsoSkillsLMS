@@ -228,31 +228,22 @@
     
     </div>
 
-    <div class="Block">
-      <div class="content" id="submit-homework">
-        <h2 class="content-tittle">Submit Homework</h2>
-        <input type="text" placeholder="Homework Title" />
-        <input type="file" />
-        <button class="send-btn">Upload Homework</button>
-      </div>
+<div class="Block">
+  <div class="content" id="submit-homework">
+    <h2 class="content-tittle">Entregar Tarea</h2>
+    <input type="text" id="homeworkTitle" placeholder="Título de la Tarea" />
+    <input type="file" id="homeworkFile" />
+    <button class="send-btn" id="uploadBtn" disabled>Subir Tarea</button>
+  </div>
 
-      <div class="content" id="stats">
-        <h2 class="content-tittle">Your Stats</h2>
-        <ul class="stats-list">
-          <li><strong>Assignments Submitted:</strong> 4</li>
-          <li><strong>Messages Sent:</strong> 8</li>
-          <li><strong>Attendance:</strong> 92%</li>
-        </ul>
-      </div>
-    </div>
+  <div class="content" id="stats">
+    <h2 class="content-tittle">Tus Entregas</h2>
+    <div class="file-list" id="fileList"></div>
+  </div>
+</div>
 
 
-    <input type="file" id="fileInput" accept="image/*" />
-  <button id="uploadBtn">Upload Image</button>
 
-  <div id="fileList"></div>
-
-</section>
 
 
 
