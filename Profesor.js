@@ -1,101 +1,162 @@
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-  import {
-    getFirestore,
-    doc,
-    getDoc,
-    getDocs,
-    collection,
-    addDoc, 
-    updateDoc,
-    setDoc,
-    arrayUnion,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  getDocs,
+  collection,
+  addDoc,
+  updateDoc,
+  setDoc,
+  arrayUnion,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
-  import {
-    getAuth,
-    signInWithEmailAndPassword,
-    onAuthStateChanged,
-    sendPasswordResetEmail,
-    signOut
-  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
 
-  import {
-    getStorage,
-    ref,
-    listAll,
-    uploadBytes,
-    getDownloadURL
-  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
+import {
+  getStorage,
+  ref,
+  listAll,
+  uploadBytes,
+  getDownloadURL
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyD2w5sXCGRBxne-23FRCTAXQrMwHt4nHTY",
-    authDomain: "corsoskills-1ba50.firebaseapp.com",
-    projectId: "corsoskills-1ba50",
-    storageBucket: "corsoskills-1ba50.appspot.com",
-    messagingSenderId: "813928863826",
-    appId: "1:813928863826:web:771cd8ad820570441fa78b",
-    measurementId: "G-MYT63ZNNCC"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyD2w5sXCGRBxne-23FRCTAXQrMwHt4nHTY",
+  authDomain: "corsoskills-1ba50.firebaseapp.com",
+  projectId: "corsoskills-1ba50",
+  storageBucket: "corsoskills-1ba50.appspot.com",
+  messagingSenderId: "813928863826",
+  appId: "1:813928863826:web:771cd8ad820570441fa78b",
+  measurementId: "G-MYT63ZNNCC"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const auth = getAuth(app);
-  
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
 const storage = getStorage(app, 'gs://corsoskills-1ba50.firebasestorage.app');
 
-  const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
-  const UserUidInfo = localStorage.getItem("UserUidInfo");
-  console.log(UserUidInfo)
-  const courseId = localStorage.getItem("selectedCourseId");
+const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
+const UserUidInfo = localStorage.getItem("UserUidInfo");
+console.log(UserUidInfo);
+const courseId = localStorage.getItem("selectedCourseId");
 
-console.log(storage)
+console.log(storage);
 
 // Reference to root or a folder inside the bucket
 const folderRef = ref(storage, "BusinessUnits/");  // for example, list files inside BusinessUnits/
 
-const testEmail = "test3@gmail.com";      // Replace with your test email
-const testPassword = "123456789";  // Replace with your test password
+const folderPath = "BusinessUnits/CorsoSkills/Careers/BC01/";
 
+const fileInput = document.getElementById("fileInput");
+const uploadBtn = document.getElementById("uploadBtn");
+const fileListDiv = document.getElementById("fileList");
 
-async function listFilesInFolder() {
+async function listFiles() {
   try {
-    // Sign in the user first
-    const userCredential = await signInWithEmailAndPassword(auth, testEmail, testPassword);
-    console.log("✅ Signed in as:", userCredential.user.email);
-
-    // Reference your deep folder inside the bucket
-    const folderRef = ref(storage, "BusinessUnits/CorsoSkills/Careers/BC01/");
-
-    // List all files in the folder
+    const folderRef = ref(storage, folderPath);
     const res = await listAll(folderRef);
 
+    fileListDiv.innerHTML = "<h2>Files:</h2>";
+
     if (res.items.length === 0) {
-      console.log("⚠️ No files found in the folder.");
+      fileListDiv.innerHTML += "<p>No files found.</p>";
       return;
     }
 
-    console.log(`📂 Found ${res.items.length} files:`);
-
-    // Loop through files and log URL + add clickable link
     for (const itemRef of res.items) {
       const url = await getDownloadURL(itemRef);
-      console.log("🔗", itemRef.name, url);
-
-      // Optional: create clickable link in the page
       const a = document.createElement("a");
       a.href = url;
       a.textContent = itemRef.name;
       a.target = "_blank";
-      document.body.appendChild(a);
-      document.body.appendChild(document.createElement("br"));
+      fileListDiv.appendChild(a);
+      fileListDiv.appendChild(document.createElement("br"));
     }
   } catch (error) {
-    console.error("❌ Error:", error);
+    console.error("❌ Error listing files:", error);
   }
 }
 
-listFilesInFolder();
+async function uploadFile(file) {
+  try {
+    if (!file) {
+      alert("Please select a file first!");
+      return;
+    }
+    const storageRef = ref(storage, folderPath + file.name);
+
+    // Upload the file
+    const snapshot = await uploadBytes(storageRef, file);
+    console.log("✅ File uploaded:", snapshot.metadata.fullPath);
+
+    // Refresh the file list
+    await listFiles();
+  } catch (error) {
+    console.error("❌ Upload failed:", error);
+  }
+}
+
+uploadBtn.addEventListener("click", () => {
+  const file = fileInput.files[0];
+  uploadFile(file);
+});
+
+// Check auth state and run listFiles if signed in
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    console.log("✅ User is signed in:", user.email);
+    await listFiles();
+  } else {
+    console.log("⚠️ No user signed in");
+    // User is not signed in; you can show a message or redirect to login
+  }
+});
+
+
+window.addEventListener("DOMContentLoaded", () => {
+  const auth = getAuth();
+
+  onAuthStateChanged(auth, async (user) => {
+    console.log("🔍 onAuthStateChanged triggered");
+
+    if (user) {
+      console.log("✅ Logged in user:", user.email);
+      await listFiles();
+    } else {
+      console.log("⚠️ No user is logged in");
+      // Optionally redirect to login.html
+    }
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

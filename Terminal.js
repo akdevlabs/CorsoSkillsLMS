@@ -1,21 +1,13 @@
-// Import Firebase SDKs
+// Firebase SDK Imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 import { 
-  getFirestore, 
-  doc, 
-  getDoc, 
-  updateDoc, 
-  serverTimestamp,
-  arrayUnion
+  getFirestore, doc, getDoc, updateDoc, serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 import { 
-  getStorage, 
-  ref, 
-  uploadBytes, 
-  getDownloadURL 
-} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
+  getAuth, onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
 
-// Your Firebase config and initialization
+// Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyD2w5sXCGRBxne-23FRCTAXQrMwHt4nHTY",
   authDomain: "corsoskills-1ba50.firebaseapp.com",
@@ -26,209 +18,89 @@ const firebaseConfig = {
   measurementId: "G-MYT63ZNNCC"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
-// Get user info from localStorage
-const TBuInfo = "CorsoSkills";
-const UserUidInfo = localStorage.getItem("UserUidInfo");
-const UserRole = localStorage.getItem("UserRole");
-
-// Branding and styling (your existing code)
+const auth = getAuth(app);
+localStorage.setItem("UserRole", "teacher"); // or "Affiliate" or "student"
+// Apply Branding
 async function applyBranding() {
   try {
-    const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
+    const docRef = doc(db, "CorsoSkillBusiness", "CorsoSkills");
     const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      return docSnap.data();
-    } else {
-      console.error("No such document!");
-      return null;
-    }
-  } catch (error) {
-    console.error("Error fetching document:", error);
-    return null;
+    if (!docSnap.exists()) return;
+    const { Base, Prime4 } = docSnap.data().BuColors.Colors;
+    document.body.style.backgroundColor = Prime4;
+    document.getElementById("Terminal-text").style.color = Base;
+    document.getElementById("Terminal-Img").src = docSnap.data().BuLogos.Icons[0];
+  } catch (e) {
+    console.error("Branding error:", e);
   }
 }
-applyBranding().then(data => {
-  if (!data) return;
-  const { Base, Prime1, Prime2, Prime3, Prime4, Prime5 } = data.BuColors.Colors;
+applyBranding();
 
-  function renderImage(imageUrl, altUrl, UrlId) {
-    const logoElement = document.getElementById(UrlId);
-    if (logoElement) {
-      logoElement.src = imageUrl;
-      logoElement.alt = altUrl;
-    } else {
-      console.error("Element with ID 'logo' not found.");
-    }
-  }
-  function setBodyBackgroundColor(backgroundColor) {
-    document.body.style.backgroundColor = backgroundColor;
-  }
-  function setTextColors(elementId, Tcolor) {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.style.color = Tcolor;
-    } else {
-      console.error(`Element with ID '${elementId}' not found.`);
-    }
-  }
-  function renderLoginColors() {
-    renderImage(data.BuLogos.Icons[0], "Bu logo", "Terminal-Img");
-    setTextColors("Terminal-text", Base);
-    setBodyBackgroundColor(Prime4);
-  }
-  renderLoginColors();
-});
+// Utility: Get user data by role
+async function getUserData(uid, role) {
+  const path = role === "teacher"
+    ? "CorsoSkillsTeacher"
+    : role === "Affiliate"
+    ? "CorsoSkillsAffiliate"
+    : "CorsoSkillsStudents";
 
-// Data fetching functions for different user roles
-async function getTeacherContent() {
-  try {
-    const docRef = doc(db, "CorsoSkillsTeacher", UserUidInfo);
-    const docSnap = await getDoc(docRef);
-    return docSnap.exists() ? docSnap.data() : null;
-  } catch (error) {
-    console.error("Error fetching teacher document:", error);
-    return null;
-  }
-}
-async function getStudentContent() {
-  try {
-    const docRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-    const docSnap = await getDoc(docRef);
-    return docSnap.exists() ? docSnap.data() : null;
-  } catch (error) {
-    console.error("Error fetching student document:", error);
-    return null;
-  }
-}
-async function getAffiliateContent() {
-  try {
-    const docRef = doc(db, "CorsoSkillsAffiliate", UserUidInfo);
-    const docSnap = await getDoc(docRef);
-    return docSnap.exists() ? docSnap.data() : null;
-  } catch (error) {
-    console.error("Error fetching affiliate document:", error);
-    return null;
-  }
+  const docRef = doc(db, path, uid);
+  const docSnap = await getDoc(docRef);
+  return docSnap.exists() ? docSnap.data() : null;
 }
 
-// Login streak calculation function
-function calculateLoginStreak(loginHistory) {
-  if (!Array.isArray(loginHistory) || loginHistory.length === 0) return 0;
+// Utility: Update login streak
+function calculateLoginStreak(history) {
+  if (!Array.isArray(history) || history.length === 0) return 0;
 
-  const dates = loginHistory
+  const dates = history
     .map(ts => new Date(ts).toDateString())
-    .filter((v, i, arr) => arr.indexOf(v) === i)
+    .filter((v, i, a) => a.indexOf(v) === i)
     .sort((a, b) => new Date(b) - new Date(a));
 
-  let streak = 1;
-  const today = new Date().toDateString();
-
-  if (dates[0] !== today) {
-    streak = 0;
-  }
+  let streak = dates[0] === new Date().toDateString() ? 1 : 0;
 
   for (let i = 0; i < dates.length - 1; i++) {
-    const current = new Date(dates[i]);
+    const curr = new Date(dates[i]);
     const next = new Date(dates[i + 1]);
-    const diffInDays = (current - next) / (1000 * 60 * 60 * 24);
-
-    if (diffInDays === 1) {
-      streak++;
-    } else {
-      break;
-    }
+    if ((curr - next) / (1000 * 60 * 60 * 24) === 1) streak++;
+    else break;
   }
-
   return streak;
 }
 
-// Update login streak in Firestore
-async function updateLoginStreakInFirestore(uid, roleCollection, loginHistory) {
-  try {
-    const streak = calculateLoginStreak(loginHistory);
-    const userDocRef = doc(db, roleCollection, uid);
+async function updateLoginStreak(uid, role, history) {
+  const path = role === "teacher"
+    ? "CorsoSkillsTeacher"
+    : role === "Affiliate"
+    ? "CorsoSkillsAffiliate"
+    : "CorsoSkillsStudents";
 
-    await updateDoc(userDocRef, {
-      loginStreak: streak
-    });
-
-    console.log("Login streak updated:", streak);
-    return streak;
-  } catch (error) {
-    console.error("Error updating login streak:", error);
-    return null;
-  }
+  const streak = calculateLoginStreak(history);
+  await updateDoc(doc(db, path, uid), { loginStreak: streak });
+  return streak;
 }
 
-// Main function to fetch user data, update streak, and redirect accordingly
-async function fetchUserDataAndRedirect() {
-  if (!UserUidInfo || !UserRole) {
-    console.error("User info missing in localStorage.");
-    return;
+// MAIN: Wait for auth state
+
+
+// Auth check
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const role = localStorage.getItem("UserRole");
+    document.getElementById("welcome").innerText = `Bienvenido ${role}`;
+    console.log("✅ Authenticated:", user.email);
+  } else {
+    console.warn("🔐 Not authenticated. Redirecting...");
+   // window.location.href = "login.html";
   }
+});
+console.log(">> BEFORE onAuthStateChanged", auth.currentUser);
 
-  try {
-    // Fetch user data according to role
-    let userData = null;
-    if (UserRole === "teacher") {
-      userData = await getTeacherContent();
-    } else if (UserRole === "Affiliate") {
-      userData = await getAffiliateContent();
-    } else {
-      userData = await getStudentContent();
-    }
-
-    if (!userData) {
-      console.error("User data not found for role:", UserRole);
-      return;
-    }
-
-    console.log(`User data for role ${UserRole}:`, userData);
-
-    // Calculate and update login streak
-    const loginHistory = userData.loginHistory || [];
-    await updateLoginStreakInFirestore(
-      UserUidInfo,
-      UserRole === "teacher"
-        ? "CorsoSkillsTeacher"
-        : UserRole === "Affiliate"
-        ? "CorsoSkillsAffiliate"
-        : "CorsoSkillsStudents",
-      loginHistory
-    );
-
-    // Wait 3 seconds before redirect
-    setTimeout(() => {
-      const completed = userData.question;
-      if (UserRole === "teacher") {
-        if (completed === true) {
-          window.location.href = "index11.html";
-        } else {
-          window.location.href = "index5.4.html";
-        }
-      } else if (UserRole === "Affiliate") {
-        if (completed === true) {
-          window.location.href = "index12.html";
-        } else {
-          window.location.href = "index5.6.html";
-        }
-      } else {
-        if (completed === true) {
-          window.location.href = "index10.html";
-        } else {
-          window.location.href = "index6.1.html";
-        }
-      }
-    }, 3000);
-
-  } catch (error) {
-    console.error("Error in fetchUserDataAndRedirect:", error);
-  }
-}
-
-
-// Call the main function after page load or when ready
-fetchUserDataAndRedirect();
+onAuthStateChanged(auth, user => {
+  console.log("🔐 onAuthStateChanged user:", user);
+});
+console.log("UserRole in storage:", localStorage.getItem("UserRole"));
