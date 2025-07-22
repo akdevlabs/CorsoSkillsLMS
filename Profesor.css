@@ -259,4 +259,16 @@ body {
 }
 
 
+#stats{
+  scroll-behavior: smooth;
+  max-height: 13vh; /* Adjust as needed */
+  overflow-y: auto;
+}
+
+
+.file-list{
+  display: flex;
+  flex-direction: column;
+
+}
 

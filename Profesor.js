@@ -1,148 +1,53 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  getDocs,
-  collection,
-  addDoc,
-  updateDoc,
-  setDoc,
-  arrayUnion,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+  import {
+    getFirestore,
+    doc,
+    getDoc,
+    getDocs,
+    collection,
+    addDoc, 
+    updateDoc,
+    setDoc,
+    arrayUnion,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
-import {
-  getAuth,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    sendPasswordResetEmail,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
 
-import {
-  getStorage,
-  ref,
-  listAll,
-  uploadBytes,
-  getDownloadURL
-} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
+  import {
+    getStorage,
+    ref,
+    listAll,
+    uploadBytes,
+    getDownloadURL
+  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyD2w5sXCGRBxne-23FRCTAXQrMwHt4nHTY",
-  authDomain: "corsoskills-1ba50.firebaseapp.com",
-  projectId: "corsoskills-1ba50",
-  storageBucket: "corsoskills-1ba50.appspot.com",
-  messagingSenderId: "813928863826",
-  appId: "1:813928863826:web:771cd8ad820570441fa78b",
-  measurementId: "G-MYT63ZNNCC"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyD2w5sXCGRBxne-23FRCTAXQrMwHt4nHTY",
+    authDomain: "corsoskills-1ba50.firebaseapp.com",
+    projectId: "corsoskills-1ba50",
+    storageBucket: "corsoskills-1ba50.appspot.com",
+    messagingSenderId: "813928863826",
+    appId: "1:813928863826:web:771cd8ad820570441fa78b",
+    measurementId: "G-MYT63ZNNCC"
+  };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+  
 const storage = getStorage(app, 'gs://corsoskills-1ba50.firebasestorage.app');
 
-const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
-const UserUidInfo = localStorage.getItem("UserUidInfo");
-console.log(UserUidInfo);
-const courseId = localStorage.getItem("selectedCourseId");
-
-console.log(storage);
-
-// Reference to root or a folder inside the bucket
-const folderRef = ref(storage, "BusinessUnits/");  // for example, list files inside BusinessUnits/
-
-const folderPath = "BusinessUnits/CorsoSkills/Careers/BC01/";
-
-const fileInput = document.getElementById("fileInput");
-const uploadBtn = document.getElementById("uploadBtn");
-const fileListDiv = document.getElementById("fileList");
-
-async function listFiles() {
-  try {
-    const folderRef = ref(storage, folderPath);
-    const res = await listAll(folderRef);
-
-    fileListDiv.innerHTML = "<h2>Files:</h2>";
-
-    if (res.items.length === 0) {
-      fileListDiv.innerHTML += "<p>No files found.</p>";
-      return;
-    }
-
-    for (const itemRef of res.items) {
-      const url = await getDownloadURL(itemRef);
-      const a = document.createElement("a");
-      a.href = url;
-      a.textContent = itemRef.name;
-      a.target = "_blank";
-      fileListDiv.appendChild(a);
-      fileListDiv.appendChild(document.createElement("br"));
-    }
-  } catch (error) {
-    console.error("❌ Error listing files:", error);
-  }
-}
-
-async function uploadFile(file) {
-  try {
-    if (!file) {
-      alert("Please select a file first!");
-      return;
-    }
-    const storageRef = ref(storage, folderPath + file.name);
-
-    // Upload the file
-    const snapshot = await uploadBytes(storageRef, file);
-    console.log("✅ File uploaded:", snapshot.metadata.fullPath);
-
-    // Refresh the file list
-    await listFiles();
-  } catch (error) {
-    console.error("❌ Upload failed:", error);
-  }
-}
-
-uploadBtn.addEventListener("click", () => {
-  const file = fileInput.files[0];
-  uploadFile(file);
-});
-
-// Check auth state and run listFiles if signed in
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    console.log("✅ User is signed in:", user.email);
-    await listFiles();
-  } else {
-    console.log("⚠️ No user signed in");
-    // User is not signed in; you can show a message or redirect to login
-  }
-});
-
-
-window.addEventListener("DOMContentLoaded", () => {
-  const auth = getAuth();
-
-  onAuthStateChanged(auth, async (user) => {
-    console.log("🔍 onAuthStateChanged triggered");
-
-    if (user) {
-      console.log("✅ Logged in user:", user.email);
-      await listFiles();
-    } else {
-      console.log("⚠️ No user is logged in");
-      // Optionally redirect to login.html
-    }
-  });
-});
-
-
-
-
-
-
-
-
+  const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
+  const UserUidInfo = localStorage.getItem("UserUidInfo");
+  console.log(UserUidInfo)
+  const courseId = localStorage.getItem("selectedCourseId");
 
 
 
@@ -1002,7 +907,108 @@ getAllCorsoSkillMessages().then((data) => {
   });
 });
 
+const folderPath = "BusinessUnits/CorsoSkills";
 
+window.addEventListener("DOMContentLoaded", () => {
+  const uploadBtn = document.getElementById("uploadBtn");
+  const fileInput = document.getElementById("homeworkFile");
+  const titleInput = document.getElementById("homeworkTitle");
+
+  const categorySelect = document.getElementById("Category-select");
+  const levelSelect = document.getElementById("Type-select");
+  const courseSelect = document.getElementById("Course-select");
+
+  const isLoggedIn = localStorage.getItem("ActiveLogedin");
+  const userUid = localStorage.getItem("UserUidInfo");
+
+  function roleUpdate() {
+    const userRole = localStorage.getItem("UserRole");
+    if (!userRole) return "Unknown";
+    return userRole.charAt(0).toUpperCase() + userRole.slice(1); // "Student"
+  }
+
+  console.log("🔑 User is logged in:", isLoggedIn);
+  console.log("👤 User role:", roleUpdate());
+  console.log("🆔 User UID:", userUid);
+
+  // ✅ Check if all selects are filled
+  function checkAllSelectsFilledtoupload() {
+    const category = categorySelect.value;
+    const level = levelSelect.value;
+    const course = courseSelect.value;
+    uploadBtn.disabled = !(category && level && course);
+  }
+
+  // ✅ Attach change events to selects
+  categorySelect.addEventListener("change", checkAllSelectsFilledtoupload);
+  levelSelect.addEventListener("change", checkAllSelectsFilledtoupload);
+  courseSelect.addEventListener("change", checkAllSelectsFilledtoupload);
+
+  // ✅ Upload file handler
+  uploadBtn.addEventListener("click", async () => {
+    const file = fileInput.files[0];
+    const title = titleInput.value.trim();
+    const category = categorySelect.value;
+    const level = levelSelect.value;
+    const course = courseSelect.value;
+    const role = roleUpdate();
+
+    if (!file || !title) {
+      alert("⚠️ Por favor ingresa un título y selecciona un archivo.");
+      return;
+    }
+
+    try {
+      const fullPath = `${folderPath}/${role}/${userUid}/${category}/${level}/${course}/${title} - ${file.name}`;
+      const fileRef = ref(storage, fullPath);
+      await uploadBytes(fileRef, file);
+      alert("✅ Tarea subida correctamente.");
+
+      // 🔄 Clear fields after upload
+      fileInput.value = "";
+      titleInput.value = "";
+      categorySelect.selectedIndex = 0;
+      levelSelect.selectedIndex = 0;
+      courseSelect.selectedIndex = 0;
+      uploadBtn.disabled = true;
+
+      listFiles(); // Refresh file list
+    } catch (err) {
+      console.error("❌ Error al subir la tarea:", err);
+      alert("❌ Error al subir archivo.");
+    }
+  });
+
+  // ✅ List uploaded files
+  async function listFiles() {
+    try {
+      const folderRef = ref(storage, folderPath);
+      const res = await listAll(folderRef);
+      const fileList = document.getElementById("fileList");
+      fileList.innerHTML = "";
+
+      if (res.items.length === 0) {
+        fileList.innerHTML = "<p>⚠️ No hay tareas enviadas aún.</p>";
+        return;
+      }
+
+      for (const itemRef of res.items) {
+        const url = await getDownloadURL(itemRef);
+        const link = document.createElement("a");
+        link.href = url;
+        link.textContent = itemRef.name;
+        link.target = "_blank";
+        link.classList.add("file-link"); // Optional styling
+        fileList.appendChild(link);
+        fileList.appendChild(document.createElement("br"));
+      }
+    } catch (err) {
+      console.error("❌ Error al listar tareas:", err);
+    }
+  }
+
+  listFiles(); // Load list on page load
+});
 
 
 
@@ -1081,3 +1087,15 @@ document.getElementById("Settings").addEventListener("click", function () {
 document.getElementById("Logout").addEventListener("click", function () {
   window.location.href = "index4.html";
 }); 
+
+
+
+
+
+
+
+
+
+
+
+

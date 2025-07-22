@@ -1,63 +1,45 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 import { getFirestore, doc, getDoc, collection, addDoc, setDoc, Timestamp, deleteField, updateDoc   } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
-import {
-  getAuth,
-  onAuthStateChanged,
-  signOut,
-  setPersistence,
-  browserLocalPersistence
-} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
-
-// Firebase config
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyD2w5sXCGRBxne-23FRCTAXQrMwHt4nHTY",
   authDomain: "corsoskills-1ba50.firebaseapp.com",
   projectId: "corsoskills-1ba50",
-  storageBucket: "corsoskills-1ba50.appspot.com",
+  storageBucket: "corsoskills-1ba50.appspot.com", // corrected to .com
   messagingSenderId: "813928863826",
   appId: "1:813928863826:web:771cd8ad820570441fa78b",
   measurementId: "G-MYT63ZNNCC"
 };
 
-// Init Firebase
+// First, make sure you already have this part:
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const auth = getAuth(app);
-export { auth };
+const auth = getAuth();
+
+
 const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
 const UserUidInfo = localStorage.getItem("UserUidInfo");
 
-console.log(UserUidInfo)
 
-setPersistence(auth, browserLocalPersistence);
+  const isLoggedIn = localStorage.getItem("ActiveLogedin");
+  const userRole = localStorage.getItem("UserRole");
+  const userUid = localStorage.getItem("UserUidInfo");
 
-// Log auth state
 onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log("Logged in as:", user.email);
-    // User is logged in — you can access UID, email, etc.
+
+  if (user && isLoggedIn === "true") {
+    console.log("Usuario autenticado:", user.email);
+    console.log("Rol:", userRole);
+    console.log("UID:", userUid);
+
+
   } else {
-    // User not logged in — redirect
-     window.location.href = "index4.html";
+    console.log("Usuario no autenticado. Redirigiendo al login...");
+    window.location.href = "index4.html";
   }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1094,17 +1076,6 @@ document.getElementById("Logout").addEventListener("click", function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
  document.addEventListener("DOMContentLoaded", function () {
     const openBtn = document.getElementById("open");
     const closeBtn = document.getElementById("close");
@@ -1130,6 +1101,3 @@ document.getElementById("Logout").addEventListener("click", function () {
  });
 
 
-
-
- 

@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 import { getFirestore, doc, getDoc, collection, addDoc, setDoc, Timestamp, deleteField, updateDoc} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
-import { getAuth,  sendPasswordResetEmail, confirmPasswordReset, applyActionCode } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+import { getAuth,  sendPasswordResetEmail, confirmPasswordReset, applyActionCode, signInWithEmailAndPassword,onAuthStateChanged, signOut   } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
 // Configuración Firebase (tuya)
 const firebaseConfig = {
   apiKey: "AIzaSyD2w5sXCGRBxne-23FRCTAXQrMwHt4nHTY",
@@ -24,6 +24,28 @@ console.log(auth)
 
 const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
 const UserUidInfo = localStorage.getItem("UserUidInfo");
+
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // ✅ Authenticated
+    console.log("🔐 User is authenticated:");
+    console.log("UID:", user.uid);
+    console.log("Email:", user.email);
+
+    // Optional: Store in localStorage if needed
+    localStorage.setItem("ActiveLogedin", "true");
+    localStorage.setItem("UserUidInfo", user.uid);
+    localStorage.setItem("UserEmail", user.email);
+
+  } else {
+    // ❌ Not authenticated
+    console.warn("🚫 Usuario no autenticado. Redirigiendo al login...");
+    localStorage.removeItem("ActiveLogedin");
+    window.location.href = "login.html"; // or your login route
+  }
+});
+
 
 
 
