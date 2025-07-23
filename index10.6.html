@@ -104,19 +104,19 @@
   
 
 
-        <div class="card">
+        <div class="card" id="Top-card">
           <div class="Card-Left">
             <h3><i class="fas fa-user"></i> Perfil</h3>
 
             <div class="Blocks" id="Img-section">
-              <div class="Content-block" id="Img-block">
-                <div id="User-Img"></div>
-              </div>
-        
+           <div class="Content-block" id="Img-block">
+              <div id="User-Img"></div>
+            </div>
+
               <div class="Hidden-Input" id="Img-Content">
-                <label for="file">Nombre completo nuevo:</label>
+                <label for="file">Selecciona archivo:</label>
                 <input type="file" id="file" />
-                <button id="Img-btn" disabled>Subir</button>  
+                <button id="Img-btn">Subir</button>  
               </div>               
             </div>
 
@@ -172,9 +172,13 @@
 
           </div>
           <div class="Card-Right">
-            <h2>Restablecer contraseña</h2>
-            <input type="email" id="resetEmail" placeholder="Ingresa tu correo" />
-            <button onclick="sendResetEmail()">Enviar correo de recuperación</button>
+            <div class="Blocks">
+              <h2>Actualizar Contraseña</h2>
+              <input class="passwordCont" type="password" id="oldPassword" placeholder="Contraseña actual" />
+              <input class="passwordCont" type="password" id="newPassword" placeholder="Nueva contraseña" />
+              <button class="btn" id="changePasswordBtn">Actualizar Contraseña</button>
+            </div>
+
           </div>
           
         </div>
@@ -231,29 +235,15 @@
         <div class="Left-Btn" id="Notifications-Btn">
           <h3><i class="fas fa-bell"></i> Notificaciones</h3>
         </div>
-        <div class="Hidden-Content" id="Notifications-Content" >
-          <label>
-            <input type="checkbox" id="emailNotif"> Recibir notificaciones por email
-          </label>
-          <label>
-            <input type="checkbox" id="platformNotif"> Notificaciones dentro de la plataforma
-          </label>
-          <label>
-            <input type="checkbox" id="classReminder"> Recordatorios de clase en vivo
-          </label>
-          <label>
-            <input type="checkbox" id="newCourseNotif"> Nuevos cursos disponibles
-          </label>
-          <label>
-            <input type="checkbox" id="messageNotif"> Mensajes de otros usuarios
-          </label>
-          <label>
-            <input type="checkbox" id="eventNotif"> Eventos y webinars en vivo
-          </label>
-          <label>
-            <input type="checkbox" id="promoNotif"> Promociones y descuentos
-          </label>
-          <button class="btn" id="saveNotif"><i class="fas fa-save"></i> Guardar configuración</button>
+        <div class="Hidden-Content" id="Notifications-Content">
+          <label><input type="checkbox" id="emailNotif"> Email</label>
+          <label><input type="checkbox" id="platformNotif"> Plataforma</label>
+          <label><input type="checkbox" id="classReminder"> Clases en vivo</label>
+          <label><input type="checkbox" id="newCourseNotif"> Nuevos cursos</label>
+          <label><input type="checkbox" id="messageNotif"> Mensajes</label>
+          <label><input type="checkbox" id="eventNotif"> Eventos</label>
+          <label><input type="checkbox" id="promoNotif"> Promos</label>
+          <button class="btn" id="saveNotif"><i class="fas fa-save"></i> Guardar</button>
         </div>
       </div>      
 
@@ -262,9 +252,8 @@
           <h3><i class="fas fa-desktop"></i> Dispositivos Conectados</h3>
         </div>
         <div class="Hidden-Content" id="Devices-Content" >
-          <p>Último acceso desde: Chrome (Windows 10) - hace 2 horas</p>
-          <p>Sesión activa: iPhone - hace 1 día</p>
-          <button class="btn"><i class="fas fa-sign-out-alt"></i> Cerrar todas las sesiones</button>
+          
+   
         </div>
       </div>   
 
