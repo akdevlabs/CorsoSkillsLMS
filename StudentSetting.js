@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getFirestore, doc, getDoc, collection, addDoc, setDoc, Timestamp, deleteField, updateDoc} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
-import { getAuth,  sendPasswordResetEmail, confirmPasswordReset, applyActionCode, signInWithEmailAndPassword,onAuthStateChanged, signOut   } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+import { getFirestore, doc, getDoc, collection, addDoc, setDoc, Timestamp, deleteField, updateDoc,arrayUnion,serverTimestamp} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL, listAll, } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
+import { getAuth, EmailAuthProvider, reauthenticateWithCredential, updateEmail, signInWithEmailAndPassword,  sendPasswordResetEmail, confirmPasswordReset, applyActionCode, onAuthStateChanged, signOut,   updatePassword   } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
 // Configuración Firebase (tuya)
 const firebaseConfig = {
   apiKey: "AIzaSyD2w5sXCGRBxne-23FRCTAXQrMwHt4nHTY",
@@ -17,7 +17,7 @@ const firebaseConfig = {
 // Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const storage = getStorage(app);
+const storage = getStorage(app, 'gs://corsoskills-1ba50.firebasestorage.app');
 const auth = getAuth(app);
 
 console.log(auth)
@@ -46,10 +46,150 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+// ✅ Folder path in Firebase Storage
+const folderPath = "BusinessUnits/CorsoSkills";
+// ✅ On page load
+window.addEventListener("DOMContentLoaded", () => {
+  const uploadBtn = document.getElementById("Img-btn");
+  const fileInput = document.getElementById("file");
+
+  const userUid = localStorage.getItem("UserUidInfo");
+  const role = capitalize(localStorage.getItem("UserRole") || "Unknown");
+
+  function capitalize(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  console.log("🔑 Usuario logueado:", localStorage.getItem("ActiveLogedin"));
+  console.log("👤 Rol:", role);
+  console.log("🆔 UID:", userUid);
+
+  if (!uploadBtn || !fileInput || !userUid) {
+    console.error("❌ Elementos del DOM o UID no encontrados.");
+    return;
+  }
+
+  // ✅ Upload logic
+  uploadBtn.addEventListener("click", async () => {
+    const file = fileInput.files[0];
+
+    if (!file) {
+      alert("Por favor selecciona un archivo.");
+      return;
+    }
+
+    try {
+      const fullPath = `${folderPath}/${role}/${userUid} - ProfileImg`;
+      const fileRef = ref(storage, fullPath);
+
+      await uploadBytes(fileRef, file);
+      const downloadURL = await getDownloadURL(fileRef);
+
+      // ✅ Save URL in Firestore
+      const userDocRef = doc(db, "CorsoSkillsStudents", userUid);
+      await setDoc(userDocRef, {
+        profileImage: downloadURL
+      }, { merge: true });
+
+      alert("✅ Imagen subida y guardada con éxito.");
+      renderUserImage(downloadURL);
+    } catch (err) {
+      console.error("❌ Error al subir/guardar imagen:", err);
+      alert("❌ Error al subir o guardar.");
+    }
+  });
+
+  // ✅ Load profile image on page load
+  loadProfileImage(userUid);
+});
+// 🔄 Load image from Firestore
+async function loadProfileImage(userUid) {
+  try {
+    const docRef = doc(db, "CorsoSkillsStudents", userUid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      const imageUrl = data.profileImage;
+
+      if (imageUrl) {
+        renderUserImage(imageUrl);
+        return;
+      }
+    }
+
+    // ❌ No image? Show icon
+    renderUserIcon();
+  } catch (err) {
+    console.error("❌ Error al cargar la imagen:", err);
+    renderUserIcon();
+  }
+}
+// 🖼️ Render image in the DOM
+function renderUserImage(url) {
+  const imgContainer = document.getElementById("User-Img");
+  imgContainer.innerHTML = `
+    <img src="${url}" alt="Imagen de perfil" />
+  `;
+}
+// 👤 Render icon fallback
+function renderUserIcon() {
+  const imgContainer = document.getElementById("User-Img");
+  imgContainer.innerHTML = `
+    <i id="User-img-Icon"  class="fa-solid fa-circle-user" ></i>
+  `;
+}
 
 
 
 
+
+
+
+
+
+document.getElementById("changePasswordBtn").addEventListener("click", async () => {
+  const user = auth.currentUser;
+  const oldPassword = document.getElementById("oldPassword").value;
+  const newPassword = document.getElementById("newPassword").value;
+
+  if (!user || !oldPassword || !newPassword) {
+    alert("Por favor completa todos los campos.");
+    return;
+  }
+
+  try {
+    const credential = EmailAuthProvider.credential(user.email, oldPassword);
+    await reauthenticateWithCredential(user, credential);
+    await updatePassword(user, newPassword);
+    alert("✅ Contraseña actualizada correctamente.");
+  } catch (err) {
+    console.error("❌ Error al actualizar contraseña:", err);
+    alert(`❌ Error: ${err.message}`);
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const userUid = localStorage.getItem("UserUidInfo");
+if (userUid) {
+  loadProfileImage(userUid);
+}
 
 async function applyBranding() {
   try {
@@ -234,6 +374,9 @@ applyBranding().then((data) => {
 });
 
 
+
+
+
 async function getstudentContent() {
   try {
     const docRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
@@ -325,21 +468,7 @@ async function fetchAllContent() {
       });
     }
   }
-  function renderUserImage() {
-      const container = document.getElementById("User-Img");
-      const imageUrl = studentData.profileImg;
 
-      container.innerHTML = ""; // Clear any existing content
-
-      if (imageUrl && imageUrl.trim() !== "") {
-        const img = document.createElement("img");
-        img.src = imageUrl;
-        img.alt = "User Image";
-        container.appendChild(img);
-      } else {
-        container.innerHTML = '<i class="fa-solid fa-user"></i>';
-      }
-  }
   function RenderProfileInfo(){
     renderTextOrFallback("Full-Name" ,"Full-Name-Content" , studentData.fullName, "Full-Name-btn", "save-Content")
     renderTextOrFallback("nick-name" ,"nick-name-Content" , studentData.ShortName, "nick-name-btn", "save-Content")
@@ -383,6 +512,9 @@ async function fetchAllContent() {
 }
 
 
+  
+  RenderProfileInfo()
+  RenderFacturaInfo()
 
 
 
@@ -476,47 +608,108 @@ async function fetchAllContent() {
 
 
 
+async function recordCurrentDevice() {
+  const ua = navigator.userAgent;
 
+  // Browser detection
+  let browser = "Navegador desconocido";
+  if (ua.includes("Chrome")) browser = "Chrome";
+  else if (ua.includes("Firefox")) browser = "Firefox";
+  else if (ua.includes("Safari") && !ua.includes("Chrome")) browser = "Safari";
+  else if (ua.includes("Edg")) browser = "Edge";
 
+  // OS detection
+  let os = "Sistema operativo desconocido";
+  if (ua.includes("Windows NT")) os = "Windows";
+  else if (ua.includes("Macintosh")) os = "macOS";
+  else if (ua.includes("Android")) os = "Android";
+  else if (ua.includes("iPhone") || ua.includes("iPad")) os = "iOS";
+  else if (ua.includes("Linux")) os = "Linux";
 
+  // Device type detection
+  let deviceType = "Computadora";
+  if (/Mobi|Android|iPhone/i.test(ua)) deviceType = "Teléfono";
+  else if (/Tablet|iPad/i.test(ua)) deviceType = "Tablet";
 
+  const deviceString = `${browser} (${os}) - ${deviceType}`;
 
+  const deviceData = {
+    deviceInfo: deviceString,
+    timestamp: serverTimestamp(),
+  };
 
+  try {
+    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
 
+    // Use setDoc with merge to ensure the document exists and the array is updated
+    await setDoc(
+      studentRef,
+      {
+        Devices: {
+          devicesArray: [deviceData], // fallback if field doesn't exist
+        },
+      },
+      { merge: true }
+    );
 
+    // Then use updateDoc + arrayUnion to push the new item
+    await updateDoc(studentRef, {
+      "Devices.devicesArray": arrayUnion(deviceData),
+    });
 
+    console.log("✅ Dispositivo agregado al array en el campo Devices.devicesArray");
+  } catch (error) {
+    console.error("❌ Error al guardar dispositivo en el array:", error);
+  }
+}
 
+recordCurrentDevice();
 
+  async function renderRecentDevices() {
+  try {
+    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+    const studentSnap = await getDoc(studentRef);
 
+    if (studentSnap.exists()) {
+      const data = studentSnap.data();
+      const devicesArray = data.Devices?.devicesArray || [];
 
+      // Sort by timestamp (newest first)
+      const sorted = devicesArray.sort((a, b) => {
+        const timeA = a.timestamp?.seconds || 0;
+        const timeB = b.timestamp?.seconds || 0;
+        return timeB - timeA;
+      });
 
+      // Get the 3 newest
+      const latestThree = sorted.slice(0, 3);
 
-  renderUserImage()
-  RenderProfileInfo()
-  RenderFacturaInfo()
+      // Get the container
+      const container = document.getElementById("Devices-Content");
+      container.innerHTML = ""; // clear any existing content
 
+      if (latestThree.length === 0) {
+        container.innerHTML = "<p>No hay dispositivos registrados.</p>";
+        return;
+      }
 
+      // Render each device
+      latestThree.forEach((device) => {
+        const p = document.createElement("p");
+        const readableDate = device.timestamp?.toDate?.().toLocaleString("es-ES") || "Fecha desconocida";
+        p.textContent = `${device.deviceInfo} - ${readableDate}`;
+        container.appendChild(p);
+      });
+    } else {
+      console.log("❌ No se encontró el documento del estudiante.");
+    }
+  } catch (error) {
+    console.error("❌ Error al cargar los dispositivos:", error);
+  }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Call this after recording the device
+await renderRecentDevices();
 
 
 
@@ -595,3 +788,10 @@ document.getElementById("profile").addEventListener("click", function () {
 document.getElementById("Logout").addEventListener("click", function () {
   window.location.href = "index4.html";
 });  
+
+
+
+
+
+
+

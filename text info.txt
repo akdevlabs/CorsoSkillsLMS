@@ -1,0 +1,303 @@
+
+    
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+  import {
+    getFirestore,
+    doc,
+    getDoc,
+    getDocs,
+    collection,
+    addDoc, 
+    updateDoc,
+    setDoc,
+    arrayUnion,
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    sendPasswordResetEmail,
+    signOut
+  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+
+  import {
+    getStorage,
+    ref,
+    listAll,
+    uploadBytes,
+    getDownloadURL
+  } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD2w5sXCGRBxne-23FRCTAXQrMwHt4nHTY",
+    authDomain: "corsoskills-1ba50.firebaseapp.com",
+    projectId: "corsoskills-1ba50",
+    storageBucket: "corsoskills-1ba50.appspot.com",
+    messagingSenderId: "813928863826",
+    appId: "1:813928863826:web:771cd8ad820570441fa78b",
+    measurementId: "G-MYT63ZNNCC"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+  
+const storage = getStorage(app, 'gs://corsoskills-1ba50.firebasestorage.app');
+
+  const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
+  const UserUidInfo = localStorage.getItem("UserUidInfo");
+  console.log(UserUidInfo)
+  const courseId = localStorage.getItem("selectedCourseId");
+
+    
+    
+    const folderPath = "BusinessUnits/CorsoSkills/Students/QB9nkmuw77ar3tyMYmUWh1TIx2r1/Homework/";
+
+
+
+   // ✅ Wait until DOM is ready
+    window.addEventListener("DOMContentLoaded", () => {
+      const uploadBtn = document.getElementById("uploadBtn");
+      const fileInput = document.getElementById("homeworkFile");
+      const titleInput = document.getElementById("homeworkTitle");
+
+      if (!uploadBtn || !fileInput || !titleInput) {
+        console.error("❌ Uno o más elementos no se encontraron en el DOM.");
+        return;
+      }
+
+      uploadBtn.addEventListener("click", async () => {
+        const file = fileInput.files[0];
+        const title = titleInput.value.trim();
+
+        if (!file || !title) {
+          alert("Por favor ingresa un título y selecciona un archivo.");
+          return;
+        }
+
+        try {
+          const fileRef = ref(storage, folderPath + title + " - " + file.name);
+          await uploadBytes(fileRef, file);
+          alert("✅ Tarea subida correctamente.");
+          listFiles(); // Refresh list
+        } catch (err) {
+          console.error("❌ Error al subir la tarea:", err);
+          alert("❌ Error al subir archivo.");
+        }
+      });
+
+      listFiles(); // Load existing files on page load
+    });
+
+    // ✅ List all uploaded files
+    async function listFiles() {
+      try {
+        const folderRef = ref(storage, folderPath);
+        const res = await listAll(folderRef);
+        const fileList = document.getElementById("fileList");
+        fileList.innerHTML = "";
+
+        if (res.items.length === 0) {
+          fileList.innerHTML = "<p>⚠️ No hay tareas enviadas aún.</p>";
+          return;
+        }
+
+        for (const itemRef of res.items) {
+          const url = await getDownloadURL(itemRef);
+          const link = document.createElement("a");
+          link.href = url;
+          link.textContent = itemRef.name;
+          link.target = "_blank";
+          fileList.appendChild(link);
+        }
+      } catch (err) {
+        console.error("❌ Error al listar tareas:", err);
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const preferenceKeys = [
+  "emailNotifi",
+  "platformNotifi",
+  "classReminderNotifi",
+  "newCourseNotifi",
+  "messageNotifi",
+  "eventNotifi",
+  "promoNotifi"
+];
+
+// 🎨 Update checkbox background based on value
+function updateCheckboxStyle(checkbox, value) {
+  checkbox.parentElement.style.backgroundColor = value ? "#d4edda" : "#f8d7da";
+}
+
+// 🔁 Load preferences from Firestore and apply to DOM
+async function loadPreferences(userId) {
+  const userRef = doc(db, "CorsoSkillsStudents", userId);
+
+  try {
+    const userSnap = await getDoc(userRef);
+
+    if (userSnap.exists()) {
+      const userData = userSnap.data();
+      const prefs = userData.notifications || {};
+
+      // Apply to DOM checkboxes
+      preferenceKeys.forEach((key) => {
+        const checkbox = document.getElementById(key);
+        const value = prefs[key] !== undefined ? prefs[key] : true;
+
+        if (checkbox) {
+          checkbox.checked = value;
+          updateCheckboxStyle(checkbox, value);
+        }
+      });
+
+      // If no preferences yet, save default true
+      if (!userData.notifications) {
+        const defaultPrefs = {};
+        preferenceKeys.forEach((key) => (defaultPrefs[key] = true));
+        await setDoc(userRef, { notifications: defaultPrefs }, { merge: true });
+        console.log("✅ Default preferences saved");
+      }
+    } else {
+      // Create full user doc if it doesn't exist
+      const defaultPrefs = {};
+      preferenceKeys.forEach((key) => (defaultPrefs[key] = true));
+      await setDoc(userRef, { notifications: defaultPrefs });
+      console.log("✅ Created new user document with preferences");
+    }
+  } catch (error) {
+    console.error("❌ Error loading preferences:", error);
+  }
+}
+
+// ✅ Save single updated preference (safe with merge)
+async function updatePreference(userId, key, value) {
+  const userRef = doc(db, "CorsoSkillsStudents", userId);
+  try {
+    await setDoc(
+      userRef,
+      {
+        notifications: {
+          [key]: value
+        }
+      },
+      { merge: true }
+    );
+    console.log(`✅ Saved: notifications.${key} = ${value}`);
+  } catch (error) {
+    console.error("❌ Error saving preference:", error);
+  }
+}
+
+// 🧠 Listen to checkbox changes and update DB
+function setupListeners(userId) {
+  preferenceKeys.forEach((key) => {
+    const checkbox = document.getElementById(key);
+    if (checkbox) {
+      checkbox.addEventListener("change", async () => {
+        const isChecked = checkbox.checked;
+        await updatePreference(userId, key, isChecked);
+        updateCheckboxStyle(checkbox, isChecked);
+      });
+    }
+  });
+
+  const saveBtn = document.getElementById("saveNotif");
+  if (saveBtn) {
+    saveBtn.addEventListener("click", () => {
+      alert("Preferencias guardadas");
+    });
+  }
+}
+
+// 🔐 Start everything after auth
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const userId = user.uid;
+    loadPreferences(userId);
+    setupListeners(userId);
+  } else {
+    console.warn("Usuario no autenticado");
+  }
+});
+
+
+
+
+
+
+
+ // ✅ Función para marcar todos los checkboxes como true por defecto
+function setDefaultNotificationCheckboxes() {
+  const ids = [
+    "emailNotif", "platformNotif", "classReminder", "newCourseNotif",
+    "messageNotif", "eventNotif", "promoNotif", "whatsappNotif"
+  ];
+  ids.forEach(id => {
+    const checkbox = document.getElementById(id);
+    if (checkbox) checkbox.checked = true;
+  });
+}
+
+// ✅ Esperar a que el DOM cargue
+document.addEventListener("DOMContentLoaded", () => {
+  setDefaultNotificationCheckboxes();
+
+  const saveBtn = document.getElementById("saveNotif");
+
+  saveBtn.addEventListener("click", () => {
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        console.warn("⚠️ Usuario no autenticado");
+        return;
+      }
+
+      const userId = user.uid;
+      const userRef = doc(db, "CorsoSkillsStudents", userId);
+
+      const notificationPrefs = {
+        notificationPrefs: {
+          email: document.getElementById("emailNotif").checked,
+          plataforma: document.getElementById("platformNotif").checked,
+          clasesEnVivo: document.getElementById("classReminder").checked,
+          nuevosCursos: document.getElementById("newCourseNotif").checked,
+          mensajes: document.getElementById("messageNotif").checked,
+          eventos: document.getElementById("eventNotif").checked,
+          promos: document.getElementById("promoNotif").checked,
+          whatsapp: document.getElementById("whatsappNotif").checked,
+          updatedAt: serverTimestamp()
+        }
+      };
+
+      try {
+        await setDoc(userRef, notificationPrefs, { merge: true });
+        console.log("✅ Preferencias guardadas correctamente en Firestore.");
+      } catch (error) {
+        console.error("❌ Error al guardar preferencias:", error);
+      }
+    });
+  });
+});

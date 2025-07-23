@@ -9,13 +9,14 @@ html, body {
   overflow-x: hidden;
 }
 body {
-  height: 100vh;
   display: flex;
-  flex-direction: row;
+  height: 100vh;
+  width: 100%;
   overflow: hidden;
+  flex-direction:row; /* Helps small screens stack better */
+  overflow-y: auto;
 }
-
-/*----------- Navigation ------------*/
+/*---------- Navigation ------------*/
 .nav {
   padding: 1rem;
   display: flex;
@@ -69,10 +70,10 @@ body {
 /* Layout Containers */
 .Central, .Left {
   width: 100%;
-  margin: 1rem;
+  margin: .5rem 1rem;
   padding: 1.5rem;
   border-radius: 1rem;
-  overflow-y: auto;
+
   
 }
 .Central {
@@ -81,7 +82,6 @@ body {
 .Left {
   width: 30%;
 }
-
 /* Header */
 .header {
   font-size: 1.5rem;
@@ -91,8 +91,17 @@ body {
   margin:0 0 1.5rem 0  ;
   border-radius: 1rem;
 }
-
 /* Card Block Style */
+#Top-card{
+  height: 31rem;
+    overflow-y: auto;
+}
+
+
+
+
+
+
 .card {
   display: flex;
   justify-content: space-between;
@@ -102,9 +111,7 @@ body {
   margin-bottom: 30px;
   transition: transform 0.2s;
 }
-.card:hover {
-  transform: translateY(-3px);
-}
+
 .card h3, .card h2 {
   font-size: 20px;
   margin-bottom: 20px;
@@ -113,7 +120,6 @@ body {
   font-size: 1rem;
   margin-right: 8px;
 }
-
 /* Label and Input */
 label {
   display: block;
@@ -134,12 +140,10 @@ select {
 }
 input:focus, textarea:focus, select:focus {
   outline: none;
-
 }
 input[type="checkbox"] {
   margin-right: 8px;
 }
-
 /* Buttons */
 .btn, .btn-sm {
   border: none;
@@ -159,13 +163,45 @@ input[type="checkbox"] {
   padding: 6px 10px;
   font-size: 14px;
 }
+
+
 /* Hidden Toggle Logic */
 .Hidden-Input, .Hidden-Content {
-  display: none;
+     display: none;
 }
 .Hidden-Content.show {
   display: block;
 }
+
+/* Profile Section */
+#Img-section {
+  display: flex;
+}
+#Img-block {
+  display: flex;
+  align-items: center;
+  margin: 0 2rem;
+}
+.Content-block img {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+#User-img-Icon {
+  font-size: 4rem;           
+}
+
+
+
+.passwordCont{
+  width: 20rem;
+}
+
+
+
+
+
 
 /* Payment Section */
 #payments-container {
@@ -218,24 +254,6 @@ input[type="checkbox"] {
   display: flex;
   flex-direction: column;
 }
-#Img-section {
-  display: flex;
-}
-#Img-block {
-  display: flex;
-  align-items: center;
-  margin: 0 2rem;
-}
-.Content-block img {
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-#User-Img i {
-  font-size: 2rem;
-}
-
 
 .card-left-btn{
   display: flex;
@@ -258,3 +276,4 @@ input[type="checkbox"] {
   font-size: 1rem;
   margin-right: 8px;
 }
+
