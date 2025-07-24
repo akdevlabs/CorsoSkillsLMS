@@ -784,7 +784,8 @@ async function fetchAllContent() {
           Type:CInfo.Type,
           Teacher:Teacher,
           Time:OCTime,
-          TeacherId:TId
+          TeacherId:TId,
+          Certificate: false
 
         };
 
