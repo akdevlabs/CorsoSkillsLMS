@@ -277,3 +277,91 @@ input[type="checkbox"] {
   margin-right: 8px;
 }
 
+
+.certificate {
+    width: 100%;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 3rem 2rem;
+    background-color: #fff;
+    border: 8px solid #2c3e50;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    color: #2c3e50;
+  }
+
+  .certificate h1 {
+    font-size: 2rem;
+    margin: 1rem 0;
+    text-transform: uppercase;
+    color: #1a1a1a;
+  }
+
+  .certificate h3 {
+    margin: 0.5rem 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .certificate p {
+    font-size: 1rem;
+    margin: 1.5rem 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #444;
+  }
+
+  .course-Time-Lessons {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin: 2rem 0;
+  }
+
+  .course-Time-Lessons .hours,
+  .course-Time-Lessons .lessons {
+    text-align: center;
+    font-size: 1.1rem;
+  }
+
+  .course-Time-Lessons span:first-child {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2980b9;
+  }
+
+  .certificate-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid #ccc;
+  }
+
+  .certificate-footer .signature,
+  .certificate-footer .date {
+    width: 45%;
+    text-align: center;
+  }
+
+  .certificate-footer .line {
+    height: 2px;
+    background-color: #333;
+    margin: 1rem auto;
+    width: 80%;
+  }
+
+  .certificate-footer h3 {
+    font-size: 1rem;
+    margin: 0.3rem 0;
+  }
+
+  .signature img {
+    width: 120px;
+    height: auto;
+    margin-bottom: 0.5rem;
+  }

@@ -601,117 +601,310 @@ async function fetchAllContent() {
     renderPayments()
   });
 
-
-
-
-
-
-
-
-async function recordCurrentDevice() {
-  const ua = navigator.userAgent;
-
-  // Browser detection
-  let browser = "Navegador desconocido";
-  if (ua.includes("Chrome")) browser = "Chrome";
-  else if (ua.includes("Firefox")) browser = "Firefox";
-  else if (ua.includes("Safari") && !ua.includes("Chrome")) browser = "Safari";
-  else if (ua.includes("Edg")) browser = "Edge";
-
-  // OS detection
-  let os = "Sistema operativo desconocido";
-  if (ua.includes("Windows NT")) os = "Windows";
-  else if (ua.includes("Macintosh")) os = "macOS";
-  else if (ua.includes("Android")) os = "Android";
-  else if (ua.includes("iPhone") || ua.includes("iPad")) os = "iOS";
-  else if (ua.includes("Linux")) os = "Linux";
-
-  // Device type detection
-  let deviceType = "Computadora";
-  if (/Mobi|Android|iPhone/i.test(ua)) deviceType = "Teléfono";
-  else if (/Tablet|iPad/i.test(ua)) deviceType = "Tablet";
-
-  const deviceString = `${browser} (${os}) - ${deviceType}`;
-
-  const deviceData = {
-    deviceInfo: deviceString,
-    timestamp: serverTimestamp(),
-  };
-
-  try {
+  document.getElementById("saveNotif").addEventListener("click", async () => {
     const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
 
-    // Use setDoc with merge to ensure the document exists and the array is updated
-    await setDoc(
-      studentRef,
-      {
-        Devices: {
-          devicesArray: [deviceData], // fallback if field doesn't exist
-        },
-      },
-      { merge: true }
-    );
+  })
 
-    // Then use updateDoc + arrayUnion to push the new item
-    await updateDoc(studentRef, {
-      "Devices.devicesArray": arrayUnion(deviceData),
-    });
 
-    console.log("✅ Dispositivo agregado al array en el campo Devices.devicesArray");
-  } catch (error) {
-    console.error("❌ Error al guardar dispositivo en el array:", error);
-  }
-}
 
-recordCurrentDevice();
 
-  async function renderRecentDevices() {
-  try {
-    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-    const studentSnap = await getDoc(studentRef);
 
-    if (studentSnap.exists()) {
-      const data = studentSnap.data();
-      const devicesArray = data.Devices?.devicesArray || [];
 
-      // Sort by timestamp (newest first)
-      const sorted = devicesArray.sort((a, b) => {
-        const timeA = a.timestamp?.seconds || 0;
-        const timeB = b.timestamp?.seconds || 0;
-        return timeB - timeA;
-      });
 
-      // Get the 3 newest
-      const latestThree = sorted.slice(0, 3);
 
-      // Get the container
-      const container = document.getElementById("Devices-Content");
-      container.innerHTML = ""; // clear any existing content
 
-      if (latestThree.length === 0) {
-        container.innerHTML = "<p>No hay dispositivos registrados.</p>";
-        return;
+  // PEnding to do //
+  function Certificates(){
+    const CertificateBlock =  studentData.Courses
+    function getCertifiedCourseIds(Courses) {
+      const certifiedIds = [];
+
+      // Loop through each slot in the Courses object
+      for (const slot in Courses) {
+        const course = Courses[slot];
+        
+        // Check if the course has Certificates === true
+        if (course?.Certificates === true) {
+          certifiedIds.push(course.Id);
+        }
       }
 
-      // Render each device
-      latestThree.forEach((device) => {
-        const p = document.createElement("p");
-        const readableDate = device.timestamp?.toDate?.().toLocaleString("es-ES") || "Fecha desconocida";
-        p.textContent = `${device.deviceInfo} - ${readableDate}`;
-        container.appendChild(p);
-      });
-    } else {
-      console.log("❌ No se encontró el documento del estudiante.");
+      return certifiedIds;
     }
-  } catch (error) {
-    console.error("❌ Error al cargar los dispositivos:", error);
+    const certifiedCourseIds = getCertifiedCourseIds(CertificateBlock);
+    console.log(certifiedCourseIds); // Output: ["BB05"]
+
+
+
+
+  async function generateAndDownloadCertificate(data) {
+    const {
+      userName,
+      courseName,
+      courseId,
+      type,
+      Hours = "00",
+      Lessons = "00",
+      completionDate
+    } = data;
+
+    const certificateHTML = `
+      <div class="certificate" id="certificate-content">
+        <h3>CERTIFICADO DE FINALIZACIÓN</h3>
+        <h3>${userName}</h3>
+        <h3>FINALIZÓ EL ${type === "Carrera" ? "CARRERA PROFESIONAL" : "CURSO"} DE CORSOSKILLS</h3>
+        <h1>${courseName.toUpperCase()}</h1>
+        <p>POR HABER COMPLETADO SATISFACTORIAMENTE EL ${type.toUpperCase()}:</p>
+        <div class="course-Time-Lessons">
+          <div class="hours">
+            <span>${Hours}</span>
+            <span>HORAS</span>
+          </div>
+          <div class="lessons">
+            <span>${Lessons}</span>
+            <span>LECCIONES</span>
+          </div>
+        </div>
+
+        <div class="certificate-footer">
+          <div class="signature">
+            <img>
+            <div class="line"></div>
+            <h3>Ashley Armanti</h3>
+            <h3>CEO, CorsoSkills</h3>
+          </div>
+          <div class="date">
+            <h3>${new Date(completionDate).toLocaleDateString("es-MX")}</h3>
+            <div class="line"></div>
+            <h3>FECHA DE FINALIZACIÓN</h3>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const container = document.getElementById("certificate-container");
+    container.innerHTML = certificateHTML;
+
+    const element = document.getElementById("certificate-content");
+
+    const opt = {
+      margin: 0.5,
+      filename: `certificado-${courseId}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+
+    // Trigger the download
+    await html2pdf().from(element).set(opt).save();
   }
-}
 
-// Call this after recording the device
-await renderRecentDevices();
+  // Example data
+  const exampleData = {
+    userName: "Juan Pérez",
+    courseId: "BB05",
+    courseName: "Negocios para Emprendedores",
+    type: "Curso", // or "Carrera"
+    teacher: "Carlos Rivas",
+    Hours: 12,
+    Lessons: 8,
+    completionDate: "2025-07-23"
+  };
+
+  // Call the certificate generation on page load
+  window.onload = () => {
+    generateAndDownloadCertificate(exampleData);
+  };
+    
+  }
 
 
+
+
+
+  function  Notificaciones(){
+    async function loadNotificationSettings() {
+      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+      const docSnap = await getDoc(studentRef);
+
+      if (!docSnap.exists()) {
+        // If user doc doesn't exist, create it with default notifications
+        await setDoc(studentRef, {
+          Notifications: {
+            settings: getDefaultNotificationSettings()
+          }
+        });
+      } else {
+        const data = docSnap.data();
+        const settings = data.Notifications?.settings;
+
+        if (!settings) {
+          // If Notifications.settings doesn't exist yet, initialize it
+          await updateDoc(studentRef, {
+            "Notifications.settings": getDefaultNotificationSettings()
+          });
+        } else {
+          // Render checkboxes from existing settings
+          document.getElementById("emailNotif").checked = settings.email ?? true;
+          document.getElementById("platformNotif").checked = settings.platform ?? true;
+          document.getElementById("classReminder").checked = settings.classReminder ?? true;
+          document.getElementById("newCourseNotif").checked = settings.newCourse ?? true;
+          document.getElementById("messageNotif").checked = settings.message ?? true;
+          document.getElementById("eventNotif").checked = settings.event ?? true;
+          document.getElementById("promoNotif").checked = settings.promo ?? true;
+        }
+      }
+    }
+
+    loadNotificationSettings()
+    function getDefaultNotificationSettings() {
+      return {
+        email: true,
+        platform: true,
+        classReminder: true,
+        newCourse: true,
+        message: true,
+        event: true,
+        promo: true,
+        updatedAt: Timestamp.fromDate(new Date())
+      };
+    }
+
+    document.getElementById("saveNotif").addEventListener("click", async () => {
+      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+
+      const newSettings = {
+        email: document.getElementById("emailNotif").checked,
+        platform: document.getElementById("platformNotif").checked,
+        classReminder: document.getElementById("classReminder").checked,
+        newCourse: document.getElementById("newCourseNotif").checked,
+        message: document.getElementById("messageNotif").checked,
+        event: document.getElementById("eventNotif").checked,
+        promo: document.getElementById("promoNotif").checked,
+        updatedAt: Timestamp.fromDate(new Date())
+      };
+
+      try {
+        await updateDoc(studentRef, {
+          "Notifications.settings": newSettings
+        });
+        console.log("✅ Notificaciones actualizadas:", newSettings);
+      } catch (error) {
+        console.error("❌ Error al guardar notificaciones:", error);
+      }
+    });
+  }
+  function Devices(){
+    async function recordCurrentDeviceOncePerDay() {
+    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+    const docSnap = await getDoc(studentRef);
+
+    if (!docSnap.exists()) {
+      await setDoc(studentRef, {
+        Devices: { devicesArray: [], lastRecorded: Timestamp.fromDate(new Date(0)) }
+      });
+    }
+
+    const data = docSnap.data();
+    const lastRecorded = data.Devices?.lastRecorded?.toDate?.() || new Date(0);
+
+    const today = new Date();
+    const sameDay =
+      today.getFullYear() === lastRecorded.getFullYear() &&
+      today.getMonth() === lastRecorded.getMonth() &&
+      today.getDate() === lastRecorded.getDate();
+
+    // Ya se registró hoy, no volver a registrar
+    if (sameDay) {
+      console.log("ℹ️ El dispositivo ya fue registrado hoy.");
+      return;
+    }
+
+    const ua = navigator.userAgent;
+
+    // Browser detection
+    let browser = "Navegador desconocido";
+    if (ua.includes("Chrome")) browser = "Chrome";
+    else if (ua.includes("Firefox")) browser = "Firefox";
+    else if (ua.includes("Safari") && !ua.includes("Chrome")) browser = "Safari";
+    else if (ua.includes("Edg")) browser = "Edge";
+
+    // OS detection
+    let os = "Sistema operativo desconocido";
+    if (ua.includes("Windows NT")) os = "Windows";
+    else if (ua.includes("Macintosh")) os = "macOS";
+    else if (ua.includes("Android")) os = "Android";
+    else if (ua.includes("iPhone") || ua.includes("iPad")) os = "iOS";
+    else if (ua.includes("Linux")) os = "Linux";
+
+    // Device type detection
+    let deviceType = "Computadora";
+    if (/Mobi|Android|iPhone/i.test(ua)) deviceType = "Teléfono";
+    else if (/Tablet|iPad/i.test(ua)) deviceType = "Tablet";
+
+    const deviceString = `${browser} (${os}) - ${deviceType}`;
+
+    const deviceData = {
+      deviceInfo: deviceString,
+      timestamp: Timestamp.fromDate(today)
+    };
+
+    try {
+      await updateDoc(studentRef, {
+        "Devices.devicesArray": arrayUnion(deviceData),
+        "Devices.lastRecorded": Timestamp.fromDate(today)
+      });
+      console.log("✅ Dispositivo registrado con éxito:", deviceString);
+    } catch (error) {
+      console.error("❌ Error al guardar dispositivo:", error);
+    }
+  }
+  recordCurrentDeviceOncePerDay()
+  async function renderRecentDevices() {
+    try {
+      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+      const studentSnap = await getDoc(studentRef);
+
+      if (studentSnap.exists()) {
+        const data = studentSnap.data();
+        const devicesArray = data.Devices?.devicesArray || [];
+
+        const sorted = devicesArray.sort((a, b) => {
+          const timeA = a.timestamp?.seconds || 0;
+          const timeB = b.timestamp?.seconds || 0;
+          return timeB - timeA;
+        });
+
+        const latestThree = sorted.slice(0, 3);
+
+        const container = document.getElementById("Devices-Content");
+        container.innerHTML = "";
+
+        if (latestThree.length === 0) {
+          container.innerHTML = "<p>No hay dispositivos registrados.</p>";
+          return;
+        }
+
+        latestThree.forEach((device) => {
+          const p = document.createElement("p");
+          const readableDate = device.timestamp?.toDate?.().toLocaleString("es-ES") || "Fecha desconocida";
+          p.textContent = `${device.deviceInfo} - ${readableDate}`;
+          container.appendChild(p);
+        });
+      } else {
+        console.log("❌ No se encontró el documento del estudiante.");
+      }
+    } catch (error) {
+      console.error("❌ Error al cargar los dispositivos:", error);
+    }
+  }
+  renderRecentDevices()
+  }
+  
+  Certificates()
+  Notificaciones()
+  Devices()
 
 
 
