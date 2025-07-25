@@ -13,6 +13,8 @@
   <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -219,7 +221,6 @@
 
         <div class="Left-Btn" id="Certification-Btn">
           <h3><i class="fas fa-certificate"></i> Mis Certificados</h3>
-         
         </div>
 
         <div class="Hidden-Content" id="Certification-Content" >
@@ -307,27 +308,29 @@
           <label>
             <input type="checkbox" id="syncGoogleCalendar"> Sincronizar con Google Calendar
           </label>
-
-          <label>Disponibilidad semanal:</label>
-          <input type="text" placeholder="Ej. Lunes a Viernes, 9am-5pm">
-
           <button class="btn"><i class="fas fa-save"></i> Guardar agenda</button>
         </div>
       </div>
 
       <div class="card-left-btn">
         <div class="Left-Btn" id="Redes-Btn">
-          <h3><i class="fab fa-linkedin"></i> Redes Sociales Vinculadas</h3>
+          <h3><i class="fa-solid fa-share-nodes"></i> Redes Sociales Vinculadas</h3>
         </div>
         <div class="Hidden-Content" id="Redes-Content">
           <label>
-            <input type="checkbox"> Conectar con Google
+            <input type="checkbox"> <i class="fab fa-instagram"></i> Conectar con Instagram
           </label>
           <label>
-            <input type="checkbox"> Conectar con Facebook
+            <input type="checkbox"> <i class="fab fa-facebook"></i> Conectar con Facebook
           </label>
           <label>
-            <input type="checkbox"> Conectar con LinkedIn
+            <input type="checkbox"> <i class="fab fa-linkedin"></i> Conectar con LinkedIn
+          </label>
+          <label>
+            <input type="checkbox"> <i class="fab fa-twitter"></i> Conectar con X (Twitter)
+          </label>
+          <label>
+            <input type="checkbox"> <i class="fab fa-tiktok"></i> Conectar con TikTok
           </label>
           <button class="btn"><i class="fas fa-link"></i> Guardar conexiones</button>
         </div>
@@ -343,7 +346,7 @@
           <button class="btn"><i class="fas fa-copy"></i> Copiar enlace</button>
         </div>
       </div>
-
+    </div>
   </section>
 
 
@@ -354,5 +357,6 @@
 
  
   <script  src="StudentSetting.js" type="module"></script>
+  <script src="https://apis.google.com/js/api.js"></script>
 </body>
 </html>
