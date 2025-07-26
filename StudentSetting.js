@@ -20,7 +20,7 @@ const db = getFirestore(app);
 const storage = getStorage(app, 'gs://corsoskills-1ba50.firebasestorage.app');
 const auth = getAuth(app);
 
-console.log(auth)
+//console.log(auth)
 
 const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
 const UserUidInfo = localStorage.getItem("UserUidInfo");
@@ -29,9 +29,9 @@ const UserUidInfo = localStorage.getItem("UserUidInfo");
 onAuthStateChanged(auth, (user) => {
   if (user) {
     // ✅ Authenticated
-    console.log("🔐 User is authenticated:");
-    console.log("UID:", user.uid);
-    console.log("Email:", user.email);
+   // console.log("🔐 User is authenticated:");
+   // console.log("UID:", user.uid);
+  //  console.log("Email:", user.email);
 
     // Optional: Store in localStorage if needed
     localStorage.setItem("ActiveLogedin", "true");
@@ -60,9 +60,9 @@ window.addEventListener("DOMContentLoaded", () => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 
-  console.log("🔑 Usuario logueado:", localStorage.getItem("ActiveLogedin"));
-  console.log("👤 Rol:", role);
-  console.log("🆔 UID:", userUid);
+ // console.log("🔑 Usuario logueado:", localStorage.getItem("ActiveLogedin"));
+ // console.log("👤 Rol:", role);
+ // console.log("🆔 UID:", userUid);
 
   if (!uploadBtn || !fileInput || !userUid) {
     console.error("❌ Elementos del DOM o UID no encontrados.");
@@ -209,7 +209,7 @@ async function applyBranding() {
   }
 }
 applyBranding().then((data) => {  
-  console.log(data.BuLogos.Icons[0])
+ // console.log(data.BuLogos.Icons[0])
   const {Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
   
   function renderImage(imageUrl, altUrl, UrlId) {
@@ -425,6 +425,9 @@ async function fetchAllContent() {
   } else {
     console.log("No business data found.");
   }
+
+  const {Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5} = businessData.BuColors.Colors;
+
   function renderText(text, elementId) {
     const container = document.getElementById(elementId);
     if (container) {
@@ -616,280 +619,530 @@ async function fetchAllContent() {
 
   // PEnding to do //
   function Certificates(){
-// Assume these are defined already
-const CertificateBlock = studentData.Courses;
-const Courses = businessData.Courses;
+    function CertificatesCourses() {
+    // 🔧 Helper: resolve "Category.Level.CXX" into nested object access
+    function getNestedProperty(obj, path) {
+      return path.split('.').reduce((acc, key) => acc?.[key], obj);
+      }
 
-// Step 1: Get Certified Course IDs
-function getCertifiedCourseIds(CoursesObj) {
-  const certifiedIds = [];
+      // ✅ Setup
+      const CertificateBlock = studentData.Courses;
+      const Courses = businessData.Courses;
 
-  for (const slot in CoursesObj) {
-    const course = CoursesObj[slot];
-    if (course?.Certificates === true) {
-      certifiedIds.push(course.Id); // e.g. "BB05"
+      function getCertifiedCourseIds(CoursesObj) {
+        const certifiedIds = [];
+        for (const slot in CoursesObj) {
+          const course = CoursesObj[slot];
+          if (course?.Certificates === true) {
+            certifiedIds.push(course.Id);
+          }
+        }
+        return certifiedIds;
+      }
+
+      function parseCourseCode(code) {
+        const levelMap = { B: "Beginner", I: "Intermediate", A: "Advanced" };
+        const categoryMap = {
+          A: "AI", B: "Business", D: "Design", F: "Finance", I: "Languages",
+          L: "Leadership", M: "Marketing", P: "Productivity", C: "Programming",
+          S: "Sales", T: "Technology", W: "Wellness"
+        };
+
+        if (!/^[A-Z]{2}\d{2}$/.test(code)) {
+          return { error: `Invalid code format: ${code}` };
+        }
+
+        const levelCode = code.charAt(0);
+        const categoryCode = code.charAt(1);
+        const courseNumber = parseInt(code.slice(2), 10);
+        return {
+          code,
+          level: levelMap[levelCode] || "Unknown",
+          category: categoryMap[categoryCode] || "Unknown",
+          fullLabel: `${categoryMap[categoryCode] || "?"}.${levelMap[levelCode] || "?"}.C${courseNumber}`
+        };
+      }
+
+      async function generateAndDownloadCertificate(data) {
+        const {
+          userName,
+          courseName,
+          courseId,
+          type,
+          Hours = "00",
+          Lessons = "00",
+          completionDate
+        } = data;
+
+        const isCarrera = type === "Carrera";
+        const backgroundImg = isCarrera ? businessData.Certificates.Careers : businessData.Certificates.Courses;
+        const signatureImg = businessData.Certificates.Sig;
+        const logo = businessData.BuLogos.Simple[1];
+        const orientation = isCarrera ? "portrait" : "landscape";
+
+        let modal = document.getElementById("certificate-modal");
+        if (!modal) {
+          modal = document.createElement("div");
+          modal.id = "certificate-modal";
+          modal.innerHTML = `
+            <div class="certificate-overlay">
+              <div class="certificate-popup">
+                <button class="close-btn" id="close-certificate-btn">✖</button>
+                <div id="certificate-container"></div>
+              </div>
+            </div>
+          `;
+          document.body.appendChild(modal);
+
+          const style = document.createElement("style");
+          style.textContent = `
+            .certificate-overlay {
+              position: fixed;
+              top: 0; left: 0;
+              width: 100%; height: 100%;
+              background: rgba(0, 0, 0, 0.7);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              z-index: 9999;
+            }
+            .certificate-popup {
+              background: ${Prime5}; 
+              padding: 20px;
+              border-radius: 8px;
+              width: ${isCarrera ? '600px' : '1000px'};
+              max-height: 90vh;
+              overflow: auto;
+              position: relative;
+            }
+            .close-btn {
+              position: absolute;
+              top: 10px;
+              right: 10px;
+              background:  ${Prime2}; 
+              color: ${Prime5}; 
+              border: none;
+              font-size: 18px;
+              cursor: pointer;
+              border-radius: 4px;
+              padding: 5px 10px;
+            }
+            .certificate {
+              width: 100%;
+              font-family: sans-serif;
+              text-align: center;
+              padding: 40px;
+              color: ${Prime}; 
+              box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            }
+            .certificate .logo {
+              width: 200px;
+              margin: 0 auto 20px;
+            }
+            .course-Time-Lessons {
+              display: flex;
+              justify-content: center;
+              gap: 40px;
+              margin-top: 10px;
+            }
+            .certificate-footer {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-top: 40px;
+              padding: 0 30px;
+            }
+            .signature{
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              margin: -1rem 0 1rem 0;
+            }
+
+            .signature img {
+            width: 150px;
+              margin: 10px 0  -4rem 0;
+            }
+            .line {
+              width: 100px;
+              height: 2px;
+              background-color: black;
+              margin: 5px auto;
+            }
+            .certificate h1{
+              color: ${Base};
+            }  
+
+            .name{
+              margin:-1rem 0 0 0 ;
+            }
+          `;
+          document.head.appendChild(style);
+
+          document.getElementById("close-certificate-btn").addEventListener("click", () => {
+            modal.remove();
+          });
+        }
+
+        const container = document.getElementById("certificate-container");
+
+        container.innerHTML = `
+          <div class="certificate" id="certificate-content">
+            <img src="${logo}" alt="Logo" class="logo" />
+            <h3>CERTIFICADO DE FINALIZACIÓN</h3>
+            <h1>${userName}</h1>
+            <h4>FINALIZÓ EL ${isCarrera ? "CARRERA PROFESIONAL" : "CURSO"} DE CORSOSKILLS</h4>
+            <h1>${courseName.toUpperCase()}</h1>
+            <p>POR HABER COMPLETADO SATISFACTORIAMENTE EL ${type.toUpperCase()}:</p>
+            <div class="course-Time-Lessons">
+              <div class="hours">
+                <span>${Hours}</span><br/>
+                <span>HORAS</span>
+              </div>
+              <div class="lessons">
+                <span>${Lessons}</span><br/>
+                <span>LECCIONES</span>
+              </div>
+            </div>
+            <div class="certificate-footer">
+              <div class="signature">
+                <img src="${signatureImg}" alt="Signature">
+                <div class="line"></div>
+                <div class="name">
+                  <h3>Ashley  Armanti</h3>
+                  <h3>CEO, CorsoSkills</h3>
+                </div>
+              </div>
+              <div class="date">
+                <h3>${new Date(completionDate).toLocaleDateString("es-MX")}</h3>
+                <div class="line"></div>
+                <h3>FECHA DE FINALIZACIÓN</h3>
+              </div>
+            </div>
+          </div>
+        `;
+          // ✅ Apply background via JS to ensure it works
+          const certificateEl = document.getElementById("certificate-content");
+          certificateEl.style.backgroundImage = `url('${backgroundImg}')`;
+          certificateEl.style.backgroundSize = "cover";
+          certificateEl.style.backgroundPosition = "center";
+          certificateEl.style.backgroundRepeat = "no-repeat";
+        }
+
+      function renderCertifiedCourseButtons() {
+        const certifiedCourseIds = getCertifiedCourseIds(CertificateBlock);
+        const container = document.getElementById("CertificatesCurso");
+        container.innerHTML = ""; // Clear content
+
+        certifiedCourseIds.forEach(id => {
+          const parsed = parseCourseCode(id);
+          const fullCourseObj = getNestedProperty(Courses, parsed.fullLabel);
+          const studentCourseEntry = Object.values(CertificateBlock).find(entry => entry?.Id === id);
+          if (!fullCourseObj || !studentCourseEntry) return;
+
+          const exampleData = {
+            userName: studentData.fullName || studentData.Name || "Nombre del Estudiante",
+            courseId: fullCourseObj.Id || id,
+            courseName: fullCourseObj.Title || fullCourseObj.Tittle || "Título no encontrado",
+            type: fullCourseObj.Type || "Curso", // or "Carrera"
+            Hours: fullCourseObj.Duration?.Hours || "00",
+            Lessons: fullCourseObj.Lessons || "00",
+            completionDate: studentCourseEntry?.Date || new Date().toISOString()
+          };
+
+          const button = document.createElement("button");
+          button.textContent = exampleData.courseName;
+          button.className = "course-button";
+          button.style = `
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+          `;
+          button.addEventListener("click", () => {
+            generateAndDownloadCertificate(exampleData);
+          });
+          container.appendChild(button);
+        });
+      }
+
+      // ✅ Init
+      renderCertifiedCourseButtons();
+
     }
-  }
 
-  return certifiedIds;
-}
-
-// Step 2: Parse a course code like "BB05"
-function parseCourseCode(code) {
-  const levelMap = {
-    B: "Beginner",
-    I: "Intermediate",
-    A: "Advanced"
-  };
-
-  const categoryMap = {
-    A: "AI",
-    B: "Business",
-    D: "Design",
-    F: "Finance",
-    I: "Languages",
-    L: "Leadership",
-    M: "Marketing",
-    P: "Productivity",
-    C: "Programming",
-    S: "Sales",
-    T: "Technology",
-    W: "Wellness"
-  };
-
-  if (!/^[A-Z]{2}\d{2}$/.test(code)) {
-    return { error: `Invalid code format: ${code}` };
-  }
-
-  const levelCode = code.charAt(0);
-  const categoryCode = code.charAt(1);
-  const courseNumber = parseInt(code.slice(2), 10);
-
-  return {
-    code,
-    levelCode,
-    level: levelMap[levelCode] || "Unknown level",
-    categoryCode,
-    category: categoryMap[categoryCode] || "Unknown category",
-    courseNumber,
-    fullLabel: `${levelMap[levelCode] || "?"} - ${categoryMap[categoryCode] || "?"} - Course ${courseNumber}`
-  };
-}
-
-// Step 3: Combine info
-const certifiedCourseIds = getCertifiedCourseIds(CertificateBlock);
-
-const parsedCourses = certifiedCourseIds.map(id => {
-  const parsed = parseCourseCode(id);
-  const courseData = Object.values(Courses).find(c => c.Id === id);
-
-  return {
-    ...parsed,
-    title: courseData?.Title || "No title found",
-    description: courseData?.Description || "No description available"
-  };
-});
-
-console.log(parsedCourses);
-
-
-
-
-
-
-
-
-
-async function generateAndDownloadCertificate(data) {
-  const {
-    userName,
-    courseName,
-    courseId,
-    type,
-    Hours = "00",
-    Lessons = "00",
-    completionDate
-  } = data;
-
-  const isCarrera = type === "Carrera";
-
-  // Images from businessData
-  const backgroundImg = isCarrera
-    ? businessData.Certificates.Careers
-    : businessData.Certificates.Cursos;
-
-  const signatureImg = businessData.Certificates.Sig;
-  const logo = businessData.BuLogos.Simple[1];
-
-  const orientation = isCarrera ? "portrait" : "landscape";
-
-  // Create modal if not already
-  let modal = document.getElementById("certificate-modal");
-  if (!modal) {
-    modal = document.createElement("div");
-    modal.id = "certificate-modal";
-    modal.innerHTML = `
-      <div class="certificate-overlay">
-        <div class="certificate-popup">
-          <button class="close-btn" id="close-certificate-btn">✖</button>
-          <div id="certificate-container"></div>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(modal);
-
-    const style = document.createElement("style");
-    style.textContent = `
-      .certificate-overlay {
-        position: fixed;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
+    function CertificatesCarrera() {
+      // 🔧 Helper: resolve "Category.Level.CXX" into nested object access
+      function getNestedProperty(obj, path) {
+        return path.split('.').reduce((acc, key) => acc?.[key], obj);
       }
-      .certificate-popup {
-        position: relative;
-        background: white;
-        padding: 20px;
-        border-radius: 8px;
-        width: ${isCarrera ? '600px' : '1000px'};
-        max-height: 90vh;
-        overflow: auto;
-      }
-      .close-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: red;
-        color: white;
-        border: none;
-        font-size: 18px;
-        cursor: pointer;
-        border-radius: 4px;
-        padding: 5px 10px;
-      }
-      .certificate {
-        font-family: sans-serif;
-        text-align: center;
-        padding: 30px;
-        position: relative;
-        background-image: url('${backgroundImg}');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        ${isCarrera ? 'min-height: 900px;' : 'width: 1000px; height: 700px;'}
-        color: #000;
-        box-shadow: 0 0 10px rgba(0,0,0,0.3);
-      }
-      .certificate .logo {
-        width: 200px;
-        margin: 0 auto 20px;
-      }
-      .course-Time-Lessons {
-        display: flex;
-        justify-content: center;
-        gap: 40px;
-        margin-top: 10px;
-      }
-      .certificate-footer {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 40px;
-        padding: 0 30px;
-      }
-      .signature img {
-        height: 50px;
-      }
-      .line {
-        width: 100px;
-        height: 2px;
-        background-color: black;
-        margin: 5px auto;
-      }
-    `;
-    document.head.appendChild(style);
 
-    document.getElementById("close-certificate-btn").addEventListener("click", () => {
-      modal.remove();
-    });
-  }
+      // Setup
+      const CertificateBlock = studentData.Career;
+      const Careers = businessData.Careers;
 
-  const container = document.getElementById("certificate-container");
+      // Get certified career IDs
+      function getCertifiedCareerIds(CareerObj) {
+        const certifiedIds = [];
+        for (const slot in CareerObj) {
+          const career = CareerObj[slot];
+          if (career?.Certificates === true) {
+            certifiedIds.push(career.Cid);
+          }
+        }
+        return certifiedIds;
+      }
 
-  container.innerHTML = `
-    <div class="certificate" id="certificate-content">
-      <img src="${logo}" alt="Logo" class="logo" />
-      <h3>CERTIFICADO DE FINALIZACIÓN</h3>
-      <h3>${userName}</h3>
-      <h3>FINALIZÓ EL ${isCarrera ? "CARRERA PROFESIONAL" : "CURSO"} DE CORSOSKILLS</h3>
-      <h1>${courseName.toUpperCase()}</h1>
-      <p>POR HABER COMPLETADO SATISFACTORIAMENTE EL ${type.toUpperCase()}:</p>
-      <div class="course-Time-Lessons">
-        <div class="hours">
-          <span>${Hours}</span><br/>
-          <span>HORAS</span>
-        </div>
-        <div class="lessons">
-          <span>${Lessons}</span><br/>
-          <span>LECCIONES</span>
-        </div>
-      </div>
-      <div class="certificate-footer">
-        <div class="signature">
-          <img src="${signatureImg}" alt="Signature">
-          <div class="line"></div>
-          <h3>Ashley Armanti</h3>
-          <h3>CEO, CorsoSkills</h3>
-        </div>
-        <div class="date">
-          <h3>${new Date(completionDate).toLocaleDateString("es-MX")}</h3>
-          <div class="line"></div>
-          <h3>FECHA DE FINALIZACIÓN</h3>
-        </div>
-      </div>
-    </div>
-  `;
+      // Parse code like "BC01" → category + label
+      function parseCourseCode(code) {
+        const categoryMap = {
+          A: "AI", B: "Business", D: "Design", F: "Finance", I: "Languages",
+          L: "Leadership", M: "Marketing", P: "Productivity", C: "Programming",
+          S: "Sales", T: "Technology", W: "Wellness"
+        };
 
-  const element = document.getElementById("certificate-content");
+        if (!/^[A-Z]{2}\d{2}$/.test(code)) {
+          return { error: `Invalid code format: ${code}` };
+        }
 
-  const opt = {
-    margin: 0.5,
-    filename: `certificado-${courseId}.pdf`,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: {
-      unit: 'in',
-      format: 'letter',
-      orientation: orientation
+        const categoryCode = code.charAt(0);
+        const courseNumber = parseInt(code.slice(2), 10);
+
+        return {
+          code,
+          category: categoryMap[categoryCode] || "Unknown",
+          fullLabel: `C${courseNumber}`
+        };
+      }
+
+      // Generate and download certificate (same as courses, but with Careers background)
+      async function generateAndDownloadCertificate(data) {
+        const {
+          userName,
+          courseName,
+          courseId,
+          type = "Carrera",
+          Hours = "00",
+          Lessons = "00",
+          completionDate
+        } = data;
+
+        const isCarrera = type === "Carrera";
+        const backgroundImg = isCarrera
+          ? businessData.Certificates.Careers
+          : businessData.Certificates.Courses;
+        const signatureImg = businessData.Certificates.Sig;
+        const logo = businessData.BuLogos.Simple[1];
+        const orientation = isCarrera ? "portrait" : "landscape";
+
+        // Create or reuse modal
+        let modal = document.getElementById("certificate-modal");
+        if (!modal) {
+          modal = document.createElement("div");
+          modal.id = "certificate-modal";
+          modal.innerHTML = `
+            <div class="certificate-overlay">
+              <div class="certificate-popup">
+                <button class="close-btn" id="close-certificate-btn">✖</button>
+                <div id="certificate-container"></div>
+              </div>
+            </div>
+          `;
+          document.body.appendChild(modal);
+
+          const style = document.createElement("style");
+          style.textContent = `
+            .certificate-overlay {
+              position: fixed;
+              top: 0; left: 0;
+              width: 100%; height: 100%;
+              background: rgba(0, 0, 0, 0.7);
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              z-index: 9999;
+            }
+            .certificate-popup {
+              background: ${Prime5};
+              padding: 20px;
+              border-radius: 8px;
+              width: ${isCarrera ? '600px' : '1000px'};
+              max-height: 90vh;
+              overflow: auto;
+              position: relative;
+            }
+            .close-btn {
+              position: absolute;
+              top: 10px;
+              right: 10px;
+              background:  ${Prime2};
+              color: ${Prime5};
+              border: none;
+              font-size: 18px;
+              cursor: pointer;
+              border-radius: 4px;
+              padding: 5px 10px;
+            }
+            .certificate {
+              width: 100%;
+              font-family: sans-serif;
+              text-align: center;
+              padding: 40px;
+              color: ${Prime};
+              box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            }
+            .certificate .logo {
+              width: 200px;
+              margin: 0 auto 20px;
+            }
+            .course-Time-Lessons {
+              display: flex;
+              justify-content: center;
+              gap: 40px;
+              margin-top: 10px;
+            }
+            .certificate-footer {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-top: 40px;
+              padding: 0 30px;
+            }
+            .signature{
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              margin: -1rem 0 1rem 0;
+            }
+            .signature img {
+              width: 150px;
+              margin: 10px 0  -4rem 0;
+            }
+            .line {
+              width: 100px;
+              height: 2px;
+              background-color: black;
+              margin: 5px auto;
+            }
+            .certificate h1{
+              color: ${Base};
+            }
+            .name{
+              margin:-1rem 0 0 0 ;
+            }
+          `;
+          document.head.appendChild(style);
+
+          document.getElementById("close-certificate-btn").addEventListener("click", () => {
+            modal.remove();
+          });
+        }
+
+        const container = document.getElementById("certificate-container");
+
+        container.innerHTML = `
+          <div class="certificate" id="certificate-content">
+            <img src="${logo}" alt="Logo" class="logo" />
+            <h3>CERTIFICADO DE FINALIZACIÓN</h3>
+            <h1>${userName}</h1>
+            <h4>FINALIZÓ LA ${"CARRERA PROFESIONAL" } DE CORSOSKILLS</h4>
+            <h1>${courseName.toUpperCase()}</h1>
+            <p>POR HABER COMPLETADO SATISFACTORIAMENTE LA ${type.toUpperCase()}:</p>
+            <div class="course-Time-Lessons">
+              <div class="hours">
+                <span>${Hours}</span><br/>
+                <span>HORAS</span>
+              </div>
+              <div class="lessons">
+                <span>${Lessons}</span><br/>
+                <span>LECCIONES</span>
+              </div>
+            </div>
+            <div class="certificate-footer">
+              <div class="signature">
+                <img src="${signatureImg}" alt="Signature">
+                <div class="line"></div>
+                <div class="name">
+                  <h3>Ashley  Armanti</h3>
+                  <h3>CEO, CorsoSkills</h3>
+                </div>
+              </div>
+              <div class="date">
+                <h3>${new Date(completionDate).toLocaleDateString("es-MX")}</h3>
+                <div class="line"></div>
+                <h3>FECHA DE FINALIZACIÓN</h3>
+              </div>
+            </div>
+          </div>
+        `;
+        // Apply background
+        const certificateEl = document.getElementById("certificate-content");
+        certificateEl.style.backgroundImage = `url('${backgroundImg}')`;
+        certificateEl.style.backgroundSize = "cover";
+        certificateEl.style.backgroundPosition = "center";
+        certificateEl.style.backgroundRepeat = "no-repeat";
+      }
+
+      // Render buttons
+      function renderCertifiedCareerButtons() {
+        const certifiedCareerIds = getCertifiedCareerIds(CertificateBlock);
+        const container = document.getElementById("CertificatesCarrera");
+        container.innerHTML = "";
+
+        certifiedCareerIds.forEach(id => {
+          const { category, fullLabel } = parseCourseCode(id);
+          const categoryData = Careers?.[category];
+          const careerData = categoryData?.[fullLabel];
+          const studentCareerEntry = Object.values(CertificateBlock).find(entry => entry?.Cid === id);
+          if (!careerData || !studentCareerEntry) return;
+
+          const exampleData = {
+            userName: studentData.FullName || studentData.Name || "Nombre del Estudiante",
+            courseId: careerData.Cid || id,
+            courseName: careerData.Tittle || careerData.Title || "Título no encontrado",
+            type: careerData.Type || "Carrera",
+            Hours: careerData?.Duration?.Hours || "00",
+            Lessons: careerData?.CList?.length?.toString() || "00",
+            completionDate: studentCareerEntry?.Date || new Date().toISOString()
+          };
+
+          const button = document.createElement("button");
+          button.textContent = exampleData.courseName;
+          button.className = "career-button";
+          button.style.margin = "10px";
+          button.style.padding = "10px 20px";
+          button.style.border = "none";
+          button.style.backgroundColor = "#28a745";
+          button.style.color = "white";
+          button.style.borderRadius = "6px";
+          button.style.cursor = "pointer";
+
+          button.addEventListener("click", () => {
+            generateAndDownloadCertificate(exampleData);
+          });
+
+          container.appendChild(button);
+        });
+      }
+
+      // Init
+      renderCertifiedCareerButtons();
     }
-  };
-
- // setTimeout(async () => {
-   // await html2pdf().from(element).set(opt).save();
-//  }, 500);
-}
 
 
 
-      // Example data
-      const exampleData = {
-        userName: "Juan Pérez",
-        courseId: "BB05",
-        courseName: "Negocios para Emprendedores",
-        type: "Curso", // or "Carrera"
-        teacher: "Carlos Rivas",
-        Hours: 12,
-        Lessons: 8,
-        completionDate: "2025-07-23"
-        
-      };
 
-        generateAndDownloadCertificate(exampleData);
-      
-        
+
+
+
+
+
+      CertificatesCourses()
+CertificatesCarrera()
+ 
   }
 
 
