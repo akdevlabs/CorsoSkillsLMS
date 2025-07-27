@@ -1140,100 +1140,100 @@ async function fetchAllContent() {
 
 
 
-      CertificatesCourses()
-CertificatesCarrera()
+    CertificatesCourses()
+    CertificatesCarrera()
  
   }
+function Notificaciones() {
+  async function loadNotificationSettings() {
+    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+    const docSnap = await getDoc(studentRef);
 
+    if (!docSnap.exists()) {
+      // Crear documento con valores por defecto en Settings.Notificaciones
+      await setDoc(studentRef, {
+        Settings: {
+          Notificaciones: getDefaultNotificationSettings()
+        }
+      });
+    } else {
+      const data = docSnap.data();
+      const settings = data.Settings?.Notificaciones;
 
-
-
-
-  function  Notificaciones(){
-    async function loadNotificationSettings() {
-      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-      const docSnap = await getDoc(studentRef);
-
-      if (!docSnap.exists()) {
-        // If user doc doesn't exist, create it with default notifications
-        await setDoc(studentRef, {
-          Notifications: {
-            settings: getDefaultNotificationSettings()
-          }
+      if (!settings) {
+        // Inicializar Settings.Notificaciones si no existe
+        await updateDoc(studentRef, {
+          "Settings.Notificaciones": getDefaultNotificationSettings()
         });
       } else {
-        const data = docSnap.data();
-        const settings = data.Notifications?.settings;
-
-        if (!settings) {
-          // If Notifications.settings doesn't exist yet, initialize it
-          await updateDoc(studentRef, {
-            "Notifications.settings": getDefaultNotificationSettings()
-          });
-        } else {
-          // Render checkboxes from existing settings
-          document.getElementById("emailNotif").checked = settings.email ?? true;
-          document.getElementById("platformNotif").checked = settings.platform ?? true;
-          document.getElementById("classReminder").checked = settings.classReminder ?? true;
-          document.getElementById("newCourseNotif").checked = settings.newCourse ?? true;
-          document.getElementById("messageNotif").checked = settings.message ?? true;
-          document.getElementById("eventNotif").checked = settings.event ?? true;
-          document.getElementById("promoNotif").checked = settings.promo ?? true;
-        }
+        // Renderizar checkboxes con valores existentes o true por defecto
+        document.getElementById("emailNotif").checked = settings.email ?? true;
+        document.getElementById("platformNotif").checked = settings.platform ?? true;
+        document.getElementById("classReminder").checked = settings.classReminder ?? true;
+        document.getElementById("newCourseNotif").checked = settings.newCourse ?? true;
+        document.getElementById("messageNotif").checked = settings.message ?? true;
+        document.getElementById("eventNotif").checked = settings.event ?? true;
+        document.getElementById("promoNotif").checked = settings.promo ?? true;
       }
     }
-
-    loadNotificationSettings()
-    function getDefaultNotificationSettings() {
-      return {
-        email: true,
-        platform: true,
-        classReminder: true,
-        newCourse: true,
-        message: true,
-        event: true,
-        promo: true,
-        updatedAt: Timestamp.fromDate(new Date())
-      };
-    }
-
-    document.getElementById("saveNotif").addEventListener("click", async () => {
-      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-
-      const newSettings = {
-        email: document.getElementById("emailNotif").checked,
-        platform: document.getElementById("platformNotif").checked,
-        classReminder: document.getElementById("classReminder").checked,
-        newCourse: document.getElementById("newCourseNotif").checked,
-        message: document.getElementById("messageNotif").checked,
-        event: document.getElementById("eventNotif").checked,
-        promo: document.getElementById("promoNotif").checked,
-        updatedAt: Timestamp.fromDate(new Date())
-      };
-
-      try {
-        await updateDoc(studentRef, {
-          "Notifications.settings": newSettings
-        });
-        console.log("✅ Notificaciones actualizadas:", newSettings);
-      } catch (error) {
-        console.error("❌ Error al guardar notificaciones:", error);
-      }
-    });
   }
-  function Devices(){
-    async function recordCurrentDeviceOncePerDay() {
+
+  function getDefaultNotificationSettings() {
+    return {
+      email: true,
+      platform: true,
+      classReminder: true,
+      newCourse: true,
+      message: true,
+      event: true,
+      promo: true,
+      updatedAt: Timestamp.fromDate(new Date())
+    };
+  }
+
+  document.getElementById("saveNotif").addEventListener("click", async () => {
+    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+
+    const newSettings = {
+      email: document.getElementById("emailNotif").checked,
+      platform: document.getElementById("platformNotif").checked,
+      classReminder: document.getElementById("classReminder").checked,
+      newCourse: document.getElementById("newCourseNotif").checked,
+      message: document.getElementById("messageNotif").checked,
+      event: document.getElementById("eventNotif").checked,
+      promo: document.getElementById("promoNotif").checked,
+      updatedAt: Timestamp.fromDate(new Date())
+    };
+
+    try {
+      await updateDoc(studentRef, {
+        "Settings.Notificaciones": newSettings
+      });
+      console.log("✅ Notificaciones actualizadas:", newSettings);
+    } catch (error) {
+      console.error("❌ Error al guardar notificaciones:", error);
+    }
+  });
+
+  loadNotificationSettings();
+}
+
+function Devices() {
+  async function recordCurrentDeviceOncePerDay() {
     const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
     const docSnap = await getDoc(studentRef);
 
     if (!docSnap.exists()) {
       await setDoc(studentRef, {
-        Devices: { devicesArray: [], lastRecorded: Timestamp.fromDate(new Date(0)) }
+        Settings: {
+          Dispositivos: { devicesArray: [], lastRecorded: Timestamp.fromDate(new Date(0)) }
+        }
       });
     }
 
     const data = docSnap.data();
-    const lastRecorded = data.Devices?.lastRecorded?.toDate?.() || new Date(0);
+    const dispositivos = data.Settings?.Dispositivos || { devicesArray: [], lastRecorded: Timestamp.fromDate(new Date(0)) };
+    const lastRecorded = dispositivos.lastRecorded?.toDate?.() || new Date(0);
 
     const today = new Date();
     const sameDay =
@@ -1241,7 +1241,6 @@ CertificatesCarrera()
       today.getMonth() === lastRecorded.getMonth() &&
       today.getDate() === lastRecorded.getDate();
 
-    // Ya se registró hoy, no volver a registrar
     if (sameDay) {
       console.log("ℹ️ El dispositivo ya fue registrado hoy.");
       return;
@@ -1278,15 +1277,15 @@ CertificatesCarrera()
 
     try {
       await updateDoc(studentRef, {
-        "Devices.devicesArray": arrayUnion(deviceData),
-        "Devices.lastRecorded": Timestamp.fromDate(today)
+        "Settings.Dispositivos.devicesArray": arrayUnion(deviceData),
+        "Settings.Dispositivos.lastRecorded": Timestamp.fromDate(today)
       });
       console.log("✅ Dispositivo registrado con éxito:", deviceString);
     } catch (error) {
       console.error("❌ Error al guardar dispositivo:", error);
     }
   }
-  recordCurrentDeviceOncePerDay()
+
   async function renderRecentDevices() {
     try {
       const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
@@ -1294,7 +1293,8 @@ CertificatesCarrera()
 
       if (studentSnap.exists()) {
         const data = studentSnap.data();
-        const devicesArray = data.Devices?.devicesArray || [];
+        const dispositivos = data.Settings?.Dispositivos || { devicesArray: [] };
+        const devicesArray = dispositivos.devicesArray || [];
 
         const sorted = devicesArray.sort((a, b) => {
           const timeA = a.timestamp?.seconds || 0;
@@ -1325,12 +1325,287 @@ CertificatesCarrera()
       console.error("❌ Error al cargar los dispositivos:", error);
     }
   }
-  renderRecentDevices()
+
+  recordCurrentDeviceOncePerDay();
+  renderRecentDevices();
+}
+
+function Comunicacion() {
+  async function loadCommunicationSettings() {
+    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+    const docSnap = await getDoc(studentRef);
+
+    if (!docSnap.exists()) {
+      // Crear documento con valores por defecto en Settings.Comunicacion
+      await setDoc(studentRef, {
+        Settings: {
+          Comunicacion: getDefaultCommunicationSettings()
+        }
+      });
+    } else {
+      const data = docSnap.data();
+      const settings = data.Settings?.Comunicacion;
+
+      if (!settings) {
+        // Inicializar Settings.Comunicacion si no existe
+        await updateDoc(studentRef, {
+          "Settings.Comunicacion": getDefaultCommunicationSettings()
+        });
+      } else {
+        // Renderizar selects con valores existentes o valores por defecto
+        document.querySelector("#Comunicacion-Content select:nth-of-type(1)").value = settings.metodo ?? "Email";
+        document.querySelector("#Comunicacion-Content select:nth-of-type(2)").value = settings.zona ?? "GMT-6 Ciudad de México";
+      }
+    }
   }
+
+  function getDefaultCommunicationSettings() {
+    return {
+      metodo: "Email",
+      zona: "GMT-6 Ciudad de México",
+      updatedAt: Timestamp.fromDate(new Date())
+    };
+  }
+
+  document.querySelector("#Comunicacion-Content button").addEventListener("click", async () => {
+    const metodo = document.querySelector("#Comunicacion-Content select:nth-of-type(1)").value;
+    const zona = document.querySelector("#Comunicacion-Content select:nth-of-type(2)").value;
+
+    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+
+    const newSettings = {
+      metodo,
+      zona,
+      updatedAt: Timestamp.fromDate(new Date())
+    };
+
+    try {
+      await updateDoc(studentRef, {
+        "Settings.Comunicacion": newSettings
+      });
+      console.log("✅ Configuración de comunicación actualizada:", newSettings);
+    } catch (error) {
+      console.error("❌ Error al guardar configuración de comunicación:", error);
+    }
+  });
+
+  loadCommunicationSettings();
+}
   
+function Privacidad() {
+  async function loadPrivacySettings() {
+    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+    const docSnap = await getDoc(studentRef);
+
+    if (!docSnap.exists()) {
+      // Crear el documento con valores por defecto dentro de Settings.Privacidad
+      await setDoc(studentRef, {
+        Settings: {
+          Privacidad: getDefaultPrivacySettings()
+        }
+      });
+    } else {
+      const data = docSnap.data();
+      const settings = data.Settings?.Privacidad; // CORREGIDO: leer desde Settings.Privacidad
+
+      if (!settings) {
+        // Inicializar Settings.Privacidad si no existe
+        await updateDoc(studentRef, {
+          "Settings.Privacidad": getDefaultPrivacySettings()
+        });
+      } else {
+        // Mostrar estado actual en los checkboxes
+        document.getElementById("publicProfile").checked = settings.publicProfile ?? true;
+        document.getElementById("shareActivity").checked = settings.shareActivity ?? true;
+      }
+    }
+  }
+
+  function getDefaultPrivacySettings() {
+    return {
+      publicProfile: true,
+      shareActivity: true,
+      updatedAt: Timestamp.fromDate(new Date())
+    };
+  }
+
+  document.querySelector("#Privacidad-Content button").addEventListener("click", async () => {
+    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+
+    const newSettings = {
+      publicProfile: document.getElementById("publicProfile").checked,
+      shareActivity: document.getElementById("shareActivity").checked,
+      updatedAt: Timestamp.fromDate(new Date())
+    };
+
+    try {
+      await updateDoc(studentRef, {
+        "Settings.Privacidad": newSettings
+      });
+      console.log("✅ Configuración de privacidad actualizada:", newSettings);
+    } catch (error) {
+      console.error("❌ Error al guardar privacidad:", error);
+    }
+  });
+
+  loadPrivacySettings();
+}
+function AgendaPersonal() {
+  async function loadAgendaSettings() {
+    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+    const docSnap = await getDoc(studentRef);
+
+    if (!docSnap.exists()) {
+      // Crear el documento con configuración por defecto dentro de Settings.Agenda
+      await setDoc(studentRef, {
+        Settings: {
+          Agenda: getDefaultAgendaSettings()
+        }
+      });
+    } else {
+      const data = docSnap.data();
+      const settings = data.Settings?.Agenda;  // CORREGIDO para leer desde Settings.Agenda
+
+      if (!settings) {
+        // Inicializar Settings.Agenda si no existe
+        await updateDoc(studentRef, {
+          "Settings.Agenda": getDefaultAgendaSettings()
+        });
+      } else {
+        // Cargar el estado del checkbox
+        document.getElementById("syncGoogleCalendar").checked = settings.syncGoogle ?? false;
+      }
+    }
+  }
+
+  function getDefaultAgendaSettings() {
+    return {
+      syncGoogle: false,
+      updatedAt: Timestamp.fromDate(new Date())
+    };
+  }
+
+  document.querySelector("#Agenda-Content button").addEventListener("click", async () => {
+    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+
+    const newSettings = {
+      syncGoogle: document.getElementById("syncGoogleCalendar").checked,
+      updatedAt: Timestamp.fromDate(new Date())
+    };
+
+    try {
+      // Actualizar dentro de Settings.Agenda
+      await updateDoc(studentRef, {
+        "Settings.Agenda": newSettings
+      });
+      console.log("✅ Configuración de agenda actualizada:", newSettings);
+    } catch (error) {
+      console.error("❌ Error al guardar configuración de agenda:", error);
+    }
+  });
+
+  loadAgendaSettings();
+}
+function RedesSociales() {
+  async function loadSocialSettings() {
+    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+    const docSnap = await getDoc(studentRef);
+
+    if (!docSnap.exists()) {
+      // Crear documento con la estructura inicial y valores por defecto
+      await setDoc(studentRef, {
+        Settings: {
+          Redes: getDefaultSocialSettings()
+        }
+      });
+    } else {
+      const data = docSnap.data();
+      const settings = data.Settings?.Redes;
+
+      if (!settings) {
+        // Si no existe Settings.Redes, inicializarlo
+        await updateDoc(studentRef, {
+          "Settings.Redes": getDefaultSocialSettings()
+        });
+      } else {
+        // Cargar estados a los checkboxes
+        document.getElementById("instagram").checked = settings.instagram ?? true;
+        document.getElementById("facebook").checked = settings.facebook ?? true;
+        document.getElementById("linkedin").checked = settings.linkedin ?? true;
+        document.getElementById("twitter").checked = settings.twitter ?? true;
+        document.getElementById("tiktok").checked = settings.tiktok ?? true;
+      }
+    }
+  }
+
+  function getDefaultSocialSettings() {
+    return {
+      instagram: true,
+      facebook: true,
+      linkedin: true,
+      twitter: true,
+      tiktok: true,
+      updatedAt: Timestamp.fromDate(new Date())
+    };
+  }
+
+  document.querySelector("#Redes-Content button").addEventListener("click", async () => {
+    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+
+    const newSettings = {
+      instagram: document.getElementById("instagram").checked,
+      facebook: document.getElementById("facebook").checked,
+      linkedin: document.getElementById("linkedin").checked,
+      twitter: document.getElementById("twitter").checked,
+      tiktok: document.getElementById("tiktok").checked,
+      updatedAt: Timestamp.fromDate(new Date())
+    };
+
+    try {
+      await updateDoc(studentRef, {
+        "Settings.Redes": newSettings
+      });
+      console.log("✅ Conexiones de redes sociales actualizadas:", newSettings);
+    } catch (error) {
+      console.error("❌ Error al guardar redes sociales:", error);
+    }
+  });
+
+  loadSocialSettings();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   Certificates()
   Notificaciones()
   Devices()
+  Comunicacion()
+  Privacidad()
+  AgendaPersonal()
+  RedesSociales()
+
+
 
 
 
