@@ -100,20 +100,19 @@
   </section>
 
   <section class="Central" id="main">
-    <div class="Card-Block">
+    <div class="Card-Block" id="Right">
+
       <div class="header" id="header" >Portal de Configuración</div>
-
-  
-
-
+      
         <div class="card" id="Top-card">
+
           <div class="Card-Left">
             <h3><i class="fas fa-user"></i> Perfil</h3>
 
             <div class="Blocks" id="Img-section">
-           <div class="Content-block" id="Img-block">
-              <div id="User-Img"></div>
-            </div>
+              <div class="Content-block" id="Img-block">
+                <div id="User-Img"></div>
+              </div>
 
               <div class="Hidden-Input" id="Img-Content">
                 <label for="file">Selecciona archivo:</label>
@@ -173,19 +172,24 @@
 
 
           </div>
+          
           <div class="Card-Right">
-            <div class="Blocks">
-              <h2>Actualizar Contraseña</h2>
-              <input class="passwordCont" type="password" id="oldPassword" placeholder="Contraseña actual" />
-              <input class="passwordCont" type="password" id="newPassword" placeholder="Nueva contraseña" />
-              <button class="btn" id="changePasswordBtn">Actualizar Contraseña</button>
+            <div class="Blocks" id="password-section">
+              <div class="PS-tittle">
+                <h2>Actualizar Contraseña</h2><i class="fa-solid fa-pencil" id="password-update-btn"></i>
+              </div>
+              <div class="Hidden-Input" id="PS-password-Content">
+                <input class="passwordCont" type="password" id="oldPassword" placeholder="Contraseña actual" />
+                <input class="passwordCont" type="password" id="newPassword" placeholder="Nueva contraseña" />
+                <button class="btn" id="changePasswordBtn">Actualizar Contraseña</button>
+              </div>
             </div>
 
           </div>
           
         </div>
 
-        <div class="card">
+        <div class="card" id="Payment-block">
           <div class="Card-Left">
             <h3><i class="fas fa-credit-card"></i>Facturación</h3>
 
@@ -207,16 +211,10 @@
           </div>
           
         </div>
-        
-
-
- 
 
     </div>  
 
-  </section>
-  <section class="Left" id="Left">
-    <div class="Card-Block">
+    <div class="Card-Block" id="Left">
       <div class="card-left-btn">
 
         <div class="Left-Btn" id="Certification-Btn">
@@ -344,13 +342,10 @@
         </div>
       </div>
     </div>
+
+    <div class="header" id="hidden-header" >Portal de Configuración</div>
+
   </section>
-
-
-
-
-
-
 
  
   <script  src="StudentSetting.js" type="module"></script>
