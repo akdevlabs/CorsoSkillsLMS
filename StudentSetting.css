@@ -7,50 +7,71 @@ html, body {
   width: 100%;
   min-height: 100vh;
   overflow-x: hidden;
+  display: flex;
 }
 body {
   display: flex;
+  align-items: center;
   height: 100vh;
   width: 100%;
   overflow: hidden;
   flex-direction:row; /* Helps small screens stack better */
   overflow-y: auto;
 }
-/*---------- Navigation ------------*/
+/* ---------- nav -------------- */
 .nav {
-  padding: 1rem;
   display: flex;
-  margin: 1rem;
+  flex-direction: row;
+  align-items: center;
+  height: 97vh;
+  padding: 1rem .5rem;
   border-radius: 1rem;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
-  flex-wrap: wrap;
-  justify-content: space-between;
+  transition: width 0.3s ease;
+  margin: 1rem;
 }
 .sidebar-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
-}
-#Bulogos {
-  width: 3rem;
+  height: 100%;
 }
 .sidebar-top {
-  gap: 1.5rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+}
+.sidebar-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.Side-Btns {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.Side-Btns:hover {
+  background-color: #2e2e42;
+}
+.Side-Btns i {
+  font-size: 1.5rem;
+}
+.linkName {
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+#Bulogos {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 1.2rem;
 }
 .Side-caret {
   font-size: 1.5rem;
   display: flex;
   justify-content: flex-end;
-}
-.Action-nav-btns,
-.Side-Btns {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 .Side-Btns i {
   font-size: 1.5rem;
@@ -58,105 +79,100 @@ body {
 .linkName {
   font-size: 0.8rem;
 }
-#open {
-  margin: 0 -1.3rem;
+/* ---------- Central -------------- */
+.Central{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
-.sidebar-bottom {
-  gap: 1rem;
+#Right{
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
-/*----------- Central ------------*/
-/* Layout Containers */
-.Central{
-  width: 100%;
-  height: 96vh;
-  margin: .5rem 1rem;
-  padding: 1.5rem;
-  border-radius: 1rem;
-}
-.header {
-  font-size: 1.5rem;
+.header{
   text-align: center;
+  font-size: 1.5rem;
   font-weight: bold;
-  padding: 1rem ;
-  margin:0 0 1.5rem 0  ;
   border-radius: 1rem;
+  padding: 1rem;
 }
-#Top-card{
-  height: 30rem;
-  overflow-y: auto;
-  padding:1.5rem ;
+.Card-Left h3 i{
+  padding: 0 1rem;
 }
 .card {
   display: flex;
-  justify-content: space-between;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  padding: 35px 30px;
-  margin-bottom: 30px;
-  transition: transform 0.2s;
-}
-.card h3, .card h2 {
-  font-size: 20px;
-  margin-bottom: 20px;
-}
-.card i {
-  font-size: 1rem;
-  margin-right: 8px;
-}
-/* Label and Input */
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 600;
-}
-input[type="text"],
-input[type="email"],
-input[type="password"],
-textarea,
-select {
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  font-size: 15px;
-  transition: border 0.2s;
-}
-input:focus, textarea:focus, select:focus {
-  outline: none;
-}
-input[type="checkbox"] {
-  margin-right: 8px;
-}
-/* Buttons */
-.btn, .btn-sm {
-  border: none;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: background 0.3s;
-}
-.btn {
-  padding: 10px 16px;
-  font-size: 15px;
-}
-.btn-sm {
-  padding: 6px 10px;
-  font-size: 14px;
-}
-
-
-/* Hidden Toggle Logic */
-.Hidden-Input, .Hidden-Content {
-  display: none;
   padding: 1rem;
+  border-radius: 1rem;
+  margin: 1rem 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.04);
+  flex-wrap: wrap;
 }
-.Hidden-Content.show {
-  display: block;
+#Top-card {
+  height: 28rem;
+  display: flex;
+  padding: 1rem;
+  border-radius: 1rem;
+  flex-wrap: wrap;
+  overflow-y: auto;
+}
+.Card-Right {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+.PS-tittle h3 i{
+  padding: 0 1rem;
+}
+.Content-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.Renderd {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  justify-content: space-between;
+  border-radius: .5rem;
+  margin:0 0 .5rem 0;
+}
+.Renderd h1.Info {
+  font-size: 1rem;
+  font-weight: normal;
+  margin: 0;
+
+}
+.Renderd i {
+  cursor: pointer;
+  font-size: 1rem;
+}
+.Hidden-Input {
+  display: none;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+.Hidden-Input input,
+.Hidden-Input textarea {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
+.Hidden-Input button {
+  padding: 0.6rem 1rem;
+  background-color: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.Hidden-Input button:hover {
+  background-color: #145aa3;
 }
 #Img-section {
   display: flex;
@@ -169,17 +185,62 @@ input[type="checkbox"] {
 .Content-block img {
   width: 85px;
   height: 85px;
+  margin: 1rem;
   border-radius: 50%;
   object-fit: cover;
 }
 #User-img-Icon {
   font-size: 4rem;           
 }
+/* ---------- Password -------------- */
+#password-section{
+  margin: 1rem 0;
+}
+.PS-tittle{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#password-section h2{
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.passwordCont {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
+#PS-password-Content{
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.Card-Left {
+  flex: 1;
+  min-width: 600px;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+/* ---------- Facturación -------------- */
+.Card-Left h3 i{
+  margin: 1rem 0;
+}
+#Payment-block{
+  height: 20rem;
+  display: flex;
+  align-items: center;
+  overflow-y: auto;
 
-
-
-.passwordCont{
-  width: 20rem;
+}
+.Pay-Btns-Block{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 
@@ -187,16 +248,40 @@ input[type="checkbox"] {
 
 
 
-/* Payment Section */
+
+
+
+
+
+
+
+.btn {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+.Pay-Info {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.Pay-Btns-Block .btn i {
+  margin-right: 0.5rem;
+}
+
+/* 🧾 Payment history container styling */
 #payments-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+  height: 15rem;
   padding: 1rem;
-  max-width: 600px;
-  margin: auto;
-  height: 25vh;
-  overflow-y: auto;
+
+  border-radius: 0.75rem;
+
+  min-height: 150px;
+  font-size: 0.95rem;
+    overflow-y: auto;
 }
 .payment-card {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
@@ -210,72 +295,26 @@ input[type="checkbox"] {
 }
 .payment-card h4 {
   margin-bottom: 0.5rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 .payment-card p {
   margin: 0.25rem 0;
-  font-size: 0.95rem;
-}
-.Renderd {
-  width: 30rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: .5rem 1.2rem;
-  padding: 0 1rem;
-  border-radius: .5rem;
-}
-.Info, .Pay-Info {
-  font-size: 1rem;
-}
-.Pay-Info {
-  margin: 1rem;
-}
-.Blocks {
-  margin: .5rem 0;
-}
-.Card-Left {
-  display: flex;
-  flex-direction: column;
+  font-size: 0.9rem;
 }
 
 
 
-.Left{
-  width: 35rem;
-  height: 97vh;
-  padding: 1rem;
-  border-radius: 1rem;
-  margin: auto;
-  overflow-y: auto;
+
+
+
+
+
+#Bulogos {
+  width: 3rem;
 }
 
-.Card-Block{
 
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between
-}
-.card-left-btn{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-radius: 1rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.397);
-  padding:1.3rem 1rem;
- margin: 1rem 0;
-  transition: transform 0.2s;
-}
-.card-left-btn:hover {
-  transform: translateY(-3px);
-}
-.card-left-btn  h3, .card-left-btn h2 {
-  font-size: 20px;
-}
-.card-left-btn i {
-  font-size: 1rem;
-  margin-right: 8px;
-}
+
 
 
 
@@ -376,3 +415,390 @@ input[type="checkbox"] {
     height: auto;
     margin-bottom: 0.5rem;
   }
+
+
+
+
+
+
+
+
+
+#Left{
+  width: 100%;
+  max-width: 400px;
+  height: 95%;
+  padding: 20px;
+  display: flex;
+  margin:0 1rem ;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 18px;
+  overflow-y: auto;
+}
+
+/* Each section block */
+.card-left-btn {
+  border-radius: 16px;
+  padding:.5rem 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Button Headers */
+.Left-Btn {
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.Left-Btn h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Hidden Content */
+.Hidden-Content {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 20px;
+}
+
+.Hidden-Content span {
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+.Hidden-Content label,
+.Hidden-Content select,
+.Hidden-Content p,
+.Hidden-Content input[type="text"] {
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: block;
+  width: 100%;
+}
+
+.Hidden-Content select,
+.Hidden-Content input[type="text"] {
+  padding: 8px;
+  border-radius: 8px;
+}
+
+/* Checkboxes */
+.Hidden-Content input[type="checkbox"] {
+  margin-right: 8px;
+  transform: scale(1.1);
+}
+
+.Hidden-Content i {
+  margin-right: 6px;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.3s ease;
+}
+
+  #hidden-header {
+    display: none;
+  }
+/* ---------- Responsive Design ---------- */
+@media (max-width: 1440px) {
+
+/* ---------- Central -------------- */
+.Central{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+#Right{
+  width: 100%;
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+}
+.header{
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+.Card-Left h3 i{
+  padding: 0 1rem;
+}
+.card {
+  display: flex;
+  padding: 1rem;
+  border-radius: 1rem;
+  margin: 1rem 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.04);
+  flex-wrap: wrap;
+}
+#Top-card {
+  height: 28rem;
+  display: flex;
+  padding: 1rem;
+  border-radius: 1rem;
+  flex-wrap: wrap;
+  overflow-y: auto;
+}
+.Card-Right {
+
+  min-width: 300px;
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.Content-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.Renderd {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  justify-content: space-between;
+  border-radius: .5rem;
+  margin:0 0 .5rem 0;
+}
+.Renderd h1.Info {
+  font-size: 1rem;
+  font-weight: normal;
+  margin: 0;
+
+}
+.Renderd i {
+  cursor: pointer;
+  font-size: 1rem;
+}
+.Hidden-Input {
+  display: none;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+.Hidden-Input input,
+.Hidden-Input textarea {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
+.Hidden-Input button {
+  padding: 0.6rem 1rem;
+  background-color: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+.Hidden-Input button:hover {
+  background-color: #145aa3;
+}
+#Img-section {
+  display: flex;
+}
+#Img-block {
+  display: flex;
+  align-items: center;
+  margin: 0 2rem;
+}
+.Content-block img {
+  width: 65px;
+  height: 65px;
+  margin: 1rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+#User-img-Icon {
+  font-size: 4rem;           
+}
+/* ---------- Password -------------- */
+#password-section{
+  margin: 1rem 0;
+}
+.PS-tittle{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#password-section h2{
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.passwordCont {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 0.95rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
+#PS-password-Content{
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+.Card-Left {
+  flex: 1;
+  min-width: 600px;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+
+
+}
+@media (max-width: 1126px) {
+  html, body {
+    overflow-x: hidden;
+    height: auto;
+  }
+
+  .Central {
+    flex-direction: column-reverse;
+    height: auto;
+    width: 100%;
+  }
+
+  #header {
+    display: none !important;
+  }
+
+  #hidden-header {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+
+
+#Top-card {
+  height: 17rem;
+  width: 87%;
+  display: flex;
+  flex-direction: column;
+  padding: .5rem;
+  border-radius: 1rem;
+  overflow-y: scroll;
+}
+.card{
+  display: flex;
+  flex-direction: column;
+}
+
+
+  #Left {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: auto;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.5rem 1rem;
+    gap: 0.5rem;
+    max-width: 100vw;
+    box-sizing: border-box;
+  }
+
+  .card-left-btn {
+    min-width: max-content;
+    padding: 0.4rem 0.8rem;
+    border-radius: 0.8rem;
+    flex: 0 0 auto;
+  }
+
+  .Left-Btn {
+    padding: 0.4rem;
+  }
+
+  .Left-Btn h3 {
+    font-size: 0.9rem;
+    gap: 0.3rem;
+    white-space: nowrap;
+  }
+
+  .Side-Btns i {
+    font-size: 1.2rem;
+  }
+
+  .linkName {
+    display: none;
+  }
+  #Payment-block{
+    width: 85%;
+  }
+  #payments-container {
+  height: 15rem;
+  padding: 1rem;
+
+
+
+  min-height: 10px;
+  font-size: 0.9rem;
+  overflow-y: auto;
+}
+.payment-card {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 1rem 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.payment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+.payment-card h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+.payment-card p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+
+
+  #Right {
+    width: 100%;
+    padding: 1rem;
+    flex-direction: column;
+    height: auto;
+  }
+
+}
+
+
+
+
+

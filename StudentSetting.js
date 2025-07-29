@@ -280,6 +280,8 @@ applyBranding().then((data) => {
   }
   function mainColors(){
     setBackgroundColor("#header", Prime5)
+  setBackgroundColor("#hidden-header", Prime5)
+  
   }
   function CenterColors(){
     const style = document.createElement('style');
@@ -577,6 +579,13 @@ async function fetchAllContent() {
       alert("Hubo un error al guardar el perfil.");
     }
   });
+  document.getElementById("password-update-btn").addEventListener("click", function () {
+    const passwordContent = document.getElementById("PS-password-Content");
+    passwordContent.style.display = "flex";
+  });
+
+
+
   document.getElementById("saveNotif").addEventListener("click", async () => {
     const emailNotif = document.getElementById("emailNotif").checked;
     const platformNotif = document.getElementById("platformNotif").checked;
@@ -608,7 +617,52 @@ async function fetchAllContent() {
     const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
 
   })
+  document.getElementById("saveProfile").addEventListener("click", async () => {
+    const fullName = document.getElementById("fullName").value.trim();
+    const ShortName = document.getElementById("nickname").value.trim();
+    const bio = document.getElementById("bio").value.trim();
 
+    try {
+      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+
+      // Only update filled fields
+      const updatedFields = {};
+
+      if (fullName) {
+        updatedFields.fullName = fullName;
+        document.getElementById("Full-Name").innerText = fullName;
+        document.getElementById("Full-Name-Content").style.display = "none";
+      }
+
+      if (ShortName) {
+        updatedFields.ShortName = ShortName;
+        document.getElementById("nick-name").innerText = ShortName;
+        document.getElementById("nick-name-Content").style.display = "none";
+      }
+
+      if (bio) {
+        updatedFields.bio = bio;
+        document.getElementById("bio-R").innerText = bio;
+        document.getElementById("Bio-Content").style.display = "none";
+      }
+
+      if (Object.keys(updatedFields).length > 0) {
+        await updateDoc(studentRef, updatedFields);
+        alert("Perfil actualizado exitosamente.");
+
+        // Refresh after slight delay
+        setTimeout(() => {
+          location.reload();
+        }, 800);
+      } else {
+        alert("No se ingresaron nuevos datos para actualizar.");
+      }
+
+    } catch (error) {
+      console.error("Error al guardar el perfil:", error);
+      alert("Hubo un error al guardar el perfil.");
+    }
+  });
 
 
 
@@ -1144,435 +1198,435 @@ async function fetchAllContent() {
     CertificatesCarrera()
  
   }
-function Notificaciones() {
-  async function loadNotificationSettings() {
-    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-    const docSnap = await getDoc(studentRef);
-
-    if (!docSnap.exists()) {
-      // Crear documento con valores por defecto en Settings.Notificaciones
-      await setDoc(studentRef, {
-        Settings: {
-          Notificaciones: getDefaultNotificationSettings()
-        }
-      });
-    } else {
-      const data = docSnap.data();
-      const settings = data.Settings?.Notificaciones;
-
-      if (!settings) {
-        // Inicializar Settings.Notificaciones si no existe
-        await updateDoc(studentRef, {
-          "Settings.Notificaciones": getDefaultNotificationSettings()
-        });
-      } else {
-        // Renderizar checkboxes con valores existentes o true por defecto
-        document.getElementById("emailNotif").checked = settings.email ?? true;
-        document.getElementById("platformNotif").checked = settings.platform ?? true;
-        document.getElementById("classReminder").checked = settings.classReminder ?? true;
-        document.getElementById("newCourseNotif").checked = settings.newCourse ?? true;
-        document.getElementById("messageNotif").checked = settings.message ?? true;
-        document.getElementById("eventNotif").checked = settings.event ?? true;
-        document.getElementById("promoNotif").checked = settings.promo ?? true;
-      }
-    }
-  }
-
-  function getDefaultNotificationSettings() {
-    return {
-      email: true,
-      platform: true,
-      classReminder: true,
-      newCourse: true,
-      message: true,
-      event: true,
-      promo: true,
-      updatedAt: Timestamp.fromDate(new Date())
-    };
-  }
-
-  document.getElementById("saveNotif").addEventListener("click", async () => {
-    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-
-    const newSettings = {
-      email: document.getElementById("emailNotif").checked,
-      platform: document.getElementById("platformNotif").checked,
-      classReminder: document.getElementById("classReminder").checked,
-      newCourse: document.getElementById("newCourseNotif").checked,
-      message: document.getElementById("messageNotif").checked,
-      event: document.getElementById("eventNotif").checked,
-      promo: document.getElementById("promoNotif").checked,
-      updatedAt: Timestamp.fromDate(new Date())
-    };
-
-    try {
-      await updateDoc(studentRef, {
-        "Settings.Notificaciones": newSettings
-      });
-      console.log("✅ Notificaciones actualizadas:", newSettings);
-    } catch (error) {
-      console.error("❌ Error al guardar notificaciones:", error);
-    }
-  });
-
-  loadNotificationSettings();
-}
-
-function Devices() {
-  async function recordCurrentDeviceOncePerDay() {
-    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-    const docSnap = await getDoc(studentRef);
-
-    if (!docSnap.exists()) {
-      await setDoc(studentRef, {
-        Settings: {
-          Dispositivos: { devicesArray: [], lastRecorded: Timestamp.fromDate(new Date(0)) }
-        }
-      });
-    }
-
-    const data = docSnap.data();
-    const dispositivos = data.Settings?.Dispositivos || { devicesArray: [], lastRecorded: Timestamp.fromDate(new Date(0)) };
-    const lastRecorded = dispositivos.lastRecorded?.toDate?.() || new Date(0);
-
-    const today = new Date();
-    const sameDay =
-      today.getFullYear() === lastRecorded.getFullYear() &&
-      today.getMonth() === lastRecorded.getMonth() &&
-      today.getDate() === lastRecorded.getDate();
-
-    if (sameDay) {
-      console.log("ℹ️ El dispositivo ya fue registrado hoy.");
-      return;
-    }
-
-    const ua = navigator.userAgent;
-
-    // Browser detection
-    let browser = "Navegador desconocido";
-    if (ua.includes("Chrome")) browser = "Chrome";
-    else if (ua.includes("Firefox")) browser = "Firefox";
-    else if (ua.includes("Safari") && !ua.includes("Chrome")) browser = "Safari";
-    else if (ua.includes("Edg")) browser = "Edge";
-
-    // OS detection
-    let os = "Sistema operativo desconocido";
-    if (ua.includes("Windows NT")) os = "Windows";
-    else if (ua.includes("Macintosh")) os = "macOS";
-    else if (ua.includes("Android")) os = "Android";
-    else if (ua.includes("iPhone") || ua.includes("iPad")) os = "iOS";
-    else if (ua.includes("Linux")) os = "Linux";
-
-    // Device type detection
-    let deviceType = "Computadora";
-    if (/Mobi|Android|iPhone/i.test(ua)) deviceType = "Teléfono";
-    else if (/Tablet|iPad/i.test(ua)) deviceType = "Tablet";
-
-    const deviceString = `${browser} (${os}) - ${deviceType}`;
-
-    const deviceData = {
-      deviceInfo: deviceString,
-      timestamp: Timestamp.fromDate(today)
-    };
-
-    try {
-      await updateDoc(studentRef, {
-        "Settings.Dispositivos.devicesArray": arrayUnion(deviceData),
-        "Settings.Dispositivos.lastRecorded": Timestamp.fromDate(today)
-      });
-      console.log("✅ Dispositivo registrado con éxito:", deviceString);
-    } catch (error) {
-      console.error("❌ Error al guardar dispositivo:", error);
-    }
-  }
-
-  async function renderRecentDevices() {
-    try {
+  function Notificaciones() {
+    async function loadNotificationSettings() {
       const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-      const studentSnap = await getDoc(studentRef);
+      const docSnap = await getDoc(studentRef);
 
-      if (studentSnap.exists()) {
-        const data = studentSnap.data();
-        const dispositivos = data.Settings?.Dispositivos || { devicesArray: [] };
-        const devicesArray = dispositivos.devicesArray || [];
-
-        const sorted = devicesArray.sort((a, b) => {
-          const timeA = a.timestamp?.seconds || 0;
-          const timeB = b.timestamp?.seconds || 0;
-          return timeB - timeA;
-        });
-
-        const latestThree = sorted.slice(0, 3);
-
-        const container = document.getElementById("Devices-Content");
-        container.innerHTML = "";
-
-        if (latestThree.length === 0) {
-          container.innerHTML = "<p>No hay dispositivos registrados.</p>";
-          return;
-        }
-
-        latestThree.forEach((device) => {
-          const p = document.createElement("p");
-          const readableDate = device.timestamp?.toDate?.().toLocaleString("es-ES") || "Fecha desconocida";
-          p.textContent = `${device.deviceInfo} - ${readableDate}`;
-          container.appendChild(p);
+      if (!docSnap.exists()) {
+        // Crear documento con valores por defecto en Settings.Notificaciones
+        await setDoc(studentRef, {
+          Settings: {
+            Notificaciones: getDefaultNotificationSettings()
+          }
         });
       } else {
-        console.log("❌ No se encontró el documento del estudiante.");
-      }
-    } catch (error) {
-      console.error("❌ Error al cargar los dispositivos:", error);
-    }
-  }
+        const data = docSnap.data();
+        const settings = data.Settings?.Notificaciones;
 
-  recordCurrentDeviceOncePerDay();
-  renderRecentDevices();
-}
-
-function Comunicacion() {
-  async function loadCommunicationSettings() {
-    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-    const docSnap = await getDoc(studentRef);
-
-    if (!docSnap.exists()) {
-      // Crear documento con valores por defecto en Settings.Comunicacion
-      await setDoc(studentRef, {
-        Settings: {
-          Comunicacion: getDefaultCommunicationSettings()
+        if (!settings) {
+          // Inicializar Settings.Notificaciones si no existe
+          await updateDoc(studentRef, {
+            "Settings.Notificaciones": getDefaultNotificationSettings()
+          });
+        } else {
+          // Renderizar checkboxes con valores existentes o true por defecto
+          document.getElementById("emailNotif").checked = settings.email ?? true;
+          document.getElementById("platformNotif").checked = settings.platform ?? true;
+          document.getElementById("classReminder").checked = settings.classReminder ?? true;
+          document.getElementById("newCourseNotif").checked = settings.newCourse ?? true;
+          document.getElementById("messageNotif").checked = settings.message ?? true;
+          document.getElementById("eventNotif").checked = settings.event ?? true;
+          document.getElementById("promoNotif").checked = settings.promo ?? true;
         }
-      });
-    } else {
-      const data = docSnap.data();
-      const settings = data.Settings?.Comunicacion;
+      }
+    }
 
-      if (!settings) {
-        // Inicializar Settings.Comunicacion si no existe
+    function getDefaultNotificationSettings() {
+      return {
+        email: true,
+        platform: true,
+        classReminder: true,
+        newCourse: true,
+        message: true,
+        event: true,
+        promo: true,
+        updatedAt: Timestamp.fromDate(new Date())
+      };
+    }
+
+    document.getElementById("saveNotif").addEventListener("click", async () => {
+      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+
+      const newSettings = {
+        email: document.getElementById("emailNotif").checked,
+        platform: document.getElementById("platformNotif").checked,
+        classReminder: document.getElementById("classReminder").checked,
+        newCourse: document.getElementById("newCourseNotif").checked,
+        message: document.getElementById("messageNotif").checked,
+        event: document.getElementById("eventNotif").checked,
+        promo: document.getElementById("promoNotif").checked,
+        updatedAt: Timestamp.fromDate(new Date())
+      };
+
+      try {
         await updateDoc(studentRef, {
-          "Settings.Comunicacion": getDefaultCommunicationSettings()
+          "Settings.Notificaciones": newSettings
         });
-      } else {
-        // Renderizar selects con valores existentes o valores por defecto
-        document.querySelector("#Comunicacion-Content select:nth-of-type(1)").value = settings.metodo ?? "Email";
-        document.querySelector("#Comunicacion-Content select:nth-of-type(2)").value = settings.zona ?? "GMT-6 Ciudad de México";
+        console.log("✅ Notificaciones actualizadas:", newSettings);
+      } catch (error) {
+        console.error("❌ Error al guardar notificaciones:", error);
       }
-    }
+    });
+
+    loadNotificationSettings();
   }
 
-  function getDefaultCommunicationSettings() {
-    return {
-      metodo: "Email",
-      zona: "GMT-6 Ciudad de México",
-      updatedAt: Timestamp.fromDate(new Date())
-    };
-  }
+  function Devices() {
+    async function recordCurrentDeviceOncePerDay() {
+      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+      const docSnap = await getDoc(studentRef);
 
-  document.querySelector("#Comunicacion-Content button").addEventListener("click", async () => {
-    const metodo = document.querySelector("#Comunicacion-Content select:nth-of-type(1)").value;
-    const zona = document.querySelector("#Comunicacion-Content select:nth-of-type(2)").value;
+      if (!docSnap.exists()) {
+        await setDoc(studentRef, {
+          Settings: {
+            Dispositivos: { devicesArray: [], lastRecorded: Timestamp.fromDate(new Date(0)) }
+          }
+        });
+      }
 
-    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-
-    const newSettings = {
-      metodo,
-      zona,
-      updatedAt: Timestamp.fromDate(new Date())
-    };
-
-    try {
-      await updateDoc(studentRef, {
-        "Settings.Comunicacion": newSettings
-      });
-      console.log("✅ Configuración de comunicación actualizada:", newSettings);
-    } catch (error) {
-      console.error("❌ Error al guardar configuración de comunicación:", error);
-    }
-  });
-
-  loadCommunicationSettings();
-}
-  
-function Privacidad() {
-  async function loadPrivacySettings() {
-    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-    const docSnap = await getDoc(studentRef);
-
-    if (!docSnap.exists()) {
-      // Crear el documento con valores por defecto dentro de Settings.Privacidad
-      await setDoc(studentRef, {
-        Settings: {
-          Privacidad: getDefaultPrivacySettings()
-        }
-      });
-    } else {
       const data = docSnap.data();
-      const settings = data.Settings?.Privacidad; // CORREGIDO: leer desde Settings.Privacidad
+      const dispositivos = data.Settings?.Dispositivos || { devicesArray: [], lastRecorded: Timestamp.fromDate(new Date(0)) };
+      const lastRecorded = dispositivos.lastRecorded?.toDate?.() || new Date(0);
 
-      if (!settings) {
-        // Inicializar Settings.Privacidad si no existe
+      const today = new Date();
+      const sameDay =
+        today.getFullYear() === lastRecorded.getFullYear() &&
+        today.getMonth() === lastRecorded.getMonth() &&
+        today.getDate() === lastRecorded.getDate();
+
+      if (sameDay) {
+        console.log("ℹ️ El dispositivo ya fue registrado hoy.");
+        return;
+      }
+
+      const ua = navigator.userAgent;
+
+      // Browser detection
+      let browser = "Navegador desconocido";
+      if (ua.includes("Chrome")) browser = "Chrome";
+      else if (ua.includes("Firefox")) browser = "Firefox";
+      else if (ua.includes("Safari") && !ua.includes("Chrome")) browser = "Safari";
+      else if (ua.includes("Edg")) browser = "Edge";
+
+      // OS detection
+      let os = "Sistema operativo desconocido";
+      if (ua.includes("Windows NT")) os = "Windows";
+      else if (ua.includes("Macintosh")) os = "macOS";
+      else if (ua.includes("Android")) os = "Android";
+      else if (ua.includes("iPhone") || ua.includes("iPad")) os = "iOS";
+      else if (ua.includes("Linux")) os = "Linux";
+
+      // Device type detection
+      let deviceType = "Computadora";
+      if (/Mobi|Android|iPhone/i.test(ua)) deviceType = "Teléfono";
+      else if (/Tablet|iPad/i.test(ua)) deviceType = "Tablet";
+
+      const deviceString = `${browser} (${os}) - ${deviceType}`;
+
+      const deviceData = {
+        deviceInfo: deviceString,
+        timestamp: Timestamp.fromDate(today)
+      };
+
+      try {
         await updateDoc(studentRef, {
-          "Settings.Privacidad": getDefaultPrivacySettings()
+          "Settings.Dispositivos.devicesArray": arrayUnion(deviceData),
+          "Settings.Dispositivos.lastRecorded": Timestamp.fromDate(today)
         });
-      } else {
-        // Mostrar estado actual en los checkboxes
-        document.getElementById("publicProfile").checked = settings.publicProfile ?? true;
-        document.getElementById("shareActivity").checked = settings.shareActivity ?? true;
+        console.log("✅ Dispositivo registrado con éxito:", deviceString);
+      } catch (error) {
+        console.error("❌ Error al guardar dispositivo:", error);
       }
     }
-  }
 
-  function getDefaultPrivacySettings() {
-    return {
-      publicProfile: true,
-      shareActivity: true,
-      updatedAt: Timestamp.fromDate(new Date())
-    };
-  }
+    async function renderRecentDevices() {
+      try {
+        const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+        const studentSnap = await getDoc(studentRef);
 
-  document.querySelector("#Privacidad-Content button").addEventListener("click", async () => {
-    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+        if (studentSnap.exists()) {
+          const data = studentSnap.data();
+          const dispositivos = data.Settings?.Dispositivos || { devicesArray: [] };
+          const devicesArray = dispositivos.devicesArray || [];
 
-    const newSettings = {
-      publicProfile: document.getElementById("publicProfile").checked,
-      shareActivity: document.getElementById("shareActivity").checked,
-      updatedAt: Timestamp.fromDate(new Date())
-    };
+          const sorted = devicesArray.sort((a, b) => {
+            const timeA = a.timestamp?.seconds || 0;
+            const timeB = b.timestamp?.seconds || 0;
+            return timeB - timeA;
+          });
 
-    try {
-      await updateDoc(studentRef, {
-        "Settings.Privacidad": newSettings
-      });
-      console.log("✅ Configuración de privacidad actualizada:", newSettings);
-    } catch (error) {
-      console.error("❌ Error al guardar privacidad:", error);
-    }
-  });
+          const latestThree = sorted.slice(0, 3);
 
-  loadPrivacySettings();
-}
-function AgendaPersonal() {
-  async function loadAgendaSettings() {
-    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-    const docSnap = await getDoc(studentRef);
+          const container = document.getElementById("Devices-Content");
+          container.innerHTML = "";
 
-    if (!docSnap.exists()) {
-      // Crear el documento con configuración por defecto dentro de Settings.Agenda
-      await setDoc(studentRef, {
-        Settings: {
-          Agenda: getDefaultAgendaSettings()
+          if (latestThree.length === 0) {
+            container.innerHTML = "<p>No hay dispositivos registrados.</p>";
+            return;
+          }
+
+          latestThree.forEach((device) => {
+            const p = document.createElement("p");
+            const readableDate = device.timestamp?.toDate?.().toLocaleString("es-ES") || "Fecha desconocida";
+            p.textContent = `${device.deviceInfo} - ${readableDate}`;
+            container.appendChild(p);
+          });
+        } else {
+          console.log("❌ No se encontró el documento del estudiante.");
         }
-      });
-    } else {
-      const data = docSnap.data();
-      const settings = data.Settings?.Agenda;  // CORREGIDO para leer desde Settings.Agenda
-
-      if (!settings) {
-        // Inicializar Settings.Agenda si no existe
-        await updateDoc(studentRef, {
-          "Settings.Agenda": getDefaultAgendaSettings()
-        });
-      } else {
-        // Cargar el estado del checkbox
-        document.getElementById("syncGoogleCalendar").checked = settings.syncGoogle ?? false;
+      } catch (error) {
+        console.error("❌ Error al cargar los dispositivos:", error);
       }
     }
+
+    recordCurrentDeviceOncePerDay();
+    renderRecentDevices();
   }
 
-  function getDefaultAgendaSettings() {
-    return {
-      syncGoogle: false,
-      updatedAt: Timestamp.fromDate(new Date())
-    };
-  }
+  function Comunicacion() {
+    async function loadCommunicationSettings() {
+      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+      const docSnap = await getDoc(studentRef);
 
-  document.querySelector("#Agenda-Content button").addEventListener("click", async () => {
-    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+      if (!docSnap.exists()) {
+        // Crear documento con valores por defecto en Settings.Comunicacion
+        await setDoc(studentRef, {
+          Settings: {
+            Comunicacion: getDefaultCommunicationSettings()
+          }
+        });
+      } else {
+        const data = docSnap.data();
+        const settings = data.Settings?.Comunicacion;
 
-    const newSettings = {
-      syncGoogle: document.getElementById("syncGoogleCalendar").checked,
-      updatedAt: Timestamp.fromDate(new Date())
-    };
-
-    try {
-      // Actualizar dentro de Settings.Agenda
-      await updateDoc(studentRef, {
-        "Settings.Agenda": newSettings
-      });
-      console.log("✅ Configuración de agenda actualizada:", newSettings);
-    } catch (error) {
-      console.error("❌ Error al guardar configuración de agenda:", error);
-    }
-  });
-
-  loadAgendaSettings();
-}
-function RedesSociales() {
-  async function loadSocialSettings() {
-    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-    const docSnap = await getDoc(studentRef);
-
-    if (!docSnap.exists()) {
-      // Crear documento con la estructura inicial y valores por defecto
-      await setDoc(studentRef, {
-        Settings: {
-          Redes: getDefaultSocialSettings()
+        if (!settings) {
+          // Inicializar Settings.Comunicacion si no existe
+          await updateDoc(studentRef, {
+            "Settings.Comunicacion": getDefaultCommunicationSettings()
+          });
+        } else {
+          // Renderizar selects con valores existentes o valores por defecto
+          document.querySelector("#Comunicacion-Content select:nth-of-type(1)").value = settings.metodo ?? "Email";
+          document.querySelector("#Comunicacion-Content select:nth-of-type(2)").value = settings.zona ?? "GMT-6 Ciudad de México";
         }
-      });
-    } else {
-      const data = docSnap.data();
-      const settings = data.Settings?.Redes;
-
-      if (!settings) {
-        // Si no existe Settings.Redes, inicializarlo
-        await updateDoc(studentRef, {
-          "Settings.Redes": getDefaultSocialSettings()
-        });
-      } else {
-        // Cargar estados a los checkboxes
-        document.getElementById("instagram").checked = settings.instagram ?? true;
-        document.getElementById("facebook").checked = settings.facebook ?? true;
-        document.getElementById("linkedin").checked = settings.linkedin ?? true;
-        document.getElementById("twitter").checked = settings.twitter ?? true;
-        document.getElementById("tiktok").checked = settings.tiktok ?? true;
       }
     }
-  }
 
-  function getDefaultSocialSettings() {
-    return {
-      instagram: true,
-      facebook: true,
-      linkedin: true,
-      twitter: true,
-      tiktok: true,
-      updatedAt: Timestamp.fromDate(new Date())
-    };
-  }
-
-  document.querySelector("#Redes-Content button").addEventListener("click", async () => {
-    const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-
-    const newSettings = {
-      instagram: document.getElementById("instagram").checked,
-      facebook: document.getElementById("facebook").checked,
-      linkedin: document.getElementById("linkedin").checked,
-      twitter: document.getElementById("twitter").checked,
-      tiktok: document.getElementById("tiktok").checked,
-      updatedAt: Timestamp.fromDate(new Date())
-    };
-
-    try {
-      await updateDoc(studentRef, {
-        "Settings.Redes": newSettings
-      });
-      console.log("✅ Conexiones de redes sociales actualizadas:", newSettings);
-    } catch (error) {
-      console.error("❌ Error al guardar redes sociales:", error);
+    function getDefaultCommunicationSettings() {
+      return {
+        metodo: "Email",
+        zona: "GMT-6 Ciudad de México",
+        updatedAt: Timestamp.fromDate(new Date())
+      };
     }
-  });
 
-  loadSocialSettings();
-}
+    document.querySelector("#Comunicacion-Content button").addEventListener("click", async () => {
+      const metodo = document.querySelector("#Comunicacion-Content select:nth-of-type(1)").value;
+      const zona = document.querySelector("#Comunicacion-Content select:nth-of-type(2)").value;
+
+      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+
+      const newSettings = {
+        metodo,
+        zona,
+        updatedAt: Timestamp.fromDate(new Date())
+      };
+
+      try {
+        await updateDoc(studentRef, {
+          "Settings.Comunicacion": newSettings
+        });
+        console.log("✅ Configuración de comunicación actualizada:", newSettings);
+      } catch (error) {
+        console.error("❌ Error al guardar configuración de comunicación:", error);
+      }
+    });
+
+    loadCommunicationSettings();
+  }
+    
+  function Privacidad() {
+    async function loadPrivacySettings() {
+      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+      const docSnap = await getDoc(studentRef);
+
+      if (!docSnap.exists()) {
+        // Crear el documento con valores por defecto dentro de Settings.Privacidad
+        await setDoc(studentRef, {
+          Settings: {
+            Privacidad: getDefaultPrivacySettings()
+          }
+        });
+      } else {
+        const data = docSnap.data();
+        const settings = data.Settings?.Privacidad; // CORREGIDO: leer desde Settings.Privacidad
+
+        if (!settings) {
+          // Inicializar Settings.Privacidad si no existe
+          await updateDoc(studentRef, {
+            "Settings.Privacidad": getDefaultPrivacySettings()
+          });
+        } else {
+          // Mostrar estado actual en los checkboxes
+          document.getElementById("publicProfile").checked = settings.publicProfile ?? true;
+          document.getElementById("shareActivity").checked = settings.shareActivity ?? true;
+        }
+      }
+    }
+
+    function getDefaultPrivacySettings() {
+      return {
+        publicProfile: true,
+        shareActivity: true,
+        updatedAt: Timestamp.fromDate(new Date())
+      };
+    }
+
+    document.querySelector("#Privacidad-Content button").addEventListener("click", async () => {
+      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+
+      const newSettings = {
+        publicProfile: document.getElementById("publicProfile").checked,
+        shareActivity: document.getElementById("shareActivity").checked,
+        updatedAt: Timestamp.fromDate(new Date())
+      };
+
+      try {
+        await updateDoc(studentRef, {
+          "Settings.Privacidad": newSettings
+        });
+        console.log("✅ Configuración de privacidad actualizada:", newSettings);
+      } catch (error) {
+        console.error("❌ Error al guardar privacidad:", error);
+      }
+    });
+
+    loadPrivacySettings();
+  }
+  function AgendaPersonal() {
+    async function loadAgendaSettings() {
+      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+      const docSnap = await getDoc(studentRef);
+
+      if (!docSnap.exists()) {
+        // Crear el documento con configuración por defecto dentro de Settings.Agenda
+        await setDoc(studentRef, {
+          Settings: {
+            Agenda: getDefaultAgendaSettings()
+          }
+        });
+      } else {
+        const data = docSnap.data();
+        const settings = data.Settings?.Agenda;  // CORREGIDO para leer desde Settings.Agenda
+
+        if (!settings) {
+          // Inicializar Settings.Agenda si no existe
+          await updateDoc(studentRef, {
+            "Settings.Agenda": getDefaultAgendaSettings()
+          });
+        } else {
+          // Cargar el estado del checkbox
+          document.getElementById("syncGoogleCalendar").checked = settings.syncGoogle ?? false;
+        }
+      }
+    }
+
+    function getDefaultAgendaSettings() {
+      return {
+        syncGoogle: false,
+        updatedAt: Timestamp.fromDate(new Date())
+      };
+    }
+
+    document.querySelector("#Agenda-Content button").addEventListener("click", async () => {
+      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+
+      const newSettings = {
+        syncGoogle: document.getElementById("syncGoogleCalendar").checked,
+        updatedAt: Timestamp.fromDate(new Date())
+      };
+
+      try {
+        // Actualizar dentro de Settings.Agenda
+        await updateDoc(studentRef, {
+          "Settings.Agenda": newSettings
+        });
+        console.log("✅ Configuración de agenda actualizada:", newSettings);
+      } catch (error) {
+        console.error("❌ Error al guardar configuración de agenda:", error);
+      }
+    });
+
+    loadAgendaSettings();
+  }
+  function RedesSociales() {
+    async function loadSocialSettings() {
+      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+      const docSnap = await getDoc(studentRef);
+
+      if (!docSnap.exists()) {
+        // Crear documento con la estructura inicial y valores por defecto
+        await setDoc(studentRef, {
+          Settings: {
+            Redes: getDefaultSocialSettings()
+          }
+        });
+      } else {
+        const data = docSnap.data();
+        const settings = data.Settings?.Redes;
+
+        if (!settings) {
+          // Si no existe Settings.Redes, inicializarlo
+          await updateDoc(studentRef, {
+            "Settings.Redes": getDefaultSocialSettings()
+          });
+        } else {
+          // Cargar estados a los checkboxes
+          document.getElementById("instagram").checked = settings.instagram ?? true;
+          document.getElementById("facebook").checked = settings.facebook ?? true;
+          document.getElementById("linkedin").checked = settings.linkedin ?? true;
+          document.getElementById("twitter").checked = settings.twitter ?? true;
+          document.getElementById("tiktok").checked = settings.tiktok ?? true;
+        }
+      }
+    }
+
+    function getDefaultSocialSettings() {
+      return {
+        instagram: true,
+        facebook: true,
+        linkedin: true,
+        twitter: true,
+        tiktok: true,
+        updatedAt: Timestamp.fromDate(new Date())
+      };
+    }
+
+    document.querySelector("#Redes-Content button").addEventListener("click", async () => {
+      const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+
+      const newSettings = {
+        instagram: document.getElementById("instagram").checked,
+        facebook: document.getElementById("facebook").checked,
+        linkedin: document.getElementById("linkedin").checked,
+        twitter: document.getElementById("twitter").checked,
+        tiktok: document.getElementById("tiktok").checked,
+        updatedAt: Timestamp.fromDate(new Date())
+      };
+
+      try {
+        await updateDoc(studentRef, {
+          "Settings.Redes": newSettings
+        });
+        console.log("✅ Conexiones de redes sociales actualizadas:", newSettings);
+      } catch (error) {
+        console.error("❌ Error al guardar redes sociales:", error);
+      }
+    });
+
+    loadSocialSettings();
+  }
 
 
 
@@ -1618,13 +1672,26 @@ fetchAllContent()
 
 
 
-document.querySelectorAll('.Left-Btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const contentId = btn.id.replace('-Btn', '-Content');
-    const content = document.getElementById(contentId);
-    content.classList.toggle('show'); // Asegúrate que el CSS use .show para visibilidad
+  document.addEventListener("DOMContentLoaded", function () {
+    const leftButtons = document.querySelectorAll(".Left-Btn");
+
+    leftButtons.forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const content = this.nextElementSibling;
+
+        // Optional: Close all other open contents
+        document.querySelectorAll(".Hidden-Content").forEach((section) => {
+          if (section !== content) {
+            section.style.display = "none";
+          }
+        });
+
+        // Toggle the current section
+        content.style.display =
+          content.style.display === "block" ? "none" : "block";
+      });
+    });
   });
-});
 
 
  document.addEventListener("DOMContentLoaded", function () {
