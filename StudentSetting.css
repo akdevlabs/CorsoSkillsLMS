@@ -652,4 +652,59 @@ body {
 
 
 }
+@media (max-width: 425px) {
+  .hamburger {
+      display: block;
+      color: #c40505;
+      font-weight: bold;
+  }
+  .Mobile-close-btn{
+    display: flex;
+    margin: -43rem 0 0 0;
+    color: #c40505;
+    font-size: 1.5rem;
 
+  }
+  .Mobile-sidebar {
+    position: fixed;
+    top: 0;
+    left: -270px;
+    width: 75%;
+    max-width:210px;
+    height: 95%;
+    background-color: #1a1a1a;
+    color: white;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+  .Mobile-sidebar.active {
+    left: 0;
+  }
+
+  .linkName {
+  display: block;
+}
+
+
+  .Central {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    margin: 33rem 1rem 1rem 1rem;
+    gap: 1rem;
+    position: relative;
+  }
+
+  #Top-card {
+    height: 50rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    overflow-y: auto;
+  }
+  .Card-Right{
+    height: 2rem;
+  }
+
+}
