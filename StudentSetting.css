@@ -19,6 +19,20 @@ body {
   overflow-y: auto;
 }
 /* ---------- nav -------------- */
+.hamburger {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none;
+}
+.Mobile-close-btn{
+  display: none;
+}
 .nav {
   display: flex;
   flex-direction: row;
@@ -65,6 +79,7 @@ body {
 }
 #Bulogos {
   max-width: 100%;
+  width: 3rem;
   height: auto;
   margin-bottom: 1.2rem;
 }
@@ -73,386 +88,57 @@ body {
   display: flex;
   justify-content: flex-end;
 }
-.Side-Btns i {
-  font-size: 1.5rem;
-}
-.linkName {
-  font-size: 0.8rem;
-}
+
+/* ---------- Mobile-sidebar -------------- */
+
 /* ---------- Central -------------- */
-.Central{
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-#Right{
-  width: 100%;
+.Central {
+  width: 90%;
   display: flex;
   flex-direction: column;
-}
-.header{
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  border-radius: 1rem;
-  padding: 1rem;
-}
-.Card-Left h3 i{
-  padding: 0 1rem;
-}
-.card {
-  display: flex;
-  padding: 1rem;
-  border-radius: 1rem;
-  margin: 1rem 0;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.04);
-  flex-wrap: wrap;
-}
-#Top-card {
-  height: 28rem;
-  display: flex;
-  padding: 1rem;
-  border-radius: 1rem;
-  flex-wrap: wrap;
-  overflow-y: auto;
-}
-.Card-Right {
-  flex: 1;
-  min-width: 300px;
-  display: flex;
-  flex-direction: column;
-}
-.PS-tittle h3 i{
-  padding: 0 1rem;
-}
-.Content-block {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.Renderd {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  justify-content: space-between;
-  border-radius: .5rem;
-  margin:0 0 .5rem 0;
-}
-.Renderd h1.Info {
-  font-size: 1rem;
-  font-weight: normal;
-  margin: 0;
-
-}
-.Renderd i {
-  cursor: pointer;
-  font-size: 1rem;
-}
-.Hidden-Input {
-  display: none;
-  flex-direction: column;
-  gap: 0.4rem;
-  margin-top: 0.5rem;
-}
-.Hidden-Input input,
-.Hidden-Input textarea {
-  width: 100%;
-  padding: 0.6rem;
-  font-size: 0.95rem;
-  border: 1px solid #ccc;
-  border-radius: 0.5rem;
-}
-.Hidden-Input button {
-  padding: 0.6rem 1rem;
-  background-color: #1976d2;
-  color: #fff;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-}
-.Hidden-Input button:hover {
-  background-color: #145aa3;
-}
-#Img-section {
-  display: flex;
-}
-#Img-block {
-  display: flex;
-  align-items: center;
-  margin: 0 2rem;
-}
-.Content-block img {
-  width: 85px;
-  height: 85px;
   margin: 1rem;
-  border-radius: 50%;
-  object-fit: cover;
-}
-#User-img-Icon {
-  font-size: 4rem;           
-}
-/* ---------- Password -------------- */
-#password-section{
-  margin: 1rem 0;
-}
-.PS-tittle{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-#password-section h2{
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-.passwordCont {
-  width: 100%;
-  padding: 0.6rem;
-  font-size: 0.95rem;
-  border: 1px solid #ccc;
-  border-radius: 0.5rem;
-}
-#PS-password-Content{
-  display: none;
-  flex-direction: column;
   gap: 1rem;
-  margin-top: 0.5rem;
+   position: relative;
+ 
 }
-.Card-Left {
-  flex: 1;
-  min-width: 600px;
-  display: flex;
-  flex-direction: column;
+.header {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  border-radius: 1rem;
   padding: 1rem;
 }
-/* ---------- Facturación -------------- */
-.Card-Left h3 i{
-  margin: 1rem 0;
-}
-#Payment-block{
-  height: 20rem;
+.Nav-Btns-Blocks {
   display: flex;
   align-items: center;
-  overflow-y: auto;
-
+  justify-content: space-between;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+ 
 }
-.Pay-Btns-Block{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+.Nav-Btns-Blocks::-webkit-scrollbar {
+  height: 6px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-.btn {
-  padding: 0.6rem 1rem;
-  border: none;
-  border-radius: 0.5rem;
-  font-weight: bold;
-  cursor: pointer;
+.Nav-Btns-Blocks::-webkit-scrollbar-thumb {
+  background: #c40505;
+  border-radius: 4px;
 }
-.Pay-Info {
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-
-.Pay-Btns-Block .btn i {
-  margin-right: 0.5rem;
-}
-
-/* 🧾 Payment history container styling */
-#payments-container {
-  height: 15rem;
-  padding: 1rem;
-
-  border-radius: 0.75rem;
-
-  min-height: 150px;
-  font-size: 0.95rem;
-    overflow-y: auto;
-}
-.payment-card {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  border-radius: 12px;
-  padding: 1.25rem 1.5rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.payment-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-}
-.payment-card h4 {
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-}
-.payment-card p {
-  margin: 0.25rem 0;
-  font-size: 0.9rem;
-}
-
-
-
-
-
-
-
-
-#Bulogos {
-  width: 3rem;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.certificate {
-    width: 100%;
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 3rem 2rem;
-    background-color: #fff;
-    border: 8px solid #2c3e50;
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    color: #2c3e50;
-  }
-
-  .certificate h1 {
-    font-size: 2rem;
-    margin: 1rem 0;
-    text-transform: uppercase;
-    color: #1a1a1a;
-  }
-
-  .certificate h3 {
-    margin: 0.5rem 0;
-    font-size: 1.2rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-  }
-
-  .certificate p {
-    font-size: 1rem;
-    margin: 1.5rem 0;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: #444;
-  }
-
-  .course-Time-Lessons {
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
-    margin: 2rem 0;
-  }
-
-  .course-Time-Lessons .hours,
-  .course-Time-Lessons .lessons {
-    text-align: center;
-    font-size: 1.1rem;
-  }
-
-  .course-Time-Lessons span:first-child {
-    display: block;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #2980b9;
-  }
-
-  .certificate-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 2px solid #ccc;
-  }
-
-  .certificate-footer .signature,
-  .certificate-footer .date {
-    width: 45%;
-    text-align: center;
-  }
-
-  .certificate-footer .line {
-    height: 2px;
-    background-color: #333;
-    margin: 1rem auto;
-    width: 80%;
-  }
-
-  .certificate-footer h3 {
-    font-size: 1rem;
-    margin: 0.3rem 0;
-  }
-
-  .signature img {
-    width: 120px;
-    height: auto;
-    margin-bottom: 0.5rem;
-  }
-
-
-
-
-
-
-
-
-
-#Left{
-  width: 100%;
-  max-width: 400px;
-  height: 95%;
-  padding: 20px;
-  display: flex;
-  margin:0 1rem ;
-  flex-direction: column;
-  justify-content: space-evenly;
-  gap: 18px;
-  overflow-y: auto;
-}
-
-/* Each section block */
 .card-left-btn {
-  border-radius: 16px;
-  padding:.5rem 1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  overflow: hidden;
-  transition: all 0.3s ease;
+  border-radius: .5rem;
+  padding: 0 .5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  min-width: auto;
+  scroll-snap-align: start;
 }
-
-/* Button Headers */
 .Left-Btn {
   display: flex;
   align-items: center;
-  padding: 14px 20px;
+  justify-content: flex-start;
+  padding: 0.5rem 0.75rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  border-radius: .5rem;
 }
 .Left-Btn h3 {
   font-size: 16px;
@@ -462,38 +148,48 @@ body {
   align-items: center;
   gap: 10px;
 }
-
-/* Hidden Content */
 .Hidden-Content {
+  width: 100%;
   display: none;
   flex-direction: column;
+  position: absolute;
   gap: 12px;
   padding: 16px 20px;
-}
+  border-radius: 10px;
+  top: 8rem;
+  left: 0;
+  background-color: #fff;
+  margin-bottom: 10px;
+  z-index: 10;
+  min-width: 220px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.562);
 
-.Hidden-Content span {
-  font-weight: 600;
-  font-size: 14px;
-  margin-top: 6px;
 }
-
+.Hidden-Content span,
 .Hidden-Content label,
 .Hidden-Content select,
 .Hidden-Content p,
 .Hidden-Content input[type="text"] {
   font-size: 14px;
-  margin-bottom: 8px;
   display: block;
   width: 100%;
+  margin-bottom: 8px;
 }
+  input{
+    width: 100%;
+    margin: .5rem 0;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+
+  }
 
 .Hidden-Content select,
 .Hidden-Content input[type="text"] {
   padding: 8px;
   border-radius: 8px;
+  border: 1px solid #ccc;
 }
 
-/* Checkboxes */
 .Hidden-Content input[type="checkbox"] {
   margin-right: 8px;
   transform: scale(1.1);
@@ -503,302 +199,457 @@ body {
   margin-right: 6px;
 }
 
-/* Buttons */
 .btn {
   padding: 10px 15px;
   font-size: 14px;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  margin-top: 10px;
+  background-color: #007bff;
+  color: white;
   display: inline-flex;
   align-items: center;
   gap: 6px;
   transition: background-color 0.3s ease;
 }
 
-  #hidden-header {
-    display: none;
-  }
-/* ---------- Responsive Design ---------- */
-@media (max-width: 1440px) {
+.btn:hover {
+  background-color: #0056b3;
+}
 
-/* ---------- Central -------------- */
-.Central{
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
-#Right{
-  width: 100%;
-  height: 95%;
-  display: flex;
-  flex-direction: column;
-}
-.header{
-  text-align: center;
-  font-size: 1.2rem;
-  font-weight: bold;
-  border-radius: 1rem;
-  padding: 1rem;
-}
-.Card-Left h3 i{
-  padding: 0 1rem;
-}
+/* Cards and content sections */
 .card {
+  width: 100%;
   display: flex;
-  padding: 1rem;
+  flex-direction: row;
+  position: relative;
+  gap: 2rem;
+  background-color: #fff;
   border-radius: 1rem;
-  margin: 1rem 0;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.04);
-  flex-wrap: wrap;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
-#Top-card {
-  height: 28rem;
-  display: flex;
-  padding: 1rem;
-  border-radius: 1rem;
-  flex-wrap: wrap;
-  overflow-y: auto;
-}
-.Card-Right {
 
-  min-width: 300px;
-  height: 10rem;
-  display: flex;
-  flex-direction: column;
+.Card-Left,
+.Card-Right {
+  flex: 1;
+}
+.Card-Left{
+  height: 28rem;
+   overflow-y: auto;
+}
+#Payment-block{
+  height: 16rem;
+}
+
+.Blocks {
+  margin-bottom: 1.5rem;
 }
 
 .Content-block {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
 }
+
 .Renderd {
   display: flex;
   align-items: center;
-  padding: 0.5rem 1rem;
   justify-content: space-between;
+  padding: 0 1rem;
   border-radius: .5rem;
-  margin:0 0 .5rem 0;
 }
+
 .Renderd h1.Info {
   font-size: 1rem;
   font-weight: normal;
-  margin: 0;
+}
 
-}
-.Renderd i {
-  cursor: pointer;
-  font-size: 1rem;
-}
 .Hidden-Input {
   display: none;
   flex-direction: column;
-  gap: 0.4rem;
-  margin-top: 0.5rem;
+  gap: 0.75rem;
 }
-.Hidden-Input input,
-.Hidden-Input textarea {
-  width: 100%;
-  padding: 0.6rem;
-  font-size: 0.95rem;
-  border: 1px solid #ccc;
-  border-radius: 0.5rem;
-}
-.Hidden-Input button {
-  padding: 0.6rem 1rem;
-  background-color: #1976d2;
-  color: #fff;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-}
-.Hidden-Input button:hover {
-  background-color: #145aa3;
-}
-#Img-section {
-  display: flex;
-}
-#Img-block {
+
+.PS-tittle {
   display: flex;
   align-items: center;
-  margin: 0 2rem;
+  justify-content: space-between;
+}
+
+#Full-Name-Content,
+#nick-name-Content
+{
+  display: none;
+  margin: 1rem 0;
+  flex-direction: column;
+
+}
+.passwordCont {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.Pay-Info {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.Pay-Btns-Block {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 .Content-block img {
-  width: 65px;
-  height: 65px;
+  width: 85px;
+  height: 85px;
   margin: 1rem;
   border-radius: 50%;
   object-fit: cover;
 }
-#User-img-Icon {
-  font-size: 4rem;           
-}
-/* ---------- Password -------------- */
-#password-section{
-  margin: 1rem 0;
-}
-.PS-tittle{
+#Img-section{
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  flex-direction: row;
 }
-#password-section h2{
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-.passwordCont {
-  width: 100%;
-  padding: 0.6rem;
-  font-size: 0.95rem;
-  border: 1px solid #ccc;
-  border-radius: 0.5rem;
-}
-#PS-password-Content{
-  display: none;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 0.5rem;
-}
-.Card-Left {
-  flex: 1;
-  min-width: 600px;
+
+#Img-Content{
   display: flex;
-  flex-direction: column;
-  padding: 1rem;
+  align-items: center;
+  flex-direction: row;
 }
 
 
-
-}
-@media (max-width: 1126px) {
-  html, body {
-    overflow-x: hidden;
-    height: auto;
-  }
-
+/* ------------------------ Responsive Breakpoint: 1440px ------------------------ */
+@media (max-width: 1440px) {
   .Central {
-    flex-direction: column-reverse;
-    height: auto;
-    width: 100%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    gap: 1rem;
+    position: relative;
   }
-
-  #header {
-    display: none !important;
-  }
-
-  #hidden-header {
-    display: block;
-    width: 100%;
+  .header {
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     border-radius: 1rem;
-    padding: 1rem;
-    margin: 1rem 0;
+    padding: .7rem;
   }
-
-
-#Top-card {
-  height: 17rem;
-  width: 87%;
-  display: flex;
-  flex-direction: column;
-  padding: .5rem;
-  border-radius: 1rem;
-  overflow-y: scroll;
-}
-.card{
-  display: flex;
-  flex-direction: column;
-}
-
-
-  #Left {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    justify-content: flex-start;
-    height: auto;
-    width: 100%;
+  .Nav-Btns-Blocks {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
     overflow-x: auto;
-    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+  
+  }
+  .card {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    gap: 1rem;
+    background-color: #fff;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  #Top-card {
+    height: 20rem;
+    display: flex;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    flex-wrap: wrap;
+    overflow-y: auto;
+  }
+  .Card-Right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .PS-tittle h3 i{
+    padding: 0 1rem;
+  }
+  .Content-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .Renderd {
+    display: flex;
+    align-items: center;
     padding: 0.5rem 1rem;
-    gap: 0.5rem;
-    max-width: 100vw;
-    box-sizing: border-box;
+    justify-content: space-between;
+    border-radius: .5rem;
+    margin:0 0 .5rem 0;
+  }
+  .Renderd h1.Info {
+    font-size: .8rem;
+    font-weight: normal;
+    margin: 0;
+
+  }
+  .Renderd i {
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  .Hidden-Input {
+    display: none;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+  }
+  .Hidden-Input input,
+  .Hidden-Input textarea {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 0.95rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+  }
+  .Hidden-Input button {
+    padding: 0.6rem 1rem;
+    background-color: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+  #Img-section {
+    display: flex;
+  }
+  #Img-block {
+    display: flex;
+    align-items: center;
+  }
+  .Content-block img {
+    width: 60px;
+    height: 60px;
+    margin: .5rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  #User-img-Icon {
+    font-size: 2rem;           
+  }
+  input{
+    width: 100%;
+    margin: .3rem 0;
+    padding: .3rem 1rem;
+    border-radius: .5rem;
+
   }
 
-  .card-left-btn {
-    min-width: max-content;
-    padding: 0.4rem 0.8rem;
-    border-radius: 0.8rem;
-    flex: 0 0 auto;
+  #Payment-block{
+    padding: 1rem 2rem;
+  }
+  #payments-container{
+    height: 15rem;
+     overflow-y: auto;
   }
 
-  .Left-Btn {
-    padding: 0.4rem;
+
+
+
+
+
+
+
+
+
+}
+@media (max-width: 1024px) {
+  .Central {
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    gap: 1rem;
+    position: relative;
+  }
+  .header {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 1rem;
+    padding: .7rem;
+  }
+  .Nav-Btns-Blocks {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  
+  }
+  .card {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    gap: 1rem;
+    background-color: #fff;
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  #Top-card {
+    height: 20rem;
+    display: flex;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    flex-wrap: wrap;
+    overflow-y: auto;
+  }
+  .Card-Right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .PS-tittle h3 i{
+    padding: 0 1rem;
+  }
+  .Content-block {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .Renderd {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    justify-content: space-between;
+    border-radius: .5rem;
+    margin:0 0 .5rem 0;
+  }
+  .Renderd h1.Info {
+    font-size: .8rem;
+    font-weight: normal;
+    margin: 0;
+
+  }
+  .Renderd i {
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  .Hidden-Input {
+    display: none;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+  }
+  .Hidden-Input input,
+  .Hidden-Input textarea {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 0.95rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+  }
+  .Hidden-Input button {
+    padding: 0.6rem 1rem;
+    background-color: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+  #Img-section {
+    display: flex;
+  }
+  #Img-block {
+    display: flex;
+    align-items: center;
+  }
+  .Content-block img {
+    width: 60px;
+    height: 60px;
+    margin: .5rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  #User-img-Icon {
+    font-size: 2rem;           
+  }
+  input{
+    width: 100%;
+    margin: .3rem 0;
+    padding: .3rem 1rem;
+    border-radius: .5rem;
+
   }
 
-  .Left-Btn h3 {
-    font-size: 0.9rem;
-    gap: 0.3rem;
-    white-space: nowrap;
+  #Payment-block{
+    padding: 1rem 2rem;
+  }
+  #payments-container{
+    height: 15rem;
+     overflow-y: auto;
   }
 
-  .Side-Btns i {
-    font-size: 1.2rem;
+
+
+
+
+
+
+
+
+
+}
+@media (max-width: 768px) {
+  .hamburger {
+      display: block;
+      color: #c40505;
+      font-weight: bold;
+  }
+  .Mobile-close-btn{
+    display: flex;
+    margin: -43rem 0 0 0;
+    color: #c40505;
+    font-size: 1.5rem;
+
+  }
+  .Mobile-sidebar {
+    position: fixed;
+    top: 0;
+    left: -270px;
+    width: 75%;
+    max-width:210px;
+    height: 95%;
+    background-color: #1a1a1a;
+    color: white;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+  .Mobile-sidebar.active {
+    left: 0;
   }
 
   .linkName {
-    display: none;
-  }
-  #Payment-block{
-    width: 85%;
-  }
-  #payments-container {
-  height: 15rem;
-  padding: 1rem;
-
-
-
-  min-height: 10px;
-  font-size: 0.9rem;
-  overflow-y: auto;
-}
-.payment-card {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  border-radius: 12px;
-  padding: 1rem 1rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.payment-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-}
-.payment-card h4 {
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-}
-.payment-card p {
-  margin: 0.25rem 0;
-  font-size: 0.9rem;
+  display: block;
 }
 
 
-
-  #Right {
-    width: 100%;
-    padding: 1rem;
+  .Central {
+    width: 95%;
+    display: flex;
     flex-direction: column;
-    height: auto;
+    margin: 1rem;
+    gap: 1rem;
+    position: relative;
   }
 
+
+
+
 }
-
-
-
-
 

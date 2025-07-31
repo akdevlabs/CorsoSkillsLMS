@@ -280,8 +280,7 @@ applyBranding().then((data) => {
   }
   function mainColors(){
     setBackgroundColor("#header", Prime5)
-  setBackgroundColor("#hidden-header", Prime5)
-  
+
   }
   function CenterColors(){
     const style = document.createElement('style');
@@ -1669,54 +1668,82 @@ async function fetchAllContent() {
 fetchAllContent()
 
 
+document.addEventListener("DOMContentLoaded", () => {
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+  const toggle = document.getElementById("menuToggle");
+  const closeBtn = document.getElementById("Mobile-closeBtn");
+
+  const openSidebar = () => {
+    sidebar.classList.add("active");
+    overlay.classList.add("active");
+  };
+
+  const closeSidebar = () => {
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+  };
+
+  toggle.addEventListener("click", openSidebar);
+  closeBtn.addEventListener("click", closeSidebar);
+  overlay.addEventListener("click", closeSidebar);
+});
 
 
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const leftButtons = document.querySelectorAll(".Left-Btn");
+document.addEventListener("DOMContentLoaded", function () {
+  const leftButtons = document.querySelectorAll(".Left-Btn");
 
-    leftButtons.forEach((btn) => {
-      btn.addEventListener("click", function () {
-        const content = this.nextElementSibling;
+  leftButtons.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const content = this.nextElementSibling;
 
-        // Optional: Close all other open contents
-        document.querySelectorAll(".Hidden-Content").forEach((section) => {
-          if (section !== content) {
-            section.style.display = "none";
-          }
-        });
-
-        // Toggle the current section
-        content.style.display =
-          content.style.display === "block" ? "none" : "block";
+      // Optional: Close all other open contents
+      document.querySelectorAll(".Hidden-Content").forEach((section) => {
+        if (section !== content) {
+          section.style.display = "none";
+        }
       });
+
+      // Toggle the current section
+      content.style.display =
+        content.style.display === "flex" ? "none" : "flex";
     });
   });
+});
 
 
- document.addEventListener("DOMContentLoaded", function () {
-    const openBtn = document.getElementById("open");
-    const closeBtn = document.getElementById("close");
-    const linkNames = document.querySelectorAll(".linkName");
+document.addEventListener("DOMContentLoaded", function () {
+  const openBtn = document.getElementById("open");
+  const closeBtn = document.getElementById("close");
+  const menuToggle = document.getElementById("menuToggle");
+  const linkNames = document.querySelectorAll(".linkName");
+  const mobileSidebar = document.getElementById("Mobile-sidebar"); // Make sure this ID exists
 
-    function showSidebarText() {
-      linkNames.forEach(el => el.style.display = "inline");
-      openBtn.style.display = "none";
-      closeBtn.style.display = "flex";
-    }
+  function showSidebarText() {
+    linkNames.forEach(el => el.style.display = "inline");
+    openBtn.style.display = "none";
+    closeBtn.style.display = "flex";
+  }
 
-    function hideSidebarText() {
-      linkNames.forEach(el => el.style.display = "none");
-      closeBtn.style.display = "none";
-      openBtn.style.display = "flex";
-    }
+  function hideSidebarText() {
+    linkNames.forEach(el => el.style.display = "none");
+    closeBtn.style.display = "none";
+    openBtn.style.display = "flex";
+  }
 
-    openBtn.addEventListener("click", showSidebarText);
-    closeBtn.addEventListener("click", hideSidebarText);
+  function toggleMobileSidebar() {
+    mobileSidebar.classList.toggle("show"); // Add a class like .show to handle visibility in CSS
+  }
 
-    // Initial state: hide all link names, show open button only
-    hideSidebarText();
- });
+  // Attach event listeners
+  openBtn.addEventListener("click", showSidebarText);
+  closeBtn.addEventListener("click", hideSidebarText);
+  menuToggle.addEventListener("click", toggleMobileSidebar);
+
+  // Initial state
+  hideSidebarText();
+});
 
 
 
