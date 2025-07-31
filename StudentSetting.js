@@ -346,9 +346,20 @@ applyBranding().then((data) => {
     .card-left-btn i {
       color: ${Prime3};
     }
-
-
-
+    .course-button {
+      background-color:${Base};
+      color: ${Prime5};
+    }
+    .course-button:hover {
+      background-color: ${Prime2};
+    }
+    .career-button {
+      background-color:${Base};
+      color: ${Prime5};
+    }  
+    .career-button:hover {
+      background-color: ${Prime2};
+    }
 
 
 
@@ -882,45 +893,39 @@ async function fetchAllContent() {
           certificateEl.style.backgroundRepeat = "no-repeat";
         }
 
-      function renderCertifiedCourseButtons() {
-        const certifiedCourseIds = getCertifiedCourseIds(CertificateBlock);
-        const container = document.getElementById("CertificatesCurso");
-        container.innerHTML = ""; // Clear content
+        function renderCertifiedCourseButtons() {
+          const certifiedCourseIds = getCertifiedCourseIds(CertificateBlock);
+          const container = document.getElementById("CertificatesCurso");
+          container.innerHTML = ""; // Clear content
 
-        certifiedCourseIds.forEach(id => {
-          const parsed = parseCourseCode(id);
-          const fullCourseObj = getNestedProperty(Courses, parsed.fullLabel);
-          const studentCourseEntry = Object.values(CertificateBlock).find(entry => entry?.Id === id);
-          if (!fullCourseObj || !studentCourseEntry) return;
+          certifiedCourseIds.forEach(id => {
+            const parsed = parseCourseCode(id);
+            const fullCourseObj = getNestedProperty(Courses, parsed.fullLabel);
+            const studentCourseEntry = Object.values(CertificateBlock).find(entry => entry?.Id === id);
+            if (!fullCourseObj || !studentCourseEntry) return;
 
-          const exampleData = {
-            userName: studentData.fullName || studentData.Name || "Nombre del Estudiante",
-            courseId: fullCourseObj.Id || id,
-            courseName: fullCourseObj.Title || fullCourseObj.Tittle || "Título no encontrado",
-            type: fullCourseObj.Type || "Curso", // or "Carrera"
-            Hours: fullCourseObj.Duration?.Hours || "00",
-            Lessons: fullCourseObj.Lessons || "00",
-            completionDate: studentCourseEntry?.Date || new Date().toISOString()
-          };
+            const exampleData = {
+              userName: studentData.fullName || studentData.Name || "Nombre del Estudiante",
+              courseId: fullCourseObj.Id || id,
+              courseName: fullCourseObj.Title || fullCourseObj.Tittle || "Título no encontrado",
+              type: fullCourseObj.Type || "Curso",
+              Hours: fullCourseObj.Duration?.Hours || "00",
+              Lessons: fullCourseObj.Lessons || "00",
+              completionDate: studentCourseEntry?.Date || new Date().toISOString()
+            };
 
-          const button = document.createElement("button");
-          button.textContent = exampleData.courseName;
-          button.className = "course-button";
-          button.style = `
-            margin: 10px;
-            padding: 10px 20px;
-            border: none;
-            background-color: #007bff;
-            color: white;
-            border-radius: 6px;
-            cursor: pointer;
-          `;
-          button.addEventListener("click", () => {
-            generateAndDownloadCertificate(exampleData);
+            const button = document.createElement("button");
+            button.textContent = exampleData.courseName;
+            button.className = "course-button";
+
+            button.addEventListener("click", () => {
+              generateAndDownloadCertificate(exampleData);
+            });
+
+            container.appendChild(button);
           });
-          container.appendChild(button);
-        });
-      }
+        }
+
 
       // ✅ Init
       renderCertifiedCourseButtons();
@@ -1086,6 +1091,7 @@ async function fetchAllContent() {
             .name{
               margin:-1rem 0 0 0 ;
             }
+
           `;
           document.head.appendChild(style);
 
@@ -1140,46 +1146,41 @@ async function fetchAllContent() {
       }
 
       // Render buttons
-      function renderCertifiedCareerButtons() {
-        const certifiedCareerIds = getCertifiedCareerIds(CertificateBlock);
-        const container = document.getElementById("CertificatesCarrera");
-        container.innerHTML = "";
+      // Render buttons
+        function renderCertifiedCareerButtons() {
+          const certifiedCareerIds = getCertifiedCareerIds(CertificateBlock);
+          const container = document.getElementById("CertificatesCarrera");
+          container.innerHTML = "";
 
-        certifiedCareerIds.forEach(id => {
-          const { category, fullLabel } = parseCourseCode(id);
-          const categoryData = Careers?.[category];
-          const careerData = categoryData?.[fullLabel];
-          const studentCareerEntry = Object.values(CertificateBlock).find(entry => entry?.Cid === id);
-          if (!careerData || !studentCareerEntry) return;
+          certifiedCareerIds.forEach(id => {
+            const { category, fullLabel } = parseCourseCode(id);
+            const categoryData = Careers?.[category];
+            const careerData = categoryData?.[fullLabel];
+            const studentCareerEntry = Object.values(CertificateBlock).find(entry => entry?.Cid === id);
+            if (!careerData || !studentCareerEntry) return;
 
-          const exampleData = {
-            userName: studentData.FullName || studentData.Name || "Nombre del Estudiante",
-            courseId: careerData.Cid || id,
-            courseName: careerData.Tittle || careerData.Title || "Título no encontrado",
-            type: careerData.Type || "Carrera",
-            Hours: careerData?.Duration?.Hours || "00",
-            Lessons: careerData?.CList?.length?.toString() || "00",
-            completionDate: studentCareerEntry?.Date || new Date().toISOString()
-          };
+            const exampleData = {
+              userName: studentData.FullName || studentData.Name || "Nombre del Estudiante",
+              courseId: careerData.Cid || id,
+              courseName: careerData.Tittle || careerData.Title || "Título no encontrado",
+              type: careerData.Type || "Carrera",
+              Hours: careerData?.Duration?.Hours || "00",
+              Lessons: careerData?.CList?.length?.toString() || "00",
+              completionDate: studentCareerEntry?.Date || new Date().toISOString()
+            };
 
-          const button = document.createElement("button");
-          button.textContent = exampleData.courseName;
-          button.className = "career-button";
-          button.style.margin = "10px";
-          button.style.padding = "10px 20px";
-          button.style.border = "none";
-          button.style.backgroundColor = "#28a745";
-          button.style.color = "white";
-          button.style.borderRadius = "6px";
-          button.style.cursor = "pointer";
+            const button = document.createElement("button");
+            button.textContent = exampleData.courseName;
+            button.className = "career-button";
 
-          button.addEventListener("click", () => {
-            generateAndDownloadCertificate(exampleData);
+            button.addEventListener("click", () => {
+              generateAndDownloadCertificate(exampleData);
+            });
+
+            container.appendChild(button);
           });
+        }
 
-          container.appendChild(button);
-        });
-      }
 
       // Init
       renderCertifiedCareerButtons();

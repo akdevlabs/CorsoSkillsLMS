@@ -328,7 +328,101 @@ body {
   overflow-y: auto;
 }
 
-
+/* ---------- certificate -------------- */
+.certificate {
+    width: 100%;
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 3rem 2rem;
+    background-color: #fff;
+    border: 8px solid #2c3e50;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    color: #2c3e50;
+}
+.certificate h1 {
+  font-size: 2rem;
+  margin: 1rem 0;
+  text-transform: uppercase;
+  color: #1a1a1a;
+}
+.certificate h3 {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.certificate p {
+  font-size: 1rem;
+  margin: 1.5rem 0;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #444;
+}
+.course-Time-Lessons {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin: 2rem 0;
+}
+.course-Time-Lessons .hours,
+.course-Time-Lessons .lessons {
+  text-align: center;
+  font-size: 1.1rem;
+}
+.course-Time-Lessons span:first-child {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2980b9;
+}
+.certificate-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid #ccc;
+}
+.certificate-footer .signature,
+.certificate-footer .date {
+    width: 45%;
+    text-align: center;
+}
+.certificate-footer .line {
+  height: 2px;
+  background-color: #333;
+  margin: 1rem auto;
+  width: 80%;
+}
+.certificate-footer h3 {
+  font-size: 1rem;
+  margin: 0.3rem 0;
+}
+.signature img {
+  width: 120px;
+  height: auto;
+  margin-bottom: 0.5rem;
+}
+.course-button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+.career-button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
 
 
 
@@ -617,8 +711,8 @@ body {
 }
 @media (max-width: 768px) {
   body {
-  overflow-y: auto;
-}
+    overflow-y: auto;
+  }
   .hamburger {
       display: block;
       color: #c40505;
@@ -646,12 +740,9 @@ body {
   .Mobile-sidebar.active {
     left: 0;
   }
-
   .linkName {
     display: block;
   }
-
-
   .Central {
     width: 95%;
     display: flex;
@@ -665,9 +756,7 @@ body {
     font-size: 1.2rem;
     margin: 0 0 0 2.5rem;
   }
-
-
-#Top-card {
+  #Top-card {
     height: 30rem;
     display: flex;
     padding:  2rem;
@@ -722,7 +811,8 @@ body {
     border-radius: 0.5rem;
   }
   .Hidden-Input button {
-    padding: 0.6rem 1rem;
+    font-size: .8rem;
+    padding: 0.4rem 1rem;
     background-color: #1976d2;
     color: #fff;
     border: none;
@@ -753,7 +843,6 @@ body {
     border-radius: .5rem;
 
   }
-
   #Payment-block{
     height:20rem;
     display: flex;
@@ -768,9 +857,75 @@ body {
     width: 8rem;
     font-size: .8rem;
   }
+/* ---------- certificate -------------- */
+ .certificate {
+    padding: 2rem 1rem;
+  }
 
+  .certificate h1 {
+    font-size: 1.5rem;
+  }
 
+  .certificate h3 {
+    font-size: 1rem;
+  }
 
+  .certificate p {
+    font-size: 0.9rem;
+  }
+
+  .course-Time-Lessons {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .course-Time-Lessons .hours,
+  .course-Time-Lessons .lessons {
+    font-size: 1rem;
+  }
+
+  .course-Time-Lessons span:first-child {
+    font-size: 1.3rem;
+  }
+
+  .certificate-footer {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .certificate-footer .signature,
+  .certificate-footer .date {
+    width: 100%;
+  }
+
+  .certificate-footer h3 {
+    font-size: 0.9rem;
+  }
+
+  .signature img {
+    width: 100px;
+  }
+
+  .course-button {
+    margin: 5px;
+    font-size: .8rem;
+    padding: 5px auto;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  .career-button {
+    margin: 5px;
+    font-size: .8rem;
+    padding: 5px auto;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
 
 
 
