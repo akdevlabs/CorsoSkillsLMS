@@ -542,7 +542,6 @@ async function fetchAllContent() {
    
         Img.style.display = "block"; 
   });
-
   document.getElementById("saveProfile").addEventListener("click", async () => {
     const fullName = document.getElementById("fullName").value.trim();
     const ShortName = document.getElementById("nickname").value.trim();
@@ -593,9 +592,6 @@ async function fetchAllContent() {
     const passwordContent = document.getElementById("PS-password-Content");
     passwordContent.style.display = "flex";
   });
-
-
-
   document.getElementById("saveNotif").addEventListener("click", async () => {
     const emailNotif = document.getElementById("emailNotif").checked;
     const platformNotif = document.getElementById("platformNotif").checked;
@@ -618,11 +614,9 @@ async function fetchAllContent() {
       alert("Hubo un error al guardar la configuración.");
     }
   });
-
   document.getElementById("pay-history-btn").addEventListener("click", async () => {
     renderPayments()
   });
-
   document.getElementById("saveNotif").addEventListener("click", async () => {
     const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
 
@@ -683,25 +677,19 @@ async function fetchAllContent() {
 
   // PEnding to do //
   function Certificates(){
+
     function CertificatesCourses() {
-    // 🔧 Helper: resolve "Category.Level.CXX" into nested object access
-    function getNestedProperty(obj, path) {
-      return path.split('.').reduce((acc, key) => acc?.[key], obj);
+      function getNestedProperty(obj, path) {
+        return path.split('.').reduce((acc, key) => acc?.[key], obj);
       }
 
-      // ✅ Setup
       const CertificateBlock = studentData.Courses;
       const Courses = businessData.Courses;
 
       function getCertifiedCourseIds(CoursesObj) {
-        const certifiedIds = [];
-        for (const slot in CoursesObj) {
-          const course = CoursesObj[slot];
-          if (course?.Certificates === true) {
-            certifiedIds.push(course.Id);
-          }
-        }
-        return certifiedIds;
+        return Object.values(CoursesObj)
+          .filter(course => course?.Certificates === true)
+          .map(course => course.Id);
       }
 
       function parseCourseCode(code) {
@@ -716,14 +704,15 @@ async function fetchAllContent() {
           return { error: `Invalid code format: ${code}` };
         }
 
-        const levelCode = code.charAt(0);
-        const categoryCode = code.charAt(1);
+        const level = levelMap[code.charAt(0)] || "Unknown";
+        const category = categoryMap[code.charAt(1)] || "Unknown";
         const courseNumber = parseInt(code.slice(2), 10);
+
         return {
           code,
-          level: levelMap[levelCode] || "Unknown",
-          category: categoryMap[categoryCode] || "Unknown",
-          fullLabel: `${categoryMap[categoryCode] || "?"}.${levelMap[levelCode] || "?"}.C${courseNumber}`
+          level,
+          category,
+          fullLabel: `${category}.${level}.C${courseNumber}`
         };
       }
 
@@ -742,7 +731,6 @@ async function fetchAllContent() {
         const backgroundImg = isCarrera ? businessData.Certificates.Careers : businessData.Certificates.Courses;
         const signatureImg = businessData.Certificates.Sig;
         const logo = businessData.BuLogos.Simple[1];
-        const orientation = isCarrera ? "portrait" : "landscape";
 
         let modal = document.getElementById("certificate-modal");
         if (!modal) {
@@ -752,6 +740,7 @@ async function fetchAllContent() {
             <div class="certificate-overlay">
               <div class="certificate-popup">
                 <button class="close-btn" id="close-certificate-btn">✖</button>
+                <button class="download-btn" id="download-certificate-btn">📥 Descargar</button>
                 <div id="certificate-container"></div>
               </div>
             </div>
@@ -761,84 +750,24 @@ async function fetchAllContent() {
           const style = document.createElement("style");
           style.textContent = `
             .certificate-overlay {
-              position: fixed;
-              top: 0; left: 0;
-              width: 100%; height: 100%;
-              background: rgba(0, 0, 0, 0.7);
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              z-index: 9999;
+              background: #000000b3;
             }
             .certificate-popup {
-              background: ${Prime5}; 
-              padding: 20px;
-              border-radius: 8px;
-              width: ${isCarrera ? '600px' : '1000px'};
-              max-height: 90vh;
-              overflow: auto;
-              position: relative;
+              background: ${Prime5};
             }
             .close-btn {
-              position: absolute;
-              top: 10px;
-              right: 10px;
-              background:  ${Prime2}; 
-              color: ${Prime5}; 
-              border: none;
-              font-size: 18px;
-              cursor: pointer;
-              border-radius: 4px;
-              padding: 5px 10px;
+              color: ${Prime2};
+            }
+            .download-btn {
+              background:${Prime3};
+              color: ${Prime5};
             }
             .certificate {
-              width: 100%;
-              font-family: sans-serif;
-              text-align: center;
-              padding: 40px;
-              color: ${Prime}; 
-              box-shadow: 0 0 10px rgba(0,0,0,0.3);
-            }
-            .certificate .logo {
-              width: 200px;
-              margin: 0 auto 20px;
-            }
-            .course-Time-Lessons {
-              display: flex;
-              justify-content: center;
-              gap: 40px;
-              margin-top: 10px;
-            }
-            .certificate-footer {
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              margin-top: 40px;
-              padding: 0 30px;
-            }
-            .signature{
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              margin: -1rem 0 1rem 0;
-            }
-
-            .signature img {
-            width: 150px;
-              margin: 10px 0  -4rem 0;
+              background-color: ${Prime5};
+              box-shadow: 0 0 10px #0000004d;
             }
             .line {
-              width: 100px;
-              height: 2px;
               background-color: black;
-              margin: 5px auto;
-            }
-            .certificate h1{
-              color: ${Base};
-            }  
-
-            .name{
-              margin:-1rem 0 0 0 ;
             }
           `;
           document.head.appendChild(style);
@@ -846,12 +775,25 @@ async function fetchAllContent() {
           document.getElementById("close-certificate-btn").addEventListener("click", () => {
             modal.remove();
           });
+
+          document.getElementById("download-certificate-btn").addEventListener("click", () => {
+            const target = document.getElementById("certificate-content");
+            html2canvas(target, {
+              scale: 2,
+              useCORS: true,
+              allowTaint: true
+            }).then(canvas => {
+              const link = document.createElement("a");
+              link.download = `Certificado-${data.courseName.replace(/\s+/g, "_")}.png`;
+              link.href = canvas.toDataURL("image/png");
+              link.click();
+            });
+          });
         }
 
         const container = document.getElementById("certificate-container");
-
         container.innerHTML = `
-          <div class="certificate" id="certificate-content">
+          <div class="certificate" id="certificate-content" style="background-image: url('CorsoSkill/certifacete.png');">
             <img src="${logo}" alt="Logo" class="logo" />
             <h3>CERTIFICADO DE FINALIZACIÓN</h3>
             <h1>${userName}</h1>
@@ -870,12 +812,10 @@ async function fetchAllContent() {
             </div>
             <div class="certificate-footer">
               <div class="signature">
-                <img src="${signatureImg}" alt="Signature">
+                <img src="CorsoSkill/ArmantiSig.png" alt="Firma" />
                 <div class="line"></div>
-                <div class="name">
-                  <h3>Ashley  Armanti</h3>
-                  <h3>CEO, CorsoSkills</h3>
-                </div>
+                <h3>Ashley Armanti</h3>
+                <h3>CEO, CorsoSkills</h3>
               </div>
               <div class="date">
                 <h3>${new Date(completionDate).toLocaleDateString("es-MX")}</h3>
@@ -885,52 +825,44 @@ async function fetchAllContent() {
             </div>
           </div>
         `;
-          // ✅ Apply background via JS to ensure it works
-          const certificateEl = document.getElementById("certificate-content");
-          certificateEl.style.backgroundImage = `url('${backgroundImg}')`;
-          certificateEl.style.backgroundSize = "cover";
-          certificateEl.style.backgroundPosition = "center";
-          certificateEl.style.backgroundRepeat = "no-repeat";
-        }
+      }
 
-        function renderCertifiedCourseButtons() {
-          const certifiedCourseIds = getCertifiedCourseIds(CertificateBlock);
-          const container = document.getElementById("CertificatesCurso");
-          container.innerHTML = ""; // Clear content
+      function renderCertifiedCourseButtons() {
+        const certifiedCourseIds = getCertifiedCourseIds(CertificateBlock);
+        const container = document.getElementById("CertificatesCurso");
+        container.innerHTML = "";
 
-          certifiedCourseIds.forEach(id => {
-            const parsed = parseCourseCode(id);
-            const fullCourseObj = getNestedProperty(Courses, parsed.fullLabel);
-            const studentCourseEntry = Object.values(CertificateBlock).find(entry => entry?.Id === id);
-            if (!fullCourseObj || !studentCourseEntry) return;
+        certifiedCourseIds.forEach(id => {
+          const parsed = parseCourseCode(id);
+          const fullCourseObj = getNestedProperty(Courses, parsed.fullLabel);
+          const studentCourseEntry = Object.values(CertificateBlock).find(entry => entry?.Id === id);
+          if (!fullCourseObj || !studentCourseEntry) return;
 
-            const exampleData = {
-              userName: studentData.fullName || studentData.Name || "Nombre del Estudiante",
-              courseId: fullCourseObj.Id || id,
-              courseName: fullCourseObj.Title || fullCourseObj.Tittle || "Título no encontrado",
-              type: fullCourseObj.Type || "Curso",
-              Hours: fullCourseObj.Duration?.Hours || "00",
-              Lessons: fullCourseObj.Lessons || "00",
-              completionDate: studentCourseEntry?.Date || new Date().toISOString()
-            };
+          const exampleData = {
+            userName: studentData.fullName || studentData.Name || "Nombre del Estudiante",
+            courseId: fullCourseObj.Id || id,
+            courseName: fullCourseObj.Title || fullCourseObj.Tittle || "Título no encontrado",
+            type: fullCourseObj.Type || "Curso",
+            Hours: fullCourseObj.Duration?.Hours || "00",
+            Lessons: fullCourseObj.Lessons || "00",
+            completionDate: studentCourseEntry?.Date || new Date().toISOString()
+          };
 
-            const button = document.createElement("button");
-            button.textContent = exampleData.courseName;
-            button.className = "course-button";
+          const button = document.createElement("button");
+          button.textContent = exampleData.courseName;
+          button.className = "course-button";
 
-            button.addEventListener("click", () => {
-              generateAndDownloadCertificate(exampleData);
-            });
-
-            container.appendChild(button);
+          button.addEventListener("click", () => {
+            generateAndDownloadCertificate(exampleData);
           });
-        }
+          container.appendChild(button);
+        });
+      }
 
-
-      // ✅ Init
       renderCertifiedCourseButtons();
-
     }
+
+
 
     function CertificatesCarrera() {
       // 🔧 Helper: resolve "Category.Level.CXX" into nested object access
@@ -1186,18 +1118,11 @@ async function fetchAllContent() {
       renderCertifiedCareerButtons();
     }
 
-
-
-
-
-
-
-
-
     CertificatesCourses()
     CertificatesCarrera()
  
   }
+
   function Notificaciones() {
     async function loadNotificationSettings() {
       const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);

@@ -182,23 +182,19 @@ body {
     border-radius: .5rem;
 
   }
-
 .Hidden-Content select,
 .Hidden-Content input[type="text"] {
   padding: 8px;
   border-radius: 8px;
   border: 1px solid #ccc;
 }
-
 .Hidden-Content input[type="checkbox"] {
   margin-right: 8px;
   transform: scale(1.1);
 }
-
 .Hidden-Content i {
   margin-right: 6px;
 }
-
 .btn {
   padding: 10px 15px;
   font-size: 14px;
@@ -212,7 +208,6 @@ body {
   gap: 6px;
   transition: background-color 0.3s ease;
 }
-
 .btn:hover {
   background-color: #0056b3;
 }
@@ -425,6 +420,94 @@ body {
 }
 
 
+
+
+
+
+.certificate-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; 
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+.certificate-popup {
+  padding: 20px;
+  border-radius: 8px;
+  width: 1000px;
+  max-height: 90vh;
+  overflow: auto;
+  position: relative;
+}
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 5px 10px;
+}
+.download-btn {
+  position: absolute;
+  top: 10px;
+  right: 50px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 5px 10px;
+}
+.certificate {
+  width: 100%;
+  font-family: sans-serif;
+  text-align: center;
+  padding: 40px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+.certificate .logo {
+  width: 200px;
+  margin: 0 auto 20px;
+}
+.course-Time-Lessons {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 10px;
+}
+.certificate-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  padding: 0 30px;
+}
+.signature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: -1rem 0 1rem 0;
+}
+.signature img {
+  width: 150px;
+  margin-bottom: -4rem;
+}
+.line {
+  width: 100px;
+  height: 2px;
+  margin: 5px auto;
+}
+.certificate h1, .certificate h3, .certificate h4 {
+  margin: 0.5rem 0;
+}
 
 
 
