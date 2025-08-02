@@ -131,12 +131,14 @@ applyBranding().then((data) => {
   function headerColors(){
     setTextColors("#Welcome", Prime5)
     setBackgroundColor("#Welcome", Prime3)
+    setBackgroundColor("#C-Progress", Prime5)
+    setBackgroundColor("#New-Course-Tittle", Prime5)
   }
   function SetMainColors(){
     renderImage(data.BuLogos.Icons[0], "BuLogo", "Bulogos")
     setBodyBackgroundColor(Prime4)
     setBackgroundColor("#sidebar", Prime5)
-
+    setBackgroundColor("#calendar-container", Prime5)
   }
   function MaintopColors(){
 
@@ -516,7 +518,7 @@ renderStreak()
 
   function renderStudentinfo(){
     let date = renderTodayInSpanish()
-    renderImage(studentData.profileImg, "User image", "user-Img")
+    renderImage(studentData.profileImage, "User image", "user-Img")
     renderText(date, "Date")
   }
   function renderStreak() {

@@ -67,9 +67,7 @@ body {
   cursor: pointer;
   transition: background 0.2s ease;
 }
-.Side-Btns:hover {
-  background-color: #2e2e42;
-}
+
 .Side-Btns i {
   font-size: 1.5rem;
 }
@@ -431,6 +429,7 @@ body {
   height: 100%;
   display: flex;
   justify-content: center;
+  flex-direction: row;
   align-items: center;
   z-index: 9999;
 }
@@ -958,7 +957,7 @@ body {
   }
 
   .course-Time-Lessons {
-    flex-direction: column;
+    flex-direction: row;
     gap: 1.5rem;
   }
 
@@ -972,8 +971,9 @@ body {
   }
 
   .certificate-footer {
-    flex-direction: column;
-    gap: 2rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
   }
 
   .certificate-footer .signature,

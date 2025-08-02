@@ -175,6 +175,8 @@ const storage = getStorage(app, 'gs://corsoskills-1ba50.firebasestorage.app');
 
     }
     function Allcolors(){
+
+      setBackgroundColor("#Tittle", Prime5)
       const style = document.createElement('style');
       style.textContent = `
         .content {
@@ -1012,6 +1014,34 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 
+document.addEventListener("DOMContentLoaded", () => {
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+  const toggle = document.getElementById("menuToggle");
+  const closeBtn = document.getElementById("Mobile-closeBtn");
+  const linkNames = document.querySelectorAll(".linkName");
+  const openCBtn = document.getElementById("open");
+  const closeCBtn = document.getElementById("close");
+
+  const openSidebar = () => {
+    sidebar.classList.add("active");
+    overlay.classList.add("active");
+    toggle.style.display = "none"; // Hide toggle button
+    linkNames.forEach(el => el.style.display = "inline");
+    openCBtn.style.display = "none";
+    closeCBtn.style.display = "none";
+  };
+
+  const closeSidebar = () => {
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+    toggle.style.display = "block"; // Show toggle button again
+  };
+
+  toggle.addEventListener("click", openSidebar);
+  closeBtn.addEventListener("click", closeSidebar);
+  overlay.addEventListener("click", closeSidebar);
+});
 
 
 
@@ -1032,29 +1062,36 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-
 document.addEventListener("DOMContentLoaded", function () {
-    const openBtn = document.getElementById("open");
-    const closeBtn = document.getElementById("close");
-    const linkNames = document.querySelectorAll(".linkName");
+  const openBtn = document.getElementById("open");
+  const closeBtn = document.getElementById("close");
+  const menuToggle = document.getElementById("menuToggle");
+  const linkNames = document.querySelectorAll(".linkName");
+  const mobileSidebar = document.getElementById("Mobile-sidebar"); // Make sure this ID exists
 
-    function showSidebarText() {
-      linkNames.forEach(el => el.style.display = "inline");
-      openBtn.style.display = "none";
-      closeBtn.style.display = "flex";
-    }
+  function showSidebarText() {
+    linkNames.forEach(el => el.style.display = "inline");
+    openBtn.style.display = "none";
+    closeBtn.style.display = "flex";
+  }
 
-    function hideSidebarText() {
-      linkNames.forEach(el => el.style.display = "none");
-      closeBtn.style.display = "none";
-      openBtn.style.display = "flex";
-    }
+  function hideSidebarText() {
+    linkNames.forEach(el => el.style.display = "none");
+    closeBtn.style.display = "none";
+    openBtn.style.display = "flex";
+  }
 
-    openBtn.addEventListener("click", showSidebarText);
-    closeBtn.addEventListener("click", hideSidebarText);
+  function toggleMobileSidebar() {
+    mobileSidebar.classList.toggle("show"); // Add a class like .show to handle visibility in CSS
+  }
 
-    // Initial state: hide all link names, show open button only
-    hideSidebarText();
+  // Attach event listeners
+  openBtn.addEventListener("click", showSidebarText);
+  closeBtn.addEventListener("click", hideSidebarText);
+  menuToggle.addEventListener("click", toggleMobileSidebar);
+
+  // Initial state
+  hideSidebarText();
 });
 
 

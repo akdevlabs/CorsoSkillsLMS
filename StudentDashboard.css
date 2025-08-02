@@ -1,4 +1,3 @@
-/* Reset and Global */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -14,8 +13,21 @@ body {
   flex-direction: row;
   overflow: hidden;
 }
-
-/*----------- Navigation ------------*/
+/*--------- nav ---------*/
+.hamburger {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none;
+}
+.Mobile-close-btn{
+  display: none;
+}
 .nav {
   padding: 1rem;
   display: flex;
@@ -23,7 +35,6 @@ body {
   border-radius: 1rem;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
   flex-wrap: wrap;
-  justify-content: space-between;
 }
 .sidebar-content {
   display: flex;
@@ -41,9 +52,10 @@ body {
   align-items: flex-start;
 }
 .Side-caret {
-  font-size: 1.5rem;
   display: flex;
+  align-items: flex-end;
   justify-content: flex-end;
+  font-size: 1.5rem;
 }
 .Action-nav-btns,
 .Side-Btns {
@@ -65,46 +77,66 @@ body {
   display: flex;
   flex-direction: column;
 }
-
 /*----------- Main Layout ------------*/
 main {
-  flex: 1;
+  gap: 5rem;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  height: 100%;
-  overflow-y: auto;
-}
-.Main-left {
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  margin: 1rem;
-  display: flex;
-  flex-direction: column;
+  margin: 1rem 0;
 }
-.Welcome-block {
-  gap: 0.7rem;
+.Block{
+  gap: 1rem;
+  padding: 1rem;  
   display: flex;
   flex-direction: column;
-  padding: 1rem 2rem;
   border-radius: 1rem;
 }
-#Name {
+/*----------- Main-left ------------*/
+#Date{
+  margin: 0 1rem;
+}
+#Name{
+  font-size: 2rem;
   font-weight: bold;
-  font-size: 1.7rem;
+}
+/*----------- Cursos-En-Progreso ------------*/
+.coures-container{
+  display: flex;
+  justify-content: space-between;
+}
+.coures-tittle{
+  border-radius: 1rem;
+  padding: .5rem 1rem;
+}
+.Btns {
+  display: flex;
+  flex-direction: row;
+  margin: 0 2rem;
+}
+.course-Btns {
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 8px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 /*----------- Courses ------------*/
 #results {
-  gap: 2rem;
+  gap: 1.5rem;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
-  margin: 1rem;
+
 }
 .slot-item {
   border-radius: 16px;
   padding: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.74);
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -129,9 +161,6 @@ main {
   font-size: 0.85rem;
   margin-bottom: 8px;
 }
-.progress-container {
-  margin-top: auto;
-}
 .progress-bar {
   height: 6px;
   border-radius: 5px;
@@ -146,27 +175,6 @@ main {
   font-size: 0.9rem;
   display: flex;
   justify-content: space-between;
-}
-.course-Btns {
-  cursor: pointer;
-  padding: 0.3rem 0.5rem;
-  border-radius: 8px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.Btns {
-  gap: 1rem;
-  display: flex;
-  flex-direction: row;
-  margin: 0 2rem;
-}
-.coures-container{
-  display: flex;
-  justify-content: space-between;
-  margin: 1rem 0;
 }
 /*----------- Carousel Section ------------*/
 .custom-carousel-wrapper {
@@ -237,20 +245,31 @@ main {
   display: flex;
   justify-content: space-between;
 }
-/*----------- Sidebar ------------*/
-.Main-right {
+
+/*----------- Main-right ------------*/
+.Main-right{
   width: 25rem;
-  margin: 1rem 1.5rem;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.User-info-alerts {
-  gap: 2rem;
+/*----------- Alert-Icons ------------*/
+#Alert-Icons{
+  gap: 3rem; 
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
-#bell-full,
-#full-Evalope {
+#full-Evalope, #bell-full{
   display: none;
+}
+.Main-right-block i{
+  font-size: 1.5rem;
+}
+.Icons{
+  gap: 2rem;
+  display: flex;
 }
 #user-Img {
   width: 3.5rem;
@@ -259,7 +278,7 @@ main {
   border-radius: 50%;
 }
 /*----------- Calendar ------------*/
-.calendar-container {
+#calendar-container {
   border-radius: 1rem;
   padding: 1.5rem;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.527);
@@ -309,43 +328,27 @@ main {
   cursor: pointer;
 }
 /*----------- Tasks ------------*/
-#Task-block {
-  padding: 2rem 0;
-}
 #taskContainer {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 800px;
   margin: auto;
 }
 .task-card {
-  padding: 16px 20px;
+  padding: 16px ;
   margin: 5px 0;
   border-radius: 12px;
   border: 2px solid transparent;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.65);
   transition: border-color 0.3s ease, transform 0.2s ease;
 }
-.task-card:hover {
-  transform: translateY(-2px);
-}
 .task-card h3 {
-  font-size: 15px;
+  font-size: 1rem;
   margin-bottom: 4px;
 }
 .task-card p {
-  font-size: 12px;
+  font-size: .8rem;
   margin: 4px 0;
-}
-.show-all-btn {
-  align-self: center;
-  padding: 12px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
 }
 .modal {
   display: none;
@@ -372,718 +375,226 @@ main {
   font-weight: bold;
   cursor: pointer;
 }
+.show-all-btn {
+  align-self: center;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+/* ========== Responsive Enhancements ========== */
+@media (max-width: 1686px) {
+main {
+  gap: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  margin: 1rem 0;
+}
 
 
 
 
-/*----------- Responsive ------------*/
-@media screen and (max-width: 1686px) {
-  .Main-right {
-    width: 15rem;
+
+
+}
+@media (max-width: 1440px) {
+  main {
+    gap: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    margin: 1rem 0;
   }
-  /*----------- Calendar ------------*/
-.calendar-container {
+
+  /*----------- Main-right ------------*/
+.Main-right{
+  width: 20rem;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#calendar-container {
   border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-  width: 13rem;
-  background-color: #ffffff;
-  transition: all 0.3s ease-in-out;
+  padding: 1.5rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.527);
+  width: 20rem;
+  text-align: center;
 }
 
 .calendar-container h2 {
-  font-size: 1rem;
+  font-size: 1.rem;
   margin-bottom: 1rem;
   text-align: left;
-  font-weight: 600;
-  color: #333;
 }
-
 .calendar {
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  background-color: #f8f9fa;
+  border-radius: 1rem;
+  padding: 1rem;
 }
-
 .calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-weight: 600;
+  font-weight: bold;
   margin-bottom: 1rem;
 }
-
 .calendar-header button {
   background: none;
   border: none;
-  font-size: 1rem;
-  color: #333;
+  font-size: 1.2rem;
   cursor: pointer;
-  transition: color 0.2s ease;
 }
-
-.calendar-header button:hover {
-  color: #007bff;
-}
-
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 0.3rem;
-}
-
-.day-name {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-align: center;
-  color: #555;
-}
-
-.day {
-  height: 2rem;
-  line-height: 2rem;
-  font-size: 0.75rem;
-  text-align: center;
-  border-radius: 50%;
-  color: #333;
-  background-color: #e9ecef;
-  transition: background-color 0.3s ease;
-}
-
-.day:hover {
-  background-color: #dee2e6;
-}
-
-.day.active {
-  background-color: #007bff;
-  color: #fff;
-  font-weight: bold;
-}
-
-.day.marked {
-  background-color: #ffc107;
-  color: #212529;
-  font-weight: bold;
-  cursor: pointer;
-  position: relative;
-}
-
-.day.marked::after {
-  content: "";
-  position: absolute;
-  bottom: 3px;
-  right: 3px;
-  width: 5px;
-  height: 5px;
-  background-color: #dc3545;
-  border-radius: 50%;
-}
-
-  .slot-item,
-  .custom-course-card {
-    max-width: 200px;
-  }
-}
-@media screen and (max-width: 1328px) {
-  .Main-right {
-    width: 15rem;
-  }
-  /*----------- Courses ------------*/
-#results {
-  gap: 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start;
-  margin: 1rem;
-}
-.slot-item {
-  border-radius: 16px;
-  padding: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 180px;
-  transition: transform 0.2s ease;
-}
-.slot-item:hover {
-  transform: translateY(-4px);
-}
-.slot-item img {
-  width: 100%;
-  height: 6rem;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 12px;
-}
-.slot-title {
-  font-weight: 600;
-  font-size: .9rem;
-}
-.slot-prof {
-  font-size: 0.7rem;
-  margin-bottom: 8px;
-}
-.progress-container {
-  margin-top: auto;
-}
-.progress-bar {
-  height: 6px;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-.progress-bar-fill {
-  height: 100%;
-  transition: width 0.3s ease;
-}
-.progress-info {
-  font-size: 0.7rem;
-  display: flex;
-  justify-content: space-between;
-}
-.course-Btns {
-  cursor: pointer;
-  padding: 0.3rem 0.5rem;
-  border-radius: 8px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.Btns {
-  gap: 1rem;
-  display: flex;
-  flex-direction: row;
-  margin: 0 2rem;
-}
-.coures-container{
-  display: flex;
-  justify-content: space-between;
-  margin: 1rem 0;
-}
-
-}
-@media screen and (max-width: 1202px) {
-/*----------- Navigation ------------*/
-.nav {
-  padding: .7rem;
-  display: flex;
-  margin: 1rem;
-  border-radius: 1rem;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-.sidebar-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-#Bulogos {
-  width: 2rem;
-}
-.sidebar-top {
-  gap: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-.Side-caret {
-  font-size: 1rem;
-  display: flex;
-  justify-content: flex-end;
-}
-.Action-nav-btns,
-.Side-Btns {
-  display: flex;
-  align-items: center;
   gap: 0.5rem;
 }
-.Side-Btns i {
-  font-size: 1.2rem;
-}
-.linkName {
-  font-size: 0.8rem;
-}
-#open {
-  margin: 0 -1.3rem;
-}
-.sidebar-bottom {
-  gap: 1rem;
-  display: flex;
-  flex-direction: column;
-}
-
-/*----------- Main Layout ------------*/
-main {
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  height: 100%;
-  overflow-y: auto;
-}
-.Main-left {
-  width: 100%;
-  margin: 1rem;
-  display: flex;
-  flex-direction: column;
-}
-.Welcome-block {
-  gap: 0.7rem;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem 2rem;
-  border-radius: 1rem;
-}
-#Name {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-/*----------- Courses ------------*/
-#results {
-  gap: 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start;
-  margin: 1rem 0;
-}
-.slot-item {
-  border-radius: 16px;
-  padding: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 140px;
-  transition: transform 0.2s ease;
-}
-.slot-item:hover {
-  transform: translateY(-4px);
-}
-.slot-item img {
-  width: 100%;
-  height: 5rem;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 12px;
-}
-.slot-title {
-  font-weight: 600;
-  font-size: .7rem;
-}
-.slot-prof {
-  font-size: 0.5rem;
-  margin-bottom: 8px;
-}
-.progress-container {
-  margin-top: auto;
-}
-.progress-bar {
-  height: 6px;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-.progress-bar-fill {
-  height: 100%;
-  transition: width 0.3s ease;
-}
-.progress-info {
-  font-size: 0.6rem;
-  display: flex;
-  justify-content: space-between;
-}
-.course-Btns {
-  cursor: pointer;
-  padding: 0.3rem 0.5rem;
-  border-radius: 8px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.Btns {
-  gap: 1rem;
-  display: flex;
-  flex-direction: row;
-  margin: 0 2rem;
-}
-.coures-container{
-  display: flex;
-  justify-content: space-between;
-  margin: 1rem 0;
-}
-
-  /*----------- Calendar ------------*/
-.calendar-container {
-  border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.65);
-  width: 8rem;
-  height: 8rem;
-  background-color: #ffffff;
-  transition: all 0.3s ease-in-out;
-}
-/*----------- Carousel Section ------------*/
-.custom-carousel-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  padding: 30px 0;
-  overflow-x: auto;
-}
-.custom-carousel-btn {
-  cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 1.5rem;
+.day-name {
   font-weight: bold;
 }
-#custom-course-carousel {
-  display: flex;
-  gap: 24px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-}
-.custom-course-card {
- border-radius: 16px;
-  padding: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 140px;
-  transition: transform 0.2s ease;
-}
-.custom-course-card:hover {
-  transform: translateY(-5px);
-}
-.custom-course-card img {
-  width: 100%;
-  height: 5rem;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 10px;
-}
-.custom-course-title {
-  font-weight: 600;
-  font-size: .7rem;
-}
-.custom-course-instructor {
-  font-size: 0.5rem;
-  margin-bottom: 8px;
-}
-.custom-progress-container {
-  margin-top: auto;
-}
-.custom-progress-bar {
-  height: 8px;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-.custom-progress-fill {
-  height: 100%;
-  transition: width 0.3s ease;
-}
-.custom-progress-info {
- font-size: 0.6rem;
-  display: flex;
-  justify-content: space-between;
-}
-/*----------- Sidebar ------------*/
-.Main-right {
-  width: 25rem;
-  margin: 1rem 1.5rem;
-}
-.User-info-alerts {
-  gap: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-}
-#bell-full,
-#full-Evalope {
-  display: none;
-}
-#user-Img {
-  width: 2rem;
-  height: 2rem;
-  object-fit: cover;
+.day {
+  height: 2.5rem;
+  line-height: 2.5rem;
   border-radius: 50%;
 }
-
-/*----------- Tasks ------------*/
-#Task-block {
-  padding: 1.5rem 0;
+.day.active {
+  font-weight: bold;
 }
-
-#taskContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  max-width: 600px;
-  margin: auto;
-  padding: 0 1rem;
-}
-
-.task-card {
-  padding: 12px 16px;
-  margin: 4px 0;
-  border-radius: 10px;
-  border: 2px solid transparent;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
-  transition: border-color 0.3s ease, transform 0.2s ease;
-  background-color: #fff;
-}
-
-.task-card:hover {
-  transform: translateY(-2px);
-}
-
-.task-card h3 {
-  font-size: 12px;
-  margin-bottom: 3px;
-}
-
-.task-card p {
-  font-size: 9.5px;
-  margin: 3px 0;
-}
-
-.show-all-btn {
-  align-self: center;
-  padding: 10px 16px;
-  font-size: 14px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background-color: #007bff;
-  color: white;
-  transition: background-color 0.2s ease;
-}
-
-.show-all-btn:hover {
-  background-color: #0056b3;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-
-.modal-content {
-  margin: 2rem auto;
-  padding: 16px;
-  width: 95%;
-  max-width: 600px;
-  border-radius: 10px;
-  background-color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.close-btn {
-  float: right;
-  font-size: 24px;
+.day.marked {
   font-weight: bold;
   cursor: pointer;
-  color: #333;
 }
 
 
 
 
-
 }
-@media screen and (max-width: 825px) {
+@media (max-width: 1024px) {
   body {
     flex-direction: column;
-    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   main {
     flex-direction: column;
-    height: auto;
-  }
-
-  .nav,
-  .Main-left,
-  .Main-right,
-  .sidebar-content,
-  .User-info-alerts {
-    width: 100% !important;
-    margin: 0 auto;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
+    gap: 2rem;
+    width: 100%;
+    margin: 1rem;
   }
 
   .Main-right {
-    margin-top: 1rem;
     width: 100%;
+    align-items: center;
   }
 
-  .slot-item,
-  .custom-course-card {
-    max-width: 160px;
+  #calendar-container {
     width: 100%;
+    padding: 1rem;
+  }
+
+  #Alert-Icons {
+    gap: 1.5rem;
+    justify-content: center;
   }
 
   #results {
-    justify-content: center;
-  }
-
-  .slot-item img,
-  .custom-course-card img {
-    height: 6rem;
-  }
-
-  .slot-title,
-  .custom-course-title {
-    font-size: 0.8rem;
-  }
-
-  .slot-prof,
-  .custom-course-instructor,
-  .progress-info,
-  .custom-progress-info {
-    font-size: 0.65rem;
-  }
-
-  .calendar-container {
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-  }
-
-  .calendar-header {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .calendar-grid {
-    gap: 0.4rem;
-  }
-
-  .Btns,
-  .Action-nav-btns {
     flex-wrap: wrap;
     justify-content: center;
-    gap: 0.5rem;
   }
 
-  #user-Img {
-    width: 2.5rem;
-    height: 2.5rem;
+  .coures-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
   }
 
-  .task-card {
-    padding: 10px;
-    font-size: 0.75rem;
+  .Btns {
+    margin: 1rem 0;
+    justify-content: center;
   }
 
-  .show-all-btn {
-    font-size: 14px;
-    padding: 8px 12px;
+  .slot-item {
+    max-width: 90%;
+  }
+
+  .custom-carousel-wrapper {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  #custom-course-carousel {
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .custom-course-card {
+    max-width: 90%;
   }
 }
 
-@media screen and (max-width: 768px) {
-  body {
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .Mobile-close-btn {
+    display: block;
+  }
+
+  .nav {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    height: 100vh;
+    width: 70%;
+    background-color: white;
+    z-index: 1000;
     flex-direction: column;
-    overflow: auto;
+    justify-content: flex-start;
+    transition: left 0.3s ease;
+  }
+
+  .nav.active {
+    left: 0;
+  }
+
+  .Main-right {
+    width: 100%;
   }
 
   main {
     flex-direction: column;
-    height: auto;
+    margin: 1rem;
+    gap: 1.5rem;
   }
 
-  .Main-left,
-  .Main-right,
-  .nav,
-  .User-info-alerts,
   .sidebar-content {
-    width: 100% !important;
-    padding: 1rem;
-    margin: 0;
+    align-items: flex-start;
+  }
+
+  #calendar-container {
+    width: 100%;
+  }
+
+  #results,
+  #custom-course-carousel {
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
   }
 
   .slot-item,
   .custom-course-card {
     max-width: 100%;
   }
-
-  #Name {
-    font-size: 1.3rem;
-  }
-
-  .slot-title,
-  .custom-course-title {
-    font-size: 0.9rem;
-  }
-
-  .slot-prof,
-  .custom-course-instructor,
-  .progress-info,
-  .custom-progress-info {
-    font-size: 0.75rem;
-  }
-
-  .calendar-container {
-    width: 25rem;
-    max-width: 100%;
-  }
-
-  #taskContainer {
-    padding: 0 1rem;
-  }
-
-  .Btns,
-  .Action-nav-btns {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
 }
 
-@media screen and (max-width: 399px) {
-  .calendar-container {
-    width: 100% !important;
-    padding: 1rem;
-  }
 
-  .calendar-header {
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: flex-start;
-  }
 
-  .calendar-grid {
-    gap: 0.25rem;
-  }
 
-  .day {
-    font-size: 0.7rem;
-    height: 1.8rem;
-    line-height: 1.8rem;
-  }
-}
+

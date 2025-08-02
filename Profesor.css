@@ -9,7 +9,22 @@ body {
   width: 100%;
   overflow: hidden;
   flex-direction:row; /* Helps small screens stack better */
-  overflow-y: auto;
+
+}
+/*--------- nav ---------*/
+.hamburger {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none;
+}
+.Mobile-close-btn{
+  display: none;
 }
 .nav {
   padding: 1rem;
@@ -63,59 +78,40 @@ body {
 /*--------- Main ---------*/
 .Main{
   width: 100%;
+  margin: 1rem;
 }
 #Tittle{
   text-align: center;
   font-size: 1.8rem;
+  padding: .5rem 0;
+  border-radius: 1rem;
 }
-#messages{
-  width: 70%
-}
+
 /*----------- MainNav  --------------*/
-.main-nav {
-  gap: 1rem;
+.main-nav{
+  gap: 2rem;
   display: flex;
   padding: .5rem 1rem;
   border-radius: 12px;
-  max-width: 800px;
-  justify-content: space-between;
 }
-.Input-Block {
-  flex: 1 1 200px;
-  display: flex;
-  flex-direction: column;
-}
-.Input-Block select {
-  padding: 10px 12px;
-  font-size: 16px;
-  border-radius: 8px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  appearance: none;
-  cursor: pointer;
-}
-.Input-Block select:hover {
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-}
-.Input-Block select:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-}
+
 /*----------- Blocks --------------*/
 .Block{
   gap: 1rem;
   display: flex;
-  align-items: center;
+  
+  margin: 1rem 0;
+}
+.hidden-faq-text{
+  display: none;
+}
+.content{
+  border-radius: 1rem;
+  padding: 1rem;
 }
 .Block-set{
-  gap: 2rem;
+  gap: 1rem;
   display: flex;
-  flex-wrap: wrap;
-}
-.content {
-  padding: 1.5rem;
-  margin: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 /*----------- Faq --------------*/
 #faq {
@@ -125,6 +121,7 @@ body {
   overflow-y: auto;
   box-sizing: border-box;
   scroll-behavior: smooth;
+  
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 .Faq-Q-tittle{
@@ -190,20 +187,23 @@ body {
   vertical-align: middle;
 }
 /*----------- Messages --------------*/
-#teacher-message{
-  width: 100%;
-  height: 8rem;
-  margin: 0.5rem 0 1rem 0;
-  padding: 0.7rem;
-  font-size: 1rem;
-  border-radius: 6px;
+#messages{
+  width: 65%;
+
 }
 .message-container{
   width: 100%;
-  height: 22vh;
   overflow-y: auto;
   box-sizing: border-box;
   scroll-behavior: smooth;
+}
+#teacher-message{
+  width: 100%;
+  height: 10rem;
+  margin: 0.5rem  0;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 6px;
 }
 .send-btn {
   padding: 0.7rem 1.2rem;
@@ -211,29 +211,13 @@ body {
   border-radius: 6px;
   cursor: pointer;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*----------- teacher-info --------------*/
 #teacher-info {
   width: 25%;
   height: 18rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  margin: 0 auto;
+  margin: 0 ;
   box-sizing: border-box;
 }
 #teacher-info .content-tittle {
@@ -257,18 +241,380 @@ body {
 .Teacher-points strong {
   font-weight: 600;
 }
-
-
 #stats{
   scroll-behavior: smooth;
   max-height: 13vh; /* Adjust as needed */
   overflow-y: auto;
 }
-
-
 .file-list{
   display: flex;
   flex-direction: column;
 
 }
 
+/* ------------------ Responsive: max 1440px ------------------ */
+@media (max-width: 1440px) {
+
+  /*--------- Main ---------*/
+  .Main{
+    width: 88%;
+    margin: 1rem;
+  }
+  #Tittle{
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  /*----------- MainNav  --------------*/
+  .main-nav{
+    gap: 1.5rem;
+    display: flex;
+    padding: .5rem .8rem;
+    border-radius: 12px;
+  }
+  /*----------- Blocks --------------*/
+  .Block{
+    gap: .5rem;
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+  }
+  .hidden-faq-text{
+    display: none;
+  }
+  .content{
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+  .Block-set{
+    gap: 1rem;
+    display: flex;
+  }
+  /*----------- Announcement --------------*/
+  #announcement-container {
+    
+    height: 10rem;
+    overflow-y: auto;
+  }
+  /*----------- Messages --------------*/
+  #messages{
+    width: 65%;
+    padding:  1rem;
+
+  }
+  .message-container{
+    width: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+  }
+  #teacher-message{
+    width: 100%;
+    height: 6rem;
+    margin: 0.5rem  0;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 6px;
+  }
+  .send-btn {
+    padding: 0.7rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  /*----------- teacher-info --------------*/
+  #teacher-info{
+    height: 14rem;
+    overflow-y: auto;
+  }
+  #teacher-info .content-tittle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    text-align: center;
+  }
+  .Teacher-points {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    font-size: .9rem;
+    padding-left: 0.5rem;
+  }
+  .Teacher-points span {
+    gap: .5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  #stats{
+    scroll-behavior: smooth;
+    max-height: 16vh; /* Adjust as needed */
+    overflow-y: auto;
+  }
+  .file-list{
+    display: flex;
+    flex-direction: column;
+  }
+  #faq, #messages {
+    width: 70%;
+    max-height: 28vh;
+  }
+  #announcement-container { 
+    max-height: 28vh;
+  }
+  #teacher-info {
+    width: 30%;
+    height: auto;
+    margin-top: 1rem;
+  }
+  .Faq-Q-tittle, .hidden-faq-text {
+    width: 100%;
+  }
+}
+@media (max-width: 1024px) {
+
+  /*--------- Main ---------*/
+  .Main{
+    width: 88%;
+    margin: 1rem;
+  }
+  #Tittle{
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  /*----------- MainNav  --------------*/
+  .main-nav{
+    gap: 1rem;
+    display: flex;
+    padding: .5rem .8rem;
+    border-radius: 12px;
+  }
+  .Input-Block select{
+    font-size: .9rem;
+  }
+  /*----------- Faq --------------*/
+  #faq {
+    width: 65%;
+    padding:1rem;
+    max-height: 26.4vh; /* Adjust as needed */
+    overflow-y: auto;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  }
+  .content-tittle{
+    font-size: 1.2rem;
+  }
+  .Faq-Q-tittle{
+    font-size: 1rem;
+  }
+  .Faq-block {
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .hidden-faq-text {
+    width: 25rem;
+    display: none;
+    text-align: justify;
+    margin: 0 auto;
+    font-size: 1rem;
+    padding: 1rem;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+  }
+  .hidden-faq-text.show {
+    display: flex;
+  }
+  #faq::-webkit-scrollbar {
+    width: 8px;
+  }
+  #faq::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+  }
+
+
+
+
+  /*----------- Blocks --------------*/
+  .Block{
+    gap: .5rem;
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+  }
+  .hidden-faq-text{
+    display: none;
+  }
+  .content{
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+  .Block-set{
+    gap: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  /*----------- Announcement --------------*/
+  #announcement-container {
+    height: 10rem;
+    overflow-y: auto;
+  }
+  /*----------- Messages --------------*/
+  #messages{
+    width: 65%;
+    padding:  1rem;
+
+  }
+  .message-container{
+    width: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+  }
+  #teacher-message{
+    width: 100%;
+    height: 6rem;
+    margin: 0.5rem  0;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 6px;
+  }
+
+  .send-btn {
+    padding: 0.7rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+
+/*----------- teacher-info --------------*/
+  #teacher-info{
+    height: 14rem;
+    overflow-y: auto;
+  }
+  #teacher-info .content-tittle {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+    text-align: center;
+  }
+  .Teacher-points {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    font-size: .9rem;
+    padding-left: 0.5rem;
+  }
+  .Teacher-points span {
+    gap: .5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #stats{
+    scroll-behavior: smooth;
+    max-height: 16vh; /* Adjust as needed */
+    overflow-y: auto;
+  }
+  .file-list{
+    display: flex;
+    flex-direction: column;
+
+  }
+
+
+
+
+
+}
+@media (max-width: 876px) {
+    body {
+    overflow-y: auto;
+  }
+  .Main{
+    width: 100%;
+    margin: 1rem;
+  }
+
+
+  .hamburger {
+      display: block;
+      color: #c40505;
+      font-weight: bold;
+  }
+  .Mobile-close-btn{
+    display: flex;
+ 
+    color: #c40505;
+    font-size: 1.5rem;
+
+  }
+  .Mobile-sidebar {
+    position: fixed;
+    top: 0;
+    left: -270px;
+    width: 75%;
+    max-width:210px;
+    height: 95%;
+    background-color: #1a1a1a;
+    color: white;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+  .Mobile-sidebar.active {
+    left: 0;
+  }
+  .main-nav{
+    flex-wrap: wrap;
+  }
+  #Tittle{
+    padding: .5rem 0;
+    border-radius: 1rem;
+    margin: 0 0 .5rem 3rem;
+  }
+}
+@media (max-width: 698px) {
+  body {
+    overflow-y: auto;
+  }
+  .Main{
+    width: 100%;
+    margin:1rem;
+    padding-bottom:1rem ;
+  }
+
+  /*----------- MainNav  --------------*/
+  .main-nav{
+    gap: .5rem;
+    display: flex;
+    padding: .5rem;
+    border-radius: 12px;
+  }
+  .Input-Block select{
+    font-size: .7rem;
+    padding: .3rem ;
+  }
+
+
+
+
+
+
+
+
+
+
+
+  .Block{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .content{
+    width: 100%;
+  }
+#faq, #messages, #teacher-info {
+  width: 100%;
+}
+
+}
