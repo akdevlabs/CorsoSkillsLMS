@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LearnHub - Descubre tu pasión y aprende a tu propio ritmo con cursos interactivos">
+  <!-- Fuentes y estilos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classroom|StudentDashboard|CorsoSkills</title>
+  <link rel="stylesheet" href="Classroom.css">
+</head>
+<body>
+  <section class="nav" id="sidebar">
+      
+      <div class="sidebar-content">
+        
+        <div class="sidebar-top">  
+          <img id="Bulogos"></img>
+          
+          <div class="Side-Btns" id="Home">
+            <i class="fa-solid fa-table-cells"></i>
+            <span class="linkName">Dashboard</span>
+          </div>
+
+          <div class="Side-Btns" id="Books">
+            <i class="fa-solid fa-book-open"></i>
+            <span class="linkName">eBooks</span>
+          </div>
+
+          <div class="Side-Btns" id="Videos">
+            <i class="fa-solid fa-school"></i>
+            <span class="linkName">Cursos</span>
+          </div>
+
+          <div class="Side-Btns" id="Trophy">
+            <i class="fa-solid fa-trophy"></i>
+            <span class="linkName">Logros</span>
+          </div>
+
+          <div class="Side-Btns" id="Multi-User">    
+            <i class="fa-solid fa-users"></i>
+            <span class="linkName">Comunidad</span>
+          </div>
+
+          <div class="Side-Btns" id="carrer">    
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span class="linkName">Ruta Profesional</span>
+          </div>
+
+        </div>
+
+        <div class="Side-Btns" class="sidebar-bottom">
+          <div class="profile">
+            <i class="fa-solid fa-user-tie"></i>
+            <span class="linkName">Profesor</span>
+        </div>
+        </div> 
+        
+      </div>
+
+    
+
+    
+
+      <div class="Action-nav-btns">
+      
+      <div class="Side-caret" id="open">
+          <i class="fa-solid fa-caret-right"></i>
+      </div>
+
+      <div class="Side-caret" id="close">
+          <i class="fa-solid fa-caret-left"></i>
+      </div>
+
+      </div>
+  </section>
+
+  <section class="Content" id="Course-Content">
+    <div class="Top-Course-Content" id="Top-Course-Content">
+      <div class="Course-Nav" id="breadcrumb">
+        <span>Mis Cursos</span> > <span id="Type">Mastering Illustration</span> > <span id="current">Course</span>
+      </div>
+      <h1 id="Courese-Tittle"></h1>      
+    </div>
+
+    <div class="video-player" id="videoContainer">
+      <video id="courseVideo" controls>
+        <source src="" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+
+    <div class="bottom-Course-Content" id="bottom-Course-Content">
+      <div class="Active-Nav-Btns" id="Active-Nav-Btns">
+
+        <div id="Detials-Block">
+          <button class="ANB" id="Detials-btn">Detalles</button>
+        </div>
+
+        <div id="Resources-Block">
+          <button class="ANB" id="Resources-btn">Recursos</button>
+        </div>
+
+        <div id="Homework-Block">
+          <button class="ANB" id="Homework-btn">Tarea</button>
+        </div>
+
+        <div id="Exam-Block">
+          <button class="ANB" id="Exam-btn">Examen</button>
+        </div>
+
+        <div id="Requirement-Block">
+          <button class="ANB" id="Requirement-btn">Requisitos</button>
+        </div>
+
+      </div>
+
+      <div id="detials">
+        <div class="Teacher-About-block">
+          <div class="mentor-info">
+            <img id="Mentor-Photo" />
+            <div class="Teacher-Text">
+              <div id="Teacher-Name"></div>
+              <div id="Teacher-Subtitle"></div>
+            </div>
+          </div>
+          <div class="course-suit" id="resultados-aprendizaje"></div>
+        </div>
+        <div class="course-description">
+            <h3>Acerca de este curso</h3>
+            <div class="About-Course">
+              <div id="About-Course-1"></div>
+              <div id="About-Course-2"></div>
+            </div>
+            <a id="showMoreLink">Show more</a>
+        </div> 
+      </div>
+
+      <div id="Resources">
+        <h2 id="Resources-main-tittle">Estos son recursos para ayudarte en tu camino:</h2>
+        <div id="Resourcesbtns"></div>
+      </div>
+
+      <div id="Homework">
+        <h2 id="Resources-main-tittle">Estos son recursos para ayudarte en tu camino:</h2>
+        <div id="Homeworkbtns"></div>      
+      </div>
+
+      <div id="Exam">
+        <div id="Exam-Portal" style="display: none;"></div>
+      </div>
+
+      <div id="Requirement">
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="sidebar" id="container">
+    <div class="Details-block" id="Details-block">
+      <div class="Review-Stars">
+        <h1>Calificación</h1>        
+        <div id="Review-Stars"></div>
+      </div>
+      <div class="Detail-points">
+
+        <div class="Duration">
+          <i class="fa-solid fa-hourglass-start"></i>
+          <div id="Duration"></div>
+        </div>
+
+        <div class="Skill-Level">
+          <i class="fa-solid fa-ranking-star"></i>
+          <div id="Skill-Level"></div>
+        </div>
+
+        <div class="Language">
+          <i class="fa-solid fa-address-card"></i>
+          <div id="Language"></div>
+        </div>
+
+        <div class="Views">
+          <i class="fa-solid fa-signature"></i>
+          <div id="Views"></div>
+        </div>        
+      </div>
+
+    </div>
+
+    <div class="progress-section" id="progress-section">
+        <h4>Así va tu camino de aprendizaje<span id="progress-percent">0%</span></h4>
+        <div class="progress-bar">
+          <div class="progress" id="progress-bar-fill" style="width:0%;"></div>
+        </div>
+        <p id="Quotes-block"></p>
+    </div>
+
+<div class="course-completion" id="Module-view">
+  <h4>Course Completion</h4>
+  <ul id="module-list">
+    <!-- modules will render here -->
+  </ul>
+</div>
+
+<div class="course-completion" id="Module-List">
+  <h4>Course Completion <span>1/6</span></h4>
+  <ul></ul>
+</div>
+
+    <button class="Action-btns" id="enroll-container">inscribirse</button>
+    <button class="Action-btns" id="Upgrade-container">Obtener acceso ilimitado</button>
+    <div class="Pay-block" id="Pay-block">
+      <div id="Pay-info"></div>
+      <button class="Action-btns">Pagar</button>
+    </div>
+
+    <div id="suggeston-block"></div>
+
+
+
+     
+
+  </section>
+  
+
+
+ 
+  <script  src="Classroom.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LearnHub - Descubre tu pasión y aprende a tu propio ritmo con cursos interactivos">
+  <!-- Fuentes y estilos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comunidad|StudentDashboard|CorsoSkills</title>
+  <link rel="stylesheet" href="Profesor.css">
+</head>
+<body>
+  <!-- Hamburger (mobile only) -->
+  <button id="menuToggle" class="hamburger">&#9776;</button>
+  <div id="overlay" class="overlay"></div>
+  <section class="nav Mobile-sidebar" id="sidebar">
+   
+
+    <div class="sidebar-content">
+      <div class="sidebar-top">  
+        <img id="Bulogos" alt="Logo" />
+
+        <div class="Side-Btns" id="Home">
+          <i class="fa-solid fa-table-cells"></i>
+          <span class="linkName">Dashboard</span>
+        </div>
+        <div class="Side-Btns" id="Books">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="linkName">eBooks</span>
+        </div>
+        <div class="Side-Btns" id="Videos">
+          <i class="fa-solid fa-school"></i>
+          <span class="linkName">Cursos</span>
+        </div>
+        <div class="Side-Btns" id="Classroom">
+          <i class="fa-solid fa-file-video"></i>
+          <span class="linkName">Salón</span>
+        </div>
+        <div class="Side-Btns" id="Trophy">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="linkName">Logros</span>
+        </div>
+        <div class="Side-Btns" id="Multi-User">    
+          <i class="fa-solid fa-users"></i>
+          <span class="linkName">Comunidad</span>
+        </div>
+        <div class="Side-Btns" id="carrer">    
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span class="linkName">Ruta Profesional</span>
+        </div>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="Side-Btns" id="Settings">
+          <i class="fa-solid fa-gear"></i>
+          <span class="linkName">Settings</span>
+        </div>
+        <div class="Side-Btns" id="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span class="linkName">Cerrar sesión</span>
+        </div>
+      </div> 
+    </div>
+    <div class="Action-nav-btns">
+      <div class="Side-caret" id="open">
+        <i class="fa-solid fa-caret-right"></i>
+      </div>
+      <div class="Side-caret" id="close">
+        <i class="fa-solid fa-caret-left"></i>
+      </div>
+    </div>
+     <span id="Mobile-closeBtn" class="Mobile-close-btn">&times;</span>
+  </section>
+
+
+  <section class="Main">
+
+    <h1 id="Tittle">Conecta con tu Profesor</h1>
+
+    <div class="main-nav">
+      
+      <div class="Input-Block">
+        <select id="Category-select">
+          <option>Elige Categoria</option>
+        </select>
+      </div> 
+      
+      <div class="Input-Block">
+        <select id="Type-select">
+            <option>Elige Nivel</option>
+        </select>
+      </div> 
+
+      <div class="Input-Block">
+        <select id="Course-select">
+            <option>Elige Courso</option>
+        </select>
+      </div>  
+
+    </div>
+
+    <div class="Block">
+      <div class="content" id="faq">
+        <h2 class="content-tittle">Preguntas Frecuentes</h2>
+
+        <div class="Block-set">
+          <div class="Faq-block">
+            <h1 class="Faq-Q-tittle" id="Faq-1-questions">¿Cómo uso el portal?</h1>
+            <p class="hidden-faq-text" id="Faq-1-answer">
+              Primero elige una categoría, luego el nivel, y después selecciona el curso. Una vez hecho esto, tendrás acceso al contenido, tareas y comunicación con el profesor.
+            </p>
+          </div>
+
+          <div class="Faq-block">
+            <h1 class="Faq-Q-tittle" id="Faq-2-questions">¿Dónde veo mis eBooks?</h1>
+            <p class="hidden-faq-text" id="Faq-2-answer">
+              Dirígete a la sección eBooks desde el menú lateral. Ahí encontrarás los libros disponibles según tu curso y nivel.
+            </p>
+          </div>
+        </div>
+
+        <div class="Block-set">
+          <div class="Faq-block">
+            <h1 class="Faq-Q-tittle" id="Faq-3-questions">¿Cómo accedo a mis cursos en video?</h1>
+            <p class="hidden-faq-text" id="Faq-3-answer">
+              En el menú lateral, haz clic en Cursos. Verás todos los módulos disponibles para ti con sus respectivos videos.
+            </p>
+          </div>
+
+          <div class="Faq-block">
+            <h1 class="Faq-Q-tittle" id="Faq-4-questions">¿Qué es el salón virtual?</h1>
+            <p class="hidden-faq-text" id="Faq-4-answer">
+              El Salón es un espacio donde puedes ver clases en vivo, grabaciones, y participar en actividades virtuales organizadas por el profesor.
+            </p>
+          </div>
+        </div>
+
+        <div class="Block-set">
+          <div class="Faq-block">
+            <h1 class="Faq-Q-tittle" id="Faq-5-questions">¿Cómo veo mis logros?</h1>
+            <p class="hidden-faq-text" id="Faq-5-answer">
+              Puedes ver tus insignias y logros obtenidos haciendo clic en la sección Logros del menú. Ahí se muestran tus progresos y premios.
+            </p>
+          </div>
+
+          <div class="Faq-block">
+            <h1 class="Faq-Q-tittle" id="Faq-6-questions">¿Cómo interactúo con otros estudiantes?</h1>
+            <p class="hidden-faq-text" id="Faq-6-answer">
+              Entra a la sección Comunidad para conectarte con otros estudiantes, compartir dudas o experiencias, y participar en foros de discusión.
+            </p>
+          </div>
+        </div>
+
+        <div class="Block-set">
+          <div class="Faq-block">
+            <h1 class="Faq-Q-tittle" id="Faq-7-questions">¿Qué es la Ruta Profesional?</h1>
+            <p class="hidden-faq-text" id="Faq-7-answer">
+              Es una guía paso a paso con cursos y actividades recomendadas para ayudarte a crecer profesionalmente dentro de tu área de interés.
+            </p>
+          </div>
+
+          <div class="Faq-block">
+            <h1 class="Faq-Q-tittle" id="Faq-8-questions">¿Cómo configuro mi cuenta?</h1>
+            <p class="hidden-faq-text" id="Faq-8-answer">
+              Ve a Settings desde el menú para editar tu información personal, cambiar tu contraseña o ajustar notificaciones.
+            </p>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="content" id="announcements">
+        <h2 class="content-tittle">Últimos Anuncios</h2>
+        <div id="announcement-container"></div>
+      </div>
+    </div>
+
+    <div class="Block">
+      <div class="content" id="messages">
+        <h2 class="content-tittle">Enviar mensaje a tu profesor</h2>
+        <div class="message-container">
+          <textarea id="teacher-message" placeholder="Escribe tu mensaje..."></textarea>
+          <button class="send-btn" id="teacher-message-btn">Enviar mensaje</button>
+        </div>
+
+      </div>
+
+      <div class="content" id="teacher-info">
+        <h2 class="content-tittle">Información del Profesor</h2>
+        <div class="Teacher-points">
+          <span id="Teacher-Name"><strong>Nombre:</strong></span>
+          <span id="Teacher-Email"><strong>Email:</strong></span>
+          <span id="Teacher-Time"><strong>Horario de atención:</strong></span>          
+        </div>
+
+      </div>
+    
+    </div>
+
+    <div class="Block">
+      <div class="content" id="submit-homework">
+        <h2 class="content-tittle">Entregar Tarea</h2>
+        <input type="text" id="homeworkTitle" placeholder="Título de la Tarea" />
+        <input type="file" id="homeworkFile" />
+        <button class="send-btn" id="uploadBtn" disabled>Subir Tarea</button>
+      </div>
+
+      <div class="content" id="stats">
+        <h2 class="content-tittle">Tus Entregas</h2>
+        <div class="file-list" id="fileList"></div>
+      </div>
+    </div>
+
+  </section>
+
+
+
+
+
+
+
+ 
+  <script  src="Profesor.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LearnHub - Descubre tu pasión y aprende a tu propio ritmo con cursos interactivos">
+  
+  <!-- Stripe FIRST -->
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <!-- Fuentes y estilos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  <!-- Manifest opcional corregido -->
+  <link rel="manifest" href="site.webmanifest">
+
+  <title>Precio | CorsoSkills</title>
+  <link rel="stylesheet" href="Precio.css">
+</head>
+<body>
+  <header class="Nav-Container" id="header">  
+    <img id="Main-logo" src="">
+
+    <nav class="nav-links">
+      <div class="main-nav-links">
+        <a class="nav-link" href="index.html">Inicio</a>
+        <a class="nav-link" href="index1.html">Cursos</a>
+        <a class="nav-link" href="index2.html">Comunidad</a>
+        <a class="nav-link" href="index3.html">Precios</a> 
+      </div>
+      <div class="action-nav-links">
+        <a href="index4.html" class="ANLB" id="LoginSBtn">Alumno</a>
+        <a href="index4.html" class="ANLB" id="LoginTBtn">Docente</a>
+        <a href="index5.1.html" id="startBtn">Comenzar</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Pricing Section -->
+  <section class="container" id="container">
+    <h2 class="title">Planes de precios</h2>
+    <p class="subtitle">Elige el plan perfecto para tu crecimiento profesional</p>
+
+    <div class="cards">
+      <!-- Starter Plan -->
+      <div class="card" id="Basic-card">
+        <h3 id="Basic-Tittle"></h3>
+        <p class="price" id="Basic-Price"></p>
+        <ul class="features custom-list" id="Basic-features"></ul>
+        <button class="btn" id="Basic-btn">Comenzar Starter</button>
+      </div>
+
+      <!-- Pro Plan -->
+      <div class="card" id="Pro-card">
+        <h3 id="Pro-Tittle"></h3>
+        <p class="price" id="Pro-Price"></p>
+        <ul class="features custom-list" id="Pro-features"></ul>
+        <button class="btn" id="pro-btn">Elegir Pro</button>
+      </div>
+
+      <!-- Annual Plan -->
+      <div class="card" id="Anual-card">
+        <h3 id="Anual-Tittle"></h3>
+        <p class="price" id="Anual-Price"></p>
+        <ul class="features custom-list" id="Anual-features"></ul>
+        <button class="btn" id="Anual-btn">Elegir Anual</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer">
+    © 2025 CorsoSkills. Todos los derechos reservados.
+  </footer>
+
+  <!-- Stripe Payment Logic -->
+  <script>
+    const stripe = Stripe("pk_test_51RVlJuPP0Xlil7VVGeRnUzZx0GGULCxUNymNvSfrfjjCY3oHcOvYIYB7QeBdWVlbxsdw9p0V1zsC0OjrsUPvmjL0004YvCwOB9");
+
+    const handleCheckout = async (plan) => {
+      const response = await fetch("http://localhost:4242/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ plan }),
+      });
+
+      const session = await response.json();
+      stripe.redirectToCheckout({ sessionId: session.id });
+    };
+
+    document.getElementById("Basic-btn").addEventListener("click", () => handleCheckout("Basic"));
+    document.getElementById("pro-btn").addEventListener("click", () => handleCheckout("Pro"));
+    document.getElementById("Anual-btn").addEventListener("click", () => handleCheckout("Anual"));
+  </script>
+
+  <!-- Firebase pricing theme loader -->
+  <script type="module" src="Precio.js"></script>
+</body>
+</html>

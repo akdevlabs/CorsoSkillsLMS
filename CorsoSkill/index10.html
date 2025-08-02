@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LearnHub - Descubre tu pasión y aprende a tu propio ritmo con cursos interactivos">
+  <!-- Fuentes y estilos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard|StudentDashboard|CorsoSkills</title>
+  <link rel="stylesheet" href="StudentDashboard.css">
+</head>
+<body>
+  <section class="nav" id="sidebar">
+      
+      <div class="sidebar-content">
+        
+        <div class="sidebar-top">  
+          <img id="Bulogos"></img>
+
+          <div class="Side-Btns" id="Books">
+            <i class="fa-solid fa-book-open"></i>
+            <span class="linkName">eBooks</span>
+          </div>
+
+          <div class="Side-Btns" id="Videos">
+            <i class="fa-solid fa-school"></i>
+            <span class="linkName">Cursos</span>
+          </div>
+
+          <div class="Side-Btns" id="Classroom">
+            <i class="fa-solid fa-file-video"></i>
+            <span class="linkName">Salon</span>
+          </div>
+
+          <div class="Side-Btns" id="Trophy">
+            <i class="fa-solid fa-trophy"></i>
+            <span class="linkName">Logros</span>
+          </div>
+
+          <div class="Side-Btns" id="Multi-User">    
+            <i class="fa-solid fa-users"></i>
+            <span class="linkName">Comunidad</span>
+          </div>
+
+          <div class="Side-Btns" id="carrer">    
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span class="linkName">Ruta Profesional</span>
+          </div>
+
+        </div>
+
+        <div class="sidebar-bottom">
+
+          <div class="Side-Btns" id="Settings">
+            <i class="fa-solid fa-gear"></i>
+            <span class="linkName">Settings</span>
+          </div>
+   
+          <div class="Side-Btns" id="profile">
+            <i class="fa-solid fa-user-tie"></i>
+            <span class="linkName">Profesor</span>
+          </div>
+
+          <div class="Side-Btns" id="Logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="linkName">Cerrar sesión</span>
+          </div>
+        </div> 
+        
+      </div>
+
+    
+
+    
+
+      <div class="Action-nav-btns">
+      
+      <div class="Side-caret" id="open">
+          <i class="fa-solid fa-caret-right"></i>
+      </div>
+
+      <div class="Side-caret" id="close">
+          <i class="fa-solid fa-caret-left"></i>
+      </div>
+
+      </div>
+  </section>
+
+  <main>
+      <div class="Main-left">
+
+        <div class="Block" id="Welcome">
+            <div id="Date"></div>
+            <div id="Name"></div>
+            <div id="Updates"></div>  
+        </div>
+
+        <div class="Block" id="Cursos-En-Progreso">
+         
+          <div class="coures-container">
+            <h2 class="coures-tittle" id="C-Progress">Cursos En Progreso</h2>
+
+            <div class="Btns">
+              <div class="course-Btns" id="Course-left-btn">&lt;</div>
+              <div class="course-Btns" id="Course-right-btn">&gt;</div>
+            </div>
+          </div>  
+
+          <div id="results"></div>  
+          
+        </div>
+
+        <div class="Block" id="Cursos-Nuevos">
+          
+          <div class="coures-container">
+            <h2 class="coures-tittle" id="New-Course-Tittle">Cursos Nuevos</h2>
+            <div class="Btns">
+              <div class="course-Btns" id="custom-carousel-left">&lt;</div>
+              <div class="course-Btns" id="custom-carousel-right">&gt;</div>
+            </div>
+
+          </div>
+
+          <div id="custom-course-carousel"></div>
+        </div>        
+      </div>
+
+      <div class="Main-right">
+
+        <div class="Main-right-block" id="Alert-Icons">
+          <div class="Icons">
+            <div class="Evalopes">
+              <i id="empty-Evalope" class="fa-solid fa-envelope-open"></i>
+              <i id="full-Evalope" class="fa-solid fa-envelope-open-text"></i>
+            </div>
+            <div class="Bells">
+              <i class="fa-regular fa-bell" id="bell-empty"></i>
+              <i class="fa-solid fa-bell" id="bell-full"></i>
+            </div>
+          </div>
+
+          <div class="Info">
+            <img id="user-Img">
+          </div>
+        </div>
+
+        <div class="Main-right-block" id="calendar-container">
+            <h2 class="Tittles" id="Calander-Tittle">Mi Calendario</h2>
+            <div class="calendar">
+              <div class="calendar-header">
+                <button id="prev-month">&lt;</button>
+                <span id="month-name">Mes</span>
+                <button id="next-month">&gt;</button>
+              </div>
+              <div class="calendar-grid" id="calendar-grid"></div>
+            </div>
+        </div>
+   
+        <div class="Main-right-block" id="Task-block">
+
+          <h2 class="Task-Tittle">Próximas Tareas</h2>
+          <div id="taskContainer"></div>
+
+            <!-- Modal -->
+          <div id="taskModal" class="modal">
+            <div class="modal-content">
+              <span class="close-btn">&times;</span>
+              <h2>Todas las tareas</h2>
+              <div id="modalContent"></div>
+            </div>
+          </div>
+        </div>
+
+    
+      </div> 
+  </main>  
+
+
+  <div id="Popup-info-request"></div>
+
+
+ 
+  <script  src="StudentDashboard.js" type="module"></script>
+</body>
+</html>  

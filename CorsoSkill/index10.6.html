@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LearnHub - Descubre tu pasión y aprende a tu propio ritmo con cursos interactivos">
+  <!-- Fuentes y estilos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings|StudentDashboard|CorsoSkills</title>
+  <link rel="stylesheet" href="StudentSetting.css">
+</head>
+<body>
+  <!-- Hamburger (mobile only) -->
+  <button id="menuToggle" class="hamburger">&#9776;</button>
+  <div id="overlay" class="overlay"></div>
+  <section class="nav Mobile-sidebar" id="sidebar">
+   
+
+    <div class="sidebar-content">
+      <div class="sidebar-top">  
+        <img id="Bulogos" alt="Logo" />
+
+        <div class="Side-Btns" id="Home">
+          <i class="fa-solid fa-table-cells"></i>
+          <span class="linkName">Dashboard</span>
+        </div>
+        <div class="Side-Btns" id="Books">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="linkName">eBooks</span>
+        </div>
+        <div class="Side-Btns" id="Videos">
+          <i class="fa-solid fa-school"></i>
+          <span class="linkName">Cursos</span>
+        </div>
+        <div class="Side-Btns" id="Classroom">
+          <i class="fa-solid fa-file-video"></i>
+          <span class="linkName">Salón</span>
+        </div>
+        <div class="Side-Btns" id="Trophy">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="linkName">Logros</span>
+        </div>
+        <div class="Side-Btns" id="Multi-User">    
+          <i class="fa-solid fa-users"></i>
+          <span class="linkName">Comunidad</span>
+        </div>
+        <div class="Side-Btns" id="carrer">    
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span class="linkName">Ruta Profesional</span>
+        </div>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="Side-Btns" id="profile">
+          <i class="fa-solid fa-user-tie"></i>
+          <span class="linkName">Profesor</span>
+        </div>
+        <div class="Side-Btns" id="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span class="linkName">Cerrar sesión</span>
+        </div>
+      </div> 
+    </div>
+    <div class="Action-nav-btns">
+      <div class="Side-caret" id="open">
+        <i class="fa-solid fa-caret-right"></i>
+      </div>
+      <div class="Side-caret" id="close">
+        <i class="fa-solid fa-caret-left"></i>
+      </div>
+    </div>
+     <span id="Mobile-closeBtn" class="Mobile-close-btn">&times;</span>
+  </section>
+
+  
+
+
+  <section class="Central" id="main">
+  
+    <div class="header" id="header" >Portal de Configuración</div>
+
+    <div class="Nav-Btns-Blocks">
+          <div class="card-left-btn">
+
+          <div class="Left-Btn" id="Certification-Btn">
+            <h3><i class="fas fa-certificate"></i> Mis Certificados</h3>
+          </div>
+
+          <div class="Hidden-Content" id="Certification-Content" >
+            <span>Certificado de cursos</span>
+            <div id="CertificatesCurso"></div>
+
+            <span>Certificado de Carrera</span>
+            <div id="CertificatesCarrera"></div>
+          </div>
+
+          </div>
+
+          <div class="card-left-btn">
+            <div class="Left-Btn" id="Notifications-Btn">
+              <h3><i class="fas fa-bell"></i> Notificaciones</h3>
+            </div>
+            <div class="Hidden-Content" id="Notifications-Content">
+              <label><input type="checkbox" id="emailNotif"> Email</label>
+              <label><input type="checkbox" id="platformNotif"> Plataforma</label>
+              <label><input type="checkbox" id="classReminder"> Clases en vivo</label>
+              <label><input type="checkbox" id="newCourseNotif"> Nuevos cursos</label>
+              <label><input type="checkbox" id="messageNotif"> Mensajes</label>
+              <label><input type="checkbox" id="eventNotif"> Eventos</label>
+              <label><input type="checkbox" id="promoNotif"> Promos</label>
+              <button class="btn" id="saveNotif"><i class="fas fa-save"></i> Guardar</button>
+            </div>
+          </div>      
+
+          <div class="card-left-btn">
+            <div class="Left-Btn" id="Devices-Btn">
+              <h3><i class="fas fa-desktop"></i>Dispositivos</h3>
+            </div>
+            <div class="Hidden-Content" id="Devices-Content" >
+              
+      
+            </div>
+          </div>   
+
+          <div class="card-left-btn">
+            <div class="Left-Btn" id="Comunicacion-Btn">
+              <h3><i class="fas fa-envelope-open-text"></i>Comunicación</h3>
+            </div>
+            <div class="Hidden-Content" id="Comunicacion-Content">
+              <label>Método preferido de contacto:</label>
+              <select>
+                <option>Email</option>
+                <option>WhatsApp</option>
+                <option>Notificaciones en la plataforma</option>
+              </select>
+
+              <label>Zona horaria:</label>
+              <select>
+                <option>GMT-6 Ciudad de México</option>
+                <option>GMT-5 Bogotá</option>
+                <option>GMT-3 Buenos Aires</option>
+              </select>
+
+              <button class="btn"><i class="fas fa-save"></i> Guardar comunicación</button>
+            </div>
+          </div>
+
+          <div class="card-left-btn">
+            <div class="Left-Btn" id="Privacidad-Btn">
+              <h3><i class="fas fa-user-shield"></i>Privacidad</h3>
+            </div>
+            <div class="Hidden-Content" id="Privacidad-Content">
+              <label>
+                <input type="checkbox" id="publicProfile"> Mostrar mi perfil públicamente
+              </label>
+              <label>
+                <input type="checkbox" id="shareActivity"> Compartir mi actividad con otros usuarios
+              </label>
+              <button class="btn"><i class="fas fa-save"></i> Guardar privacidad</button>
+            </div>
+          </div>
+
+          <div class="card-left-btn">
+            <div class="Left-Btn" id="Agenda-Btn">
+              <h3><i class="fas fa-calendar-alt"></i>Agenda</h3>
+            </div>
+            <div class="Hidden-Content" id="Agenda-Content">
+              <label>
+                <input type="checkbox" id="syncGoogleCalendar"> Sincronizar con Google Calendar
+              </label>
+              <button class="btn"><i class="fas fa-save"></i> Guardar agenda</button>
+            </div>
+          </div>
+
+          <div class="card-left-btn">
+            <div class="Left-Btn" id="Redes-Btn">
+              <h3><i class="fa-solid fa-share-nodes"></i>Redes Sociales</h3>
+            </div>
+            <div class="Hidden-Content" id="Redes-Content">
+              <label>
+                <input type="checkbox"> <i class="fab fa-instagram"></i> Conectar con Instagram
+              </label>
+              <label>
+                <input type="checkbox"> <i class="fab fa-facebook"></i> Conectar con Facebook
+              </label>
+              <label>
+                <input type="checkbox"> <i class="fab fa-linkedin"></i> Conectar con LinkedIn
+              </label>
+              <label>
+                <input type="checkbox"> <i class="fab fa-twitter"></i> Conectar con X (Twitter)
+              </label>
+              <label>
+                <input type="checkbox"> <i class="fab fa-tiktok"></i> Conectar con TikTok
+              </label>
+              <button class="btn"><i class="fas fa-link"></i> Guardar conexiones</button>
+            </div>
+          </div>
+
+          <div class="card-left-btn">
+            <div class="Left-Btn" id="Referidos-Btn">
+              <h3><i class="fas fa-user-friends"></i>Referidos</h3>
+            </div>
+            <div class="Hidden-Content" id="Referidos-Content">
+              <p>Invita a otros y gana recompensas.</p>
+              <input type="text" value="https://corsoskills.com/invite/mariap" readonly>
+              <button class="btn"><i class="fas fa-copy"></i> Copiar enlace</button>
+            </div>
+          </div>
+    </div>
+      
+    <div class="card" id="Top-card">
+
+          <div class="Card-Left">
+            <h3><i class="fas fa-user"></i> Perfil</h3>
+
+            <div class="Blocks" id="Img-section">
+              <div class="Content-block" id="Img-block">
+                <div id="User-Img"></div>
+              </div>
+
+              <div class="Hidden-Input" id="Img-Content">
+                <div>
+                  <label for="file">Selecciona archivo:</label>
+                  <input type="file" id="file" />                  
+                </div>
+                <button id="Img-btn">Subir</button>  
+              </div>               
+            </div>
+
+            <div class="Blocks">
+              <div class="Content-block" id="Full-Name-block">
+                <label for="Full-Name">Nombre completo:</label>
+                <div class="Renderd">
+                  <h1 class="Info" id="Full-Name"></h1><i class="fa-solid fa-pencil" id="Full-Name-btn"></i>
+                </div>
+              </div>
+
+              <div class="Hidden-Input" id="Full-Name-Content">
+                <label for="fullName">Nombre completo nuevo:</label>
+                <input type="text" id="fullName" placeholder="Ej. María Pérez">   
+              </div>    
+            </div>
+ 
+            <div class="Blocks">
+              <div class="Content-block" id="nickname-block">
+                <label for="nick-name">Nombre preferido:</label>
+                <div class="Renderd">
+                  <h1 class="Info" id="nick-name"></h1><i class="fa-solid fa-pencil" id="nick-name-btn"></i>
+                </div>
+              </div>
+
+              <div class="Hidden-Input" id="nick-name-Content">
+                <label for="nickname">Apodo preferido nuevo:</label>
+                <input type="text" id="nickname" placeholder="Ej. Mari, MP, etc.">
+              </div>
+            </div>
+
+            <div class="Blocks">
+              <div class="Content-block" id="Bio-block">
+                <label for="bio-R">Biografía:</label>
+                <div class="Renderd">
+                  <h1  class="Info" id="bio-R"></h1><i class="fa-solid fa-pencil" id="Bio-btn"></i>
+                </div>
+              </div>
+
+              <div class="Hidden-Input" id="Bio-Content">
+                <label for="Bio">Biografía nueva:</label>
+                <textarea id="bio" rows="3" placeholder="Cuéntanos sobre ti..."></textarea>
+              </div>
+            </div>
+
+            <div class="Blocks">
+              <div class="Hidden-Input" id="save-Content">
+                <button class="btn" id="saveProfile"><i class="fas fa-save"></i> Guardar cambios</button>              
+              </div>
+            </div>
+
+
+
+          </div>
+          
+          <div class="Card-Right">
+            <div class="Blocks" id="password-section">
+              <div class="PS-tittle">
+                <h2>Actualizar Contraseña</h2><i class="fa-solid fa-pencil" id="password-update-btn"></i>
+              </div>
+              <div class="Hidden-Input" id="PS-password-Content">
+                <input class="passwordCont" type="password" id="oldPassword" placeholder="Contraseña actual" />
+                <input class="passwordCont" type="password" id="newPassword" placeholder="Nueva contraseña" />
+                <button class="btn" id="changePasswordBtn">Actualizar Contraseña</button>
+              </div>
+            </div>
+
+          </div>
+          
+    </div>
+
+    <div class="card" id="Payment-block">
+          <div class="Card-Left" id="Card-Left-payment">
+            <h3><i class="fas fa-credit-card"></i>Facturación</h3>
+
+            <label for="Active-plan">Plan actual:</label>
+            <h1 class="Pay-Info" id="Active-plan"></h1>
+
+            <label for="Payments">Próximo cobro:</label>
+            <h1 class="Pay-Info" id="Payments"></h1>    
+
+            <div class="Pay-Btns-Block">
+              <button class="btn" id="pay-history-btn"><i class="fas fa-receipt"></i> Ver historial de pagos</button>
+              <button class="btn"><i class="fas fa-sync-alt"></i> Cambiar plan</button>               
+            </div>
+           
+          </div>
+
+          <div class="Card-Right">
+            <div id="payments-container"></div>
+          </div>
+          
+    </div>
+
+  </section>
+
+ 
+  <script  src="StudentSetting.js" type="module"></script>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LearnHub - Descubre tu pasión y aprende a tu propio ritmo con cursos interactivos">
+  <!-- Fuentes y estilos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudentQuestions|CorsoSkills</title>
+  <link rel="stylesheet" href="Questions.css">
+</head>
+<body>
+  <header id="header">
+    <img id="header-logo"/>
+    <a href="index10.html" id="exit-link" class="exit-link">Salir</a>
+  </header>
+
+  <main class="container" id="container">
+    <div class="avatar">
+      <img id="Bulogos"/>
+    </div>
+
+    <div class="tittle-block">
+      <h1 id="wecome-banner-tittle"></h1>
+      <h2>Queremos conocerte mejor para hacer tu experiencia única</h2>
+      <h3>Por favor, responde estas preguntas para ayudarnos a construir tu camino hacia el éxito</h3>
+    </div>
+    
+    <form class="info-form">
+
+      <div id="Info-block-1">
+        <div class="IFTop">
+          <div class="form-group">
+            <label for="edad">Edad:</label>
+            <input type="number" id="edad" name="edad" min="12" max="100" required />
+          </div>
+
+          <div class="form-group">
+            <label for="sexo">Sexo:</label>
+            <select id="sexo" name="sexo" required>
+              <option value="">Selecciona una opción</option>
+              <option value="femenino">Femenino</option>
+              <option value="masculino">Masculino</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="IFBottom">
+          <div class="form-group">
+          <label for="carrera">Carrera o área profesional:</label>
+          <input type="text" id="carrera" name="carrera" placeholder="Ej. Educación Física, Marketing..." required />
+          </div>
+
+          <div class="form-group">
+            <label for="puesto">Puesto o posición laboral actual:</label>
+            <input type="text" id="puesto" name="puesto" placeholder="Ej. Profesor, Emprendedor..." required />
+          </div>
+        </div>
+      
+        <div class="cards">
+
+          <div class="card toggle-btn" id="Start-Carer">
+            <div class="Card-Icons" id="Icon-Start">
+              <i class="fa-solid fa-plane-departure" style="color: #ffffff;"></i>
+            </div>
+            <span>Empezar una carrera</span>
+          </div>
+
+          <div class="card toggle-btn" id="Rol-Change">
+            <div class="Card-Icons" id="Icon-Change">
+              <i class="fa-solid fa-code-branch" style="color: #ffffff;"></i>
+            </div>
+            <span>Cambiar de carrera</span>
+          </div>
+
+          <div class="card toggle-btn" id="Grow-Carer">
+            <div class="Card-Icons" id="Icon-Grow">
+              <i class="fa-solid fa-user-tie" style="color: #ffffff;"></i>
+            </div>
+            <span>Impulsar mi carrera</span>
+          </div>
+
+          <div class="card toggle-btn" id="New-Carer">
+            <div class="Card-Icons" id="Icon-New">
+              <i class="fa-solid fa-route" style="color: #ffffff;"></i>
+            </div>
+            <span>Crecimiento personal</span>
+          </div>
+
+        </div>
+      </div>
+
+      <button class="next-button" id="next-question-block">Siguiente </button>
+
+      <div class="hidden-Info-block" id="Info-block-2">
+        
+       <div class="coures-List" id="coures-List"></div>
+        <button id="next-button" type="submit" class="next-button">Siguiente →</button>
+      </div>
+    </form>
+
+    
+  </main>
+</body>
+  <script  src="Questions.js" type="module"></script>
+</html>

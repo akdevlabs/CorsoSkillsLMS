@@ -1,0 +1,214 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: sans-serif;
+}
+
+.Nav-Container {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.Nav-Container i {
+  font-size: 1.5rem;
+}
+
+#Main-logo {
+  width: 8rem;
+  max-width: 100%;
+}
+
+/* Hero Section */
+.hero {
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: 2rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+/* Benefits */
+.benefits-section {
+  padding: 3rem 1rem;
+}
+
+.benefits-section h3 {
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.benefits-grid {
+  width: 100%;
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.benefit-card {
+  width: 100%;
+  max-width: 25rem;
+  text-align: center;
+  border-radius: 12px;
+  padding: 1.8rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.432);
+}
+
+.benefit-card i {
+  display: flex;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.benefit-card h4 {
+  font-size: 1.2rem;
+  margin-bottom: 0.6rem;
+}
+
+/* Steps Section */
+.steps-section {
+  padding: 3rem 1rem;
+}
+
+.steps-section h3 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.steps-list {
+  list-style: none;
+  max-width: 700px;
+  margin: 0 auto;
+  counter-reset: step;
+  padding: 0 1rem;
+}
+
+.steps-list li {
+  margin-bottom: 1.5rem;
+  padding: 1.5rem 1.75rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.329);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.steps-list li span {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 32px;
+  margin-right: 0.75rem;
+}
+
+/* CTA Section */
+.cta-section {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.cta-section h3 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.cta-section p {
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+/* Footer */
+#footer {
+  display: flex;
+  font-size: 0.6rem;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+  .hero h2 {
+    font-size: 1.75rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .benefits-grid {
+    flex-direction: column;
+  }
+
+  .steps-list li {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .steps-list li span {
+    margin: 0 0 1rem 0;
+  }
+
+  .cta-section h3 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h2 {
+    font-size: 1.5rem;
+  }
+
+  .hero p {
+    font-size: 0.9rem;
+  }
+
+  .benefit-card {
+    padding: 1.2rem;
+  }
+
+  .steps-list li {
+    padding: 1rem;
+  }
+
+  .cta-section h3 {
+    font-size: 1.25rem;
+  }
+}

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LearnHub - Descubre tu pasión y aprende a tu propio ritmo con cursos interactivos">
+  <!-- Fuentes y estilos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CreateCourse|CorsoSkills</title>
+  <link rel="stylesheet" href="CreateCourse.css">
+
+</head>
+<body>  
+  <section class="nav" id="sidebar">
+      
+      <div class="sidebar-content">
+        
+        <div class="sidebar-top" id="sidebar-top">  
+          <img id="Bulogos"></img>
+          
+          <div class="Side-Btns" id="Home">
+            <i class="fa-solid fa-square-poll-vertical"></i>
+            <span class="linkName">Dashboard</span>
+          </div>
+
+          <div class="Side-Btns" id="invocie">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+            <span class="linkName">Pagos</span>
+          </div>
+
+          <div class="Side-Btns" id="Students">
+            <i class="fa-solid fa-school"></i>
+            <span class="linkName">Estudiantes</span>
+          </div>
+
+          <div class="Side-Btns" id="Assignments">
+            <i class="fa-solid fa-list-check"></i>
+            <span class="linkName">Tareas</span>
+          </div>
+
+          <div class="Side-Btns" id="Lessons">    
+            <i class="fa-solid fa-person-chalkboard"></i>
+            <span class="linkName">Lecciones</span>
+          </div>
+
+          <div class="Side-Btns" id="Mensajes">    
+            <i class="fa-solid fa-message"></i>
+            <span class="linkName">Mensajes</span>
+          </div>
+
+        </div>
+
+        <div class="sidebar-bottom">
+
+          <div class="Side-Btns" id="Settings">
+            <i class="fa-solid fa-gear"></i>
+            <span class="linkName">Settings</span>
+          </div>
+   
+          <div class="Side-Btns" id="Logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="linkName">Cerrar sesión</span>
+          </div>
+        </div> 
+        
+      </div>
+
+      <div class="Action-nav-btns">
+      
+      <div class="Side-caret" id="open">
+          <i class="fa-solid fa-caret-right"></i>
+      </div>
+
+      <div class="Side-caret" id="close">
+          <i class="fa-solid fa-caret-left"></i>
+      </div>
+
+      </div>
+  </section>
+
+
+
+
+
+  <section class="Main" id="Main">
+    <div>
+      <h1 id="Main-Title-header">Crea tu curso</h1>
+    </div>
+
+    <div class="Main-divide">
+
+      <div class="Main-divide-sections" id="Main-left">
+      
+        <div class="form-container" id="form-c">
+
+          <div class="Q-blocks" id="Img-Q-blocks">
+            <label for="imageInput">Imagen Del Curso</label>
+            <input type="file" id="imageInput" accept="image/*" />
+          </div>
+
+          <div class="Q-blocks">
+            <label>Nivel de Cursos</label>
+            <div id="level-toggle-buttons" class="toggle-buttons">
+              <button type="button" class="level-btn" data-value="Beginner">Principiante</button>
+              <button type="button" class="level-btn" data-value="Intermediate">Intermedio</button>
+              <button type="button" class="level-btn" data-value="Advanced">Avanzado</button>
+            </div>
+          </div>
+
+          <div class="Q-blocks">
+            <input type="text" class="input-tool" id="titleInput" placeholder="Escribe el título" />
+          </div>
+
+          <div class="Q-blocks">
+            <textarea class="input-tool" id="descriptionInput" placeholder="Escribe la descripción"></textarea>
+          </div>
+
+
+          <!-- Placeholder for additional components -->
+          <div id="Add-container"></div>
+
+        </div>
+
+      </div>
+
+      <div class="Main-divide-sections" id="Main-right">
+        <div id="Main-right-left">
+          <div id="course-title"></div>
+          <div class="img-course-block">
+            <img id="img-course"/>
+          </div>
+          <div class="tabs">
+            <button id="Notes-btns">Notas</button>
+            <button id="Resources-btns">Recursos</button>
+            <button id="Quizes-btns">Examens</button>
+          </div>
+
+          <div class="render-instr-block">
+            <div class="render-tabs">
+              <div class="hidden-tabs" id="Notes"></div>
+              <div class="hidden-tabs"  id="Resources"></div>
+              <div class="hidden-tabs"  id="Quizes"></div>
+            </div>
+
+            <div class="instructor">
+              <h4 >About Instructor</h4>
+              <p id="Teacher-Name"><strong>Natalie Storm</strong><br/>Natalie is a freelance designer who occasionally dabbles with graphic design, motion and development. She loves beaches...</p>
+            </div>
+          </div>
+
+          
+
+        </div>
+        <div id="Main-right-right">
+            <div class="sidebar">
+            <div class="progress">
+              <strong>Masterclass: Designing for web</strong><br />
+              
+              <div id="course-level"></div>
+              <div class="progress-bar">
+                <div class="progress-bar-fill"></div>
+              </div>
+            </div>
+            <div id="Course-list"></div>
+
+            
+        </div>
+
+        </div>
+      </div>
+
+  </div>
+
+
+
+
+
+    
+
+
+         
+       
+
+
+      
+
+  
+
+
+
+      </div>
+    </div>  
+  </section>
+
+
+
+
+
+  <section class="Action-side-bar" id="Action-tool-side-bar">
+
+    <div class="sidebar-container">
+
+        <div  id="tool-sidebar-top">  
+
+  
+          <div class="tool-Sidebar-Icon">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+           </div>
+        
+
+          <div class="tool-Side-Btns" id="add-video">
+            <i class="fa-solid fa-video"></i>
+            <span class="linkName">Agregar Video</span>
+          </div>
+          
+          <div class="tool-Side-Btns" id="add-text">
+            <i class="fa-solid fa-font"></i>
+            <span class="linkName">Agregar Texto</span>
+          </div>
+
+          <div class="tool-Side-Btns" id="add-present">
+            <i class="fa-solid fa-file-powerpoint"></i>
+            <span class="linkName">Agregar Presentación</span>
+          </div>
+
+          <div class="tool-Side-Btns" id="add-Exam">   
+            <i class="fa-solid fa-list-check"></i>
+            <span class="linkName">Agregar Examen</span>
+          </div>
+
+          <div class="tool-Side-Btns" id="add-Tema">
+            <i class="fa-solid fa-comment-dots"></i>
+            <span class="linkName">Agregar Tema</span>
+          </div>
+
+          <div class="tool-Side-Btns" id="add-SubTema">
+            <i class="fa-solid fa-diagram-predecessor"></i>
+            <span class="linkName">Agregar Subtema</span>
+          </div>
+
+        </div>
+
+        <div  id="tool-sidebar-bottom">
+
+          <div class="tool-Side-Btns" id="preview">
+            <i class="fa-solid fa-eye"></i>
+            <span class="linkName">Previsualizar</span>
+          </div>
+
+          <div class="tool-Side-Btns" id="clearAll">
+            <i class="fa-solid fa-trash"></i>
+            <span class="linkName">Borrar todo</span>
+          </div>
+
+          <div class="tool-Side-Btns" id="Upload">
+            <i class="fa-solid fa-upload"></i>
+            <span class="linkName">Subir Contenido</span>
+          </div>
+
+        </div>
+        
+    </div>
+
+    <div class="tool-Action-nav-btns">
+        <div class="tool-Side-caret" id="tool-sidebar-open" >
+          <i class="fa-solid fa-caret-left"></i>
+        </div>  
+        
+        <div class="tool-Side-caret" id="tool-sidebar-close">
+          <i class="fa-solid fa-caret-right"></i>
+        </div>
+    </div>
+
+  </section>
+ 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script  src="CreateCourse.js" type="module"></script>
+</body>
+</html>
