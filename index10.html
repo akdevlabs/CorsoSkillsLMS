@@ -100,16 +100,16 @@
   <main>
       <div class="Main-left">
 
-        <div class="Welcome-block" id="Welcome">
+        <div class="Block" id="Welcome">
             <div id="Date"></div>
             <div id="Name"></div>
             <div id="Updates"></div>  
         </div>
 
-        <div class="Progress-blocks">
+        <div class="Block" id="Cursos-En-Progreso">
          
           <div class="coures-container">
-            <h2 id="C-Progress">Cursos En Progreso</h2>
+            <h2 class="coures-tittle" id="C-Progress">Cursos En Progreso</h2>
 
             <div class="Btns">
               <div class="course-Btns" id="Course-left-btn">&lt;</div>
@@ -117,16 +117,14 @@
             </div>
           </div>  
 
-
-            <div id="results"></div>
-            
+          <div id="results"></div>  
           
         </div>
 
-        <div class="New-blocks">
+        <div class="Block" id="Cursos-Nuevos">
           
           <div class="coures-container">
-            <h2  id="New-Course-Tittle">Cursos Nuevos</h2>
+            <h2 class="coures-tittle" id="New-Course-Tittle">Cursos Nuevos</h2>
             <div class="Btns">
               <div class="course-Btns" id="custom-carousel-left">&lt;</div>
               <div class="course-Btns" id="custom-carousel-right">&gt;</div>
@@ -139,21 +137,25 @@
       </div>
 
       <div class="Main-right">
-        <div class="User-info-alerts" id="Alert-Icons">
-        <div class="Evalopes">
-          <i id="empty-Evalope" class="fa-solid fa-envelope-open"></i>
-          <i id="full-Evalope" class="fa-solid fa-envelope-open-text"></i>
-        </div>
-        <div class="Bells">
-          <i class="fa-regular fa-bell" id="bell-empty"></i>
-          <i class="fa-solid fa-bell" id="bell-full"></i>
-        </div>
-        <div class="Info">
-          <img id="user-Img">
-        </div>
+
+        <div class="Main-right-block" id="Alert-Icons">
+          <div class="Icons">
+            <div class="Evalopes">
+              <i id="empty-Evalope" class="fa-solid fa-envelope-open"></i>
+              <i id="full-Evalope" class="fa-solid fa-envelope-open-text"></i>
+            </div>
+            <div class="Bells">
+              <i class="fa-regular fa-bell" id="bell-empty"></i>
+              <i class="fa-solid fa-bell" id="bell-full"></i>
+            </div>
+          </div>
+
+          <div class="Info">
+            <img id="user-Img">
+          </div>
         </div>
 
-        <div class="calendar-container">
+        <div class="Main-right-block" id="calendar-container">
             <h2 class="Tittles" id="Calander-Tittle">Mi Calendario</h2>
             <div class="calendar">
               <div class="calendar-header">
@@ -165,18 +167,19 @@
             </div>
         </div>
    
-        <div class="Task-blocks" id="Task-block">
-            <h2 class="Task-Tittle">Próximas Tareas</h2>
-            <div id="taskContainer"></div>
+        <div class="Main-right-block" id="Task-block">
+
+          <h2 class="Task-Tittle">Próximas Tareas</h2>
+          <div id="taskContainer"></div>
 
             <!-- Modal -->
-            <div id="taskModal" class="modal">
-              <div class="modal-content">
-                <span class="close-btn">&times;</span>
-                <h2>Todas las tareas</h2>
-                <div id="modalContent"></div>
-              </div>
+          <div id="taskModal" class="modal">
+            <div class="modal-content">
+              <span class="close-btn">&times;</span>
+              <h2>Todas las tareas</h2>
+              <div id="modalContent"></div>
             </div>
+          </div>
         </div>
 
     

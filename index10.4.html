@@ -21,91 +21,73 @@
   <link rel="stylesheet" href="Profesor.css">
 </head>
 <body>
-  <section class="nav" id="sidebar">
-      
-      <div class="sidebar-content">
-        
-        <div class="sidebar-top">  
-          <img id="Bulogos"></img>
-          
-          <div class="Side-Btns" id="Home">
-            <i class="fa-solid fa-table-cells"></i>
-            <span class="linkName">Dashboard</span>
-          </div>
-
-          <div class="Side-Btns" id="Books">
-            <i class="fa-solid fa-book-open"></i>
-            <span class="linkName">eBooks</span>
-          </div>
-          
-          <div class="Side-Btns" id="Videos">
-            <i class="fa-solid fa-school"></i>
-            <span class="linkName">Cursos</span>
-          </div>
-
-          <div class="Side-Btns" id="Classroom">
-            <i class="fa-solid fa-file-video"></i>
-            <span class="linkName">Salon</span>
-          </div>
-
-          <div class="Side-Btns" id="Trophy">
-            <i class="fa-solid fa-trophy"></i>
-            <span class="linkName">Logros</span>
-          </div>
-
-          <div class="Side-Btns" id="Multi-User">    
-            <i class="fa-solid fa-users"></i>
-            <span class="linkName">Comunidad</span>
-          </div>
-
-          <div class="Side-Btns" id="carrer">    
-            <i class="fa-solid fa-graduation-cap"></i>
-            <span class="linkName">Ruta Profesional</span>
-          </div>
-
-        </div>
-
-        <div class="sidebar-bottom">
-
-          <div class="Side-Btns" id="Settings">
-            <i class="fa-solid fa-gear"></i>
-            <span class="linkName">Settings</span>
-          </div>
+  <!-- Hamburger (mobile only) -->
+  <button id="menuToggle" class="hamburger">&#9776;</button>
+  <div id="overlay" class="overlay"></div>
+  <section class="nav Mobile-sidebar" id="sidebar">
    
-          <div class="Side-Btns" id="Teacher">
-            <i class="fa-solid fa-user-tie"></i>
-            <span class="linkName">Profesor</span>
-          </div>
 
-          <div class="Side-Btns" id="Logout">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span class="linkName">Cerrar sesión</span>
-          </div>
-        </div> 
-        
+    <div class="sidebar-content">
+      <div class="sidebar-top">  
+        <img id="Bulogos" alt="Logo" />
+
+        <div class="Side-Btns" id="Home">
+          <i class="fa-solid fa-table-cells"></i>
+          <span class="linkName">Dashboard</span>
+        </div>
+        <div class="Side-Btns" id="Books">
+          <i class="fa-solid fa-book-open"></i>
+          <span class="linkName">eBooks</span>
+        </div>
+        <div class="Side-Btns" id="Videos">
+          <i class="fa-solid fa-school"></i>
+          <span class="linkName">Cursos</span>
+        </div>
+        <div class="Side-Btns" id="Classroom">
+          <i class="fa-solid fa-file-video"></i>
+          <span class="linkName">Salón</span>
+        </div>
+        <div class="Side-Btns" id="Trophy">
+          <i class="fa-solid fa-trophy"></i>
+          <span class="linkName">Logros</span>
+        </div>
+        <div class="Side-Btns" id="Multi-User">    
+          <i class="fa-solid fa-users"></i>
+          <span class="linkName">Comunidad</span>
+        </div>
+        <div class="Side-Btns" id="carrer">    
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span class="linkName">Ruta Profesional</span>
+        </div>
       </div>
 
-    
-
-    
-
-      <div class="Action-nav-btns">
-      
+      <div class="sidebar-bottom">
+        <div class="Side-Btns" id="Settings">
+          <i class="fa-solid fa-gear"></i>
+          <span class="linkName">Settings</span>
+        </div>
+        <div class="Side-Btns" id="Logout">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span class="linkName">Cerrar sesión</span>
+        </div>
+      </div> 
+    </div>
+    <div class="Action-nav-btns">
       <div class="Side-caret" id="open">
-          <i class="fa-solid fa-caret-right"></i>
+        <i class="fa-solid fa-caret-right"></i>
       </div>
-
       <div class="Side-caret" id="close">
-          <i class="fa-solid fa-caret-left"></i>
+        <i class="fa-solid fa-caret-left"></i>
       </div>
-
-      </div>
+    </div>
+     <span id="Mobile-closeBtn" class="Mobile-close-btn">&times;</span>
   </section>
 
 
   <section class="Main">
 
     <h1 id="Tittle">Conecta con tu Profesor</h1>
+
     <div class="main-nav">
       
       <div class="Input-Block">
@@ -199,11 +181,10 @@
 
       </div>
 
-
-    <div class="content" id="announcements">
-      <h2 class="content-tittle">Últimos Anuncios</h2>
-      <div id="announcement-container"></div>
-    </div>
+      <div class="content" id="announcements">
+        <h2 class="content-tittle">Últimos Anuncios</h2>
+        <div id="announcement-container"></div>
+      </div>
     </div>
 
     <div class="Block">
@@ -228,20 +209,21 @@
     
     </div>
 
-<div class="Block">
-  <div class="content" id="submit-homework">
-    <h2 class="content-tittle">Entregar Tarea</h2>
-    <input type="text" id="homeworkTitle" placeholder="Título de la Tarea" />
-    <input type="file" id="homeworkFile" />
-    <button class="send-btn" id="uploadBtn" disabled>Subir Tarea</button>
-  </div>
+    <div class="Block">
+      <div class="content" id="submit-homework">
+        <h2 class="content-tittle">Entregar Tarea</h2>
+        <input type="text" id="homeworkTitle" placeholder="Título de la Tarea" />
+        <input type="file" id="homeworkFile" />
+        <button class="send-btn" id="uploadBtn" disabled>Subir Tarea</button>
+      </div>
 
-  <div class="content" id="stats">
-    <h2 class="content-tittle">Tus Entregas</h2>
-    <div class="file-list" id="fileList"></div>
-  </div>
-</div>
+      <div class="content" id="stats">
+        <h2 class="content-tittle">Tus Entregas</h2>
+        <div class="file-list" id="fileList"></div>
+      </div>
+    </div>
 
+  </section>
 
 
 
