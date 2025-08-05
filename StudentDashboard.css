@@ -1585,34 +1585,9 @@ body {
     align-items: center;
     justify-content: center;
     width: 100%;
-  
     margin: 0;
   }
-  .hamburger {
-    display: block;
-    color: #c40505;
-    font-weight: bold;
-  }
-  .Mobile-close-btn{
-    display: flex;
-    color: #c40505;
-    font-size: 1.5rem;
-  }
-  .Mobile-sidebar {
-    position: fixed;
-    top: 0;
-    left: -270px;
-    width: 75%;
-    max-width:210px;
-    height: 95%;
-    background-color: #1a1a1a;
-    color: white;
-    transition: left 0.3s ease;
-    z-index: 1000;
-  }
-  .Mobile-sidebar.active {
-    left: 0;
-  }
+
 
 
 .Main-left{
@@ -1620,18 +1595,22 @@ body {
 }
 
 /*----------- mobile-alerts ------------*/
+#Mobile-Content{
+  margin:-2rem 0 0 0;
+}
 .mobile-alerts{
   display: flex;
+  flex-direction: column-reverse;
   justify-content: space-between;
-  margin: 1rem ;
+  margin:  1rem ;
 }
 #Welcome{
-  width: 60%;
+  width:100%;
   gap: .5rem;  
   padding: .5rem 1rem;  
   display: flex;
   flex-direction: column;
-  border-radius: 1rem 0 0 1rem ;
+  border-radius: 1rem ;
 }
 #Date{
   font-size: .7rem;
@@ -1647,10 +1626,10 @@ body {
 /*----------- Alert---------*/
 #Alert-Icons{
   width: 25%;
-  gap: 1rem; 
+  gap:   11rem; 
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content:space-between;
   margin: 0 2rem
 }
 #full-Evalope, #bell-full{
