@@ -1623,7 +1623,7 @@ body {
 .mobile-alerts{
   display: flex;
   justify-content: space-between;
-  margin: 1rem 0;
+  margin: 1rem ;
 }
 #Welcome{
   width: 60%;
@@ -1638,16 +1638,16 @@ body {
   margin: 0 .5rem;
 }
 #Name{
-  font-size: 1.1rem;
+  font-size:.9rem;
   font-weight: bold;
 }
 #Updates{
-  font-size: .8rem;
+  font-size: .7rem;
 }
 /*----------- Alert---------*/
 #Alert-Icons{
   width: 25%;
-  gap: 8rem; 
+  gap: 1rem; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1657,15 +1657,15 @@ body {
   display: none;
 }
 .Icons i{
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 .Icons{
-  gap: 1.3rem;
+  gap: 1rem;
   display: flex;
 }
 #user-Img {
-  width: 3.3rem;
-  height: 3.3rem;
+  width: 3rem;
+  height: 3rem;
   object-fit: cover;
   border-radius: 50%;
 }
@@ -1692,196 +1692,6 @@ body {
 
 
 
-
-
-
-
-
-
-  .mobile-calendar{
-    display: block;
-  }
-  
-
-.mobile-calendar {
- 
-  width: 100%;
-  max-width: 100%;
-  padding: .5rem;
-  background: #fff;
-  border-radius: 1rem;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.356);
-  font-family: sans-serif;
-}
-
-.calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: .5rem;
-}
-
-.calendar-header h3 {
-  font-size: 1rem;
-  text-transform: capitalize;
-}
-
-.week-grid {
-  display: grid;
-  grid-template-columns: repeat(7, .5fr);
-  gap: 0.5rem;
-}
-
-.day-box {
-  background: #f5f5f5;
-  border-radius: 0.5rem;
-  padding: 0.6rem 0.3rem;
-  text-align: center;
-  font-size: 0.8rem;
-  position: relative;
-  cursor: pointer;
-}
-
-.day-box.active {
-  background: #4CAF50;
-  color: #fff;
-  font-weight: bold;
-}
-
-.day-box.marked::after {
-  content: '📌';
-  position: absolute;
-  bottom: 0.3rem;
-  right: 0.4rem;
-  font-size: 0.7rem;
-}
-  /*----------- Cursos-En-Progreso ------------*/
-.coures-tittle{
-  font-size: 1rem;
-}
-#results {
-  gap: .8rem;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-.slot-item {
-  border-radius: 16px;
-  padding: 13px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.74);
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 240px;
-  transition: transform 0.2s ease;
-  overflow-y: auto;
-}
-.slot-item:hover {
-  transform: translateY(-4px);
-}
-.slot-item img {
-  width: 100%;
-  height: 6rem;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 12px;
-}
-.slot-title {
-  font-weight: 600;
-  font-size: .8rem;
-}
-.slot-prof {
-  font-size: 0.6rem;
-  margin-bottom: 8px;
-}
-.progress-bar {
-  height: 6px;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-.progress-bar-fill {
-  height: 100%;
-  transition: width 0.3s ease;
-}
-.progress-info {
-  font-size: 0.7rem;
-  display: flex;
-  justify-content: space-between;
-}
-/*----------- Carousel Section ------------*/
-.custom-carousel-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding:  6px;
-  overflow-x: auto;
-}
-.custom-carousel-btn {
-  cursor: pointer;
-  padding: 8px 4px;
-  border-radius: 8px;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-#custom-course-carousel {
-  display: flex;
-  gap: 10px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-}
-.custom-course-card {
-  max-width: 270px;
-  width: 100%;
-  padding: 10px;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease;
-}
-.custom-course-card:hover {
-  transform: translateY(-5px);
-}
-.custom-course-card img {
-  width: 100%;
-  height: 6rem;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 8px;
-}
-.custom-course-title {
-  font-size: .8rem;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-.custom-course-instructor {
-  font-size: 0.8rem;
-  margin: .1rem 0   ;
-}
-.custom-progress-container {
-  margin-top: auto;
-}
-.custom-progress-bar {
-  height: 8px;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-.custom-progress-fill {
-  height: 100%;
-  transition: width 0.3s ease;
-}
-.custom-progress-info {
-  font-size: 0.7rem;
-}
-
-
-
-.Main-right{
-  display: none;
-}
 
 
 }
