@@ -703,158 +703,158 @@ renderStreak()
     const Tasks = studentData.Tasks
     renderTasks(Tasks)
   }
-function renderCourses() {
-  let limit = 4; // Default
-  let currentStart = 0;
-  let allResults = [];
+  function renderCourses() {
+    let limit = 4; // Default
+    let currentStart = 0;
+    let allResults = [];
 
-  // ✅ Responsive limit based on screen width
-  if (window.innerWidth <= 825) {
-    limit = 2;
-  } else if (window.innerWidth <= 1208) {
-    limit = 3;
-  } else {
-    limit = 4;
-  }
+    // ✅ Responsive limit based on screen width
+    if (window.innerWidth <= 825) {
+      limit = 2;
+    } else if (window.innerWidth <= 1208) {
+      limit = 3;
+    } else {
+      limit = 4;
+    }
 
-  function getAllIds(data) {
-    const ids = [];
-    if (typeof data !== 'object' || data === null) {
-      console.warn('Input is not a valid object.');
+    function getAllIds(data) {
+      const ids = [];
+      if (typeof data !== 'object' || data === null) {
+        console.warn('Input is not a valid object.');
+        return ids;
+      }
+
+      for (const key in data) {
+        if (data[key] && typeof data[key] === 'object' && 'Id' in data[key]) {
+          ids.push({ id: data[key].Id, slotName: key, progress: data[key].progress });
+        }
+      }
       return ids;
     }
 
-    for (const key in data) {
-      if (data[key] && typeof data[key] === 'object' && 'Id' in data[key]) {
-        ids.push({ id: data[key].Id, slotName: key, progress: data[key].progress });
+    function findCourseById(data, targetId) {
+      if (typeof data !== 'object' || data === null) {
+        console.warn('Input is not a valid object.');
+        return null;
       }
-    }
-    return ids;
-  }
 
-  function findCourseById(data, targetId) {
-    if (typeof data !== 'object' || data === null) {
-      console.warn('Input is not a valid object.');
-      return null;
-    }
-
-    for (const categoryKey in data) {
-      const category = data[categoryKey];
-      if (typeof category === 'object') {
-        for (const levelKey in category) {
-          const level = category[levelKey];
-          if (typeof level === 'object') {
-            for (const courseKey in level) {
-              const course = level[courseKey];
-              if (
-                typeof course === 'object' &&
-                course !== null &&
-                'Id' in course &&
-                course.Id === targetId
-              ) {
-                return {
-                  category: categoryKey,
-                  level: levelKey,
-                  courseKey: courseKey,
-                  ...course
-                };
+      for (const categoryKey in data) {
+        const category = data[categoryKey];
+        if (typeof category === 'object') {
+          for (const levelKey in category) {
+            const level = category[levelKey];
+            if (typeof level === 'object') {
+              for (const courseKey in level) {
+                const course = level[courseKey];
+                if (
+                  typeof course === 'object' &&
+                  course !== null &&
+                  'Id' in course &&
+                  course.Id === targetId
+                ) {
+                  return {
+                    category: categoryKey,
+                    level: levelKey,
+                    courseKey: courseKey,
+                    ...course
+                  };
+                }
               }
             }
           }
         }
       }
+
+      return null;
     }
 
-    return null;
-  }
+    function renderSlots(slots) {
+      const container = document.getElementById("results");
+      if (!container) return;
+      container.innerHTML = '';
 
-  function renderSlots(slots) {
-    const container = document.getElementById("results");
-    if (!container) return;
-    container.innerHTML = '';
+      const end = Math.min(currentStart + limit, slots.length);
+      const visibleSlots = slots.slice(currentStart, end);
 
-    const end = Math.min(currentStart + limit, slots.length);
-    const visibleSlots = slots.slice(currentStart, end);
+      visibleSlots.forEach(slot => {
+        const div = document.createElement("div");
+        div.className = "slot-item";
+        div.style.cursor = "pointer";
 
-    visibleSlots.forEach(slot => {
-      const div = document.createElement("div");
-      div.className = "slot-item";
-      div.style.cursor = "pointer";
+        div.onclick = () => {
+  
+          localStorage.setItem("selectedCourseId", (slot.Id));
+          localStorage.setItem("selectedCourse", JSON.stringify(slot));
+          console.log(slot)
+        window.location.href = "index10.7.html";
+        };
 
-      div.onclick = () => {
- 
-        localStorage.setItem("selectedCourseId", (slot.Id));
-        localStorage.setItem("selectedCourse", JSON.stringify(slot));
-        console.log(slot)
-      window.location.href = "index10.7.html";
-      };
-
-      div.innerHTML = `
-        <img src="${slot.CImg}" alt="${slot.Tittle || 'Curso'}" />
-        <div class="slot-title">${slot.Tittle || 'Sin título'}</div>
-        <div class="slot-prof">Prof. CorsoSkills</div>
-        <div class="progress-container">
-          <div class="progress-bar">
-            <div class="progress-bar-fill" style="width: ${slot.progress}%"></div>
+        div.innerHTML = `
+          <img src="${slot.CImg}" alt="${slot.Tittle || 'Curso'}" />
+          <div class="slot-title">${slot.Tittle || 'Sin título'}</div>
+          <div class="slot-prof">Prof. CorsoSkills</div>
+          <div class="progress-container">
+            <div class="progress-bar">
+              <div class="progress-bar-fill" style="width: ${slot.progress}%"></div>
+            </div>
+            <div class="progress-info">
+              <span>Lecciones: 3</span>
+              <span>${slot.progress}%</span>
+            </div>
           </div>
-          <div class="progress-info">
-            <span>Lecciones: 3</span>
-            <span>${slot.progress}%</span>
-          </div>
-        </div>
-      `;
-      container.appendChild(div);
-    });
+        `;
+        container.appendChild(div);
+      });
 
-    updateNavigationButtons(slots.length);
-  }
-
-  function updateNavigationButtons(total) {
-    const leftBtn = document.getElementById("Course-left-btn");
-    const rightBtn = document.getElementById("Course-right-btn");
-
-    if (leftBtn) {
-      leftBtn.style.display = currentStart > 0 ? "flex" : "none";
-      leftBtn.onclick = () => {
-        currentStart = Math.max(0, currentStart - limit);
-        renderSlots(allResults);
-      };
+      updateNavigationButtons(slots.length);
     }
 
-    if (rightBtn) {
-      rightBtn.style.display = (currentStart + limit) < total ? "flex" : "none";
-      rightBtn.onclick = () => {
-        if ((currentStart + limit) < total) {
-          currentStart += limit;
+    function updateNavigationButtons(total) {
+      const leftBtn = document.getElementById("Course-left-btn");
+      const rightBtn = document.getElementById("Course-right-btn");
+
+      if (leftBtn) {
+        leftBtn.style.display = currentStart > 0 ? "flex" : "none";
+        leftBtn.onclick = () => {
+          currentStart = Math.max(0, currentStart - limit);
           renderSlots(allResults);
-        }
-      };
-    }
-  }
-
-  function getAllSlotsByIds() {
-    const slotsWithIds = getAllIds(studentData.Courses);
-    allResults = [];
-
-    slotsWithIds.forEach(slot => {
-      const foundCourse = findCourseById(businessData.Courses, slot.id);
-      if (foundCourse) {
-        allResults.push({
-          ...slot,
-          ...foundCourse
-        });
+        };
       }
-    });
 
-    allResults.sort((a, b) => b.progress - a.progress);
+      if (rightBtn) {
+        rightBtn.style.display = (currentStart + limit) < total ? "flex" : "none";
+        rightBtn.onclick = () => {
+          if ((currentStart + limit) < total) {
+            currentStart += limit;
+            renderSlots(allResults);
+          }
+        };
+      }
+    }
 
-    renderSlots(allResults);
-    return allResults;
+    function getAllSlotsByIds() {
+      const slotsWithIds = getAllIds(studentData.Courses);
+      allResults = [];
+
+      slotsWithIds.forEach(slot => {
+        const foundCourse = findCourseById(businessData.Courses, slot.id);
+        if (foundCourse) {
+          allResults.push({
+            ...slot,
+            ...foundCourse
+          });
+        }
+      });
+
+      allResults.sort((a, b) => b.progress - a.progress);
+
+      renderSlots(allResults);
+      return allResults;
+    }
+
+    // Start rendering
+    getAllSlotsByIds();
   }
-
-  // Start rendering
-  getAllSlotsByIds();
-}
 
 
 
@@ -1005,9 +1005,109 @@ function newCourses() {
 }
 
 
+function renderWeekCalendar() {
+  if (!studentData || !studentData.Calendar) {
+    console.error("studentData.Calendar is not defined");
+    return;
+  }
+
+  const calendarEvents = studentData.Calendar;
+  const monthNames = {
+    enero: 0, febrero: 1, marzo: 2, abril: 3,
+    mayo: 4, junio: 5, julio: 6, agosto: 7,
+    septiembre: 8, octubre: 9, noviembre: 10, diciembre: 11
+  };
+
+  const weekdaysShort = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+  const weekGrid = document.getElementById('week-grid');
+  const weekRangeEl = document.getElementById('week-range');
+  const prevBtn = document.getElementById('prev-week');
+  const nextBtn = document.getElementById('next-week');
+
+  function parseSpanishDate(dateStr) {
+    const parts = dateStr.toLowerCase().split(' de ');
+    if (parts.length !== 3) return null;
+    const [dayStr, monthName, yearStr] = parts;
+    const day = parseInt(dayStr);
+    const year = parseInt(yearStr);
+    const month = monthNames[monthName];
+    if (isNaN(day) || isNaN(year) || month === undefined) return null;
+    return new Date(year, month, day);
+  }
+
+  const allEvents = {};
+  for (const key in calendarEvents) {
+    const event = calendarEvents[key];
+    const date = parseSpanishDate(event.Date);
+    if (date) {
+      const keyStr = date.toISOString().split('T')[0];
+      allEvents[keyStr] = event;
+    }
+  }
+
+  let baseDate = new Date();
+
+  function getStartOfWeek(date) {
+    const day = (date.getDay() + 6) % 7; // make Monday = 0
+    const start = new Date(date);
+    start.setDate(date.getDate() - day);
+    return start;
+  }
+
+  function renderWeek(date) {
+    weekGrid.innerHTML = '';
+    const startOfWeek = getStartOfWeek(date);
+
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(endOfWeek.getDate() + 6);
+
+    const rangeText = `${startOfWeek.getDate()} ${startOfWeek.toLocaleString('es-MX', { month: 'short' })} - ${endOfWeek.getDate()} ${endOfWeek.toLocaleString('es-MX', { month: 'short' })}`;
+    weekRangeEl.textContent = `Semana: ${rangeText}`;
+
+    for (let i = 0; i < 7; i++) {
+      const dayDate = new Date(startOfWeek);
+      dayDate.setDate(startOfWeek.getDate() + i);
+      const dayStr = dayDate.toISOString().split('T')[0];
+
+      const dayBox = document.createElement('div');
+      dayBox.className = 'day-box';
+      dayBox.textContent = `${weekdaysShort[i]}\n${dayDate.getDate()}`;
+
+      if (
+        dayDate.toDateString() === new Date().toDateString()
+      ) {
+        dayBox.classList.add('active');
+      }
+
+      if (allEvents[dayStr]) {
+        dayBox.classList.add('marked');
+        dayBox.title = allEvents[dayStr].Tittle;
+        dayBox.addEventListener('click', () => {
+          alert(
+            `📌 ${allEvents[dayStr].Tittle}\n📅 ${allEvents[dayStr].Date}\n📂 ${allEvents[dayStr].Tipo}\n🎯 ${allEvents[dayStr].Objetivo || "—"}\n📝 ${allEvents[dayStr].Descripción}`
+          );
+        });
+      }
+
+      weekGrid.appendChild(dayBox);
+    }
+  }
+
+  prevBtn.addEventListener('click', () => {
+    baseDate.setDate(baseDate.getDate() - 7);
+    renderWeek(baseDate);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    baseDate.setDate(baseDate.getDate() + 7);
+    renderWeek(baseDate);
+  });
+
+  renderWeek(baseDate);
+}
 
 
-
+renderWeekCalendar()
 newCourses();
 
 
@@ -1028,6 +1128,37 @@ newCourses();
 // Run the fetch
 fetchAllContent()
 
+document.addEventListener("DOMContentLoaded", function () {
+  const openBtn = document.getElementById("open");
+  const closeBtn = document.getElementById("close");
+  const menuToggle = document.getElementById("menuToggle");
+  const linkNames = document.querySelectorAll(".linkName");
+  const mobileSidebar = document.getElementById("Mobile-sidebar"); // Make sure this ID exists
+
+  function showSidebarText() {
+    linkNames.forEach(el => el.style.display = "inline");
+    openBtn.style.display = "none";
+    closeBtn.style.display = "flex";
+  }
+
+  function hideSidebarText() {
+    linkNames.forEach(el => el.style.display = "none");
+    closeBtn.style.display = "none";
+    openBtn.style.display = "flex";
+  }
+
+  function toggleMobileSidebar() {
+    mobileSidebar.classList.toggle("show"); // Add a class like .show to handle visibility in CSS
+  }
+
+  // Attach event listeners
+  openBtn.addEventListener("click", showSidebarText);
+  closeBtn.addEventListener("click", hideSidebarText);
+  menuToggle.addEventListener("click", toggleMobileSidebar);
+
+  // Initial state
+  hideSidebarText();
+});
 
 document.addEventListener("DOMContentLoaded", () => {
   const closeBtn = document.querySelector(".close-btn");
@@ -1078,28 +1209,32 @@ document.getElementById("Logout").addEventListener("click", function () {
 
 
 
- document.addEventListener("DOMContentLoaded", function () {
-    const openBtn = document.getElementById("open");
-    const closeBtn = document.getElementById("close");
-    const linkNames = document.querySelectorAll(".linkName");
+document.addEventListener("DOMContentLoaded", () => {
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+  const toggle = document.getElementById("menuToggle");
+  const closeBtn = document.getElementById("Mobile-closeBtn");
+  const linkNames = document.querySelectorAll(".linkName");
+  const openCBtn = document.getElementById("open");
+  const closeCBtn = document.getElementById("close");
 
-    function showSidebarText() {
-      linkNames.forEach(el => el.style.display = "inline");
-      openBtn.style.display = "none";
-      closeBtn.style.display = "flex";
-    }
+  const openSidebar = () => {
+    sidebar.classList.add("active");
+    overlay.classList.add("active");
+    toggle.style.display = "none"; // Hide toggle button
+    linkNames.forEach(el => el.style.display = "inline");
+    openCBtn.style.display = "none";
+    closeCBtn.style.display = "none";
+  };
 
-    function hideSidebarText() {
-      linkNames.forEach(el => el.style.display = "none");
-      closeBtn.style.display = "none";
-      openBtn.style.display = "flex";
-    }
+  const closeSidebar = () => {
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+    toggle.style.display = "block"; // Show toggle button again
+  };
 
-    openBtn.addEventListener("click", showSidebarText);
-    closeBtn.addEventListener("click", hideSidebarText);
-
-    // Initial state: hide all link names, show open button only
-    hideSidebarText();
- });
-
+  toggle.addEventListener("click", openSidebar);
+  closeBtn.addEventListener("click", closeSidebar);
+  overlay.addEventListener("click", closeSidebar);
+});
 
