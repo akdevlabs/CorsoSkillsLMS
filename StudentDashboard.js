@@ -273,9 +273,58 @@ applyBranding().then((data) => {
     `;
     document.head.appendChild(style); 
   }
+  function NavColors(){
+    setTextColors("#New-Course-Tittle", Base)
+    const style = document.createElement('style');
+    style.textContent = `
+     .hamburger {
+        color: ${Prime2};
+      }
+      .Mobile-close-btn{
+        color: ${Prime2};
+      }
+    `;
+    document.head.appendChild(style); 
+  }
 
+  function  mobileCalendarColors(){
+    setTextColors("#New-Course-Tittle", Base)
+    const style = document.createElement('style');
+    style.textContent = `
+      .mobile-calendar {
+        background: ${Prime5};
+      }
+      .calendar-header {
+        color: ${Prime};
+      }
+      .calendar-header h3 {
+       color: ${Base};
+      }
+      #prev-week,
+      #next-week {
+        color:${Prime2};
+      }
+      #prev-week:hover,
+      #next-week:hover {
+        color:${Prime3};
+      }
+      #prev-week:focus,
+      #next-week:focus {
+        outline: none;
+        color:${Prime3};
+      }
+      .day-box {
+        background:${Prime4};
+        color: ${Prime};
+      }
+      .day-box.active {
+        background:${Prime2};
+        color: ${Prime5};
+      }
+    `;
+    document.head.appendChild(style); 
+  }
 
-  
  
 
 
@@ -289,8 +338,8 @@ applyBranding().then((data) => {
   TasksColors()
   CoursesColors()
   NewCoursesColors()
-
-
+  NavColors()
+  mobileCalendarColors()
 });
 
 
@@ -435,49 +484,77 @@ async function fetchAllContent() {
 
     return highestProgress;
   }
-  function renderTasks(tasksObject) {
-    const tasksArray = Object.entries(tasksObject);
+function renderTasks(tasksObject) {
+  const tasksArray = Object.entries(tasksObject || {});
 
-    // Ordenar por número (T1, T2, ...)
-    tasksArray.sort((a, b) => {
-      const numA = parseInt(a[0].replace("T", ""));
-      const numB = parseInt(b[0].replace("T", ""));
-      return numA - numB;
-    });
+  // Icon container
+  const iconContainer = document.getElementById("taskIconContainer");
+  iconContainer.innerHTML = ""; // Clear previous
 
-    const selectedTasks = tasksArray.slice(-2); // Últimas 4
+  // Clear main task display
+  const container = document.getElementById("taskContainer");
+  container.innerHTML = "";
 
-    const container = document.getElementById("taskContainer");
-    container.innerHTML = "";
-
-    selectedTasks.forEach(([key, task]) => {
-      const taskCard = document.createElement("div");
-      taskCard.className = "task-card";
-      taskCard.innerHTML = `
-        <h3>${task.Tittle}</h3>
-        <p><strong>Descripción:</strong> ${task.Description}</p>
-        <p><strong>Reglas:</strong> ${task.Rules}</p>
-      `;
-      container.appendChild(taskCard);
-    });
-
-    const showAllBtn = document.createElement("button");
-    showAllBtn.textContent = "Ver todas las tareas";
-    showAllBtn.className = "show-all-btn";
-    showAllBtn.onclick = () => renderAllTasksInModal(tasksObject);
-    container.appendChild(showAllBtn);
+  if (tasksArray.length === 0) {
+    // Show empty envelope
+    const emptyIcon = document.createElement("i");
+    emptyIcon.id = "empty-Evalope";
+    emptyIcon.className = "fa-solid fa-envelope-open";
+    emptyIcon.style.cursor = "pointer";
+    emptyIcon.onclick = () => renderAllTasksInModal(tasksObject);
+    iconContainer.appendChild(emptyIcon);
+    return;
   }
-  function renderAllTasksInModal(tasksObject) {
-    const tasksArray = Object.entries(tasksObject);
 
+  // Show full envelope
+  const fullIcon = document.createElement("i");
+  fullIcon.id = "full-Evalope";
+  fullIcon.className = "fa-solid fa-envelope-open-text";
+  fullIcon.style.cursor = "pointer";
+  fullIcon.onclick = () => renderAllTasksInModal(tasksObject);
+  iconContainer.appendChild(fullIcon);
+
+  // Sort and show last 2
+  tasksArray.sort((a, b) => {
+    const numA = parseInt(a[0].replace("T", ""));
+    const numB = parseInt(b[0].replace("T", ""));
+    return numA - numB;
+  });
+
+  const selectedTasks = tasksArray.slice(-2);
+
+  selectedTasks.forEach(([key, task]) => {
+    const taskCard = document.createElement("div");
+    taskCard.className = "task-card";
+    taskCard.innerHTML = `
+      <h3>${task.Tittle}</h3>
+      <p><strong>Descripción:</strong> ${task.Description}</p>
+      <p><strong>Reglas:</strong> ${task.Rules}</p>
+    `;
+    container.appendChild(taskCard);
+  });
+
+  // Add "Ver todas las tareas" button
+  const showAllBtn = document.createElement("button");
+  showAllBtn.textContent = "Ver todas las tareas";
+  showAllBtn.className = "show-all-btn";
+  showAllBtn.onclick = () => renderAllTasksInModal(tasksObject);
+  container.appendChild(showAllBtn);
+}
+
+function renderAllTasksInModal(tasksObject) {
+  const tasksArray = Object.entries(tasksObject || {});
+  const modalContent = document.getElementById("modalContent");
+  modalContent.innerHTML = "";
+
+  if (tasksArray.length === 0) {
+    modalContent.innerHTML = "<p>No hay tareas pendientes.</p>";
+  } else {
     tasksArray.sort((a, b) => {
       const numA = parseInt(a[0].replace("T", ""));
       const numB = parseInt(b[0].replace("T", ""));
       return numA - numB;
     });
-
-    const modalContent = document.getElementById("modalContent");
-    modalContent.innerHTML = "";
 
     tasksArray.forEach(([key, task]) => {
       const taskCard = document.createElement("div");
@@ -489,9 +566,11 @@ async function fetchAllContent() {
       `;
       modalContent.appendChild(taskCard);
     });
-
-    document.getElementById("taskModal").style.display = "block";
   }
+
+  document.getElementById("taskModal").style.display = "block";
+}
+
   function getNewestValue(arr) {
     if (!Array.isArray(arr) || arr.length === 0) {
       console.warn('studentData.Streak is not a valid non-empty array.');
@@ -861,254 +940,251 @@ renderStreak()
 
 
 
-function newCourses() {
-  let currentStart = 0;
-  let limit = 4; // Default
-  let currentSlots = [];
+  function newCourses() {
+    let currentStart = 0;
+    let limit = 4; // Default
+    let currentSlots = [];
 
-  function getActiveCourses(coursesObj) {
-    const activeCourses = [];
+    function getActiveCourses(coursesObj) {
+      const activeCourses = [];
 
-    if (typeof coursesObj !== 'object' || coursesObj === null) {
-      console.warn('Courses object is not valid:', coursesObj);
-      return activeCourses;
-    }
+      if (typeof coursesObj !== 'object' || coursesObj === null) {
+        console.warn('Courses object is not valid:', coursesObj);
+        return activeCourses;
+      }
 
-    for (const category in coursesObj) {
-      const categoryData = coursesObj[category];
-      if (typeof categoryData !== 'object') continue;
+      for (const category in coursesObj) {
+        const categoryData = coursesObj[category];
+        if (typeof categoryData !== 'object') continue;
 
-      for (const sub in categoryData) {
-        const subCategoryData = categoryData[sub];
-        if (typeof subCategoryData === 'object') {
-          for (const courseKey in subCategoryData) {
-            const course = subCategoryData[courseKey];
-            if (
-              course &&
-              typeof course === 'object' &&
-              course.Status === true &&
-              course.Id
-            ) {
-              if (!course.progress) course.progress = 0;
-              activeCourses.push(course);
+        for (const sub in categoryData) {
+          const subCategoryData = categoryData[sub];
+          if (typeof subCategoryData === 'object') {
+            for (const courseKey in subCategoryData) {
+              const course = subCategoryData[courseKey];
+              if (
+                course &&
+                typeof course === 'object' &&
+                course.Status === true &&
+                course.Id
+              ) {
+                if (!course.progress) course.progress = 0;
+                activeCourses.push(course);
+              }
             }
           }
         }
       }
+
+      return activeCourses;
     }
 
-    return activeCourses;
-  }
 
 
 
 
+    
+    function renderSlots(slots) {
+      const container = document.getElementById("custom-course-carousel");
+      if (!container) return;
 
-  
-  function renderSlots(slots) {
-    const container = document.getElementById("custom-course-carousel");
-    if (!container) return;
+      container.innerHTML = '';
+      const end = Math.min(currentStart + limit, slots.length);
+      const visibleSlots = slots.slice(currentStart, end);
 
-    container.innerHTML = '';
-    const end = Math.min(currentStart + limit, slots.length);
-    const visibleSlots = slots.slice(currentStart, end);
+      visibleSlots.forEach(slot => {
+        const div = document.createElement("div");
+        div.className = "custom-course-card";
+        div.style.cursor = "pointer";
 
-    visibleSlots.forEach(slot => {
-      const div = document.createElement("div");
-      div.className = "custom-course-card";
-      div.style.cursor = "pointer";
+        div.onclick = () => {
+          localStorage.setItem("selectedCourse", JSON.stringify(slot));
+          localStorage.setItem("selectedCourseId", (slot.Id));
+          window.location.href = "index10.7.html";
+        };
 
-      div.onclick = () => {
-        localStorage.setItem("selectedCourse", JSON.stringify(slot));
-        localStorage.setItem("selectedCourseId", (slot.Id));
-        window.location.href = "index10.7.html";
-      };
-
-      div.innerHTML = `
-        <img src="${slot.CImg || ''}" alt="${slot.Tittle || 'Curso'}" />
-        <div class="custom-course-title">${slot.Tittle || 'Sin título'}</div>
-        <div class="custom-course-instructor">Prof. CorsoSkills</div>
-        <div class="custom-progress-container">
-          <div class="custom-progress-bar">
-            <div class="custom-progress-fill" style="width: ${slot.progress || 0}%"></div>
+        div.innerHTML = `
+          <img src="${slot.CImg || ''}" alt="${slot.Tittle || 'Curso'}" />
+          <div class="custom-course-title">${slot.Tittle || 'Sin título'}</div>
+          <div class="custom-course-instructor">Prof. CorsoSkills</div>
+          <div class="custom-progress-container">
+            <div class="custom-progress-bar">
+              <div class="custom-progress-fill" style="width: ${slot.progress || 0}%"></div>
+            </div>
+            <div class="custom-progress-info">
+              <span>Lecciones: 3</span>
+              <span>${slot.progress || 0}%</span>
+            </div>
           </div>
-          <div class="custom-progress-info">
-            <span>Lecciones: 3</span>
-            <span>${slot.progress || 0}%</span>
-          </div>
-        </div>
-      `;
-      container.appendChild(div);
-    });
-
-    updateNavigationButtons(slots.length);
-  }
-
-
-
-
-
-  function updateNavigationButtons(totalSlots) {
-    const leftBtn = document.getElementById("custom-carousel-left");
-    const rightBtn = document.getElementById("custom-carousel-right");
-
-    if (!leftBtn || !rightBtn) return;
-
-    leftBtn.style.visibility = currentStart > 0 ? "visible" : "hidden";
-    rightBtn.style.visibility = currentStart + limit < totalSlots ? "visible" : "hidden";
-  }
-
-  function setupNavigationButtons() {
-    const leftBtn = document.getElementById("custom-carousel-left");
-    const rightBtn = document.getElementById("custom-carousel-right");
-
-    if (leftBtn) {
-      leftBtn.addEventListener("click", () => {
-        if (currentStart - limit >= 0) {
-          currentStart -= limit;
-          renderSlots(currentSlots);
-        }
+        `;
+        container.appendChild(div);
       });
+
+      updateNavigationButtons(slots.length);
     }
 
-    if (rightBtn) {
-      rightBtn.addEventListener("click", () => {
-        if (currentStart + limit < currentSlots.length) {
-          currentStart += limit;
-          renderSlots(currentSlots);
-        }
-      });
-    }
-  }
 
-  function init() {
-    // ✅ Responsive limit based on screen width
-    if (window.innerWidth <= 825) {
-      limit = 2;
-    } else if (window.innerWidth <= 1208) {
-      limit = 3;
-    } else {
-      limit = 4;
+
+
+
+    function updateNavigationButtons(totalSlots) {
+      const leftBtn = document.getElementById("custom-carousel-left");
+      const rightBtn = document.getElementById("custom-carousel-right");
+
+      if (!leftBtn || !rightBtn) return;
+
+      leftBtn.style.visibility = currentStart > 0 ? "visible" : "hidden";
+      rightBtn.style.visibility = currentStart + limit < totalSlots ? "visible" : "hidden";
     }
 
-    if (typeof businessData === 'object' && businessData?.Courses) {
-      currentSlots = getActiveCourses(businessData.Courses);
-      currentStart = 0;
-      setupNavigationButtons();
-      renderSlots(currentSlots);
-    } else {
-      console.warn("⚠️ businessData.Courses is not defined or invalid.");
-    }
-  }
+    function setupNavigationButtons() {
+      const leftBtn = document.getElementById("custom-carousel-left");
+      const rightBtn = document.getElementById("custom-carousel-right");
 
-  init();
-}
-
-
-function renderWeekCalendar() {
-  if (!studentData || !studentData.Calendar) {
-    console.error("studentData.Calendar is not defined");
-    return;
-  }
-
-  const calendarEvents = studentData.Calendar;
-  const monthNames = {
-    enero: 0, febrero: 1, marzo: 2, abril: 3,
-    mayo: 4, junio: 5, julio: 6, agosto: 7,
-    septiembre: 8, octubre: 9, noviembre: 10, diciembre: 11
-  };
-
-  const weekdaysShort = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
-  const weekGrid = document.getElementById('week-grid');
-  const weekRangeEl = document.getElementById('week-range');
-  const prevBtn = document.getElementById('prev-week');
-  const nextBtn = document.getElementById('next-week');
-
-  function parseSpanishDate(dateStr) {
-    const parts = dateStr.toLowerCase().split(' de ');
-    if (parts.length !== 3) return null;
-    const [dayStr, monthName, yearStr] = parts;
-    const day = parseInt(dayStr);
-    const year = parseInt(yearStr);
-    const month = monthNames[monthName];
-    if (isNaN(day) || isNaN(year) || month === undefined) return null;
-    return new Date(year, month, day);
-  }
-
-  const allEvents = {};
-  for (const key in calendarEvents) {
-    const event = calendarEvents[key];
-    const date = parseSpanishDate(event.Date);
-    if (date) {
-      const keyStr = date.toISOString().split('T')[0];
-      allEvents[keyStr] = event;
-    }
-  }
-
-  let baseDate = new Date();
-
-  function getStartOfWeek(date) {
-    const day = (date.getDay() + 6) % 7; // make Monday = 0
-    const start = new Date(date);
-    start.setDate(date.getDate() - day);
-    return start;
-  }
-
-  function renderWeek(date) {
-    weekGrid.innerHTML = '';
-    const startOfWeek = getStartOfWeek(date);
-
-    const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(endOfWeek.getDate() + 6);
-
-    const rangeText = `${startOfWeek.getDate()} ${startOfWeek.toLocaleString('es-MX', { month: 'short' })} - ${endOfWeek.getDate()} ${endOfWeek.toLocaleString('es-MX', { month: 'short' })}`;
-    weekRangeEl.textContent = `Semana: ${rangeText}`;
-
-    for (let i = 0; i < 7; i++) {
-      const dayDate = new Date(startOfWeek);
-      dayDate.setDate(startOfWeek.getDate() + i);
-      const dayStr = dayDate.toISOString().split('T')[0];
-
-      const dayBox = document.createElement('div');
-      dayBox.className = 'day-box';
-      dayBox.textContent = `${weekdaysShort[i]}\n${dayDate.getDate()}`;
-
-      if (
-        dayDate.toDateString() === new Date().toDateString()
-      ) {
-        dayBox.classList.add('active');
-      }
-
-      if (allEvents[dayStr]) {
-        dayBox.classList.add('marked');
-        dayBox.title = allEvents[dayStr].Tittle;
-        dayBox.addEventListener('click', () => {
-          alert(
-            `📌 ${allEvents[dayStr].Tittle}\n📅 ${allEvents[dayStr].Date}\n📂 ${allEvents[dayStr].Tipo}\n🎯 ${allEvents[dayStr].Objetivo || "—"}\n📝 ${allEvents[dayStr].Descripción}`
-          );
+      if (leftBtn) {
+        leftBtn.addEventListener("click", () => {
+          if (currentStart - limit >= 0) {
+            currentStart -= limit;
+            renderSlots(currentSlots);
+          }
         });
       }
 
-      weekGrid.appendChild(dayBox);
+      if (rightBtn) {
+        rightBtn.addEventListener("click", () => {
+          if (currentStart + limit < currentSlots.length) {
+            currentStart += limit;
+            renderSlots(currentSlots);
+          }
+        });
+      }
     }
+
+    function init() {
+      // ✅ Responsive limit based on screen width
+      if (window.innerWidth <= 825) {
+        limit = 2;
+      } else if (window.innerWidth <= 1208) {
+        limit = 3;
+      } else {
+        limit = 4;
+      }
+
+      if (typeof businessData === 'object' && businessData?.Courses) {
+        currentSlots = getActiveCourses(businessData.Courses);
+        currentStart = 0;
+        setupNavigationButtons();
+        renderSlots(currentSlots);
+      } else {
+        console.warn("⚠️ businessData.Courses is not defined or invalid.");
+      }
+    }
+
+    init();
+  }
+  function renderWeekCalendar() {
+    if (!studentData || !studentData.Calendar) {
+      console.error("studentData.Calendar is not defined");
+      return;
+    }
+
+    const calendarEvents = studentData.Calendar;
+    const monthNames = {
+      enero: 0, febrero: 1, marzo: 2, abril: 3,
+      mayo: 4, junio: 5, julio: 6, agosto: 7,
+      septiembre: 8, octubre: 9, noviembre: 10, diciembre: 11
+    };
+
+    const weekdaysShort = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+    const weekGrid = document.getElementById('week-grid');
+    const weekRangeEl = document.getElementById('week-range');
+    const prevBtn = document.getElementById('prev-week');
+    const nextBtn = document.getElementById('next-week');
+
+    function parseSpanishDate(dateStr) {
+      const parts = dateStr.toLowerCase().split(' de ');
+      if (parts.length !== 3) return null;
+      const [dayStr, monthName, yearStr] = parts;
+      const day = parseInt(dayStr);
+      const year = parseInt(yearStr);
+      const month = monthNames[monthName];
+      if (isNaN(day) || isNaN(year) || month === undefined) return null;
+      return new Date(year, month, day);
+    }
+
+    const allEvents = {};
+    for (const key in calendarEvents) {
+      const event = calendarEvents[key];
+      const date = parseSpanishDate(event.Date);
+      if (date) {
+        const keyStr = date.toISOString().split('T')[0];
+        allEvents[keyStr] = event;
+      }
+    }
+
+    let baseDate = new Date();
+
+    function getStartOfWeek(date) {
+      const day = (date.getDay() + 6) % 7; // make Monday = 0
+      const start = new Date(date);
+      start.setDate(date.getDate() - day);
+      return start;
+    }
+
+    function renderWeek(date) {
+      weekGrid.innerHTML = '';
+      const startOfWeek = getStartOfWeek(date);
+
+      const endOfWeek = new Date(startOfWeek);
+      endOfWeek.setDate(endOfWeek.getDate() + 6);
+
+      const rangeText = `${startOfWeek.getDate()} ${startOfWeek.toLocaleString('es-MX', { month: 'short' })} - ${endOfWeek.getDate()} ${endOfWeek.toLocaleString('es-MX', { month: 'short' })}`;
+      weekRangeEl.textContent = `Semana: ${rangeText}`;
+
+      for (let i = 0; i < 7; i++) {
+        const dayDate = new Date(startOfWeek);
+        dayDate.setDate(startOfWeek.getDate() + i);
+        const dayStr = dayDate.toISOString().split('T')[0];
+
+        const dayBox = document.createElement('div');
+        dayBox.className = 'day-box';
+        dayBox.textContent = `${weekdaysShort[i]}\n${dayDate.getDate()}`;
+
+        if (
+          dayDate.toDateString() === new Date().toDateString()
+        ) {
+          dayBox.classList.add('active');
+        }
+
+        if (allEvents[dayStr]) {
+          dayBox.classList.add('marked');
+          dayBox.title = allEvents[dayStr].Tittle;
+          dayBox.addEventListener('click', () => {
+            alert(
+              `📌 ${allEvents[dayStr].Tittle}\n📅 ${allEvents[dayStr].Date}\n📂 ${allEvents[dayStr].Tipo}\n🎯 ${allEvents[dayStr].Objetivo || "—"}\n📝 ${allEvents[dayStr].Descripción}`
+            );
+          });
+        }
+
+        weekGrid.appendChild(dayBox);
+      }
+    }
+
+    prevBtn.addEventListener('click', () => {
+      baseDate.setDate(baseDate.getDate() - 7);
+      renderWeek(baseDate);
+    });
+
+    nextBtn.addEventListener('click', () => {
+      baseDate.setDate(baseDate.getDate() + 7);
+      renderWeek(baseDate);
+    });
+
+    renderWeek(baseDate);
   }
 
-  prevBtn.addEventListener('click', () => {
-    baseDate.setDate(baseDate.getDate() - 7);
-    renderWeek(baseDate);
-  });
-
-  nextBtn.addEventListener('click', () => {
-    baseDate.setDate(baseDate.getDate() + 7);
-    renderWeek(baseDate);
-  });
-
-  renderWeek(baseDate);
-}
 
 
-renderWeekCalendar()
-newCourses();
 
 
 
@@ -1118,11 +1194,10 @@ newCourses();
 
   renderClander();
   renderStudentinfo()
-
   renderTask()
   renderCourses()
-
-
+  renderWeekCalendar()
+  newCourses();
 }
 
 // Run the fetch

@@ -348,6 +348,9 @@ main{
   cursor: pointer;
 }
 /*----------- Tasks ------------*/
+#taskIconContainer i {
+  display: flex;
+}
 #taskContainer {
   display: flex;
   flex-direction: column;
@@ -405,879 +408,833 @@ main{
   transition: background-color 0.2s ease;
 }
 @media (max-width: 1440px) {
-/*----------- mobile-alerts ------------*/
-.mobile-alerts{
-  display: flex;
-  justify-content: space-between;
-}
-#Welcome{
-  width: 65%;
-  gap: 1rem;
-  padding: 1rem;  
-  display: flex;
-  flex-direction: column;
-  border-radius: 1rem;
-}
-#Date{
-  font-size: .9rem;
-  margin: 0 1rem;
-}
-#Name{
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-#Updates{
-  font-size: .9rem;
-}
-/*----------- Alert---------*/
-#Alert-Icons{
-  width: 25%;
-  gap: 10rem; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 2rem
-}
-#full-Evalope, #bell-full{
-  display: none;
-}
-.Icons i{
-  font-size: 1.4rem;
-}
-.Icons{
-  gap: 1.5rem;
-  display: flex;
-}
-#user-Img {
-  width: 3.5rem;
-  height: 3.5rem;
-  object-fit: cover;
-  border-radius: 50%;
-}
-/*----------- Main-left ------------*/
+  /*----------- mobile-alerts ------------*/
+  .mobile-alerts{
+    display: flex;
+    justify-content: space-between;
+  }
+  #Welcome{
+    width: 65%;
+    gap: 1rem;
+    padding: 1rem;  
+    display: flex;
+    flex-direction: column;
+    border-radius: 1rem;
+  }
+  #Date{
+    font-size: .9rem;
+    margin: 0 1rem;
+  }
+  #Name{
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  #Updates{
+    font-size: .9rem;
+  }
+  /*----------- Alert---------*/
+  #Alert-Icons{
+    width: 25%;
+    gap: 10rem; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 2rem
+  }
+  #full-Evalope, #bell-full{
+    display: none;
+  }
+  .Icons i{
+    font-size: 1.4rem;
+  }
+  .Icons{
+    gap: 1.5rem;
+    display: flex;
+  }
+  #user-Img {
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  /*----------- Main-left ------------*/
 
-/*----------- Cursos-En-Progreso ------------*/
-.coures-tittle{
-  font-size: 1.2rem;
-}
-#results {
-  gap: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-.slot-item {
-  border-radius: 16px;
-  padding: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.74);
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 240px;
-  transition: transform 0.2s ease;
-}
-.slot-item:hover {
-  transform: translateY(-4px);
-}
-.slot-item img {
-  width: 100%;
-  height: 8rem;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 12px;
-}
-.slot-title {
-  font-weight: 600;
-  font-size: .9rem;
-}
-.slot-prof {
-  font-size: 0.7rem;
-  margin-bottom: 8px;
-}
-.progress-bar {
-  height: 6px;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-.progress-bar-fill {
-  height: 100%;
-  transition: width 0.3s ease;
-}
-.progress-info {
-  font-size: 0.8rem;
-  display: flex;
-  justify-content: space-between;
-}
-/*----------- Carousel Section ------------*/
-.custom-carousel-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 30px 0;
-  overflow-x: auto;
-}
-.custom-carousel-btn {
-  cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-#custom-course-carousel {
-  display: flex;
-  gap: 24px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-}
-.custom-course-card {
-  max-width: 270px;
-  width: 100%;
-  padding: 18px;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease;
-}
-.custom-course-card:hover {
-  transform: translateY(-5px);
-}
-.custom-course-card img {
-  width: 100%;
-  height: 8rem;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 10px;
-}
-.custom-course-title {
-  font-size: .9rem;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-.custom-course-instructor {
-  font-size: 0.9rem;
-  margin: .1rem 0   ;
-}
-.custom-progress-container {
-  margin-top: auto;
-}
-.custom-progress-bar {
-  height: 8px;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-.custom-progress-fill {
-  height: 100%;
-  transition: width 0.3s ease;
-}
-.custom-progress-info {
-  font-size: 0.7rem;
-}
-
-
-
-
-
-
-
-
-
- /*----------- Calendar ------------*/
-#calendar-container {
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.527);
-  width: 20rem;
-  text-align: center;
-}
-.calendar-container h2 {
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
-  text-align: left;
-}
-.calendar {
-  border-radius: 1rem;
-  padding: 1rem;
-}
-.calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-.calendar-header button {
-  background: none;
-  border: none;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.5rem;
-}
-.day-name {
-  font-weight: bold;
-}
-.day {
-  height: 2rem;
-  line-height: 2rem;
-  border-radius: 50%;
-}
-.day.active {
-  font-weight: bold;
-}
-.day.marked {
-  font-weight: bold;
-  cursor: pointer;
-}
-
-
-
-
+  /*----------- Cursos-En-Progreso ------------*/
+  .coures-tittle{
+    font-size: 1.2rem;
+  }
+  #results {
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .slot-item {
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.74);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 240px;
+    transition: transform 0.2s ease;
+  }
+  .slot-item:hover {
+    transform: translateY(-4px);
+  }
+  .slot-item img {
+    width: 100%;
+    height: 8rem;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+  .slot-title {
+    font-weight: 600;
+    font-size: .9rem;
+  }
+  .slot-prof {
+    font-size: 0.7rem;
+    margin-bottom: 8px;
+  }
+  .progress-bar {
+    height: 6px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+  .progress-info {
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  /*----------- Carousel Section ------------*/
+  .custom-carousel-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 30px 0;
+    overflow-x: auto;
+  }
+  .custom-carousel-btn {
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  #custom-course-carousel {
+    display: flex;
+    gap: 24px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+  }
+  .custom-course-card {
+    max-width: 270px;
+    width: 100%;
+    padding: 18px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+  }
+  .custom-course-card:hover {
+    transform: translateY(-5px);
+  }
+  .custom-course-card img {
+    width: 100%;
+    height: 8rem;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+  .custom-course-title {
+    font-size: .9rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .custom-course-instructor {
+    font-size: 0.9rem;
+    margin: .1rem 0   ;
+  }
+  .custom-progress-container {
+    margin-top: auto;
+  }
+  .custom-progress-bar {
+    height: 8px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .custom-progress-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+  .custom-progress-info {
+    font-size: 0.7rem;
+  }
+  /*----------- Calendar ------------*/
+  #calendar-container {
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.527);
+    width: 20rem;
+    text-align: center;
+  }
+  .calendar-container h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  .calendar {
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  .calendar-header button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+  }
+  .day-name {
+    font-weight: bold;
+  }
+  .day {
+    height: 2rem;
+    line-height: 2rem;
+    border-radius: 50%;
+  }
+  .day.active {
+    font-weight: bold;
+  }
+  .day.marked {
+    font-weight: bold;
+    cursor: pointer;
+  }
 }
 @media (max-width: 1192px) {
-/*----------- mobile-alerts ------------*/
-.mobile-alerts{
-  display: flex;
-  justify-content: space-between;
-}
-#Welcome{
-  width: 60%;
-  gap: 1rem;
-  padding: 1rem;  
-  display: flex;
-  flex-direction: column;
-  border-radius: 1rem;
-}
-#Date{
-  font-size: .8rem;
-  margin: 0 1rem;
-}
-#Name{
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-#Updates{
-  font-size: .8rem;
-}
-/*----------- Alert---------*/
-#Alert-Icons{
-  width: 25%;
-  gap: 8rem; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 2rem
-}
-#full-Evalope, #bell-full{
-  display: none;
-}
-.Icons i{
-  font-size: 1.2rem;
-}
-.Icons{
-  gap: 1.3rem;
-  display: flex;
-}
-#user-Img {
-  width: 3.3rem;
-  height: 3.3rem;
-  object-fit: cover;
-  border-radius: 50%;
-}
-/*----------- Main-left ------------*/
-
-/*----------- Cursos-En-Progreso ------------*/
-.coures-tittle{
-  font-size: 1rem;
-}
-#results {
-  gap: .8rem;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-.slot-item {
-  border-radius: 16px;
-  padding: 13px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.74);
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  max-width: 240px;
-  transition: transform 0.2s ease;
-  overflow-y: auto;
-}
-.slot-item:hover {
-  transform: translateY(-4px);
-}
-.slot-item img {
-  width: 100%;
-  height: 6rem;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 12px;
-}
-.slot-title {
-  font-weight: 600;
-  font-size: .8rem;
-}
-.slot-prof {
-  font-size: 0.6rem;
-  margin-bottom: 8px;
-}
-.progress-bar {
-  height: 6px;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-.progress-bar-fill {
-  height: 100%;
-  transition: width 0.3s ease;
-}
-.progress-info {
-  font-size: 0.7rem;
-  display: flex;
-  justify-content: space-between;
-}
-/*----------- Carousel Section ------------*/
-.custom-carousel-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding:  13px;
-  overflow-x: auto;
-}
-.custom-carousel-btn {
-  cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-#custom-course-carousel {
-  display: flex;
-  gap: 24px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-}
-.custom-course-card {
-  max-width: 270px;
-  width: 100%;
-  padding: 18px;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease;
-}
-.custom-course-card:hover {
-  transform: translateY(-5px);
-}
-.custom-course-card img {
-  width: 100%;
-  height: 6rem;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 10px;
-}
-.custom-course-title {
-  font-size: .8rem;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-.custom-course-instructor {
-  font-size: 0.8rem;
-  margin: .1rem 0   ;
-}
-.custom-progress-container {
-  margin-top: auto;
-}
-.custom-progress-bar {
-  height: 8px;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-.custom-progress-fill {
-  height: 100%;
-  transition: width 0.3s ease;
-}
-.custom-progress-info {
-  font-size: 0.7rem;
-}
-
-
-
-
-
-
-
-
-
- /*----------- Calendar ------------*/
-#calendar-container {
-  border-radius: 1rem;
-  padding: 1.2rem;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.527);
-  width: 16rem;
-  text-align: center;
-}
-.Tittles{
-  font-size: .9rem;
-}
-.calendar-container h2 {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  text-align: left;
-}
-.calendar {
-  border-radius: 1rem;
-  padding: 1rem;
-}
-.calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-.calendar-header button {
-  background: none;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-}
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.5rem;
-}
-.day-name {
-  font-weight: bold;
-}
-.day {
-  font-size: .8rem;
-  height: 1.3rem;
-  line-height: 1.3rem;
-  border-radius: 50%;
-}
-.day.active {
-  font-weight: bold;
-}
-.day.marked {
-  font-weight: bold;
-  cursor: pointer;
-}
-/*----------- Tasks ------------*/
-#taskContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin: auto;
-}
-.Task-Tittle{
-  font-size: 1rem;
-}
-.task-card {
-  padding: 1rem ;
-  margin: 2px 0;
-  border-radius: 12px;
-  border: 2px solid transparent;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.65);
-  transition: border-color 0.3s ease, transform 0.2s ease;
-}
-.task-card h3 {
-  font-size: .8rem;
-  margin-bottom: 2px;
-}
-.task-card p {
-  font-size: .7rem;
-  margin: 2px 0;
-}
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-.modal-content {
-  margin: auto;
-  padding: 20px;
-  width: 90%;
-  max-width: 700px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-.close-btn {
-  float: right;
-  font-size: 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
-}
-.show-all-btn {
-  align-self: center;
-  padding: 10px 15px;
-  font-size: .8rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-
-
+  /*----------- mobile-alerts ------------*/
+  .mobile-alerts{
+    display: flex;
+    justify-content: space-between;
+  }
+  #Welcome{
+    width: 60%;
+    gap: 1rem;
+    padding: 1rem;  
+    display: flex;
+    flex-direction: column;
+    border-radius: 1rem;
+  }
+  #Date{
+    font-size: .8rem;
+    margin: 0 1rem;
+  }
+  #Name{
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  #Updates{
+    font-size: .8rem;
+  }
+  /*----------- Alert---------*/
+  #Alert-Icons{
+    width: 25%;
+    gap: 8rem; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 2rem
+  }
+  #full-Evalope, #bell-full{
+    display: none;
+  }
+  .Icons i{
+    font-size: 1.2rem;
+  }
+  .Icons{
+    gap: 1.3rem;
+    display: flex;
+  }
+  #user-Img {
+    width: 3.3rem;
+    height: 3.3rem;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  /*----------- Main-left ------------*/
+  /*----------- Cursos-En-Progreso ------------*/
+  .coures-tittle{
+    font-size: 1rem;
+  }
+  #results {
+    gap: .8rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .slot-item {
+    border-radius: 16px;
+    padding: 13px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.74);
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 240px;
+    transition: transform 0.2s ease;
+    overflow-y: auto;
+  }
+  .slot-item:hover {
+    transform: translateY(-4px);
+  }
+  .slot-item img {
+    width: 100%;
+    height: 6rem;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+  .slot-title {
+    font-weight: 600;
+    font-size: .8rem;
+  }
+  .slot-prof {
+    font-size: 0.6rem;
+    margin-bottom: 8px;
+  }
+  .progress-bar {
+    height: 6px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+  .progress-info {
+    font-size: 0.7rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  /*----------- Carousel Section ------------*/
+  .custom-carousel-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding:  13px;
+    overflow-x: auto;
+  }
+  .custom-carousel-btn {
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  #custom-course-carousel {
+    display: flex;
+    gap: 24px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+  }
+  .custom-course-card {
+    max-width: 270px;
+    width: 100%;
+    padding: 18px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+  }
+  .custom-course-card:hover {
+    transform: translateY(-5px);
+  }
+  .custom-course-card img {
+    width: 100%;
+    height: 6rem;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+  }
+  .custom-course-title {
+    font-size: .8rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .custom-course-instructor {
+    font-size: 0.8rem;
+    margin: .1rem 0   ;
+  }
+  .custom-progress-container {
+    margin-top: auto;
+  }
+  .custom-progress-bar {
+    height: 8px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .custom-progress-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+  .custom-progress-info {
+    font-size: 0.7rem;
+  }
+  /*----------- Calendar ------------*/
+  #calendar-container {
+    border-radius: 1rem;
+    padding: 1.2rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.527);
+    width: 16rem;
+    text-align: center;
+  }
+  .Tittles{
+    font-size: .9rem;
+  }
+  .calendar-container h2 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  .calendar {
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  .calendar-header button {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+  }
+  .day-name {
+    font-weight: bold;
+  }
+  .day {
+    font-size: .8rem;
+    height: 1.3rem;
+    line-height: 1.3rem;
+    border-radius: 50%;
+  }
+  .day.active {
+    font-weight: bold;
+  }
+  .day.marked {
+    font-weight: bold;
+    cursor: pointer;
+  }
+  /*----------- Tasks ------------*/
+  #taskContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin:  auto;
+  }
+  .Task-Tittle{
+    font-size: 1rem;
+  }
+  .task-card {
+    padding: 1rem ;
+    margin: 2px 0;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.65);
+    transition: border-color 0.3s ease, transform 0.2s ease;
+  }
+  .task-card h3 {
+    font-size: .8rem;
+    margin-bottom: 2px;
+  }
+  .task-card p {
+    font-size: .7rem;
+    margin: 2px 0;
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  .modal-content {
+    margin: auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 700px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  .close-btn {
+    float: right;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .show-all-btn {
+    align-self: center;
+    padding: 10px 15px;
+    font-size: .8rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
 }
 @media (max-width: 980px) {
-
-main{
-  width: 86%;
-  margin: 1rem;
-}
-
-/*----------- mobile-alerts ------------*/
-.mobile-alerts{
-  display: flex;
-  justify-content: space-between;
-}
-#Welcome{
-  width: 55%;
-  gap: 1rem;
-  padding: 1rem;  
-  display: flex;
-  flex-direction: column;
-  border-radius: 1rem;
-}
-#Date{
-  font-size: .7rem;
-  margin: 0 1rem;
-}
-#Name{
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-#Updates{
-  font-size: .7rem;
-}
-/*----------- Alert---------*/
-#Alert-Icons{
-  width: 50%;
-  gap: 2rem; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-}
-#full-Evalope, #bell-full{
-  display: none;
-}
-.Icons i{
-  font-size: 1rem;
-}
-.Icons{
-  gap: 1.1rem;
-  display: flex;
-}
-#user-Img {
-  width: 3rem;
-  height: 3rem;
-  object-fit: cover;
-  border-radius: 50%;
-}
-/*----------- Main-left ------------*/
-.Main-left{
-  width: 30rem;
-}
-/*----------- Cursos-En-Progreso ------------*/
-.coures-tittle{
-  font-size: .9rem;
-}
-#results {
-  gap: .8rem;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-.slot-item {
-  border-radius: 16px;
-  padding: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.74);
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  max-width: 220px;
-  transition: transform 0.2s ease;
-  overflow-y: auto;
-}
-.slot-item:hover {
-  transform: translateY(-4px);
-}
-.slot-item img {
-  width: 100%;
-  height: 6rem;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 12px;
-}
-.slot-title {
-  font-weight: 600;
-  font-size: .7rem;
-}
-.slot-prof {
-  font-size: 0.7rem;
-  margin-bottom: 8px;
-}
-.progress-bar {
-  height: 6px;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-.progress-bar-fill {
-  height: 100%;
-  transition: width 0.3s ease;
-}
-.progress-info {
-  font-size: 0.7rem;
-  display: flex;
-  justify-content: space-between;
-}
-/*----------- Carousel Section ------------*/
-.custom-carousel-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding:  8px;
-  overflow-x: auto;
-}
-.custom-carousel-btn {
-  cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-#custom-course-carousel {
-  display: flex;
-  gap: 10px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-}
-.custom-course-card {
-  max-width: 270px;
-  width: 100%;
-  padding: 10px;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease;
-}
-.custom-course-card:hover {
-  transform: translateY(-5px);
-}
-.custom-course-card img {
-  width: 100%;
-  height: 6rem;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 1px;
-}
-.custom-course-title {
-  font-size: .7rem;
-  font-weight: 600;
-  margin-bottom: 2px;
-}
-.custom-course-instructor {
-  font-size: 0.7rem;
-  margin: .1rem 0   ;
-}
-.custom-progress-container {
-  margin-top: auto;
-}
-.custom-progress-bar {
-  height: 8px;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-.custom-progress-fill {
-  height: 100%;
-  transition: width 0.3s ease;
-}
-.custom-progress-info {
-  font-size: 0.7rem;
-}
-
-
-
-
-
-
-
-
-
- /*----------- Calendar ------------*/
-#calendar-container {
-  border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.527);
-  width: 14rem;
-  text-align: center;
-}
-.Tittles{
-  font-size: .8rem;
-}
-.calendar-container h2 {
-  font-size: .8rem;
-  margin-bottom: 1rem;
-  text-align: left;
-}
-.calendar {
-  border-radius: 1rem;
-  padding: 1rem;
-}
-.calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
-.calendar-header button {
-  background: none;
-  border: none;
-  font-size: .8rem;
-  cursor: pointer;
-}
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 0.5rem;
-}
-.day-name {
-  font-weight: bold;
-}
-.day {
-  font-size: .7rem;
-  height: 1.1rem;
-  line-height: 1.1rem;
-  border-radius: 50%;
-}
-.day.active {
-  font-weight: bold;
-}
-.day.marked {
-  font-weight: bold;
-  cursor: pointer;
-}
-/*----------- Tasks ------------*/
-#taskContainer {
-  width: 13rem;
-  display: flex;
-  flex-direction: column;
-  gap: .8rem;
-  margin: auto;
-}
-.Task-Tittle{
-  font-size: .9rem;
-}
-.task-card {
-  padding: .9rem ;
-  margin: 1.6px 0;
-  border-radius: 12px;
-  border: 2px solid transparent;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.65);
-  transition: border-color 0.3s ease, transform 0.2s ease;
-}
-.task-card h3 {
-  font-size: .8rem;
-  margin-bottom: 2px;
-}
-.task-card p {
-  font-size: .7rem;
-  margin: 2px 0;
-}
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-.modal-content {
-  margin: auto;
-  padding: 20px;
-  width: 90%;
-  max-width: 700px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-.close-btn {
-  float: right;
-  font-size: 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
-}
-.show-all-btn {
-  align-self: center;
-  padding: 10px 15px;
-  font-size: .8rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-
-
+  main{
+    width: 86%;
+    margin: 1rem;
+  }
+  /*----------- mobile-alerts ------------*/
+  .mobile-alerts{
+    display: flex;
+    justify-content: space-between;
+  }
+  #Welcome{
+    width: 55%;
+    gap: 1rem;
+    padding: 1rem;  
+    display: flex;
+    flex-direction: column;
+    border-radius: 1rem;
+  }
+  #Date{
+    font-size: .7rem;
+    margin: 0 1rem;
+  }
+  #Name{
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  #Updates{
+    font-size: .7rem;
+  }
+  /*----------- Alert---------*/
+  #Alert-Icons{
+    width: 50%;
+    gap: 2rem; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+  #full-Evalope, #bell-full{
+    display: none;
+  }
+  .Icons i{
+    font-size: 1rem;
+  }
+  .Icons{
+    gap: 1.1rem;
+    display: flex;
+  }
+  #user-Img {
+    width: 3rem;
+    height: 3rem;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  /*----------- Main-left ------------*/
+  .Main-left{
+    width: 30rem;
+  }
+  /*----------- Cursos-En-Progreso ------------*/
+  .coures-tittle{
+    font-size: .9rem;
+  }
+  #results {
+    gap: .8rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .slot-item {
+    border-radius: 16px;
+    padding: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.74);
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    max-width: 220px;
+    transition: transform 0.2s ease;
+    overflow-y: auto;
+  }
+  .slot-item:hover {
+    transform: translateY(-4px);
+  }
+  .slot-item img {
+    width: 100%;
+    height: 6rem;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+  .slot-title {
+    font-weight: 600;
+    font-size: .7rem;
+  }
+  .slot-prof {
+    font-size: 0.7rem;
+    margin-bottom: 8px;
+  }
+  .progress-bar {
+    height: 6px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+  .progress-info {
+    font-size: 0.7rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  /*----------- Carousel Section ------------*/
+  .custom-carousel-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding:  8px;
+    overflow-x: auto;
+  }
+  .custom-carousel-btn {
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  #custom-course-carousel {
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+  }
+  .custom-course-card {
+    max-width: 270px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+  }
+  .custom-course-card:hover {
+    transform: translateY(-5px);
+  }
+  .custom-course-card img {
+    width: 100%;
+    height: 6rem;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 1px;
+  }
+  .custom-course-title {
+    font-size: .7rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .custom-course-instructor {
+    font-size: 0.7rem;
+    margin: .1rem 0   ;
+  }
+  .custom-progress-container {
+    margin-top: auto;
+  }
+  .custom-progress-bar {
+    height: 8px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .custom-progress-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+  .custom-progress-info {
+    font-size: 0.7rem;
+  }
+  /*----------- Calendar ------------*/
+  #calendar-container {
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.527);
+    width: 14rem;
+    text-align: center;
+  }
+  .Tittles{
+    font-size: .8rem;
+  }
+  .calendar-container h2 {
+    font-size: .8rem;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  .calendar {
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  .calendar-header button {
+    background: none;
+    border: none;
+    font-size: .8rem;
+    cursor: pointer;
+  }
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+  }
+  .day-name {
+    font-weight: bold;
+  }
+  .day {
+    font-size: .7rem;
+    height: 1.1rem;
+    line-height: 1.1rem;
+    border-radius: 50%;
+  }
+  .day.active {
+    font-weight: bold;
+  }
+  .day.marked {
+    font-weight: bold;
+    cursor: pointer;
+  }
+  /*----------- Tasks ------------*/
+  #taskContainer {
+    width: 13rem;
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    margin: auto;
+  }
+  .Task-Tittle{
+    font-size: .9rem;
+  }
+  .task-card {
+    padding: .9rem ;
+    margin: 1.6px 0;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.65);
+    transition: border-color 0.3s ease, transform 0.2s ease;
+  }
+  .task-card h3 {
+    font-size: .8rem;
+    margin-bottom: 2px;
+  }
+  .task-card p {
+    font-size: .7rem;
+    margin: 2px 0;
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  .modal-content {
+    margin: auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 700px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  .close-btn {
+    float: right;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .show-all-btn {
+    align-self: center;
+    padding: 10px 15px;
+    font-size: .8rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
 }
 @media (max-width: 768px) {
-
-body {
-
-  display: flex;
-  align-items: center;
-  flex-direction: row;
- justify-content: center;
-  overflow: hidden;
-}
-
-
+  body {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    overflow: hidden;
+  }
   .main {
     gap: .5rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     width: 100%;
-  
     margin: 0;
   }
   .hamburger {
     display: block;
-    color: #c40505;
     font-weight: bold;
   }
   .Mobile-close-btn{
     display: flex;
-    color: #c40505;
     font-size: 1.5rem;
   }
   .Mobile-sidebar {
@@ -1287,298 +1244,253 @@ body {
     width: 75%;
     max-width:210px;
     height: 95%;
-    background-color: #1a1a1a;
-    color: white;
     transition: left 0.3s ease;
     z-index: 1000;
   }
   .Mobile-sidebar.active {
     left: 0;
   }
-
-
-.Main-left{
-  width: 100%;
-}
-
-/*----------- mobile-alerts ------------*/
-.mobile-alerts{
-  display: flex;
-  justify-content: space-between;
-  margin: 1rem 0;
-}
-#Welcome{
-  width: 60%;
-  gap: .5rem;  
-  padding: .5rem 1rem;  
-  display: flex;
-  flex-direction: column;
-  border-radius: 1rem 0 0 1rem ;
-}
-#Date{
-  font-size: .7rem;
-  margin: 0 .5rem;
-}
-#Name{
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-#Updates{
-  font-size: .8rem;
-}
-/*----------- Alert---------*/
-#Alert-Icons{
-  width: 25%;
-  gap: 8rem; 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 2rem
-}
-#full-Evalope, #bell-full{
-  display: none;
-}
-.Icons i{
-  font-size: 1.2rem;
-}
-.Icons{
-  gap: 1.3rem;
-  display: flex;
-}
-#user-Img {
-  width: 3.3rem;
-  height: 3.3rem;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  .Main-left{
+    width: 100%;
+  }
+  /*----------- mobile-alerts ------------*/
+  .mobile-alerts{
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+  }
+  #Welcome{
+    width: 60%;
+    gap: .5rem;  
+    padding: .5rem 1rem;  
+    display: flex;
+    flex-direction: column;
+    border-radius: 1rem 0 0 1rem ;
+  }
+  #Date{
+    font-size: .7rem;
+    margin: 0 .5rem;
+  }
+  #Name{
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  #Updates{
+    font-size: .8rem;
+  }
+  /*----------- Alert---------*/
+  #Alert-Icons{
+    width: 25%;
+    gap: 8rem; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 2rem
+  }
+  #full-Evalope, #bell-full{
+    display: none;
+  }
+  .Icons i{
+    font-size: 1.2rem;
+  }
+  .Icons{
+    gap: 1.3rem;
+    display: flex;
+  }
+  #user-Img {
+    width: 3.3rem;
+    height: 3.3rem;
+    object-fit: cover;
+    border-radius: 50%;
+  }
   .mobile-calendar{
     display: block;
   }
-  
-
-.mobile-calendar {
- 
-  width: 100%;
-  max-width: 100%;
-  padding: .5rem;
-  background: #fff;
-  border-radius: 1rem;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.356);
-  font-family: sans-serif;
-}
-
-.calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: .5rem;
-}
-
-.calendar-header h3 {
-  font-size: 1rem;
-  text-transform: capitalize;
-}
-
-.week-grid {
-  display: grid;
-  grid-template-columns: repeat(7, .5fr);
-  gap: 0.5rem;
-}
-
-.day-box {
-  background: #f5f5f5;
-  border-radius: 0.5rem;
-  padding: 0.6rem 0.3rem;
-  text-align: center;
-  font-size: 0.8rem;
-  position: relative;
-  cursor: pointer;
-}
-
-.day-box.active {
-  background: #4CAF50;
-  color: #fff;
-  font-weight: bold;
-}
-
-.day-box.marked::after {
-  content: '📌';
-  position: absolute;
-  bottom: 0.3rem;
-  right: 0.4rem;
-  font-size: 0.7rem;
-}
+  .mobile-calendar {
+    width: 100%;
+    max-width: 100%;
+    padding: .5rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.356);
+  }
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .5rem;
+  }
+  .calendar-header h3 {
+    font-size: 1rem;
+    text-transform: capitalize;
+  }
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(7, .5fr);
+    gap: 0.5rem;
+  }
+  #prev-week,
+  #next-week {
+    font-size: 2rem; 
+    font-weight: bold;            
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+  }
+  .day-box {
+    border-radius: 0.5rem;
+    padding: 0.6rem 0.3rem;
+    text-align: center;
+    font-size: 0.8rem;
+    position: relative;
+    cursor: pointer;
+  }
+  .day-box.active {
+    font-weight: bold;
+  }
+  .day-box.marked::after {
+    content: '📌';
+    position: absolute;
+    bottom: 0.3rem;
+    right: 0.4rem;
+    font-size: 0.7rem; 
+  }
   /*----------- Cursos-En-Progreso ------------*/
-.coures-tittle{
-  font-size: 1rem;
-}
-#results {
-  gap: .8rem;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-.slot-item {
-  border-radius: 16px;
-  padding: 13px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.74);
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 240px;
-  transition: transform 0.2s ease;
-  overflow-y: auto;
-}
-.slot-item:hover {
-  transform: translateY(-4px);
-}
-.slot-item img {
-  width: 100%;
-  height: 6rem;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 12px;
-}
-.slot-title {
-  font-weight: 600;
-  font-size: .8rem;
-}
-.slot-prof {
-  font-size: 0.6rem;
-  margin-bottom: 8px;
-}
-.progress-bar {
-  height: 6px;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-.progress-bar-fill {
-  height: 100%;
-  transition: width 0.3s ease;
-}
-.progress-info {
-  font-size: 0.7rem;
-  display: flex;
-  justify-content: space-between;
-}
-/*----------- Carousel Section ------------*/
-.custom-carousel-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding:  6px;
-  overflow-x: auto;
-}
-.custom-carousel-btn {
-  cursor: pointer;
-  padding: 8px 4px;
-  border-radius: 8px;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-#custom-course-carousel {
-  display: flex;
-  gap: 10px;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-}
-.custom-course-card {
-  max-width: 270px;
-  width: 100%;
-  padding: 10px;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease;
-}
-.custom-course-card:hover {
-  transform: translateY(-5px);
-}
-.custom-course-card img {
-  width: 100%;
-  height: 6rem;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 8px;
-}
-.custom-course-title {
-  font-size: .8rem;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-.custom-course-instructor {
-  font-size: 0.8rem;
-  margin: .1rem 0   ;
-}
-.custom-progress-container {
-  margin-top: auto;
-}
-.custom-progress-bar {
-  height: 8px;
-  border-radius: 5px;
-  overflow: hidden;
-  margin-bottom: 6px;
-}
-.custom-progress-fill {
-  height: 100%;
-  transition: width 0.3s ease;
-}
-.custom-progress-info {
-  font-size: 0.7rem;
-}
-
-
-
-.Main-right{
-  display: none;
-}
+  .coures-tittle{
+    font-size: 1rem;
+  }
+  #results {
+    gap: .8rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .slot-item {
+    border-radius: 16px;
+    padding: 13px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.74);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 240px;
+    transition: transform 0.2s ease;
+    overflow-y: auto;
+  }
+  .slot-item:hover {
+    transform: translateY(-4px);
+  }
+  .slot-item img {
+    width: 100%;
+    height: 6rem;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 12px;
+  }
+  .slot-title {
+    font-weight: 600;
+    font-size: .8rem;
+  }
+  .slot-prof {
+    font-size: 0.6rem;
+    margin-bottom: 8px;
+  }
+  .progress-bar {
+    height: 6px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+  .progress-info {
+    font-size: 0.7rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  /*----------- Carousel Section ------------*/
+  .custom-carousel-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding:  6px;
+    overflow-x: auto;
+  }
+  .custom-carousel-btn {
+    cursor: pointer;
+    padding: 8px 4px;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  #custom-course-carousel {
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+  }
+  .custom-course-card {
+    max-width: 270px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+  }
+  .custom-course-card:hover {
+    transform: translateY(-5px);
+  }
+  .custom-course-card img {
+    width: 100%;
+    height: 6rem;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+  .custom-course-title {
+    font-size: .8rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .custom-course-instructor {
+    font-size: 0.8rem;
+    margin: .1rem 0   ;
+  }
+  .custom-progress-container {
+    margin-top: auto;
+  }
+  .custom-progress-bar {
+    height: 8px;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .custom-progress-fill {
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+  .custom-progress-info {
+    font-size: 0.7rem;
+  }
+  #calendar-container, .Task-Tittle, #taskContainer    {
+    display: none;
+  }
 
 
 }
 @media (max-width: 652px) {
-
-body {
-
-  display: flex;
-  align-items: center;
-  flex-direction: row;
- justify-content: center;
-  overflow: hidden;
-}
-
-
+  body {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    overflow: hidden;
+  }
   .main {
     gap: .5rem;
     display: flex;
@@ -1587,90 +1499,55 @@ body {
     width: 100%;
     margin: 0;
   }
-
-
-
-.Main-left{
-  width: 100%;
-}
-
+  .Main-left{
+    width: 100%;
+  }
 /*----------- mobile-alerts ------------*/
-#Mobile-Content{
-  margin:-2rem 0 0 0;
-}
-.mobile-alerts{
-  display: flex;
-  flex-direction: column-reverse;
-  justify-content: space-between;
-  margin:  1rem ;
-}
-#Welcome{
-  width:100%;
-  gap: .5rem;  
-  padding: .5rem 1rem;  
-  display: flex;
-  flex-direction: column;
-  border-radius: 1rem ;
-}
-#Date{
-  font-size: .7rem;
-  margin: 0 .5rem;
-}
-#Name{
-  font-size:.9rem;
-  font-weight: bold;
-}
-#Updates{
-  font-size: .7rem;
-}
-/*----------- Alert---------*/
-#Alert-Icons{
-  width: 25%;
-  gap:   11rem; 
-  display: flex;
-  align-items: center;
-  justify-content:space-between;
-  margin: 0 2rem
-}
-#full-Evalope, #bell-full{
-  display: none;
-}
-.Icons i{
-  font-size: 1rem;
-}
-.Icons{
-  gap: 1rem;
-  display: flex;
-}
-#user-Img {
-  width: 3rem;
-  height: 3rem;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  #Mobile-Content{
+    margin:-1rem 0 0 0;
+  }
+  .mobile-alerts{
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    margin:  1rem ;
+  }
+  #Welcome{
+    width:100%;
+    gap: .5rem;  
+    padding: .5rem 1rem;  
+    display: flex;
+    flex-direction: column;
+    border-radius: 1rem ;
+  }
+  #Date{
+    font-size: .7rem;
+    margin: 0 .5rem;
+  }
+  #Name{
+    font-size:.9rem;
+    font-weight: bold;
+  }
+  #Updates{
+    font-size: .7rem;
+  }
+  /*----------- Alert---------*/
+  #Alert-Icons{
+    width: 25%;
+    gap:   11rem; 
+    display: flex;
+    align-items: center;
+    justify-content:space-between;
+    margin: 0 2rem
+  }
+  .Icons i{
+    font-size: 1rem;
+  }
+  .Icons{
+    gap: 1rem;
+  }
+  #user-Img {
+    width: 3rem;
+    height: 3rem;
+  }
 }
