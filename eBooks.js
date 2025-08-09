@@ -40,7 +40,7 @@ async function applyBranding() {
 }
 applyBranding().then((data) => {  
   console.log(data.BuLogos.Icons[0])
-  const {Base, Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
+  const {Base, Prime,Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
   
   function renderImage(imageUrl, altUrl, UrlId) {
     const logoElement = document.getElementById(UrlId);
@@ -91,53 +91,129 @@ applyBranding().then((data) => {
     renderImage(data.BuLogos.Icons[0], "BuLogo", "Bulogos")
     setBodyBackgroundColor(Prime4)
     setBackgroundColor("sidebar", Prime5)
-    setBackgroundColor("Courese-block", Prime5)
-    setBackgroundColor("E-books-Block", Prime5)
+   
     
   }
+  function SideBarColors(){
+        const style = document.createElement('style');
+    style.textContent = `
+      .Side-Btns i{
+        color: ${Base}
+      }
+      .linkName{
+        color: ${Base}
+      }
 
-  function sidebarcolors(){
-    setTextColors(".Side-Btns", Base)
-    setTextColors(".fa-solid", Base)
+      .Side-Btns i:hover {
+        color: ${Prime2}
+      }
+      .Side-caret i{
+        color: ${Base}
+      }
 
+    `;
+    document.head.appendChild(style);
 
+  }
+  function CategorieColors(){
+        const style = document.createElement('style');
+    style.textContent = `
+      .Main-tittle h1 {
+        color:${Base};
+      }
+      .TC-title h1 {
+       color:${Base};
+      }  
+      .TC-title p {
+        color: ${Prime};
+      }
+      .Categorie {
+        color: ${Base};
+        background-color: ${Prime5};
+      }
+      .Categorie:hover {
+        color:${Prime2};
+         border-color: ${Prime2};
+      }
+      .filter-bar input {
+        border: 2px solid ${Prime3};
+      }
+      .filter-bar select {
+        border: 2px solid ${Prime3};
+      }
 
-
-
-    document.querySelectorAll('.Side-Btns').forEach(button => {
-      const icon = button.querySelector('i');
-      const text = button.querySelector('.linkName');
-
-      button.addEventListener('mouseenter', () => {
-        icon.style.color = Prime2; // Hover color
-        text.style.color = Prime2;
-      });
-
-      button.addEventListener('mouseleave', () => {
-        icon.style.color = Base;// Original color
-        text.style.color = ''; // Reset to default (inherited or original)
-      });
-    });
-
+    `;
+    document.head.appendChild(style);
 
   }
 
-  function headerColors(){
-    setBackgroundColor("Wecome-banner", Prime4)
-    setBackgroundColor("courses-in-progress", Prime4)
+  function resourceColors(){
+        const style = document.createElement('style');
+    style.textContent = `
+      .resource-card-ui {
+        background:${Prime5};
+      }
+      .resource-card-ui.completed {
+        border-left-color: ${Prime3};
+      }
+      .resource-card-ui.pending {
+        border-left-color: ${Prime1};
+      }
+      .lesson-title {
+        color: ${Base};
+      }
+      .resource-info p {
+        color:  ${Prime};
+      }
+      .pdf-link {
+        color:${Prime3};
+      }
+      .pdf-link:hover {
+        color: ${Prime2};
+      }
+      .badge-green {
+        background:${Prime3};
+        color:${Prime5};
+      }
+      .badge-yellow {
+        background:${Prime1};
+        color:${Prime5};
+      }
+      .course-block {
+        background-color: ${Prime5};
+      }
 
-
-
+      .course-block-title {
+        color:${Prime3};
+        border-left: 4px solid ${Prime3};
+      }
+      .course-block::-webkit-scrollbar-thumb {
+        background-color: ${Prime1};
+      }
+      .course-block::-webkit-scrollbar-track {
+        background: transparent;
+      }
+    `;
+    document.head.appendChild(style);
 
   }
+
+
+
+
 
 
 
 
 
 SetMainColors()
-headerColors()
-sidebarcolors()
+SideBarColors()
+CategorieColors()
+resourceColors()
+
+
+
+
 
 });
 
@@ -192,35 +268,291 @@ async function fetchAllContent() {
     console.log("No business data found.");
   }
 
-  function renderText(text, elementId) {
-    const element = document.getElementById(elementId);
+function findAllIdsByValue(obj, targetValue) {
+  const matchingIds = [];
 
-    if (element) {
-      element.textContent = text;
+  function search(item) {
+    if (typeof item !== 'object' || item === null) return false;
+
+    let found = false;
+
+    for (const key in item) {
+      if (!item.hasOwnProperty(key)) continue;
+
+      const val = item[key];
+
+      if (val === targetValue) {
+        found = true;
+      }
+
+      if (typeof val === 'object' && val !== null) {
+        if (search(val)) {
+          found = true;
+        }
+      }
+    }
+
+    if (found && item.Id) {
+      matchingIds.push(item.Id);
+    }
+
+    return found;
+  }
+
+  search(obj);
+  return matchingIds;
+}
+
+function findResourcesByIds(obj, targetIds) {
+  const matchingResources = [];
+
+  function search(item) {
+    if (item === null || typeof item !== 'object') return;
+
+    if (Array.isArray(item)) {
+      for (const element of item) {
+        search(element);
+      }
     } else {
-      console.error(`Element with ID "${elementId}" not found.`);
+      if (item.Id && targetIds.includes(item.Id)) {
+        matchingResources.push(item);
+      }
+
+      for (const key in item) {
+        if (!Object.prototype.hasOwnProperty.call(item, key)) continue;
+        const val = item[key];
+        if (typeof val === 'object' && val !== null) {
+          search(val);
+        }
+      }
     }
   }
-  function setBackgroundColor(elementId, backgroundColor) {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.style.backgroundColor = backgroundColor;
-    } else {
-      console.error(`Element with ID '${elementId}' not found.`);
-    }
-  }
+
+  search(obj);
+  return matchingResources;
+}
+
+function courseBtns() {
+  const categoryButtons = document.querySelectorAll(".Categorie");
+  const resourceContainer = document.getElementById("resource-container"); 
+  const levelFilter = document.getElementById("level-filter");
+  const { Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5 } = businessData.BuColors.Colors;
+
+  categoryButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      // ✅ Clear prior rendered items
+      resourceContainer.innerHTML = "";
+
+      // ✅ Highlight the clicked category button & remove highlight from others
+      categoryButtons.forEach(btn => {
+        btn.style.borderColor = "";
+        btn.style.color = "";
+      });
+      button.style.borderColor = Prime2;
+      button.style.color = Prime2;
+
+      const categoryId = button.id;
+      const categoryName = button.querySelector("h2").textContent;
+
+      console.log("Clicked Category ID:", categoryId);
+      console.log("Clicked Category Name:", categoryName);
+
+      const matchingCourseIds = findAllIdsByValue(studentData.Courses, categoryName);
+      console.log("Matching Course IDs:", matchingCourseIds);
+
+      // Refresh level dropdown
+      const newLevelFilter = levelFilter.cloneNode(true);
+      levelFilter.parentNode.replaceChild(newLevelFilter, levelFilter);
+
+      // ✅ Set border to indicate selection required
+      newLevelFilter.style.border = `4px solid ${Prime2}`;
+
+      // ✅ Create extra optional status filter
+      let extraFilter = document.getElementById("status-filter");
+      if (!extraFilter) {
+        extraFilter = document.createElement("select");
+        extraFilter.id = "status-filter";
+        extraFilter.innerHTML = `
+          <option value="all">Todos los cursos</option>
+          <option value="in-progress">Curso en progreso</option>
+          <option value="completed">Curso finalizado</option>
+        `;
+        newLevelFilter.insertAdjacentElement("afterend", extraFilter);
+      } else {
+        extraFilter.value = "all"; // reset filter when new category
+      }
+
+      // ✅ Create search bar
+      let searchBar = document.getElementById("Search-bar");
+      if (!searchBar) {
+        searchBar = document.createElement("input");
+        searchBar.id = "Search-bar";
+        searchBar.type = "text";
+        searchBar.placeholder = "🔍 Buscar eBook por nombre o curso...";
+        extraFilter.insertAdjacentElement("afterend", searchBar);
+      } else {
+        searchBar.value = ""; // reset search
+      }
+
+      // Function to render courses with current filters
+      function renderCourses() {
+        const selectedLevel = newLevelFilter.value;
+        const statusValue = extraFilter.value;
+        const searchTerm = searchBar.value.trim().toLowerCase();
+
+        console.log("Selected Level:", selectedLevel);
+        console.log("Extra Filter:", statusValue);
+        console.log("Search Term:", searchTerm);
+
+        // ✅ Remove highlight once level selected
+        if (selectedLevel !== "") {
+          newLevelFilter.style.border = `2px solid ${Prime2}`;
+        }
+
+        const allCourses = businessData.Courses;
+
+        let matchedCategoryKey = null;
+        for (const key in allCourses) {
+          const courseCategory = allCourses[key];
+          if (courseCategory.Info?.Tittle === categoryName) {
+            matchedCategoryKey = key;
+            break;
+          }
+        }
+
+        if (!matchedCategoryKey) {
+          console.warn(`No matching category found for name: ${categoryName}`);
+          return;
+        }
+
+        const categoryCourses = allCourses[matchedCategoryKey];
+        const levelCourses = categoryCourses[selectedLevel];
+
+        if (!levelCourses || typeof levelCourses !== "object") {
+          console.warn(`No courses found for level: ${selectedLevel}`);
+          return;
+        }
+
+        let allResources = [];
+        matchingCourseIds.forEach(id => {
+          const resources = findResourcesByIds(levelCourses, id);
+          if (resources.length > 0) {
+            allResources.push(...resources);
+          }
+        });
+
+        console.log("Resources Found:", allResources);
+
+        // Save to localStorage
+        localStorage.setItem("allResources", JSON.stringify(allResources));
+
+        // Clear before rendering
+        resourceContainer.innerHTML = "";
+
+        // Group resources by course ID
+        const groupedByCourse = {};
+        allResources.forEach(resourceObj => {
+          const courseId = resourceObj.Id;
+          if (!groupedByCourse[courseId]) {
+            groupedByCourse[courseId] = [];
+          }
+          const resources = resourceObj.Resources || {};
+          for (const resKey in resources) {
+            groupedByCourse[courseId].push(resources[resKey]);
+          }
+        });
+
+        // Build course title lookup
+        const courseDataMap = {};
+        for (const categoryKey in businessData.Courses) {
+          const categoryObj = businessData.Courses[categoryKey];
+          for (const levelKey in categoryObj) {
+            if (levelKey === "Info") continue;
+            const levelObj = categoryObj[levelKey];
+            if (typeof levelObj === "object") {
+              for (const courseKey in levelObj) {
+                const courseObj = levelObj[courseKey];
+                if (courseObj?.Id) {
+                  courseDataMap[courseObj.Id] = courseObj.Tittle || "Curso sin título";
+                }
+              }
+            }
+          }
+        }
+
+        // Render
+        for (const courseId in groupedByCourse) {
+          const courseTitle = courseDataMap[courseId] || "Curso desconocido";
+
+          const courseBlock = document.createElement("div");
+          courseBlock.classList.add("course-block");
+
+          const courseHeader = document.createElement("h2");
+          courseHeader.classList.add("course-block-title");
+          courseHeader.textContent = courseTitle;
+          courseBlock.appendChild(courseHeader);
+
+          groupedByCourse[courseId].forEach((resource, index) => {
+            const status = resource.Status || (index % 2 === 0 ? "Pendiente" : "Completado");
+
+            // Status filter
+            if (
+              (statusValue === "completed" && status !== "Completado") ||
+              (statusValue === "in-progress" && status !== "Pendiente")
+            ) {
+              return;
+            }
+
+            // Search filter
+            if (
+              searchTerm &&
+              !courseTitle.toLowerCase().includes(searchTerm) &&
+              !resource.Tittle.toLowerCase().includes(searchTerm)
+            ) {
+              return;
+            }
+
+            const card = document.createElement("div");
+            card.classList.add("resource-card-ui");
+            card.classList.add(status === "Completado" ? "completed" : "pending");
+
+            card.innerHTML = `
+              <div class="resource-info">
+                <h3 class="lesson-title">Lección ${index + 1}: ${resource.Tittle}</h3>
+                <p><strong>Curso:</strong> ${courseTitle}</p>
+                <p><strong>Material:</strong> PDF - ${resource.Tittle}</p>
+              </div>
+              <div class="resource-actions">
+                <a href="${resource.Link}" target="_blank" class="pdf-link">📘 Ver PDF</a>
+                <span class="status ${status === "Completado" ? "badge-green" : "badge-yellow"}">
+                  ${status}
+                </span>
+              </div>
+            `;
+
+            courseBlock.appendChild(card);
+          });
+
+          if (courseBlock.children.length > 1) {
+            resourceContainer.appendChild(courseBlock);
+          }
+        }
+      }
+
+      // Listeners
+      newLevelFilter.addEventListener("change", renderCourses);
+      extraFilter.addEventListener("change", renderCourses);
+      searchBar.addEventListener("input", renderCourses);
+    });
+  });
+}
+
+courseBtns();
 
 
 
 
-  function renderWelcome(){
-    renderText("Welcome,"+" "+studentData.fullName,   "wecome-banner-tittle")
-    
 
-
-  }
-
-  renderWelcome()
 
 
 
@@ -247,30 +579,49 @@ fetchAllContent();
 
 
 
+document.addEventListener("DOMContentLoaded", function () {
+  const openBtn = document.getElementById("open");
+  const closeBtn = document.getElementById("close");
+  const menuToggle = document.getElementById("menuToggle");
+  const linkNames = document.querySelectorAll(".linkName");
+  const mobileSidebar = document.getElementById("Mobile-sidebar"); // Make sure this ID exists
 
- document.addEventListener("DOMContentLoaded", function () {
-    const openBtn = document.getElementById("open");
-    const closeBtn = document.getElementById("close");
-    const linkNames = document.querySelectorAll(".linkName");
+  function showSidebarText() {
+    linkNames.forEach(el => el.style.display = "inline");
+    openBtn.style.display = "none";
+    closeBtn.style.display = "flex";
+  }
 
-    function showSidebarText() {
-      linkNames.forEach(el => el.style.display = "inline");
-      openBtn.style.display = "none";
-      closeBtn.style.display = "flex";
-    }
+  function hideSidebarText() {
+    linkNames.forEach(el => el.style.display = "none");
+    closeBtn.style.display = "none";
+    openBtn.style.display = "flex";
+  }
 
-    function hideSidebarText() {
-      linkNames.forEach(el => el.style.display = "none");
-      closeBtn.style.display = "none";
-      openBtn.style.display = "flex";
-    }
+  function toggleMobileSidebar() {
+    mobileSidebar.classList.toggle("show"); // Add a class like .show to handle visibility in CSS
+  }
 
-    openBtn.addEventListener("click", showSidebarText);
-    closeBtn.addEventListener("click", hideSidebarText);
+  // Attach event listeners
+  openBtn.addEventListener("click", showSidebarText);
+  closeBtn.addEventListener("click", hideSidebarText);
+  menuToggle.addEventListener("click", toggleMobileSidebar);
 
-    // Initial state: hide all link names, show open button only
-    hideSidebarText();
- });
+  // Initial state
+  hideSidebarText();
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const closeBtn = document.querySelector(".close-btn");
+  const modal = document.getElementById("taskModal");
+
+  if (closeBtn && modal) {
+    closeBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+  }
+});
+
 
 document.getElementById("Home").addEventListener("click", function () {
   window.location.href = "index10.html";
@@ -288,7 +639,7 @@ document.getElementById("Trophy").addEventListener("click", function () {
   window.location.href = "index10.3.html";
 });
 document.getElementById("Multi-User").addEventListener("click", function () {
-  window.location.href = "index10.8.html";
+  window.location.href = "index10.4.html";
 });
 document.getElementById("carrer").addEventListener("click", function () {
   window.location.href = "index10.5.html";
@@ -302,6 +653,40 @@ document.getElementById("profile").addEventListener("click", function () {
   window.location.href = "index10.4.html";
 });   
 document.getElementById("Logout").addEventListener("click", function () {
+  // Clear localStorage (optional: also clear sessionStorage if used)
+  localStorage.clear();
+  sessionStorage.clear();
   window.location.href = "index4.html";
-});    
-  
+});
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+  const toggle = document.getElementById("menuToggle");
+  const closeBtn = document.getElementById("Mobile-closeBtn");
+  const linkNames = document.querySelectorAll(".linkName");
+  const openCBtn = document.getElementById("open");
+  const closeCBtn = document.getElementById("close");
+
+  const openSidebar = () => {
+    sidebar.classList.add("active");
+    overlay.classList.add("active");
+    toggle.style.display = "none"; // Hide toggle button
+    linkNames.forEach(el => el.style.display = "inline");
+    openCBtn.style.display = "none";
+    closeCBtn.style.display = "none";
+  };
+
+  const closeSidebar = () => {
+    sidebar.classList.remove("active");
+    overlay.classList.remove("active");
+    toggle.style.display = "block"; // Show toggle button again
+  };
+
+  toggle.addEventListener("click", openSidebar);
+  closeBtn.addEventListener("click", closeSidebar);
+  overlay.addEventListener("click", closeSidebar);
+});

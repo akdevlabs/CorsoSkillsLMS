@@ -2,202 +2,335 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  }
-
+}
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 body {
-  font-family: 'Poppins', sans-serif;
-
-
   display: flex;
-  height: 100vh;
+  flex-direction: row;
   overflow: hidden;
 }
 
-/*----------- nav ------------*/
+/*--------- nav ---------*/
+.hamburger {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none;
+}
+.Mobile-close-btn {
+  display: none;
+}
 .nav {
-  padding: 1rem ;
+  padding: 1rem;
   display: flex;
-  margin: 1rem 0 1rem 1rem ;
+  margin: 1rem;
   border-radius: 1rem;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  flex-wrap: wrap;
 }
-.sidebar-content{
+.sidebar-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content:space-between;
+  justify-content: space-between;
 }
-#Bulogos{
+#Bulogos {
   width: 3rem;
-  display: flex;
-  align-items: left;
 }
-.sidebar-top{
+.sidebar-top {
   gap: 1.5rem;
   display: flex;
   flex-direction: column;
-  align-items: left;
-  justify-content: center;
+  align-items: flex-start;
 }
-.Side-caret{
+.Side-caret {
   display: flex;
   align-items: flex-end;
-  justify-content: right;
-  font-size: 1.5rem;
-
-}
-.Action-nav-btns{
-  display: flex;
-  align-items: center;
-
-}
-.Side-Btns{
-  gap:.5rem;
-  display: flex;
-  align-items: center;
-
-}
-.Side-Btns i{
+  justify-content: flex-end;
   font-size: 1.5rem;
 }
-.linkName{
-  font-size: .8rem;
+.Action-nav-btns,
+.Side-Btns {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
-#open{
+.Side-Btns i {
+  font-size: 1.5rem;
+}
+.linkName {
+  font-size: 0.8rem;
+}
+#open {
   margin: 0 -1.3rem;
 }
-.sidebar-bottom{
+.sidebar-bottom {
   gap: 1rem;
   display: flex;
   flex-direction: column;
 }
-/*----------- Courese-block ------------*/
-.container {
-  flex-grow: 1;
-  padding: 2rem;
-}
 
-.header {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.filter-bar {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.filter-bar input,
-.filter-bar select {
-  padding: 10px 16px;
-  font-size: 1rem;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  background-color: #fff;
+/*----------- Main Layout ------------*/
+main {
+  padding: 1rem 2rem;
   flex: 1;
+  width: 100%;
 }
 
-.ebook-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1rem;
-}
-
-.ebook-card {
-  background-color: #fff;
-  border-radius: 16px;
-  padding: 1rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.ebook-card h4 {
-  font-size: 1.1rem;
-  margin: 0;
-  color: #1e3a8a;
-}
-
-.ebook-card p {
-  font-size: 0.9rem;
-  margin: 4px 0;
-}
-
-.ebook-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1rem;
-}
-
-.ebook-actions a {
-  text-decoration: none;
-  color: #2563eb;
+/*----------- Main-title ------------*/
+.Main-tittle h1 {
+  font-size: 1.75rem;
   font-weight: bold;
 }
+.TC-title {
+  text-align: center;
+  margin: 2rem 0 1rem;
+}
+.TC-title h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+.TC-title p {
+  font-size: 1rem;
+}
 
+/*----------- Categories ------------*/
+.Categorie-block {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+.Categorie {
+  border-radius: 1rem;
+  padding: 1rem;
+  width: 120px;
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.2s ease;
+  border: 2px solid transparent;
+}
+.Categorie:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+.Categorie i {
+  font-size: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+.Categorie h2 {
+  font-size: 1rem;
+}
+
+/*----------- Filter & Search ------------*/
+.Inputs-blocks {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.filter-bar input,
+.filter-bar select {
+  flex: 1;
+  min-width: 220px;
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  font-size: 1rem;
+}
+
+/*----------- Resource Cards ------------*/
+.resource-wrapper {
+  width: 100%;
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px;
+}
+.resource-card-ui {
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgb(0, 0, 0);
+  padding: 16px 20px;
+  width: 420px;
+  min-height: 120px;
+  margin: 1.5rem 0;
+  position: relative;
+  border-left: 6px solid transparent;
+  transition: all 0.25s ease;
+}
+.resource-card-ui:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgb(0, 0, 0);
+}
+.lesson-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.resource-info p {
+  margin: 2px 0;
+  font-size: 0.88rem;
+}
+.resource-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-left: 20px;
+}
+.pdf-link {
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.88rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
 .status {
   padding: 4px 10px;
   border-radius: 10px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-top: 10px;
 }
 
-.status.pending {
-  background-color: #fef3c7;
-  color: #92400e;
+/*----------- Course Block ------------*/
+.course-block {
+  height: 32rem;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  overflow-y: auto; 
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.575);
+}
+.course-block-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  padding-left: 10px;
+}
+.course-block::-webkit-scrollbar {
+  width: 8px;
+}
+.course-block::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+}
+.course-block::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.status.completed {
-  background-color: #bbf7d0;
-  color: #166534;
-}
+/*----------- RESPONSIVE BREAKPOINTS ------------*/
 
-
-
-.section-header {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin: 2rem 0 1rem;
-  color: #1e3a8a;
-}
-
-.progress-summary {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  flex-wrap: wrap;
-}
-
-.summary-box {
-  background: #f1f5f9;
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
-  flex: 1;
-  min-width: 200px;
+/* Tablets */
+@media (max-width: 1024px) {
+ .Main-tittle h1{
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.summary-box h3 {
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  color: #1e40af;
-}
-
-.summary-box span {
-  font-size: 1.6rem;
-  font-weight: bold;
-  color: #2563eb;
-}
-
-@media (max-width: 768px) {
-  .progress-summary {
+ }
+  .nav {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .resource-card-ui {
+    width: 100%;
     flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+  .nav {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background: white;
+    flex-direction: column;
+    transition: left 0.3s ease;
+    z-index: 1000;
+  }
+  .nav.active {
+    left: 0;
+  }
+  .Mobile-close-btn {
+    display: block;
+    font-size: 1.5rem;
+    text-align: right;
+    padding: 1rem;
+    cursor: pointer;
+  }
+  main {
+    padding: 1rem;
+  }
+  .Categorie-block {
+    gap: 0.5rem;
+  }
+  .Categorie {
+    width: 100px;
+    height: 90px;
   }
   .filter-bar {
     flex-direction: column;
+  }
+  .resource-wrapper {
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+  .resource-card-ui {
+    width: 100%;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .Main-tittle h1 {
+    font-size: 1.4rem;
+  }
+  .TC-title h1 {
+    font-size: 1.25rem;
+  }
+  .Categorie {
+    width: 90px;
+    height: 80px;
+    padding: 0.75rem;
+  }
+  .Categorie i {
+    font-size: 1.25rem;
+  }
+  .Categorie h2 {
+    font-size: 0.85rem;
+  }
+  .filter-bar input,
+  .filter-bar select {
+    min-width: unset;
+    font-size: 0.9rem;
   }
 }
