@@ -150,7 +150,37 @@ applyBranding().then((data) => {
 
 
   }
+  function CategorieColors(){
+        const style = document.createElement('style');
+    style.textContent = `
+      .Main-tittle h1 {
+        color:${Base};
+      }
+      .TC-title h1 {
+       color:${Base};
+      }  
+      .TC-title p {
+        color: ${Prime};
+      }
+      .Categorie {
+        color: ${Base};
+        background-color: ${Prime5};
+      }
+      .Categorie:hover {
+        color:${Prime2};
+         border-color: ${Prime2};
+      }
+      .filter-bar input {
+        border: 2px solid ${Prime3};
+      }
+      .filter-bar select {
+        border: 2px solid ${Prime3};
+      }
 
+    `;
+    document.head.appendChild(style);
+
+  }
 
 
 
@@ -161,7 +191,7 @@ applyBranding().then((data) => {
   sidebarcolors()
   CarrerColors()
   KeysColors()
-
+CategorieColors()
 
 
 
@@ -215,172 +245,186 @@ async function fetchAllContent() {
     console.log("Student Document Data:", studentData);
     console.log("Business Document Data:", businessData);
 
-    function RenderKeys(){
 
-    }
-    RenderKeys()
-    function findCourseById(careerData, CId) {
-      if (!CId) return null;
 
-      for (const [careerKey, careerBlock] of Object.entries(careerData)) {
-        if (careerBlock?.Cid === CId) return careerBlock;
+function FilterBlocks() {
+    const categories = document.querySelectorAll(".Categorie");
+    const CarrerBlock = businessData.Careers;
+    const dropdownContainer = document.getElementById("dropdown-container");
 
-        const courseList = careerBlock?.CList;
-        if (Array.isArray(courseList)) {
-          for (const course of courseList) {
-            if (course?.Id === CId) return careerBlock;
-          }
-        }
-      }
-      return null;
-    }
-
-    function findAllCoursesByIds(courseData, CIds) {
-      const matchedCourses = [];
-      const categories = Object.values(courseData);
-
-      for (const category of categories) {
-        if (typeof category !== "object") continue;
-
-        const levels = ["Beginner", "Intermediate", "Advanced"];
-        for (const level of levels) {
-          const levelGroup = category[level];
-          if (!levelGroup) continue;
-
-          for (const course of Object.values(levelGroup)) {
-            if (CIds.includes(course.Id)) matchedCourses.push(course);
-          }
-        }
-      }
-      return matchedCourses;
-    }
-
-    function extractIds(CList) {
-      return CList.map(item => item.Id);
-    }
-
-    function renderSlotBlocks(cList, fullCourses, courseProgressData) {
-      const slotMap = {};
-
-      // Group course Ids by slot
-      cList.forEach(item => {
-        if (!slotMap[item.Slot]) slotMap[item.Slot] = [];
-        slotMap[item.Slot].push(item.Id);
-      });
-
-      const container = document.getElementById("course-output");
-      container.innerHTML = '';
-
-      Object.keys(slotMap).sort((a, b) => a - b).forEach(slot => {
-        const weekBlock = document.createElement('div');
-        weekBlock.style.marginBottom = '20px';
-
-        const heading = document.createElement('h3');
-        heading.textContent = `Semana ${slot}`;
-        heading.style.marginBottom = '8px';
-        heading.style.color = '#333';
-        weekBlock.appendChild(heading);
-
-        const ul = document.createElement('ul');
-        slotMap[slot].forEach(courseId => {
-          const course = fullCourses.find(c => c.Id === courseId);
-          if (course) {
-            const li = document.createElement('li');
-            li.textContent = course.Tittle;
-
-            // Apply color based on progress
-            const progressEntry = Object.values(courseProgressData).find(p => p.Id === courseId);
-            const progress = progressEntry?.progress;
-
-            if (progress === 100) {
-              li.style.color = Prime5;
-              li.style.backgroundColor = Prime2;
-            } else if (progress === 80) {
-              li.style.color = Prime5;
-              li.style.backgroundColor = Prime3;
-            } else if (progress === 50) {
-              li.style.color = Prime5;
-              li.style.backgroundColor = Base;
-            } else {
-              li.style.color = Prime;
-              li.style.backgroundColor = Prime4;
+    categories.forEach(category => {
+        category.addEventListener("click", function () {
+            const categoryId = this.id; // e.g., "Business"
+            
+            let categoryData = CarrerBlock[categoryId];
+            if (!categoryData) {
+                console.warn("Category not found:", categoryId);
+                dropdownContainer.innerHTML = "<p>No data found for this category</p>";
+                return;
             }
 
-            ul.appendChild(li);
-          }
+            // Clear old dropdown
+            dropdownContainer.innerHTML = "";
+
+            // Create dropdown
+            const dropdown = document.createElement("select");
+
+            // Optional: placeholder option
+            const placeholderOption = document.createElement("option");
+            placeholderOption.textContent = "Seleccione un título...";
+            placeholderOption.disabled = true;
+            placeholderOption.selected = true;
+            dropdown.appendChild(placeholderOption);
+
+            // Loop through keys (C1, C2, etc.)
+            Object.keys(categoryData).forEach(key => {
+                if (categoryData[key]?.Tittle) {
+                    const option = document.createElement("option");
+                    option.value = key; // store C1, C2, etc.
+                    option.textContent = categoryData[key].Tittle;
+                    dropdown.appendChild(option);
+                }
+            });
+
+            // When a title is selected, log the full object and render courses
+            dropdown.addEventListener("change", function () {
+                const selectedKey = this.value; // e.g., "C1"
+                const selectedObj = categoryData[selectedKey];
+                console.log("Selected object:", selectedObj);
+                
+                const Courses = businessData.Courses[categoryId];
+                console.log(Courses);
+
+                // ======= Added: Render course blocks for selected object =======
+                if (selectedObj) {
+                    // extract course IDs from selectedObj.CList
+                    const selectedCourseIds = extractIds(selectedObj.CList || []);
+                    // find all full course objects from businessData.Courses
+                    const allCourses = findAllCoursesByIds(businessData.Courses, selectedCourseIds);
+                    // render course blocks with progress info into #course-output
+                    renderSlotBlocks(selectedObj.CList || [], allCourses, studentData.Courses);
+                }
+            });
+
+            dropdownContainer.appendChild(dropdown);
         });
+    });
+}
 
-        weekBlock.appendChild(ul);
-        container.appendChild(weekBlock);
-      });
-    }
 
-    // Optional: For console log tracking
-    function checkCourseProgress(Courses) {
-      Object.values(Courses).forEach((slot) => {
-        const { Id, progress } = slot;
+// Helper functions you provided, no changes here:
 
-        if (progress === 50) {
-          console.log(`1 - ${Id}`);
-        } else if (progress === 80) {
-          console.log(`2 - ${Id}`);
-        } else if (progress === 100) {
-          console.log(`3 - ${Id}`);
-        }
-      });
-    }
+function findCourseById(careerData, CId) {
+  if (!CId) return null;
 
-    checkCourseProgress(studentData.Courses);
+  for (const [careerKey, careerBlock] of Object.entries(careerData)) {
+    if (careerBlock?.Cid === CId) return careerBlock;
 
-    function renderCarrerPathBtns() {
-      function createDropdown(array, containerId, selectId = 'myDropdown') {
-        const label = document.createElement('label');
-        label.htmlFor = selectId;
-        label.textContent = 'Carrera';
-        label.style.display = 'block';
-        label.style.marginBottom = '5px';
-        label.style.fontWeight = 'bold';
-
-        const select = document.createElement('select');
-        select.id = selectId;
-
-        array.forEach((item, index) => {
-          const option = document.createElement('option');
-          option.value = item.Id;
-          option.textContent = item.Tittle;
-          if (index === 0) option.selected = true;
-          select.appendChild(option);
-        });
-
-        const container = document.getElementById(containerId);
-        container.innerHTML = '';
-        container.appendChild(label);
-        container.appendChild(select);
-
-        select.addEventListener('change', () => {
-          const selectedValue = select.value;
-          renderCareerPath(selectedValue);
-        });
-
-        return select.value;
+    const courseList = careerBlock?.CList;
+    if (Array.isArray(courseList)) {
+      for (const course of courseList) {
+        if (course?.Id === CId) return careerBlock;
       }
-
-      const optionsArray = studentData.Path;
-      const defaultId = createDropdown(optionsArray, 'dropdown-container');
-      renderCareerPath(defaultId);
     }
+  }
+  return null;
+}
 
-    function renderCareerPath(selectedId) {
-      const career = findCourseById(businessData.Careers, selectedId);
-      if (!career) return;
+function findAllCoursesByIds(courseData, CIds) {
+  const matchedCourses = [];
+  const categories = Object.values(courseData);
 
-      const selectedCourseIds = extractIds(career.CList);
-      const allCourses = findAllCoursesByIds(businessData.Courses, selectedCourseIds);
+  for (const category of categories) {
+    if (typeof category !== "object") continue;
 
-      renderSlotBlocks(career.CList, allCourses, studentData.Courses);
+    const levels = ["Beginner", "Intermediate", "Advanced"];
+    for (const level of levels) {
+      const levelGroup = category[level];
+      if (!levelGroup) continue;
+
+      for (const course of Object.values(levelGroup)) {
+        if (CIds.includes(course.Id)) matchedCourses.push(course);
+      }
     }
+  }
+  return matchedCourses;
+}
 
-    renderCarrerPathBtns();
+function extractIds(CList) {
+  return CList.map(item => item.Id);
+}
+
+function renderSlotBlocks(cList, fullCourses, courseProgressData) {
+  const slotMap = {};
+
+  // Group course Ids by slot
+  cList.forEach(item => {
+    if (!slotMap[item.Slot]) slotMap[item.Slot] = [];
+    slotMap[item.Slot].push(item.Id);
+  });
+
+  const container = document.getElementById("course-output");
+  container.innerHTML = '';
+
+  Object.keys(slotMap).sort((a, b) => a - b).forEach(slot => {
+    const weekBlock = document.createElement('div');
+    weekBlock.style.marginBottom = '20px';
+
+    const heading = document.createElement('h3');
+    heading.textContent = `Semana ${slot}`;
+    heading.style.marginBottom = '8px';
+    heading.style.color = '#333';
+    weekBlock.appendChild(heading);
+
+    const ul = document.createElement('ul');
+    slotMap[slot].forEach(courseId => {
+      const course = fullCourses.find(c => c.Id === courseId);
+      if (course) {
+        const li = document.createElement('li');
+        li.textContent = course.Tittle;
+
+        // Apply color based on progress (make sure Prime, Prime2, etc. are defined)
+        const progressEntry = Object.values(courseProgressData).find(p => p.Id === courseId);
+        const progress = progressEntry?.progress;
+
+        if (progress === 100) {
+          li.style.color = Prime5;
+          li.style.backgroundColor = Prime2;
+        } else if (progress === 80) {
+          li.style.color = Prime5;
+          li.style.backgroundColor = Prime3;
+        } else if (progress === 50) {
+          li.style.color = Prime5;
+          li.style.backgroundColor = Base;
+        } else {
+          li.style.color = Prime;
+          li.style.backgroundColor = Prime4;
+        }
+
+        ul.appendChild(li);
+      }
+    });
+
+    weekBlock.appendChild(ul);
+    container.appendChild(weekBlock);
+  });
+}
+
+
+
+
+
+
+
+
+
+    FilterBlocks()
+
+
+
+
+    
+    
   } catch (err) {
     console.error("Error in fetchAllContent:", err);
   }
@@ -449,5 +493,3 @@ document.getElementById("profile").addEventListener("click", function () {
 document.getElementById("Logout").addEventListener("click", function () {
   window.location.href = "index4.html";
 });   
-
-

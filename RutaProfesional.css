@@ -2,79 +2,149 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  }
+}
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 body {
   display: flex;
   flex-direction: row;
-  height: 100vh;
   overflow: hidden;
 }
-/*----------- nav ------------*/
+
+/*--------- nav ---------*/
+.hamburger {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none;
+}
+.Mobile-close-btn {
+  display: none;
+}
 .nav {
-  padding: 1rem ;
+  padding: 1rem;
   display: flex;
-  margin: 1rem 0 1rem 1rem ;
+  margin: 1rem;
   border-radius: 1rem;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+  flex-wrap: wrap;
 }
-.sidebar-content{
+.sidebar-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content:space-between;
+  justify-content: space-between;
 }
-#Bulogos{
+#Bulogos {
   width: 3rem;
-  display: flex;
-  align-items: left;
 }
-.sidebar-top{
+.sidebar-top {
   gap: 1.5rem;
   display: flex;
   flex-direction: column;
-  align-items: left;
-  justify-content: center;
+  align-items: flex-start;
 }
-.Side-caret{
+.Side-caret {
   display: flex;
   align-items: flex-end;
-  justify-content: right;
+  justify-content: flex-end;
   font-size: 1.5rem;
 }
-.Action-nav-btns{
+.Action-nav-btns,
+.Side-Btns {
   display: flex;
   align-items: center;
+  gap: 0.5rem;
 }
-.Side-Btns{
-  gap:.5rem;
-  display: flex;
-  align-items: center;
-}
-.Side-Btns i{
+.Side-Btns i {
   font-size: 1.5rem;
 }
-.linkName{
-  font-size: .8rem;
+.linkName {
+  font-size: 0.8rem;
 }
-#open{
+#open {
   margin: 0 -1.3rem;
 }
-.sidebar-bottom{
+.sidebar-bottom {
   gap: 1rem;
   display: flex;
   flex-direction: column;
 }
-#Course-Container-Block {
+/*----------- Main Layout ------------*/
+main {
+  padding: 0 2rem;
+  flex: 1;
   width: 100%;
-  margin: 2rem 1rem;
 }
-
-
-/*----------- Carrer-Path ------------*/ 
+/*----------- Main-title ------------*/
 #CPB-Tittle{
   text-align: center;
-  padding:  1rem 0;
+  padding:0;
 }
+/*----------- Categories ------------*/
+.Categorie-block {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+.Categorie {
+  border-radius: 1rem;
+  padding: 1rem;
+  width: 110px;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.2s ease;
+  border: 2px solid transparent;
+}
+.Categorie:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+.Categorie i {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.Categorie h2 {
+  font-size: .9rem;
+}
+/*----------- dropdown-container ------------*/ 
+#dropdown-container {
+  margin: 20px;
+}
+#dropdown-container label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 6px;
+  display: block;
+}
+#dropdown-container select {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+#dropdown-container select:focus {
+  outline: none;
+}
+/*----------- Carrer-Path ------------*/ 
+
 .Carrer-Path {
   display: flex;
   flex-direction: column;
@@ -85,8 +155,9 @@ body {
   overflow-x: auto;       /* Enables horizontal scrolling */
   overflow-y: hidden;     /* Prevent vertical scroll */
   scroll-behavior: smooth;
-  max-width: 100vw;       /* Container won't go beyond viewport width */
-  height: 75vh;
+  width:100%;
+  max-width:88vw;       /* Container won't go beyond viewport width */
+  height: 65vh;
   box-sizing: border-box;
   white-space: nowrap;    /* Ensure children stay in one line */
   box-shadow: 0 6px 20px lab(0% 0 0 / 0.253);
@@ -136,26 +207,21 @@ body {
   font-size: 14px;
   margin-top: 8px;
 }
-#dropdown-container {
-  margin: 20px;
+.Carrer-Path::-webkit-scrollbar {
+  width: 8px;
 }
-#dropdown-container label {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 6px;
-  display: block;
+.Carrer-Path::-webkit-scrollbar-thumb {
+  background-color: aqua;
+  border-radius: 4px;
 }
-#dropdown-container select {
-  width: 100%;
-  max-width: 300px;
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: border-color 0.3s ease;
+.Carrer-Path::-webkit-scrollbar-track {
+  background: transparent;
 }
-#dropdown-container select:focus {
-  outline: none;
-}
+
+
+
+
+
 
 .Keys{
   gap: 1rem;
@@ -184,11 +250,3 @@ body {
 }
 
 
-
-
-/* Responsive */
-@media (max-width: 768px) {
-  #course-output ul {
-    grid-template-columns: 1fr;
-  }
-}
