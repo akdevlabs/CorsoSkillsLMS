@@ -68,7 +68,7 @@ loginForm.addEventListener("submit", (e) => {
 
       // Guardar en localStorage
       localStorage.setItem("ActiveLogedin", "true");
-      localStorage.setItem("UserRole", "student"); //student o admin, etc., según tu lógica
+      localStorage.setItem("UserRole", "teacher"); //student o admin, etc., según tu lógica
       localStorage.setItem("UserUidInfo", user.uid);
       localStorage.setItem("UserEmail", user.email.toLowerCase());
 
@@ -77,7 +77,7 @@ loginForm.addEventListener("submit", (e) => {
       console.log("Email:", user.email);
 
       // Redirigir si quieres
-     window.location.href = "index5.html";
+          window.location.href = "index5.html";
     })
     .catch((error) => {
       console.error("❌ Error de login:", error.message);

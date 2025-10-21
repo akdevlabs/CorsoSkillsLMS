@@ -1,0 +1,105 @@
+notes 
+  <section class="main" id="main">
+    <div class="header" id="header">
+      <h1 id="wecome-banner-tittle"></h1>
+      <div id="profile-Icon"></div>
+    </div>
+
+    <div class="Cursos-Ofrecidos-block">
+      <div class="Cursos-Ofrecidos-block-top">
+        <h1 class="COB-tittle">Cursos Ofrecidos</h1>
+        
+      </div>
+      <div class="tabs-wrapper">
+        <div class="Level-Btns-blocks">
+          <button class="Level-Btns" id="Beginner">Principiante</button>
+          <button class="Level-Btns" id="Intermediate">Intermedio</button>
+          <button class="Level-Btns" id="Advanced">Avanzado</button>
+          <div id="line"></div>
+        </div>
+        
+        <div class="tabs-container">
+          <div class="tabs" id="tabs"></div>
+          <div>
+            <button class="scroll-btn" id="scroll-left"><</button>
+            <button class="scroll-btn" id="scroll-right">></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+
+      <div class="card" id="Student-card">
+        <h3>Students</h3>
+        <p class="Alerts" id="amount-of-students">88</p>
+        <small id="new-students">3 new</small>
+      </div>
+
+      <div class="card" id="Classes-card">
+        <h3>Classes</h3>
+        <p class="Alerts" id="amount-of-Classes">10</p>
+        <small id="new-Classes">2 new</small>
+      </div>
+
+      <div class="card" id="Submissions-card">
+        <h3>Submissions</h3>
+        <p class="Alerts" id="amount-of-Submissions">10</p>
+      </div>  
+
+      <div class="card" id="Tasks-card">
+        <h3>Pending Tasks</h3>
+        <p class="Alerts" id="amount-of-Tasks">10</p>
+      </div>
+
+      <div class="card" id="Messages-card">
+        <h3>Messages</h3>
+        <p class="Alerts" id="amount-of-Messages">2</p>
+      </div>
+
+    </div>  
+
+    <div class="Action-btns">
+      <div class="Action-btns-card" id="lesson-Btn">
+        <p>Subir una nueva lección</p>
+      </div>
+      <div class="Action-btns-card" id="Course-Btn">
+        <p>Crear un nuevo curso</p>
+      </div>
+    </div>
+
+    <div class="charts">
+      <div class="chart-block" id="student-chart">
+        <h3>Estudiantes Inscritos</h3>
+        <canvas id="chart1"></canvas>
+      </div>
+      <div class="chart-block" id="Cursos-chart">
+        <h3>Rendimiento De Cursos Promedio</h3>
+        <canvas id="chart2"></canvas>
+      </div>
+    </div>
+
+
+    <div class="overview-section">
+      <div class="card">
+        <h3>Total Students</h3>
+        <p>72,056</p>
+        <small style="color:green">+12.05%</small>
+      </div>
+      <div class="card">
+        <h3>Total Courses</h3>
+        <p>12,056</p>
+        <small style="color:red">-12.25%</small>
+      </div>
+      <div class="card">
+        <h3>Total Videos</h3>
+        <p>31,056</p>
+        <small style="color:green">+25.21%</small>
+      </div>
+      <div class="card">
+        <h3>Total Earnings</h3>
+        <p>$8,05,056</p>
+        <small style="color:green">+25.21%</small>
+      </div>
+    </div>
+  </section>

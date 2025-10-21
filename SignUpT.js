@@ -1,4 +1,4 @@
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
   import { getFirestore, doc, setDoc, getDoc, Timestamp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
   import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
 
@@ -36,15 +36,14 @@
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      const userRef = doc(db, "CorsoSkillsStudents", user.uid);
+      const userRef = doc(db, "CorsoSkillsTeacher", user.uid);
 
       const docSnap = await getDoc(userRef);
 
       const userData = {
         fullName,
         email,
-        level:"Beginner",
-        role: "student",
+        role: "teacher",
         Uactive: true,
         StudentId: user.uid,
         createdAt: Timestamp.now()
@@ -58,7 +57,7 @@
 
        alert("¡Registro exitoso!");
       document.getElementById("signupForm").reset();
-      window.location.href = "index4.html";
+      window.location.href = "index4.1.html";
 
     }catch (error) {
       console.error("Error al registrarse:", error);

@@ -13,7 +13,6 @@ body {
   flex-direction: row;
   overflow: hidden;
 }
-
 /*--------- nav ---------*/
 .hamburger {
   position: fixed;
@@ -78,9 +77,12 @@ body {
   display: flex;
   flex-direction: column;
 }
+#Multi-User{
+  display: none;
+}
 /*----------- Main Layout ------------*/
 main {
-  padding: 0 2rem;
+  padding: 0 1rem;
   flex: 1;
   width: 100%;
 }
@@ -92,7 +94,7 @@ main {
 /*----------- Categories ------------*/
 .Categorie-block {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap ;
   gap: 1rem;
   justify-content: center;
 }
@@ -250,3 +252,152 @@ main {
 }
 
 
+@media (max-width: 1643px) {
+
+.Categorie {
+  border-radius: 1rem;
+  padding: 2rem 1rem;
+  width: 110px;
+  height: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.2s ease;
+  border: 2px solid transparent;
+}
+
+}
+@media (max-width: 1342px) {
+
+/*----------- dropdown-container ------------*/ 
+#dropdown-container {
+  margin: .5rem;
+}
+#dropdown-container label {
+  font-size: 16px;
+  font-weight: bold;
+
+  display: block;
+}
+#dropdown-container select {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+#dropdown-container select:focus {
+  outline: none;
+}
+/*----------- Carrer-Path ------------*/ 
+
+.Carrer-Path {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 1rem auto;
+  padding: 1rem 10rem 0 2rem;
+  border-radius: 1rem;
+  overflow-x: auto;       /* Enables horizontal scrolling */
+  overflow-y: hidden;     /* Prevent vertical scroll */
+  scroll-behavior: smooth;
+  width:100%;
+  max-width:80vw;       /* Container won't go beyond viewport width */
+  height: 65vh;
+  box-sizing: border-box;
+  white-space: nowrap;    /* Ensure children stay in one line */
+  box-shadow: 0 6px 20px lab(0% 0 0 / 0.253);
+}
+#course-output {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  min-width: max-content; /* Prevent wrapping */
+  font-family: 'Segoe UI', sans-serif;
+}
+#course-output > div {
+  flex-shrink: 0;
+  width: 25rem;
+  border-radius: 16px;
+  padding: 20px;
+}
+#course-output h3 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+#course-output ul {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+#course-output li {
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.76);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+#course-output li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px lab(0% 0 0 / 0.685);
+}
+#course-output li span {
+  width: 5rem;
+  display: block;
+  font-size: 14px;
+  margin-top: 8px;
+}
+.Carrer-Path::-webkit-scrollbar {
+  width: 8px;
+}
+.Carrer-Path::-webkit-scrollbar-thumb {
+  background-color: aqua;
+  border-radius: 4px;
+}
+.Carrer-Path::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
+
+
+
+
+.Keys{
+  gap: 1rem;
+  display: flex;
+  margin: 1rem;
+}
+.key-Block{
+  display:flex;
+  align-items: center;
+}
+#Full{
+  padding: 1rem;
+  margin: .3rem;
+}
+#Almost{
+  padding: 1rem;
+  margin: .3rem;
+}
+#Half{
+  padding: 1rem;
+  margin: .3rem;
+}
+#Nothing{
+  padding: 1rem;
+  margin: .3rem;
+}
+
+}

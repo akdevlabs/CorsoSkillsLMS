@@ -83,7 +83,7 @@ console.log("What:", userUid);
 
   // 🔄 Cargar datos Firestore
   try {
-    const docRef = doc(db, "BusinessUnits/CorsoSkills/Students", user.uid);
+    const docRef = doc(db, "CorsoSkillsTeacher", user.uid);
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
@@ -361,7 +361,7 @@ async function fetchUserDataAndRedirect() {
       const completed = userData.question;
       if (UserRole === "teacher") {
         if (completed === true) {
-          window.location.href = "index11.html";
+        window.location.href = "index11.html";
         } else {
           window.location.href = "index5.4.html";
         }
@@ -388,3 +388,11 @@ async function fetchUserDataAndRedirect() {
 
 // Call the main function after page load or when ready
 fetchUserDataAndRedirect();
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("✅ Usuario autenticado:", user.uid);
+  } else {
+    console.log("⚠️ No user session found");
+  }
+});

@@ -1,121 +1,286 @@
- body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #d3e0ea;
-      margin: 0;
-      padding: 0;
-    }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    .container {
-      padding: 20px;
-      max-width: 1200px;
-      margin: auto;
-    }
+body {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  height: 100vh; /* fixed height */
+  overflow: hidden; /* prevent full page scroll */
+}
 
-    .header {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      color: #003366;
-    }
+/*----------- User-Info ------------*/
+.User-Info{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 1rem;
+  padding: 0 1rem;
+}
+.User-Info h1{
+  font-size: 1.3rem;
+}
+.Alerts-User{
+  gap: 2rem;
+  display: flex;
+  align-items: center;
+}
+.Active-Portal-Alerts{
+  font-size: 1.3rem;
+  border-radius: 50%;
+  padding: .2rem .4rem;
+}
+.User-Info-Block{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: .8rem .5rem 0 0;
+}
+.User-Block{
+  gap:1rem;
+  display: flex;
+  align-items: center;
+  
+}
+#User-Id{
+ font-size: .6rem; 
+}
+#User-Name{
+  font-size: .8rem;
+}
+#profile-Icon img{
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  margin: .5rem;
+}
+/*----------- main ------------*/
+.main{
+  gap: 1rem;
+  height: 88vh;
+  width: 100%;
+  display: flex;
+} 
+/*----------- Main-Blocks ------------*/
+.Main-Blocks{
+  padding: 1rem;
+  border-radius: 1rem;
+}
+/*----------- Sidebar ------------*/
+#sidebar{
+  height: 100%;
+  display: flex;
+  align-items: center;
 
-    .section {
-      margin-bottom: 30px;
-    }
+}
+.nav {
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  margin: 1rem;
+  border-radius: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.205);
 
-    .students-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
+}
+.sidebar-content{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#Bulogos {
+  width: 3rem;
+  display: flex;
+  align-items: left;
+}
+.Side-Btns{
 
-    .student-card {
-      background-color: white;
-      border-radius: 10px;
-      padding: 20px;
-      width: calc(33.33% - 20px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-      min-width: 250px;
-    }
+  display: flex;
+}
+.Side-Btns span {
+  display: none;
+}
+.sidebar-top {
+  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.Side-caret {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  font-size: 1.5rem;
+}
+.Action-nav-btns,
+.Side-Btns {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.Side-Btns i {
+  font-size: 1.5rem;
+}
+.linkName {
+  font-size: 0.8rem;
+}
+#open {
+  margin: 0 -1.3rem;
+}
+#close{
+  display: none;
+}
+.sidebar-bottom {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+    
+    
+.body-Bottom{
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+  height: 88vh;
 
-    .student-card h3 {
-      margin: 0 0 10px;
-      font-size: 18px;
-      color: #003366;
-    }
+}
+/*----------- main ------------*/  
+.main{
 
-    .student-card p {
-      margin: 6px 0;
-      font-size: 15px;
-    }
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  background-color: aliceblue;
+}
+.main h1{
+  margin: 1rem 2rem;
+}
+#Line{
+  padding: .1rem;
+  margin: -1rem 0 1rem 0;
+}
+.Content{
+  margin: 0 1rem;
+}
+/*----------- Nav-Btns ------------*/  
+.Nav-Btns{
+  gap: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding:  1rem;
+  margin: 1rem 0 ;
+  border-radius: 12px;
+  box-shadow:4px 4px 12px 4px   rgba(0, 0, 0, 0.301);
+}
+.Content-Btns{
+  width: 16rem;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
 
-    .student-card button {
-      margin-top: 10px;
-      background-color: #3c8dbc;
-      border: none;
-      color: white;
-      padding: 8px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+.filter-block{
+  gap: 1rem;
+  display: flex;
+  margin: 2rem 3rem;
+}
+.dropdown-input .dropdown-select{
+  width: 20rem;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #d1d5db; /* light gray */
+  background-color: #fff;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  appearance: none; /* Removes default arrow */
+  background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='12' width='12' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px;
+}
+/* 🔹 Hover and Focus */
+.dropdown-select:hover {
+  border-color: #c9511a;
+}
 
-    .calendar {
-      background-color: white;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    }
+.dropdown-select:focus {
+  border-color: #1eff00;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
 
-    .calendar h3 {
-      margin-bottom: 10px;
-      color: #003366;
-    }
+/* 🔹 Disabled Placeholder */
+.dropdown-select option[disabled] {
+  color: #ddcf06;
+}
+/* 🔹 Container Style (optional) */
+#coures-search,
+#level-search,
+#Date-search {
+  display: inline-block;
+  margin-right: 10px;
+}
+.dropdown-select:hover {
+  border-color: var(--Prime, #3cff00);
+  background-color: #fbfaf9;
+}
+.custom-dropdown .option.selected {
+  background-color: var(--Prime, #ff0055);
+  color: white;
+}
 
-    .calendar-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 10px;
-      text-align: center;
-    }
 
-    .calendar-day {
-      background-color: #e6f0fa;
-      padding: 15px;
-      border-radius: 8px;
-      min-height: 80px;
-      position: relative;
-    }
 
-    .calendar-day .date {
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
 
-    .calendar-day .session {
-      font-size: 12px;
-      margin-top: 4px;
-      background-color: #3c8dbc;
-      color: white;
-      border-radius: 4px;
-      padding: 2px 5px;
-      display: inline-block;
-    }
 
-    .calendar-day button {
-      background: none;
-      border: none;
-      font-size: 12px;
-      color: #003366;
-      text-decoration: underline;
-      cursor: pointer;
-      margin-top: 5px;
-    }
 
-    @media (max-width: 768px) {
-      .student-card {
-        width: 100%;
-      }
+#student-nav-view {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2c3e50;
+  background: #f9f9f9;
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: none;
+}
 
-      .calendar-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
+#student-nav-view.show {
+  display: inline-block;
+}
+
+.dropdown-select.error {
+  border-color: #e74c3c;
+  background-color: #fff5f5;
+}
+
+.dropdown-warning {
+  margin-top: 8px;
+  color: #e74c3c;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+
+
+
+
+.Content-Block {
+  display: none;
+}
+.Content-Block.show {
+  display: block;
+}
+

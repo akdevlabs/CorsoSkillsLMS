@@ -1,24 +1,68 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getFirestore, doc, getDoc, collection, addDoc, setDoc, Timestamp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
-// Your web app's Firebase configuration
+import { 
+  getFirestore, doc, getDoc, collection, addDoc, setDoc, 
+  Timestamp, deleteField, updateDoc, arrayUnion, serverTimestamp 
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+
+import { 
+  getStorage, ref, uploadBytes, getDownloadURL, listAll 
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
+
+import { 
+  getAuth, EmailAuthProvider, reauthenticateWithCredential, 
+  updateEmail, verifyBeforeUpdateEmail, signInWithEmailAndPassword,  
+  sendPasswordResetEmail, confirmPasswordReset, applyActionCode, 
+  onAuthStateChanged, signOut, updatePassword   
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+
+// Configuración Firebase (tuya)
 const firebaseConfig = {
   apiKey: "AIzaSyD2w5sXCGRBxne-23FRCTAXQrMwHt4nHTY",
   authDomain: "corsoskills-1ba50.firebaseapp.com",
   projectId: "corsoskills-1ba50",
-  storageBucket: "corsoskills-1ba50.appspot.com", // corrected to .com
+  storageBucket: "corsoskills-1ba50.appspot.com",
   messagingSenderId: "813928863826",
   appId: "1:813928863826:web:771cd8ad820570441fa78b",
   measurementId: "G-MYT63ZNNCC"
 };
 
-// First, make sure you already have this part:
+// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app, 'gs://corsoskills-1ba50.firebasestorage.app');
+const auth = getAuth(app);
+
+//console.log(auth)
 
 const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
 const UserUidInfo = localStorage.getItem("UserUidInfo");
+ console.log(UserUidInfo);
+// Initialize Auth
+
+
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    //✅ Authenticated
+    console.log("🔐 User is authenticated:");
+    console.log("UID:", user.uid);
+    console.log("Email:", user.email);
+
+    // Optional: Store in localStorage if needed
+    localStorage.setItem("ActiveLogedin", "true");
+    localStorage.setItem("UserUidInfo", user.uid);
+    localStorage.setItem("UserEmail", user.email);
+
+  } else {
+    // ❌ Not authenticated
+    console.warn("🚫 Usuario no autenticado. Redirigiendo al login...");
+    localStorage.removeItem("ActiveLogedin");
+    window.location.href = "login.html"; // or your login route
+  }
+});
+
 
 
 async function applyBranding() {
@@ -38,9 +82,10 @@ async function applyBranding() {
     return null;
   }
 }
+
 applyBranding().then((data) => {  
-  console.log(data.BuLogos.Icons[0])
-  const {Base, Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
+ // console.log(data.BuLogos.Icons[0])
+  const {Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
   
   function renderImage(imageUrl, altUrl, UrlId) {
     const logoElement = document.getElementById(UrlId);
@@ -84,10 +129,75 @@ applyBranding().then((data) => {
   function setGlobalFont(fontFamily) {
     document.body.style.fontFamily = fontFamily;
   }
-  setGlobalFont(data.Font)
+  function setallBackgroundColor(selector, backgroundColor) {
+    // First check if it's an ID
+    if (selector.startsWith("#")) {
+      const element = document.getElementById(selector.slice(1));
+      if (element) {
+        element.style.backgroundColor = backgroundColor;
+      } else {
+        console.error(`Element with ID '${selector}' not found.`);
+      }
+    } 
+    // If it's a class
+    else if (selector.startsWith(".")) {
+      const elements = document.querySelectorAll(selector);
+      if (elements.length > 0) {
+        elements.forEach(el => el.style.backgroundColor = backgroundColor);
+      } else {
+        console.error(`No elements with class '${selector}' found.`);
+      }
+    } 
+    // fallback: accept plain string (assume ID)
+    else {
+      const element = document.getElementById(selector);
+      if (element) {
+        element.style.backgroundColor = backgroundColor;
+      } else {
+        console.error(`Element with ID or class '${selector}' not found.`);
+      }
+    }
+  }
+  function setBorder(selector, borderStyle) {
+    // If it's an ID
+    if (selector.startsWith("#")) {
+      const element = document.getElementById(selector.slice(1));
+      if (element) {
+        element.style.border = borderStyle;
+      } else {
+        console.error(`Element with ID '${selector}' not found.`);
+      }
+    } 
+    // If it's a class
+    else if (selector.startsWith(".")) {
+      const elements = document.querySelectorAll(selector);
+      if (elements.length > 0) {
+        elements.forEach(el => el.style.border = borderStyle);
+      } else {
+        console.error(`No elements with class '${selector}' found.`);
+      }
+    } 
+    // fallback: assume ID if no # or .
+    else {
+      const element = document.getElementById(selector);
+      if (element) {
+        element.style.border = borderStyle;
+      } else {
+        console.error(`Element with ID or class '${selector}' not found.`);
+      }
+    }
+  }
 
 
 
+
+  function SetUserInfoColors(){
+    setallBackgroundColor(".User-Info", Prime)
+    setTextColors( ".User-Info", Prime5)
+  }
+  function Setmaincolors(){
+    setallBackgroundColor(".Main-Blocks", Prime5)
+  }
   function SetMainColors(){
     renderImage(data.BuLogos.Icons[0], "BuLogo", "Bulogos")
     setBodyBackgroundColor(Prime4)
@@ -102,435 +212,508 @@ applyBranding().then((data) => {
 
 
 
-document.querySelectorAll('.Side-Btns').forEach(button => {
-  const icon = button.querySelector('i');
-  const text = button.querySelector('.linkName');
+    document.querySelectorAll('.Side-Btns').forEach(button => {
+      const icon = button.querySelector('i');
+      const text = button.querySelector('.linkName');
 
-  button.addEventListener('mouseenter', () => {
-    icon.style.color = Prime2; // Hover color
-    text.style.color = Prime2;
-  });
+      button.addEventListener('mouseenter', () => {
+        icon.style.color = Prime2; // Hover color
+        text.style.color = Prime2;
+      });
 
-  button.addEventListener('mouseleave', () => {
-    icon.style.color = Base;// Original color
-    text.style.color = ''; // Reset to default (inherited or original)
-  });
-});
+      button.addEventListener('mouseleave', () => {
+        icon.style.color = Base;// Original color
+        text.style.color = ''; // Reset to default (inherited or original)
+      });
+    });
 
 
   }
+
+
+
   function setheadercolors(){
-    setTextColors("#header", Base)
-    
-  
-
-  }
-  function setLevelBtnscolors(){
-    setBackgroundColor("Beginner", Prime3)
-    setBackgroundColor("Intermediate", Prime3)
-    setBackgroundColor("Advanced", Prime3)
-    setTextColors(".Level-Btns", Prime5)
-    setBackgroundColor("line", Prime1)
-  }
-  function settabscolors(){
-    setTextColors(".COB-tittle", Base)
-    setBackgroundColor("scroll-left", Prime3)
-    setBackgroundColor("scroll-right", Prime3)
-    setTextColors("#scroll-left", Prime5)
-    setTextColors("#scroll-right", Prime5)
+    setTextColors("#header", Prime)
   }
   function setstatColors(){
-    setBackgroundColor("Student-card", Prime5)
-    setBackgroundColor("Classes-card", Prime5)
-    setBackgroundColor("Submissions-card", Prime5)
-    setBackgroundColor("Messages-card", Prime5)
-    setTextColors(".card", Base)
-    setTextColors(".Alerts", Prime2)
-
-
-    setBackgroundColor("lesson-Btn", Prime3)
-    setBackgroundColor("Course-Btn", Prime3)
-    setTextColors(".Action-btns-card", Prime5)
-    
-  }
-
-  function setChartcolors(){
-    setBackgroundColor("student-chart", Prime5)
-    setBackgroundColor("Cursos-chart", Prime5)
-    setTextColors(".chart-block", Base)
+   setallBackgroundColor(".stat-card", Prime5)
+   setallBackgroundColor(".stat-card-active", Base)
+   setTextColors(".stat-value", Prime)
+   setTextColors(".stat-label", Prime)
+   setTextColors("#Cclasses", Prime5)
+   setTextColors("#stat-label-active", Prime5)
+   setBorder(".stat-card", `2px solid ${Base}`);
+   setBorder(".stat-icon", `2px solid ${Base}`);
   }
 
 
 
+  function setNextClassColors(){
+    setTextColors(".UCC-Title", Prime)  
+    setallBackgroundColor(".UCC-Btn-block", Prime5)
+    setBorder(".UCC-Btn-block", `2px solid ${Base}`);
+    setTextColors(".UCC-Btn-block", Prime)  
+    setTextColors("#Cal-Icon", Base)  
+  }
+  function setcardContainerColors() {
+    const style = document.createElement("style");
+    style.textContent = `
+      .card {
+        background: ${Prime5};
+      }
+      .card.active {
+        border: 2px solid ${Prime2};
+      }
+      .card h4 {
+        color:${Prime1};
+      }
+      .hours {
+        color:${Prime1};
+      }
+      .btn.start {
+        background:${Prime2};
+        color:${Prime5};
+      }
+      .btn.upcoming {
+        background:${Prime3};
+        color: ${Prime5};
+      }
+      .carousel-btn {
+        background:${Prime3};
+        color:${Prime5};
+      }
+    `;
+    document.head.appendChild(style);
+  }
 
 
+  
+ 
+
+  setGlobalFont(data.Font)
   SetMainColors()
-  setLevelBtnscolors()
-  setheadercolors()
   sidebarcolors()
-  settabscolors()
+  Setmaincolors()
+  SetUserInfoColors()
+
+  setheadercolors()
   setstatColors()
-  setChartcolors()
+  setNextClassColors()
+ setcardContainerColors()
 
 
 });
 
- 
- 
 
 
- 
- 
- async function getstudentContent() {
-   try {
-     const docRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-     const docSnap = await getDoc(docRef);
- 
-     if (docSnap.exists()) {
-       return docSnap.data();
-     } else {
-       console.error("No such student document!");
-       return null;
-     }
-   } catch (error) {
-     console.error("Error fetching student document:", error);
-     return null;
-   }
- }
- async function getCorsoSkillAppContent() {
-   try {
-     const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
-     const docSnap = await getDoc(docRef);
- 
-     if (docSnap.exists()) {
-       return docSnap.data();
-     } else {
-       console.error("No such business document!");
-       return null;
-     }
-   } catch (error) {
-     console.error("Error fetching business document:", error);
-     return null;
-   }
- }
- async function fetchAllContent() {
-    const studentData = await getstudentContent();
-    const businessData = await getCorsoSkillAppContent();
-    
 
-    const {Base, Prime1, Prime2, Prime3, Prime4, Prime5} = businessData.BuColors.Colors;
+async function getTeacherContent() {
+  try {
+    const docRef = doc(db, "CorsoSkillsTeacher", UserUidInfo);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.error("No such teacher document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching teacher document:", error);
+    return null;
+  }
+}
+async function getCorsoSkillAppContent() {
+  try {
+    const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.error("No such business document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching business document:", error);
+    return null;
+  }
+}
+async function fetchAllContent() {
+  const TeacherData = await getTeacherContent();
+  const businessData = await getCorsoSkillAppContent();
+
+  if (!TeacherData && !businessData) {
+    console.error("❌ Could not load teacher or business data");
+    return;
+  }
+
+  console.log("✅ Teacher Data:", TeacherData);
+  console.log("✅ Business Data:", businessData);
+
+  // destructure colors if businessData exists
+  let Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5;
+  if (businessData?.BuColors?.Colors) {
+    ({ Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5 } = businessData.BuColors.Colors);
+  }
+
   
-
-    if (studentData) {
-      console.log("Student Document Data:", studentData);
+  function renderText(text, elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.textContent = text;
     } else {
-      console.log("No student data found.");
+      console.error(`Element with ID "${elementId}" not found.`);
+    }
+  }
+  function convertFirestoreTimestampToDate(timestamp) {
+    if (!timestamp || typeof timestamp.seconds !== "number") {
+      console.error("Invalid Firestore timestamp:", timestamp);
+      return null;
     }
 
-    if (businessData) {
-      console.log("Business Document Data:", businessData);
-    } else {
-      console.log("No business data found.");
+    const date = new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1e6);
+
+    // Format as MM/DD/YYYY
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    const year = date.getFullYear();
+
+    return `${month}/${day}/${year}`;
+  }
+  function renderTextById(id, text, append = false) {
+    const element = document.getElementById(id);
+    if (!element) {
+      console.warn(`⚠️ No element found with ID: ${id}`);
+      return;
     }
 
-    function renderText(text, elementId) {
-      const element = document.getElementById(elementId);
+    if (append) {
+      element.textContent += text;
+    } else {
+      element.textContent = text;
+    }
+  }
+
+
+  function renderWelcome() {
+    if (TeacherData?.fullName) {
+      renderText("Hola, " + TeacherData.fullName, "User-Name");
+    } else {
+      renderText("Missing", "User-Name");
+    }
+  }
+  function renderId() {
+    const userIdElement = document.getElementById("User-Id");
+
+    if (TeacherData?.TeacherId) {
+      const teacherId = TeacherData.TeacherId;
+      renderText("ID: " + teacherId, "User-Id");
+
+      // Make the ID clickable
+      userIdElement.style.cursor = "pointer";
+      userIdElement.title = "Haz clic para copiar el ID";
+
+      // Add click event to copy the ID
+      userIdElement.addEventListener("click", () => {
+        navigator.clipboard.writeText(teacherId).then(() => {
+          // Show feedback to the user
+          const originalText = userIdElement.textContent;
+          userIdElement.textContent = "ID copiado ✅";
+
+          // Restore after 1.5 seconds
+          setTimeout(() => {
+            userIdElement.textContent = originalText;
+          }, 1500);
+        });
+      });
+    } else {
+      renderText("Falta ID", "User-Id");
+    }
+  }
+  function renderUserIcon() {
+    const container = document.getElementById("profile-Icon");
+    if (!container) {
+      console.error("Element with ID 'profile-Icon' not found.");
+      return;
+    }
+
+    if (!TeacherData?.profileImg) {
+      container.innerHTML = `<i class="fa-solid fa-circle-user" style="font-size: 2rem;"></i>`;
+    } else {
+      container.innerHTML = `<img src="${TeacherData.profileImg}" alt="User Icon" width="50" height="50" style="border-radius: 50%;" />`;
+      
+    }
+  }
+  function renderAlertIcons() {
+    const ActiveAlrts = 0; // change to 0 or null to test
+
+    function setTextColors(selector, Tcolor) {
+    if (selector.startsWith('#')) {
+      const element = document.getElementById(selector.slice(1));
       if (element) {
-        element.textContent = text;
+        element.style.color = Tcolor;
       } else {
-        console.error(`Element with ID "${elementId}" not found.`);
+        console.error(`Element with ID '${selector}' not found.`);
       }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    function renderWelcome() {
-      if (studentData && studentData.fullName) {
-        renderText("Hola, " + studentData.fullName, "wecome-banner-tittle");
+    } else if (selector.startsWith('.')) {
+      const elements = document.querySelectorAll(selector);
+      if (elements.length > 0) {
+        elements.forEach(el => el.style.color = Tcolor);
       } else {
-        renderText("Welcome!", "wecome-banner-tittle");
+        console.error(`No elements found with class '${selector}'.`);
       }
+    } else {
+      console.error("Selector must start with '#' for ID or '.' for class.");
     }
-    function renderUserIcon() {
-      const container = document.getElementById("profile-Icon");
-
-      if (!container) {
-        console.error("Element with ID 'profile-Icon' not found.");
-        return;
-      }
-
-      if (!studentData?.profileImg) {
-        container.innerHTML = `<i class="fa-solid fa-circle-user" style="font-size: 2rem;"></i>`;
-      } else {
-        container.innerHTML = `<img src="${studentData.profileImg}" alt="User Icon" width="50" height="50" style="border-radius: 50%;" />`;
-      }
     }
-    function CursosOfrecidosblock(){
-
-      let selectedLevel = "Beginner"; // Default level
-      let currentIndex = 0; // Tab scroll index
-      function levelListener() {
-      const buttons = document.querySelectorAll('.Level-Btns');
-
-      buttons.forEach(button => {
-        button.addEventListener('click', () => {
-          selectedLevel = button.id;
-          currentIndex = 0; // Reset tab scroll
-
-          // Update active styles
-          buttons.forEach(btn => btn.classList.remove('active'));
-          button.classList.add('active');
-
-          console.log("Selected level:", selectedLevel);
-
-          // Refresh tab buttons with new level
-          createTabButtons(businessData.Courses);
-        });
-      });
-      }
-      function createTabButtons(courseLevels) {
-        const tabsContainer = document.getElementById("tabs");
-        tabsContainer.innerHTML = "";
-
-        const categories = courseLevels[selectedLevel];
-        if (!categories) return;
-
-        const categoryKeys = Object.keys(categories);
-        const visibleKeys = categoryKeys.slice(currentIndex, currentIndex + 6);
-
-        visibleKeys.forEach(key => {
-          const button = document.createElement("button");
-          button.textContent = key;
-          button.className = "tab-btn";
-
-          // Default style
-          button.style.backgroundColor = Base;
-          button.style.color = Prime5;
-          button.style.transition = "background-color 0.3s, color 0.3s";
-
-          button.addEventListener("mouseenter", () => {
-            button.style.backgroundColor = Prime2;
-            button.style.color = Prime5;
-          });
-
-          button.addEventListener("mouseleave", () => {
-            button.style.backgroundColor = Base;
-            button.style.color = Prime5;
-          });
-
-          tabsContainer.appendChild(button);
-        });
-
-        const leftBtn = document.getElementById("scroll-left");
-        const rightBtn = document.getElementById("scroll-right");
-
-        if (leftBtn) leftBtn.disabled = currentIndex === 0;
-        if (rightBtn) rightBtn.disabled = currentIndex + 6 >= categoryKeys.length;
-      }
-      function scrollTabs(direction) {
-        const totalKeys = Object.keys(businessData.Courses[selectedLevel]).length;
-
-        if (direction === 'left' && currentIndex > 0) {
-          currentIndex -= 6;
-        } else if (direction === 'right' && currentIndex + 6 < totalKeys) {
-          currentIndex += 6;
+    function setallBackgroundColor(selector, backgroundColor) {
+      // First check if it's an ID
+      if (selector.startsWith("#")) {
+        const element = document.getElementById(selector.slice(1));
+        if (element) {
+          element.style.backgroundColor = backgroundColor;
+        } else {
+          console.error(`Element with ID '${selector}' not found.`);
         }
-
-        createTabButtons(businessData.Courses);
-      }
-      function createLevelbtnActions() {
-        const levels = ["Beginner", "Intermediate", "Advanced"];
-
-        levels.forEach(level => {
-          const btn = document.getElementById(level);
-          if (!btn) return;
-
-          btn.addEventListener("mouseenter", () => {
-            btn.style.backgroundColor = Prime2;
-            btn.style.color = Prime5;
-          });
-
-          btn.addEventListener("mouseleave", () => {
-            if (!btn.classList.contains("active")) {
-              btn.style.backgroundColor = Prime3;
-              btn.style.color = Prime5;
-            }
-          });
-        });
-      }
-      // --- Initialize everything ---
-      document.getElementById("scroll-left").addEventListener("click", () => scrollTabs('left'));
-      document.getElementById("scroll-right").addEventListener("click", () => scrollTabs('right'));
-
-      createLevelbtnActions();
-      levelListener();
-      createTabButtons(businessData.Courses);
-    }
-    function ActionBtnsBlock() {
-      const lessonBtn = document.getElementById('lesson-Btn');
-      const courseBtn = document.getElementById('Course-Btn'); // Fixed name (lowercase 'c')
-
-      if (!lessonBtn || !courseBtn) return; // Safety check
-
-      // Hover effects for lesson button
-      lessonBtn.addEventListener("mouseenter", () => {
-        lessonBtn.style.backgroundColor = Prime2;
-        lessonBtn.style.color = Prime5;
-      });
-
-      lessonBtn.addEventListener("mouseleave", () => {
-        lessonBtn.style.backgroundColor = Prime3;
-        lessonBtn.style.color = Prime5;
-      });
-
-      // Hover effects for course button
-      courseBtn.addEventListener("mouseenter", () => {
-        courseBtn.style.backgroundColor = Prime2;
-        courseBtn.style.color = Prime5;
-      });
-
-      courseBtn.addEventListener("mouseleave", () => {
-        courseBtn.style.backgroundColor = Prime3;
-        courseBtn.style.color = Prime5;
-      });
-    }
-    function renderChartInfo(){
-      const ctx1 = document.getElementById('chart1').getContext('2d');
-      const ctx2 = document.getElementById('chart2').getContext('2d');
-
-      new Chart(ctx1, {
-        type: 'line',
-        data: {
-          labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7'],
-          datasets: [{
-            label: 'Students',
-            data: [20, 45, 40, 60, 90, 75, 100],
-            borderColor: Prime2,
-            tension: 0.4
-          }]
-        },
-        options: {
-          plugins: {legend: {display: false}},
-          scales: {y: {beginAtZero: true}}
+      } 
+      // If it's a class
+      else if (selector.startsWith(".")) {
+        const elements = document.querySelectorAll(selector);
+        if (elements.length > 0) {
+          elements.forEach(el => el.style.backgroundColor = backgroundColor);
+        } else {
+          console.error(`No elements with class '${selector}' found.`);
         }
-      });
-
-      new Chart(ctx2, {
-        type: 'line',
-        data: {
-          labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7'],
-          datasets: [{
-            label: 'Performance',
-            data: [30, 50, 45, 70, 85, 85, 95],
-            borderColor: Prime2,
-            tension: 0.4
-          }]
-        },
-        options: {
-          plugins: {legend: {display: false}},
-          scales: {y: {beginAtZero: true}}
+      } 
+      // fallback: accept plain string (assume ID)
+      else {
+        const element = document.getElementById(selector);
+        if (element) {
+          element.style.backgroundColor = backgroundColor;
+        } else {
+          console.error(`Element with ID or class '${selector}' not found.`);
         }
-      });
+      }
     }
 
+    function checkValue(value) {
+      return value ? "yes" : "no";
+    }
 
-    
-    
+    const Alert = checkValue(ActiveAlrts);
+    console.log(Alert);
+
+    const container = document.querySelector(".Active-Portal-Alerts");
+
+    if (!container) {
+      console.error("Element with class 'Active-Portal-Alerts' not found.");
+      return;
+    }
+
+    if (Alert === "yes") {
+      setTextColors("#APA", Prime2)
+      setallBackgroundColor("#APA", Prime5)
+      container.innerHTML = `<i class="fa-solid fa-bell"></i>`;
+    }else if (Alert === "no")
+      
+      container.innerHTML = `<i class="fa-regular fa-bell"></i>`;
+  }
 
 
-    renderWelcome();
-    renderUserIcon();
-    ActionBtnsBlock()
-    CursosOfrecidosblock()
-
-    renderChartInfo()
-
-    
- }
 
 
-  fetchAllContent();
-
- 
- 
- 
- 
- 
-     
-   
- 
- 
- 
-
- 
- 
- 
- 
- 
- document.getElementById("Course-Btn").addEventListener("click", function () {
-    window.location.href = "index11.7.html";
-  });
   
+  const classes = [
+      { title: "Contextual understanding and design process flow", subtitle: "UI/UX FUNDAMENTAL", hours: "14 Hours", status: "active", buttonText: "START THE CLASS", buttonType: "start" },
+      { title: "Introduction to foundation of desk research and how to present", subtitle: "UI/UX FUNDAMENTAL", hours: "20 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" },
+      { title: "Basic illustration and how to use the adobe illustrator", subtitle: "UI/UX FUNDAMENTAL", hours: "32 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" },
+      { title: "Introduction to foundation of desk research and how to present", subtitle: "UI/UX FUNDAMENTAL", hours: "20 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" },
+      { title: "Basic illustration and how to use the adobe illustrator", subtitle: "UI/UX FUNDAMENTAL", hours: "32 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" },
+      { title: "Basic illustration and how to use the adobe illustrator", subtitle: "UI/UX FUNDAMENTAL", hours: "32 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" },
+      { title: "Introduction to foundation of desk research and how to present", subtitle: "UI/UX FUNDAMENTAL", hours: "20 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" },
+      { title: "Basic illustration and how to use the adobe illustrator", subtitle: "UI/UX FUNDAMENTAL", hours: "32 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" }
+    ];
+
+    const avatars = [
+      "https://i.pravatar.cc/28?img=1",
+      "https://i.pravatar.cc/28?img=2",
+      "https://i.pravatar.cc/28?img=3"
+    ];
+
+    const container = document.getElementById("cardContainer");
+
+    // Render cards
+    classes.forEach(cls => {
+      const card = document.createElement("div");
+      card.className = `card ${cls.status === "active" ? "active" : ""}`;
+
+      card.innerHTML = `
+        <h4>${cls.subtitle}</h4>
+        <h3>${cls.title}</h3>
+        <div class="hours">${cls.hours}</div>
+        <button class="btn ${cls.buttonType}">${cls.buttonText}</button>
+        <div class="avatars">
+          ${avatars.map(src => `<img src="${src}" />`).join("")}
+          <span>+22</span>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+
+    // Carousel Logic
+    const track = document.querySelector(".carousel-track");
+    const prevBtn = document.querySelector(".carousel-btn.prev");
+    const nextBtn = document.querySelector(".carousel-btn.next");
+    let index = 0;
+
+    function updateCarousel() {
+      const cardWidth = document.querySelector(".card").offsetWidth + 20; // card + margin
+      track.style.transform = `translateX(-${index * cardWidth}px)`;
+    }
+
+    prevBtn.addEventListener("click", () => {
+      if (index > 0) index--;
+      updateCarousel();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (index < classes.length - 1) index++;
+      updateCarousel();
+    });
+
+
+
+
+
+
+
+
+
+
+
+  renderWelcome()
+  renderId()
+  renderUserIcon()
+  renderAlertIcons()
+
+}
+
+fetchAllContent()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  function renderTodaysDate() {
+    const container = document.querySelector(".UCC-Btn");
+    if (!container) return;
+
+    const today = new Date();
+
+    // Custom short month names
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                    "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+
+    const month = months[today.getMonth()];
+    const day = today.getDate();
+    const year = today.getFullYear();
+
+    const formattedDate = `${month} ${day}, ${year}`;
+
+    container.textContent = formattedDate;
+  }
+
+  // Run immediately
+  renderTodaysDate();
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const openBtn = document.getElementById("open");
+  const closeBtn = document.getElementById("close");
+  const menuToggle = document.getElementById("menuToggle");
+  const linkNames = document.querySelectorAll(".linkName");
+  const mobileSidebar = document.getElementById("Mobile-sidebar"); // Make sure this ID exists
+
+  function showSidebarText() {
+    linkNames.forEach(el => el.style.display = "inline");
+    openBtn.style.display = "none";
+    closeBtn.style.display = "flex";
+  }
+
+  function hideSidebarText() {
+    linkNames.forEach(el => el.style.display = "none");
+    closeBtn.style.display = "none";
+    openBtn.style.display = "flex";
+  }
+
+  function toggleMobileSidebar() {
+    mobileSidebar.classList.toggle("show"); // Add a class like .show to handle visibility in CSS
+  }
+
+  // Attach event listeners
+  openBtn.addEventListener("click", showSidebarText);
+  closeBtn.addEventListener("click", hideSidebarText);
+  menuToggle.addEventListener("click", toggleMobileSidebar);
+
+  // Initial state
+  hideSidebarText();
+});
+
+
+
 document.getElementById("Home").addEventListener("click", function () {
   window.location.href = "index11.html";
 });
-document.getElementById("invocie").addEventListener("click", function () {
+document.getElementById("Calander").addEventListener("click", function () {
   window.location.href = "index11.1.html";
 });
-document.getElementById("Students").addEventListener("click", function () {
+
+document.getElementById("invocie").addEventListener("click", function () {
   window.location.href = "index11.2.html";
 });
-document.getElementById("Assignments").addEventListener("click", function () {
+document.getElementById("Students").addEventListener("click", function () {
   window.location.href = "index11.3.html";
 });
-document.getElementById("Lessons").addEventListener("click", function () {
+document.getElementById("Assignments").addEventListener("click", function () {
   window.location.href = "index11.4.html";
-});   
-document.getElementById("Mensajes").addEventListener("click", function () {
+});
+document.getElementById("BCourse").addEventListener("click", function () {
   window.location.href = "index11.5.html";
 });
+
+document.getElementById("Lessons").addEventListener("click", function () {
+  window.location.href = "index11.5.html";
+}); 
+
+
+
 document.getElementById("Settings").addEventListener("click", function () {
   window.location.href = "index11.6.html";
-}); 
+});   
 document.getElementById("Logout").addEventListener("click", function () {
   window.location.href = "index4.html";
 });  
 
- 
-
-
-
- document.addEventListener("DOMContentLoaded", function () {
-    const openBtn = document.getElementById("open");
-    const closeBtn = document.getElementById("close");
-    const linkNames = document.querySelectorAll(".linkName");
-
-    function showSidebarText() {
-      linkNames.forEach(el => el.style.display = "inline");
-      openBtn.style.display = "none";
-      closeBtn.style.display = "flex";
-    }
-
-    function hideSidebarText() {
-      linkNames.forEach(el => el.style.display = "none");
-      closeBtn.style.display = "none";
-      openBtn.style.display = "flex";
-    }
-
-    openBtn.addEventListener("click", showSidebarText);
-    closeBtn.addEventListener("click", hideSidebarText);
-
-    // Initial state: hide all link names, show open button only
-    hideSidebarText();
- });

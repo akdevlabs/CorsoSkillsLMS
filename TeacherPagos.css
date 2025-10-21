@@ -1,114 +1,511 @@
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #d3e0ea;
-      margin: 0;
-      padding: 0;
-    }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    .container {
-      padding: 20px;
-      max-width: 1200px;
-      margin: auto;
-    }
+body {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  height: 100vh; /* fixed height */
+  overflow: hidden; /* prevent full page scroll */
+}
 
-    .header {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      color: #003366;
-    }
+/*----------- User-Info ------------*/
+.User-Info{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 1rem;
+  padding: 0 1rem;
+}
+.User-Info h1{
+  font-size: 1.3rem;
+}
+.Alerts-User{
+  gap: 2rem;
+  display: flex;
+  align-items: center;
+}
+.Active-Portal-Alerts{
+  font-size: 1.3rem;
+  border-radius: 50%;
+  padding: .2rem .4rem;
+}
+.User-Info-Block{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: .8rem .5rem 0 0;
+}
+.User-Block{
+  gap:1rem;
+  display: flex;
+  align-items: center;
+  
+}
+#User-Id{
+ font-size: .6rem; 
+}
+#User-Name{
+  font-size: .8rem;
+}
+#profile-Icon img{
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  margin: .5rem;
+}
+    
+    
 
-    .filters {
-      margin-bottom: 20px;
-    }
+/*----------- main ------------*/
+.main{
+  gap: 1rem;
+  height: 88vh;
+  width: 100%;
+  display: flex;
+}
+    
+/*----------- Main-Blocks ------------*/
+.Main-Blocks{
+  padding: 1rem;
+  border-radius: 1rem;
+}
+/*----------- Sidebar ------------*/
+#sidebar{
+  height: 100%;
+  display: flex;
+  align-items: center;
 
-    .filters button {
-      background-color: #3c8dbc;
-      border: none;
-      color: white;
-      padding: 8px 15px;
-      margin-right: 10px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
+}
+.nav {
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  margin: 1rem;
+  border-radius: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.205);
 
-    .stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin-bottom: 30px;
-    }
+}
+.sidebar-content{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#Bulogos {
+  width: 3rem;
+  display: flex;
+  align-items: left;
+}
+.Side-Btns{
 
-    .card {
-      flex: 1 1 calc(25% - 20px);
-      background-color: white;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-      min-width: 200px;
-    }
+  display: flex;
+}
+.Side-Btns span {
+  display: none;
+}
+.sidebar-top {
+  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.Side-caret {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  font-size: 1.5rem;
+}
+.Action-nav-btns,
+.Side-Btns {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.Side-Btns i {
+  font-size: 1.5rem;
+}
+.linkName {
+  font-size: 0.8rem;
+}
+#open {
+  margin: 0 -1.3rem;
+}
+#close{
+  display: none;
+}
+.sidebar-bottom {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+    
+    
+.body-Bottom{
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+  height: 88vh;
 
-    .card h3 {
-      margin: 0;
-      font-size: 20px;
-      color: #003366;
-    }
+}
+/*----------- main ------------*/  
+.main{
 
-    .card p {
-      margin: 8px 0 0;
-      font-size: 18px;
-      font-weight: bold;
-      color: #d6336c;
-    }
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 1rem;
+  background-color: aliceblue;
+}
+.main h1{
+  margin: 1rem 2rem;
+}
+#Line{
+  padding: .1rem;
+  margin: -1rem 0 1rem 0;
+}
+.Content{
+  margin: 0 1rem;
+}
+/*----------- summary ------------*/  
+.summary{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 1rem;
+}
+.summary-card{
+  width: 25rem;
+  padding: 1rem ;
+  gap: .5rem;
+  display: flex;
+  border-radius: 1rem;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}  
+/*----------- Payment-Nav-Btns ------------*/  
+.Payment-Nav-Btns {
+  gap: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding:  1rem;
+  margin: 1rem 0 ;
+  border-radius: 12px;
+  box-shadow:4px 4px 12px 4px   rgba(0, 0, 0, 0.301);
+}
+.Payment-Blocks {
+  display: none;
+  transition: all 0.3s ease;
+  border-radius: 1rem;
+}
+.Payment-Blocks.show {
+  display: block;
+}
+.Payment-Btns {
+  width: 16rem;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+/*----------- bank-info-card ------------*/  
+.Tittle-Block h2{
+  margin: 1rem ;
+}
+#bank-info-card{
+  width: 30rem;
+  height: 30rem;
+  padding: 1rem 2rem;
+  box-shadow:4px 4px 12px 4px   rgba(0, 0, 0, 0.301);
+}
+#bank-info-card, .Card-Devider{
+  margin: 0 1rem;
+}
+#bank-info-card, .Card-Devider, .Block-Content{
+  margin: 3rem 1rem ;
+}
+#bank-info-card a{
+  font-size: 1.1rem;
+}
+#bank-info-card span{
+  font-size: 1.1rem;
+}
+#UpdateBankInfo{
+  padding: .5rem 1.5rem;
+  border: none;
+  cursor: pointer;
+  border-radius: .5rem;
+}
+.fa-bank{
+  margin: 0 1rem;
+}
+.Block-Content{
+  display: flex;
+  justify-content: space-between;
+}
+/*----------- salary-card ------------*/  
+#chart-section{
+  padding: 1rem 2rem;
+  box-shadow:4px 4px 12px 4px   rgba(0, 0, 0, 0.301);
+}
+.alert-Containors{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.Alerts-Blocks{
+  width: 25rem;
+  cursor: pointer;
+  text-align: center;
+  padding:1rem;
+  border-radius: 1rem;
+}
+.IQ-Block, .IM-Block{
+  gap: .5rem;
+  display: flex;
+  flex-direction: column;
+}
+.fa-chart-line{
+  padding: 0 1rem;
+}
+.Break-Down{
+  display: flex;
+  
+  margin: 0 2rem;
+}
+.BD-Block{
+  width: 40rem;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem;
+}
+.BD-Tittle{
+  font-weight: bold;
+  text-align: center;
+}
+.Total{
+  font-size: 1.5rem;
+}
+.Total-Sub{
+  font-size: 1.5rem;
+}
 
-    .card small {
-      color: #555;
-    }
 
-    .table-container {
-      background-color: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
 
-    th, td {
-      text-align: left;
-      padding: 12px;
-      border-bottom: 1px solid #ccc;
-    }
 
-    th {
-      background-color: #3c8dbc;
-      color: white;
-    }
 
-    .buttons {
-      margin-top: 20px;
-    }
 
-    .buttons button {
-      background-color: #3c8dbc;
-      color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 6px;
-      margin-right: 10px;
-      cursor: pointer;
-    }
 
-    @media (max-width: 768px) {
-      .stats {
-        flex-direction: column;
-      }
 
-      .card {
-        flex: 1 1 100%;
-      }
-    }
+
+/*----------- support-section ------------*/  
+#support-section{
+  padding: 1rem;  
+}
+.SS-Block{
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.SS-Block p{
+  font-size: 1.5rem;
+}
+.SS-Block a{
+  font-size: 1.2rem;
+}
+.SS-Block button{
+  border: none;
+  border-radius: .5rem;
+  padding: .5rem 1.5rem;
+}
+
+
+
+
+/* ===== Payment History Table ===== */
+.payment-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+}
+
+/* Header */
+.payment-history-table thead {
+  background-color: #f3f6fa;
+  color: #333;
+  text-align: left;
+}
+
+.payment-history-table th {
+  padding: 14px 16px;
+  font-weight: 600;
+  border-bottom: 2px solid #e4e7ec;
+}
+
+/* Table Body */
+.payment-history-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.payment-history-table tr:hover {
+  background-color: #f9fbfd;
+  transition: background 0.2s ease-in-out;
+}
+
+/* Status Colors */
+.paid {
+  color: #22c55e;
+  font-weight: 600;
+}
+
+.pending {
+  color: #eab308;
+  font-weight: 600;
+}
+
+/* Buttons */
+.details-btn,
+.download-btn {
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Ver Detalle Button */
+.details-btn {
+  background-color: #2563eb;
+  color: #fff;
+}
+
+.details-btn:hover {
+  background-color: #1e40af;
+}
+
+/* Descargar Recibo Button */
+.download-btn {
+  background-color: #10b981;
+  color: #fff;
+  margin-left: 6px;
+}
+
+.download-btn:hover {
+  background-color: #059669;
+}
+
+/* Icon */
+.download-btn i {
+  font-size: 15px;
+}
+
+
+
+
+
+/* ===== Download Section ===== */
+#Download-section {
+  margin-top: 25px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+}
+
+#Download-section .buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+#Download-section button {
+  background-color: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out, transform 0.1s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#Download-section button:hover {
+  background-color: #1e40af;
+  transform: translateY(-1px);
+}
+
+/* Individual Button Colors */
+#Download-section .pdf-btn {
+  background-color: #10b981; /* Green */
+}
+
+#Download-section .pdf-btn:hover {
+  background-color: #059669;
+}
+
+#Download-section .invoice-btn {
+  background-color: #2563eb; /* Blue */
+}
+
+#Download-section .invoice-btn:hover {
+  background-color: #1e40af;
+}
+
+/* Icon styling */
+#Download-section i {
+  font-size: 16px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.Hidden-block{
+  display: none;
+  justify-content: space-between;
+  padding: 1rem;
+}

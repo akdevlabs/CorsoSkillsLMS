@@ -1,68 +1,25 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
+import { getFirestore, doc, getDoc, collection, addDoc, setDoc, Timestamp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
-import { 
-  getFirestore, doc, getDoc, collection, addDoc, setDoc, 
-  Timestamp, deleteField, updateDoc, arrayUnion, serverTimestamp 
-} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
-
-import { 
-  getStorage, ref, uploadBytes, getDownloadURL, listAll 
-} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
-
-import { 
-  getAuth, EmailAuthProvider, reauthenticateWithCredential, 
-  updateEmail, verifyBeforeUpdateEmail, signInWithEmailAndPassword,  
-  sendPasswordResetEmail, confirmPasswordReset, applyActionCode, 
-  onAuthStateChanged, signOut, updatePassword   
-} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
-
-// Configuración Firebase (tuya)
+// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyD2w5sXCGRBxne-23FRCTAXQrMwHt4nHTY",
   authDomain: "corsoskills-1ba50.firebaseapp.com",
   projectId: "corsoskills-1ba50",
-  storageBucket: "corsoskills-1ba50.appspot.com",
+  storageBucket: "corsoskills-1ba50.appspot.com", // corrected to .com
   messagingSenderId: "813928863826",
   appId: "1:813928863826:web:771cd8ad820570441fa78b",
   measurementId: "G-MYT63ZNNCC"
 };
 
-// Inicializar Firebase
+// First, make sure you already have this part:
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-const storage = getStorage(app, 'gs://corsoskills-1ba50.firebasestorage.app');
-const auth = getAuth(app);
-
-//console.log(auth)
 
 const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
 const UserUidInfo = localStorage.getItem("UserUidInfo");
- console.log(UserUidInfo);
-// Initialize Auth
-
-
-
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    //✅ Authenticated
-    console.log("🔐 User is authenticated:");
-    console.log("UID:", user.uid);
-    console.log("Email:", user.email);
-
-    // Optional: Store in localStorage if needed
-    localStorage.setItem("ActiveLogedin", "true");
-    localStorage.setItem("UserUidInfo", user.uid);
-    localStorage.setItem("UserEmail", user.email);
-
-  } else {
-    // ❌ Not authenticated
-    console.warn("🚫 Usuario no autenticado. Redirigiendo al login...");
-    localStorage.removeItem("ActiveLogedin");
-    window.location.href = "login.html"; // or your login route
-  }
-});
-
+console.log(UserUidInfo)
 
 
 
@@ -83,9 +40,10 @@ async function applyBranding() {
     return null;
   }
 }
+
 applyBranding().then((data) => {  
   console.log(data.BuLogos.Icons[0])
-  const {Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
+  const {Base, Prime,Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
   
   function renderImage(imageUrl, altUrl, UrlId) {
     const logoElement = document.getElementById(UrlId);
@@ -190,17 +148,13 @@ applyBranding().then((data) => {
 
 
 
-
-  function setbodyColors(){
-    setBodyBackgroundColor(Prime4)
-  }
   function SetUserInfoColors(){
     setallBackgroundColor(".User-Info", Prime)
     setTextColors( ".User-Info", Prime5)
   }
-  function Setmaincolors(){
-  //  setallBackgroundColor(".Main-Blocks", Prime5)
-  }
+
+
+
   function SetMainColors(){
     renderImage(data.BuLogos.Icons[0], "BuLogo", "Bulogos")
     setBodyBackgroundColor(Prime4)
@@ -232,118 +186,295 @@ applyBranding().then((data) => {
 
 
   }
-
-
-
-
-  function Linecolors(){
-    setallBackgroundColor("#Line", Prime3)
+  function setPendingTasksBlock(){
+    setallBackgroundColor(".Pending-Tasks-Block", Prime5)
+    setTextColors( ".PTB-Tittle", Base) 
+    setTextColors( "#Pending-Tasks", Base) 
+    setallBackgroundColor(".Alerts", Prime4)
+    setTextColors( ".Alerts", Prime) 
   }
-  function summarycolors(){
-    setTextColors(".summary-card", Prime5)
-    setallBackgroundColor(".summary-card", Base)
-    setallBackgroundColor(".main", Prime5)    
+  function setProgressBlock(){
+    setallBackgroundColor(".Progress-Block", Prime5)
+    setTextColors( ".Progress-Block", Base)
   }
-
-  function setbankInfoCardColors() {
+  function setcircularprogressColors() {
     const style = document.createElement("style");
     style.textContent = `
-      .Payment-Blocks {
-        background-color: ${Prime5};
+      .circular-progress {
+        background: conic-gradient(
+          ${Base} 0deg,
+          ${Prime3} var(--progress),
+          ${Prime5} var(--progress)
+        );
+        color:${Base};
+
+      }  
+      .circular-progress::before {
+        background: ${Prime5};
       }
-      .Tittle-Block h2{
+    `;
+    document.head.appendChild(style);
+  }
+  function setcalendarColors() {
+    const style = document.createElement("style");
+    style.textContent = `
+      .calendar {
+        color:${Prime};
+        background: ${Prime5};
+
+      }
+      .day-name {
         color: ${Base};
       }
-      #bank-info-card a{
+      .day {
+        border: 1px solid ${Prime1};
+      }
+      .attendance {
         color:${Base};
       }
-      #bank-info-card span{
-        color: ${Prime3};
-      }
-      #UpdateBankInfo{
+      .today {
+        background: ${Prime2};
         color: ${Prime5};
-        background-color: ${Prime};
       }
-      #salary-card .total {
-        border-top: 2px solid ${Prime2};
-      }
-      #salary-card button {
-        background-color: ${Prime2};
-        color: white;
-      }
-      #salary-card button:hover {
-        background-color:${Prime2};
-      }
-    `;
-    document.head.appendChild(style);
-  }
-  function setIngresosColors() {
-    const style = document.createElement("style");
-    style.textContent = `
-      .Payment-Blocks {
-        background-color: ${Prime5};
-      }
-      .Alerts-Blocks{
-        color: ${Prime5};
-        background-color: ${Base};
-      }
-      .BD-Tittle{
-        color: #3178fd;
-        font-weight: bold;
-        text-align: center;
-      }
-      .Total{
-        color: ${Base};
-      }  
-      .Total-Sub{
-        color: ${Prime3};
-      }
-
 
     `;
     document.head.appendChild(style);
   }
-  function setSupportColors() {
+  function setTaskBlock(){
+    setallBackgroundColor(".Tasks-Block", Prime5)
+    setTextColors(".Tasks-Block", Base)
+   
+  }
+  function setActiveCalanderColors() {
     const style = document.createElement("style");
     style.textContent = `
-      .Payment-Blocks {
-        background-color: ${Prime5};
-      }
-      .SS-Block p{
+      .calendar-day {
+        background: ${Prime4};
         color: ${Prime};
       }
-      .SS-Block a{
-        color: ${Prime1};
+      .calendar-day .day-name {
+        color: ${Prime};
       }
-      .SS-Block button{
-        color: ${Prime5};
-        background-color: ${Prime3};
+      .calendar-day.today {
+        border: 4px solid ${Prime2};
+        color: ${Prime2};
       }
     `;
     document.head.appendChild(style);
   }
+  function setTaskBtnsColors(){
+    setTextColors(".Calander-Btns", Prime5)
+    setallBackgroundColor(".Calander-Btns", Base)
+  }
+  function setAEBColors() {
+    setTextColors("#Plus", Prime2)
+    const style = document.createElement("style");
+    style.textContent = `
+      .calendar-day {
+        background: ${Prime4};
+        color: ${Prime};
+      }
+      #time-box{
+        color: ${Prime5};
+        background-color:${Prime2};
+      }
+      .Add-Btn{
+        color: ${Prime2};
+        border: 6px solid ${Prime2};
+      }
+      .fa-square-plus{
+        color: ${Prime5};
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+
+
+
+
+
+
   
-
-
-
-
-
-
   setGlobalFont(data.Font)
-  setbodyColors()
   SetUserInfoColors()
   SetMainColors()
   sidebarcolors()
-  Linecolors()
-  summarycolors()
-  setbankInfoCardColors()
-  setIngresosColors()
+  setPendingTasksBlock()
+  setProgressBlock()
+  setcircularprogressColors()
+  setcalendarColors()
+  setTaskBlock()
+  setActiveCalanderColors()
+  setTaskBtnsColors()
+  setAEBColors()
 
 
 
 
-  setSupportColors()
+
+
+
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+function renderWeeklyCalendar() {
+    const container = document.getElementById("Active-Calander");
+    container.innerHTML = ""; // clear old content
+
+    const today = new Date();
+    const todayDay = today.getDay(); // 0=Sunday, 1=Monday...
+    const startOfWeek = new Date(today);
+
+    // Adjust start to current week's Monday
+    const diff = (todayDay === 0 ? -6 : 1) - todayDay;
+    startOfWeek.setDate(today.getDate() + diff);
+
+    const daysShort = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(startOfWeek);
+      day.setDate(startOfWeek.getDate() + i);
+
+      const dayDiv = document.createElement("div");
+      dayDiv.className = "calendar-day";
+
+      const dayName = daysShort[i];
+      const dayNum = day.getDate();
+
+      dayDiv.innerHTML = `
+        <div class="day-name">${dayName}</div>
+        <div class="day-num">${dayNum}</div>
+      `;
+
+      // Highlight today
+      if (
+        day.getDate() === today.getDate() &&
+        day.getMonth() === today.getMonth() &&
+        day.getFullYear() === today.getFullYear()
+      ) {
+        dayDiv.classList.add("today");
+      }
+
+      container.appendChild(dayDiv);
+    }
+}
+const attendanceData = {
+    "2025-09-01": "5/6",
+    "2025-09-02": "6/6",
+    "2025-09-03": "4/6",
+    "2025-09-05": "Asistencia: 3/6",
+    "2025-09-10": "6/6"
+};
+function renderCalendar() {
+    const grid = document.getElementById("calendar-grid");
+    const header = document.getElementById("calendar-header");
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const currentDay = today.getDate();
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    const monthNames = [
+      "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+      "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+    ];
+    const dayNames = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+
+    // Mostrar cabecera
+    header.textContent = `${monthNames[month]} ${year}`;
+
+    // Nombres de días
+    grid.innerHTML = "";
+    dayNames.forEach(day => {
+      const div = document.createElement("div");
+      div.classList.add("day-name");
+      div.textContent = day;
+      grid.appendChild(div);
+    });
+
+    // Espacios vacíos antes del primer día
+    for (let i = 0; i < firstDay; i++) {
+      grid.appendChild(document.createElement("div"));
+    }
+
+    // Días del mes
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dateKey = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+      const div = document.createElement("div");
+      div.classList.add("day");
+
+      const number = document.createElement("span");
+      number.textContent = day;
+      div.appendChild(number);
+
+      if (attendanceData[dateKey]) {
+        const att = document.createElement("div");
+        att.classList.add("attendance");
+        att.textContent = attendanceData[dateKey];
+        div.appendChild(att);
+      }
+
+      // Resaltar hoy
+      if (day === currentDay) {
+        div.classList.add("today");
+        div.addEventListener("click", () => {
+          alert(`📅 Hoy es ${day} de ${monthNames[month]} ${year}`);
+        });
+      }
+
+      grid.appendChild(div);
+    }
+}
+function renderTimeBox() {
+    const now = new Date();
+    let hours = now.getHours();
+    const ampm = hours >= 12 ? "PM" : "AM";
+
+    // Convert to 12-hour format
+    hours = hours % 12;
+    hours = hours ? hours : 12; // 0 becomes 12
+
+    const box = document.getElementById("time-box");
+    box.innerHTML = `
+      <div class="time-hour">${hours}</div>
+      <div class="time-ampm">${ampm}</div>
+    `;
+}
+
+
+renderTimeBox();
+setInterval(renderTimeBox, 60000);
+renderWeeklyCalendar();
+renderCalendar();
+renderWeeklyCalendar();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -374,6 +505,7 @@ async function getTeacherContent() {
     return null;
   }
 }
+
 async function getCorsoSkillAppContent() {
   try {
     const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
@@ -390,6 +522,7 @@ async function getCorsoSkillAppContent() {
     return null;
   }
 }
+
 async function fetchAllContent() {
   const TeacherData = await getTeacherContent();
   const businessData = await getCorsoSkillAppContent();
@@ -403,12 +536,12 @@ async function fetchAllContent() {
   console.log("✅ Business Data:", businessData);
 
   // destructure colors if businessData exists
-  let Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5;
+  let Base, Prime1, Prime2, Prime3, Prime4, Prime5;
   if (businessData?.BuColors?.Colors) {
-    ({ Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5 } = businessData.BuColors.Colors);
+    ({ Base, Prime1, Prime2, Prime3, Prime4, Prime5 } = businessData.BuColors.Colors);
   }
 
-
+  // helper: render text inside an element
   function renderText(text, elementId) {
     const element = document.getElementById(elementId);
     if (element) {
@@ -417,36 +550,20 @@ async function fetchAllContent() {
       console.error(`Element with ID "${elementId}" not found.`);
     }
   }
-  function convertFirestoreTimestampToDate(timestamp) {
-    if (!timestamp || typeof timestamp.seconds !== "number") {
-      console.error("Invalid Firestore timestamp:", timestamp);
-      return null;
-    }
+  function setCircularProgress(percent) {
+    const progressEl = document.getElementById("progress");
+    const progressText = document.getElementById("progress-text");
 
-    const date = new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1e6);
+    // Convert percentage to degrees (360° = 100%)
+    const degrees = (percent / 100) * 360;
 
-    // Format as MM/DD/YYYY
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day = date.getDate().toString().padStart(2, "0");
-    const year = date.getFullYear();
+    // Update CSS variable
+    progressEl.style.setProperty("--progress", degrees + "deg");
 
-    return `${month}/${day}/${year}`;
+    // Update text
+    progressText.textContent = percent + "%";
   }
-  function renderTextById(id, text, append = false) {
-    const element = document.getElementById(id);
-    if (!element) {
-      console.warn(`⚠️ No element found with ID: ${id}`);
-      return;
-    }
-
-    if (append) {
-      element.textContent += text;
-    } else {
-      element.textContent = text;
-    }
-  }
-
-
+  // render welcome with teacher name
   function renderWelcome() {
     if (TeacherData?.fullName) {
       renderText("Hola, " + TeacherData.fullName, "User-Name");
@@ -482,6 +599,7 @@ async function fetchAllContent() {
       renderText("Falta ID", "User-Id");
     }
   }
+
   function renderUserIcon() {
     const container = document.getElementById("profile-Icon");
     if (!container) {
@@ -496,6 +614,11 @@ async function fetchAllContent() {
       
     }
   }
+
+
+
+  // PENDING
+
   function renderAlertIcons() {
     const ActiveAlrts = 0; // change to 0 or null to test
 
@@ -570,159 +693,136 @@ async function fetchAllContent() {
       
       container.innerHTML = `<i class="fa-regular fa-bell"></i>`;
   }
+  function RenderPendingTasks(){
+    const TaskAmount = 1
+    renderText(TaskAmount,"Pending-Tasks")
 
+    function renderRiskColor(value, colorId, labelId) {
+      const colorElement = document.getElementById(colorId);
+      const labelElement = document.getElementById(labelId);
 
-
-
-
-
-
-  function paymentBtnfunc() {
-    const buttons = document.querySelectorAll(".Payment-Btns");
-    const blocks = document.querySelectorAll(".Payment-Blocks");
-
-    // 🗺️ Map button IDs to section IDs
-    const sectionMap = {
-      "bank-info-Btn": "bank-info-card",
-      "Salary-Btn": "chart-section",
-      "History-Btn": "table-container",
-      "Support-Btn": "support-section",
-      "Download-Btn": "Download-section"
-    };
-
-    // 🎨 Colors
-    const activeColor = Prime; // Active background
-    const textColor = Prime5;   // Active text
-    const inactiveColor = "transparent";
-    const inactiveTextColor = Prime; // Optional
-
-    // 🟢 Function to activate a specific section/button
-    function activateSection(buttonId) {
-      const targetId = sectionMap[buttonId];
-
-      // Hide all sections
-      blocks.forEach(block => block.classList.remove("show"));
-
-      // Reset all buttons
-      buttons.forEach(btn => {
-        btn.style.backgroundColor = inactiveColor;
-        btn.style.color = inactiveTextColor;
-        btn.classList.remove("active");
-      });
-
-      // Show the target section
-      if (targetId) {
-        document.getElementById(targetId)?.classList.add("show");
+      if (!colorElement || !labelElement) {
+        console.error("No se encontraron los elementos necesarios.");
+        return;
       }
 
-      // Highlight the active button
-      const activeBtn = document.getElementById(buttonId);
-      if (activeBtn) {
-        activeBtn.classList.add("active");
-        activeBtn.style.backgroundColor = activeColor;
-        activeBtn.style.color = textColor;
+      let color = "gray";
+      let label = "Inválido";
+
+      if (value >= 0 && value <= 30) {
+        color = "green";
+        label = "Bajo";
+      } else if (value >= 31 && value <= 60) {
+        color = "yellow";
+        label = "Medio";
+      } else if (value >= 61) {
+        color = "red";
+        label = "Alto";
       }
+
+      // Renderizar el círculo en el span de color
+      colorElement.innerHTML = `<span style="
+        display:inline-block;
+        width:12px;
+        height:12px;
+        border-radius:50%;
+        background:${color};
+        margin-right:6px;
+      "></span>`;
+
+      // Renderizar el texto en el span de nivel
+      labelElement.textContent = label;
     }
-
-    // 🔘 Attach click events
-    buttons.forEach(btn => {
-      btn.addEventListener("click", () => activateSection(btn.id));
-    });
-
-    // 🟣 Default active = bank-info-Btn
-    activateSection("bank-info-Btn");
+    renderRiskColor( TaskAmount, "Alert-PT-Color", "Alert-Level")
   }
-  function renderBankInfo(){
-    renderText(TeacherData.PaymentInfo.bankName, "BankName")
-    renderText(TeacherData.PaymentInfo.accountHolder, "AccountHolder")
-    renderText(TeacherData.PaymentInfo.accountNumber, "AccountNumber")
+  function RenderGraphAmounts(){
+    const LT = 30
 
-
-
-
-
-
+    let percent = 0;
+    
+    const interval = setInterval(() => {
+      if (percent <= LT) {
+        setCircularProgress(percent);
+        percent++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 30);
   }
 
 
 
-function createPaymentHistoryTable() {
-  const container = document.getElementById("PaymentHistoryContainer");
-  container.innerHTML = "";
+  function RenderSaveEventInfo(){
 
-  const table = document.createElement("table");
-  table.classList.add("payment-history-table");
+  const addEventBtn = document.getElementById("add-event-btn");
+  const modal = document.getElementById("event-modal");
+  const closeBtn = document.querySelector(".close-btn");
+  const saveBtn = document.getElementById("save-event");
+  const eventList = document.getElementById("event-list");
 
-  table.innerHTML = `
-    <thead>
-      <tr>
-        <th>Fecha</th>
-        <th>Curso</th>
-        <th>Tipo</th>
-        <th>Monto</th>
-        <th>Método</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>05/05/2025</td>
-        <td>Yoga Intermedio</td>
-        <td>Clases</td>
-        <td>$300.00</td>
-        <td>Transferencia</td>
-        <td class="paid">Pagado</td>
-        <td>
-          <button class="details-btn">Ver Detalle</button>
-          <button class="download-btn"><i class="fas fa-file-invoice"></i> Descargar Recibo</button>
-        </td>
-      </tr>
-      <tr>
-        <td>12/05/2025</td>
-        <td>Pilates Básico</td>
-        <td>Clases</td>
-        <td>$250.00</td>
-        <td>Transferencia</td>
-        <td class="pending">Pendiente</td>
-        <td>
-          <button class="details-btn">Ver Detalle</button>
-          <button class="download-btn"><i class="fas fa-file-invoice"></i> Descargar Recibo</button>
-        </td>
-      </tr>
-      <tr>
-        <td>20/05/2025</td>
-        <td>Stretch Avanzado</td>
-        <td>Bonificación</td>
-        <td>$100.00</td>
-        <td>Transferencia</td>
-        <td class="paid">Pagado</td>
-        <td>
-          <button class="details-btn">Ver Detalle</button>
-          <button class="download-btn"><i class="fas fa-file-invoice"></i> Descargar Recibo</button>
-        </td>
-      </tr>
-    </tbody>
-  `;
-
-  container.appendChild(table);
-}
-
-  createPaymentHistoryTable()
-
-
-
-
-
-
-
-
-
-
-  document.getElementById("UpdateBankInfo").addEventListener("click", () => {
-    window.location.href = "/index11.6.html?section=Billing";
+  // Open modal
+  addEventBtn.addEventListener("click", () => {
+    modal.style.display = "flex";
   });
 
+  // Close modal
+  closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
+  });
+
+  // Save event
+  saveBtn.addEventListener("click", () => {
+    const date = document.getElementById("event-date").value;
+    const time = document.getElementById("event-time").value;
+    const course = document.getElementById("event-course").value;
+    const level = document.getElementById("event-level").value;
+    const description = document.getElementById("event-description").value;
+
+    if (!date || !time || !course || !level) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    // Create styled event card
+    const eventCard = document.createElement("div");
+    eventCard.classList.add("event-card");
+    eventCard.innerHTML = `
+      <div class="event-time">
+        <span>${time}</span>
+      </div>
+      <div class="event-details">
+        <h4>${course} <span class="event-level">${level}</span></h4>
+        <p>${description}</p>
+        <div class="status">
+          <span class="status-badge ${level.toLowerCase()}">${level}</span>
+          <div class="progress-bar">
+            <div class="progress ${level.toLowerCase()}"></div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    eventList.appendChild(eventCard);
+
+    // Reset form
+    document.getElementById("event-date").value = "";
+    document.getElementById("event-time").value = "";
+    document.getElementById("event-course").value = "";
+    document.getElementById("event-level").value = "";
+    document.getElementById("event-description").value = "";
+
+    // Close modal
+    modal.style.display = "none";
+  });
+
+  // Close modal when clicking outside content
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  }
 
 
 
@@ -732,20 +832,60 @@ function createPaymentHistoryTable() {
 
 
 
-  renderWelcome()
+  // PENDING
+
+
+function renderCorseInfo(){
+  const Courses = TeacherData.carrera
+
+  console.log(Courses)
+
+
+  const categories = [
+    { id: "Development", label: "Programación" },
+    { id: "Business", label: "Negocios" },
+    { id: "Design", label: "Diseño" },
+    { id: "Leadership", label: "Liderazgo" },
+    { id: "Sales", label: "Ventas" },
+    { id: "Languages", label: "Idiomas" },
+    { id: "Technology", label: "Tecnología" },
+    { id: "Marketing", label: "Marketing" },
+    { id: "Productivity", label: "Productividad" },
+    { id: "Finance", label: "Finanzas" },
+    { id: "AI", label: "AI" },
+    { id: "Wellness", label: "Bienestar" }
+  ];
+
+  const select = document.getElementById("event-course");
+
+  // Render options dynamically
+  categories.forEach(cat => {
+    const option = document.createElement("option");
+    option.value = cat.id;
+    option.textContent = cat.label;
+    select.appendChild(option);
+  });
+
+}
+
+
+
+
+
+
+
+
+  // Call rendering functions
+  renderWelcome();
   renderId()
+  renderAlertIcons()
   renderUserIcon()
-  renderAlertIcons() 
-  paymentBtnfunc()
-
-  renderBankInfo()
+  RenderPendingTasks()
+  RenderGraphAmounts()
 
 
-
-
-
-
-  
+  RenderSaveEventInfo()
+  renderCorseInfo()
 
 
 }
@@ -757,113 +897,33 @@ fetchAllContent();
 
 
 
-document.addEventListener("DOMContentLoaded", () => {
-  const sidebar = document.getElementById("sidebar");
-  const overlay = document.getElementById("overlay");
-  const toggle = document.getElementById("menuToggle");
-  const closeBtn = document.getElementById("Mobile-closeBtn");
-
-  const openSidebar = () => {
-    sidebar.classList.add("active");
-    overlay.classList.add("active");
-  };
-
-  const closeSidebar = () => {
-    sidebar.classList.remove("active");
-    overlay.classList.remove("active");
-  };
-
-  toggle.addEventListener("click", openSidebar);
-  closeBtn.addEventListener("click", closeSidebar);
-  overlay.addEventListener("click", closeSidebar);
-});
-document.addEventListener("DOMContentLoaded", function () {
-  const openBtn = document.getElementById("open");
-  const closeBtn = document.getElementById("close");
-  const menuToggle = document.getElementById("menuToggle");
-  const linkNames = document.querySelectorAll(".linkName");
-  const mobileSidebar = document.getElementById("Mobile-sidebar"); // Make sure this ID exists
-
-  function showSidebarText() {
-    linkNames.forEach(el => el.style.display = "inline");
-    openBtn.style.display = "none";
-    closeBtn.style.display = "flex";
-  }
-
-  function hideSidebarText() {
-    linkNames.forEach(el => el.style.display = "none");
-    closeBtn.style.display = "none";
-    openBtn.style.display = "flex";
-  }
-
-  function toggleMobileSidebar() {
-    mobileSidebar.classList.toggle("show"); // Add a class like .show to handle visibility in CSS
-  }
-
-  // Attach event listeners
-  openBtn.addEventListener("click", showSidebarText);
-  closeBtn.addEventListener("click", hideSidebarText);
-  menuToggle.addEventListener("click", toggleMobileSidebar);
-
-  // Initial state
-  hideSidebarText();
-});
-
-function setupBreakDownToggle() {
-    const monthlyBtn = document.getElementById("Ingresos Mensuales");
-    const fortnightBtn = document.getElementById("Ingresos Quincenal");
-
-    const monthlyBreak = document.getElementById("Break-Down");
-    const fortnightBreak = document.getElementById("Break-Down-Quincenal");
-
-    // 🔹 Helper: hide all breakdowns first
-    function hideAllBreakdowns() {
-      monthlyBreak.style.display = "none";
-      fortnightBreak.style.display = "none";
-    }
-
-    // 🔹 Click handlers
-    monthlyBtn.addEventListener("click", () => {
-      hideAllBreakdowns();
-      monthlyBreak.style.display = "flex";
-    });
-
-    fortnightBtn.addEventListener("click", () => {
-      hideAllBreakdowns();
-      fortnightBreak.style.display = "flex";
-    });
-
-    // 🔹 Start with both hidden
-    hideAllBreakdowns();
-}
-function setupEmailCopy() {
-  const emailElement = document.getElementById("SupportEmail");
-  const notice = document.getElementById("CopyNotice");
-
-  emailElement.addEventListener("click", async () => {
-    const email = "soporte@corsoskills.com";
-      try {
-      await navigator.clipboard.writeText(email);
-
-      // ✅ Show temporary "copied" message
-      notice.style.display = "inline";
-      setTimeout(() => {
-        notice.style.display = "none";
-      }, 1500);
-    } catch (err) {
-      console.error("Error al copiar el correo:", err);
-      alert("No se pudo copiar el correo. Intenta manualmente.");
-    }
-  });
-}
 
 
 
 
 
-document.addEventListener("DOMContentLoaded", setupBreakDownToggle);
-// 🟢 Initialize when page loads
-document.addEventListener("DOMContentLoaded", setupEmailCopy);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -885,28 +945,27 @@ document.getElementById("invocie").addEventListener("click", function () {
   window.location.href = "index11.2.html";
 });
 document.getElementById("Students").addEventListener("click", function () {
-  window.location.href = "index11.3.html";
+  window.location.href = "index11.2.html";
 });
 document.getElementById("Assignments").addEventListener("click", function () {
-  window.location.href = "index11.4.html";
+  window.location.href = "index11.3.html";
 });
-document.getElementById("BCourse").addEventListener("click", function () {
+document.getElementById("Lessons").addEventListener("click", function () {
+  window.location.href = "index11.4.html";
+});   
+document.getElementById("Mensajes").addEventListener("click", function () {
   window.location.href = "index11.5.html";
 });
 
-document.getElementById("Lessons").addEventListener("click", function () {
-  window.location.href = "index11.5.html";
-}); 
+
+
+
 
 
 
 document.getElementById("Settings").addEventListener("click", function () {
   window.location.href = "index11.6.html";
-});   
+}); 
 document.getElementById("Logout").addEventListener("click", function () {
   window.location.href = "index4.html";
 });  
-
- 
-
-

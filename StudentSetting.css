@@ -86,7 +86,9 @@ body {
   display: flex;
   justify-content: flex-end;
 }
-
+#Multi-User{
+  display: none;
+}
 /* ---------- Mobile-sidebar -------------- */
 
 /* ---------- Central -------------- */

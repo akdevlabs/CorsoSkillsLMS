@@ -1,0 +1,291 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  height: 100vh; /* fixed height */
+  overflow: hidden; /* prevent full page scroll */
+}
+
+
+/*----------- User-Info ------------*/
+.User-Info{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 1rem;
+  padding: 0 1rem;
+}
+.User-Info h1{
+  font-size: 1.3rem;
+}
+.Alerts-User{
+  gap: 2rem;
+  display: flex;
+  align-items: center;
+}
+.Active-Portal-Alerts{
+  font-size: 1.3rem;
+  border-radius: 50%;
+  padding: .2rem .4rem;
+}
+.User-Info-Block{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: .8rem .5rem 0 0;
+}
+.User-Block{
+  gap:1rem;
+  display: flex;
+  align-items: center;
+  
+}
+#User-Id{
+ font-size: .6rem; 
+}
+#User-Name{
+  font-size: .8rem;
+}
+#profile-Icon img{
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  margin: .5rem;
+}
+
+
+
+/*----------- main ------------*/
+.main{
+  gap: 1rem;
+  width: 100%;
+  height: 89vh;
+  display: flex;
+}
+
+/*----------- Main-Blocks ------------*/
+.Main-Blocks{
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+
+/*----------- Sidebar ------------*/
+#sidebar{
+  display: flex;
+  align-items: center;
+  height:  87.5vh;
+}
+.nav {
+  padding: 1rem;
+  display: flex;
+  margin: 1rem;
+  border-radius: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.205);
+  flex-wrap: wrap;
+}
+.sidebar-content{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#Bulogos {
+  width: 3rem;
+  display: flex;
+  align-items: left;
+}
+.Side-Btns{
+
+  display: flex;
+}
+.Side-Btns span {
+  display: none;
+}
+.sidebar-top {
+  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.Side-caret {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  font-size: 1.5rem;
+}
+.Action-nav-btns,
+.Side-Btns {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.Side-Btns i {
+  font-size: 1.5rem;
+}
+.linkName {
+  font-size: 0.8rem;
+}
+#open {
+  margin: 0 -1.3rem;
+}
+#close{
+  display: none;
+}
+.sidebar-bottom {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+/*----------- Content ------------*/
+#Content{
+  width: 100%;
+  height:  87.5vh;
+  padding: 0.1rem  2rem;
+}
+#Line{
+  padding: .1rem;
+  margin: -1rem 0 1rem 0;
+}
+.Setting-Btns{
+  padding: .2rem 1rem;
+  border-radius: .5rem;
+  background-color: transparent;
+}
+.Config-Nav-Btns {
+   gap: 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding:  .8rem;
+   border-radius: 12px;
+  box-shadow:4px 4px 12px 4px   rgba(0, 0, 0, 0.301);
+}
+.Setting-Btns {
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.Config-Blocks {
+  display: none;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.301);
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+.Config-Blocks.show {
+  display: block;
+}
+.Config-Blocks h2 {
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+}
+.Input-blocks {
+  display: grid;
+  max-height: 425px; /* or any height you prefer */
+  overflow-y: auto; /* enables vertical scroll */
+  padding-right: 8px; /* prevents content from hiding behind scrollbar */
+  scroll-behavior: smooth; /* optional, makes scrolling smooth */
+}
+.input-line{
+  gap: 2rem;
+  display: flex;
+  align-items: center;
+  margin: 0 2rem
+}
+.Content-block {
+  gap: 1rem;
+  width: 100%;
+  display: flex;
+  margin: .2rem 0;
+  flex-direction: column;
+}
+.Content-block label {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 6px;
+}
+.Content-block span{
+  padding:1rem;
+  font-weight: bold;
+  border-radius: .5rem;
+}
+.Content-block input,
+.Content-block select,
+.Content-block textarea {
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: border 0.3s ease;
+}
+.Content-block input:focus,
+.Content-block select:focus,
+.Content-block textarea:focus {
+  outline: none;
+}
+button {
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.CB-Tittle{
+  display: flex;
+  justify-content: space-between;
+}
+.Profile-Img-Block {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+}
+#Profile-Imgs img{
+  width: 7rem;
+  height:  7rem;
+  border-radius: 50%;
+  
+}
+.Profile-Img-Block{
+  margin:  1rem 1.3rem;
+}
+.PIB{
+  gap:1rem;
+  display: none;
+  flex-direction: column;
+}
+
+
+#Input-Billing-Block {
+  display: grid;
+  max-height: 525px; /* or any height you prefer */
+  overflow-y: auto; /* enables vertical scroll */
+  padding-right: 8px; /* prevents content from hiding behind scrollbar */
+  scroll-behavior: smooth; /* optional, makes scrolling smooth */
+}
+
+
+#New-Password-Block, #Confirm-Password-Block, #Email-Input-blocks, #Save-Notifications{
+  display: none;
+}
+
+
+.Hidden-Input{
+  display: none;
+}

@@ -1,4 +1,107 @@
-  body {
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+}
+body {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  flex-direction:row; /* Helps small screens stack better */
+  /*overflow-y: auto;*/
+}
+/* ---------- nav -------------- */
+.hamburger {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1001;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none;
+}
+.Mobile-close-btn{
+  display: none;
+}
+.nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 97vh;
+  padding: 1rem .5rem;
+  border-radius: 1rem;
+  transition: width 0.3s ease;
+  margin: 1rem;
+}
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.sidebar-top {
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.Side-Btns {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.Side-Btns i {
+  font-size: 1.5rem;
+}
+.linkName {
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+#Bulogos {
+  max-width: 100%;
+  width: 3rem;
+  height: auto;
+  margin-bottom: 1.2rem;
+}
+.Side-caret {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+#Multi-User{
+  display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+body {
       font-family: 'Segoe UI', sans-serif;
       background-color: #d3e0ea;
       margin: 0;
