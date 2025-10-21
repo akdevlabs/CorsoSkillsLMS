@@ -17,151 +17,184 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TeacherTareas|CorsoSkills</title>
-  <link rel="stylesheet" href="TeacherTareas.css">
+  <title>TeacherStudents|CorsoSkills</title>
+  <link rel="stylesheet" href="TeacherStudents.css">
 
 </head>
-<body>  
-  <section class="nav" id="sidebar">
+<body>
+    <section class="User-Info">
+      <h1>Perfil del Estudiante</h1>
+      <div class="Alerts-User">
+        <div class="Active-Portal-Alerts"
+          id="APA"></div>
+
+
+
+        <div class="User-Block">
+          <div id="profile-Icon"></div>
+          <div class="User-Info-Block">
+            <h2 id="User-Id"></h2>
+            <h1 id="User-Name"></h1>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="body-Bottom">
       
-      <div class="sidebar-content">
+      <section class="nav" id="sidebar">
+            
+            <div class="sidebar-content">
+              
+              <div class="sidebar-top" id="sidebar-top">  
+                <img id="Bulogos"></img>
+                
+                <div class="Side-Btns" id="Home">
+                  <i class="fa-solid fa-square-poll-vertical"></i>
+                  <span class="linkName">Dashboard</span>
+                </div>
+
+                <div class="Side-Btns" id="Calander">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <span class="linkName">Calendario</span>
+                </div>
+                
+                <div class="Side-Btns" id="invocie">
+                  <i class="fa-solid fa-file-invoice-dollar"></i>
+                  <span class="linkName">Pagos</span>
+                </div>
+
+                <div class="Side-Btns" id="Students">
+                  <i class="fa-solid fa-school"></i>
+                  <span class="linkName">Estudiantes</span>
+                </div>
+
+                <div class="Side-Btns" id="Assignments">
+                  <i class="fa-solid fa-list-check"></i>
+                  <span class="linkName">Tareas</span>
+                </div>
+
+                <div class="Side-Btns" id="BCourse">    
+                  <i class="fa-solid fa-atom"></i>
+                  <span class="linkName">Crear Curso</span>
+                </div>
+
+                <div class="Side-Btns" id="Lessons">    
+                  <i class="fa-solid fa-person-chalkboard"></i>
+                  <span class="linkName">Lecciones</span>
+                </div>
+
+                <div class="Side-Btns" id="Mensajes">    
+                  <i class="fa-solid fa-message"></i>
+                  <span class="linkName">Mensajes</span>
+                </div>
+
+              </div>
+
+              <div class="sidebar-bottom">
+
+                <div class="Side-Btns" id="Settings">
+                  <i class="fa-solid fa-gear"></i>
+                  <span class="linkName">Settings</span>
+                </div>
         
-        <div class="sidebar-top">  
-          <img id="Bulogos"></img>
-          
-          <div class="Side-Btns" id="Home">
-            <i class="fa-solid fa-table-cells"></i>
-            <span class="linkName">Dashboard</span>
+                <div class="Side-Btns" id="Logout">
+                  <i class="fa-solid fa-right-from-bracket"></i>
+                  <span class="linkName">Cerrar sesión</span>
+                </div>
+              </div> 
+              
+            </div>
+
+            <div class="Action-nav-btns">
+            
+            <div class="Side-caret" id="open">
+                <i class="fa-solid fa-caret-right"></i>
+            </div>
+
+            <div class="Side-caret" id="close">
+                <i class="fa-solid fa-caret-left"></i>
+            </div>
+
+            </div>
+      </section>
+
+      <section class="main" id="main">
+  
+        <h1>Progreso y Desempeño</h1>
+        <div id="Line"></div>
+
+        <div class="Content">
+
+          <div class="Nav-Btns">
+            <button class="Content-Btns" id="Overview-Btn"> Resumen</button>
+            <button class="Content-Btns" id="Performance-Btn"> Rendimiento</button>
+            <button class="Content-Btns" id="Homework-Btn">  Tareas</button>
+            <button class="Content-Btns" id="Attendance-Btn"> Asistencia</button>
+            <button class="Content-Btns" id="Notes-Btn"> Notas</button>         
           </div>
 
-          <div class="Side-Btns" id="Books">
-            <i class="fa-solid fa-book-open"></i>
-            <span class="linkName">eBooks</span>
-          </div>
+           <div class="Content-Block" id="Student-Info">
+              <div class="filter-block">
+                <div class="dropdown-input" id="coures-search"></div>
+                <div class="dropdown-input" id="level-search"></div>
+                <div class="dropdown-input" id="Active-Student-search"></div>
+                <button class="dropdown-input" id="Search-Student-Btn">Buscar</button>  
+              </div>
 
-          <div class="Side-Btns" id="Classroom">
-            <i class="fa-solid fa-school"></i>
-            <span class="linkName">Salon</span>
-          </div>
+              <div id="student-nav-view"></div>
+              <div id="student-results"></div>
+           </div>
 
-          <div class="Side-Btns" id="Videos">
-            <i class="fa-solid fa-file-video"></i>
-            <span class="linkName">Cursos</span>
-          </div>
+           <div class="Content-Block" id="Performance">
+              <div class="filter-block">
+                <div class="dropdown-input" id="Performance-coures-search"></div>
+                <div class="dropdown-input" id="Performance-level-search"></div> 
+                <div class="dropdown-input" id="Performance-Date-search"></div>          
+              </div>
+              <h1>2</h1>
+           </div>
 
-          <div class="Side-Btns" id="Trophy">
-            <i class="fa-solid fa-trophy"></i>
-            <span class="linkName">Logros</span>
-          </div>
+           <div class="Content-Block" id="Homework">
+              <div class="filter-block">
+                <div class="dropdown-input" id="Homework-coures-search"></div>
+                <div class="dropdown-input" id="Homework-level-search"></div> 
+                <div class="dropdown-input" id="Homework-Date-search"></div>          
+              </div>
+              <h1>3</h1>
+           </div>
 
-          <div class="Side-Btns" id="Multi-User">    
-            <i class="fa-solid fa-users"></i>
-            <span class="linkName">Comunidad</span>
-          </div>
+           <div class="Content-Block" id="Attendance">
+              <div class="filter-block">
+                <div class="dropdown-input" id="Attendance-coures-search"></div>
+                <div class="dropdown-input" id="Attendance-level-search"></div> 
+                <div class="dropdown-input" id="Attendance-Date-search"></div>          
+              </div>
+              <h1>4</h1>
+           </div>
 
-          <div class="Side-Btns" id="carrer">    
-            <i class="fa-solid fa-graduation-cap"></i>
-            <span class="linkName">Ruta Profesional</span>
-          </div>
-
+           <div class="Content-Block" id="Notes">
+              <div class="filter-block">
+                <div class="dropdown-input" id="Notes-coures-search"></div>
+                <div class="dropdown-input" id="Notes-level-search"></div> 
+                <div class="dropdown-input" id="Notes-Date-search"></div>          
+              </div>
+              <h1>5</h1>
+           </div>
         </div>
 
-        <div class="sidebar-bottom">
+      
+      </section>
 
-          <div class="Side-Btns" id="Settings">
-            <i class="fa-solid fa-gear"></i>
-            <span class="linkName">Settings</span>
-          </div>
-   
-          <div class="Side-Btns" id="profile">
-            <i class="fa-solid fa-user-tie"></i>
-            <span class="linkName">Profesor</span>
-          </div>
 
-          <div class="Side-Btns" id="Logout">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span class="linkName">Cerrar sesión</span>
-          </div>
-        </div> 
-        
-      </div>
+    </section>
+
+
 
     
-
-    
-
-      <div class="Action-nav-btns">
-      
-      <div class="Side-caret" id="open">
-          <i class="fa-solid fa-caret-right"></i>
-      </div>
-
-      <div class="Side-caret" id="close">
-          <i class="fa-solid fa-caret-left"></i>
-      </div>
-
-      </div>
-  </section>
-
-
-  <section class="main" id="main">
-    <div class="container">
-    <div class="header">Portal de Tareas</div>
-
-    <!-- Homework Card 1 -->
-    <div class="homework-card">
-      <div class="homework-header">
-        <h3>Laura Gómez</h3>
-        <span class="download-link"><i class="fas fa-download"></i> Descargar tarea</span>
-      </div>
-      <div class="homework-info">
-        <p><strong>Lección:</strong> Pilates Intermedio</p>
-        <p><strong>Archivo:</strong> tarea-laura.pdf</p>
-      </div>
-      <div class="actions">
-        <label for="note1">Nota para el estudiante:</label>
-        <textarea id="note1" rows="3" placeholder="Escribe una retroalimentación..."></textarea>
-
-        <label for="grade1">Calificación:</label>
-        <input id="grade1" type="number" min="0" max="100" placeholder="0 - 100">
-
-        <div class="action-buttons">
-          <button><i class="fas fa-paper-plane"></i> Enviar resultado</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Homework Card 2 -->
-    <div class="homework-card">
-      <div class="homework-header">
-        <h3>Carlos Díaz</h3>
-        <span class="download-link"><i class="fas fa-download"></i> Descargar tarea</span>
-      </div>
-      <div class="homework-info">
-        <p><strong>Lección:</strong> Yoga Básico</p>
-        <p><strong>Archivo:</strong> carlos-ejercicio.docx</p>
-      </div>
-      <div class="actions">
-        <label for="note2">Nota para el estudiante:</label>
-        <textarea id="note2" rows="3" placeholder="Escribe una retroalimentación..."></textarea>
-
-        <label for="grade2">Calificación:</label>
-        <input id="grade2" type="number" min="0" max="100" placeholder="0 - 100">
-
-        <div class="action-buttons">
-          <button><i class="fas fa-paper-plane"></i> Enviar resultado</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Add more cards dynamically as needed -->
-
-  </div>
-      
-  </section>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <script  src="TeacherTareas.js" type="module"></script>
+  <script  src="TeacherStudents.js" type="module"></script>
 </body>
 </html>

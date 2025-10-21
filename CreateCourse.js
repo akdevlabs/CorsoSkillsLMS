@@ -7,7 +7,7 @@ import {
   collection, 
   addDoc, 
   setDoc, 
-  Timestamp 
+  serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 import { 
   getStorage, 
@@ -62,8 +62,11 @@ async function applyBranding() {
 }
 applyBranding().then((data) => {  
   console.log(data.BuLogos.Icons[0])
-  const {Base, Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
+  const {Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
   
+  function setBodyBackgroundColor(backgroundColor) {
+    document.body.style.backgroundColor = backgroundColor;
+  } 
   function renderImage(imageUrl, altUrl, UrlId) {
     const logoElement = document.getElementById(UrlId);
     if (logoElement) {
@@ -72,9 +75,6 @@ applyBranding().then((data) => {
     } else {
       console.error("Element with ID 'logo' not found.");
     }
-  }
-  function setBodyBackgroundColor(backgroundColor) {
-    document.body.style.backgroundColor = backgroundColor;
   }
   function setBackgroundColor(selector, backgroundColor) {
     if (!selector) return;
@@ -128,56 +128,19 @@ applyBranding().then((data) => {
       console.error("Selector must start with '#' for ID or '.' for class.");
     }
   }
-  function setBorderWithFocus(selector, borderStyle) {
-    const elements = document.querySelectorAll(selector);
-
-    if (elements.length > 0) {
-      elements.forEach(element => {
-        // Set initial border
-        element.style.border = borderStyle;
-
-        // On focus: apply same border
-        element.addEventListener('focus', () => {
-          element.style.border = borderStyle;
-        });
-
-        // On blur: optionally keep or reset the border
-        element.addEventListener('blur', () => {
-          element.style.border = borderStyle; // or reset if desired
-        });
-      });
-    } else {
-      console.error(`No elements found with selector '${selector}'`);
-    }
-  }
   function setGlobalFont(fontFamily) {
     document.body.style.fontFamily = fontFamily;
   }
-  setGlobalFont(data.Font)
 
 
-
-
-
-
-
-
-  function SetMainColors(){
+  function RenderUserInfoColors(){
+    setBackgroundColor(".User-Info", Prime)
+    setTextColors( ".User-Info", Prime5)
+  }
+  function RenderNavBlock(){
     renderImage(data.BuLogos.Icons[0], "BuLogo", "Bulogos")
     setBodyBackgroundColor(Prime4)
     setBackgroundColor("#sidebar", Prime5)
-    setTextColors("#Main-Title-header", Base)
-    setTextColors("#Img-Q-blocks", Base)
-    setTextColors("#titleInput", Base)
-    setTextColors("#descriptionInput", Base)
-
-    setBorderWithFocus('#titleInput', `2px solid ${Base}`);
-    setBorderWithFocus('#descriptionInput', `2px solid ${Base}`);
-    setBorderWithFocus('.input-tool', `2px solid ${Base}`);
-
-
-   
-
   }
   function sidebarcolors(){
     setTextColors(".Side-Btns", Base)
@@ -197,52 +160,136 @@ applyBranding().then((data) => {
       });
     });
   }
-  function ToolSidebarColors(){
-    setBackgroundColor("#Action-tool-side-bar", Prime5)
+  function SetInputColors(){
+    setBackgroundColor("#Title-Input", Prime3)
+    const style = document.createElement("style");
+    style.textContent = `
+      #Title-Input::placeholder{
+        color:${Prime5};
+      }
+      #Title-Input{
+        color:${Prime5};
+      }
+      #Title-Input:focus {
+        border-color:${Prime3};
+      }
+    `;
+    document.head.appendChild(style);
 
-    setTextColors(".tool-Side-Btns", Base)
-    setTextColors(".fa-solid", Base)
-    document.querySelectorAll('.tool-Side-Btns').forEach(button => {
-      const icon = button.querySelector('i');
-      const text = button.querySelector('.linkName');
 
-      button.addEventListener('mouseenter', () => {
-        icon.style.color = Prime2; // Hover color
-        text.style.color = Prime2;
-      });
-
-      button.addEventListener('mouseleave', () => {
-        icon.style.color = Base;// Original color
-       text.style.color = ''; // Reset to default (inherited or original)
-      });
-    });
   }
-
-  function perviewcolors(){
-
-    setBorderWithFocus("#Main-right", `2px solid ${Base}`);
-    setBorderWithFocus("#Main-right", `2px solid ${Prime1}`);
-
-
-    setBackgroundColor("#Main-right", Prime4)
-    setTextColors("#course-title", Base)
-
-    setBackgroundColor(".hidden-tabs", Prime5)
-    setBorderWithFocus(".hidden-tabs", `2px solid ${Prime1}`);
-    
+  function setDescriptionColors(){
+    setTextColors(".Point",Prime2)
+    setTextColors(".Point-Lable", Base)
   }
+  function SetInputBlockColors(){
+    setBackgroundColor("#Title-Input", Prime3)
+    const style = document.createElement("style");
+    style.textContent = `
+
+      .Input-Blocks::-webkit-scrollbar-thumb {
+        background-color: ${Prime1};
+      }
+      .Input-Blocks::-webkit-scrollbar-thumb:hover {
+        background-color: ${Prime2};
+      }
+    `;
+    document.head.appendChild(style);
+
+
+  }
+  function SetCourseCreatorNav(){
+
+    setBackgroundColor('.Course-Nav-block', Prime4)
+    setTextColors('.Course-Nav-block', Prime5) 
+    setBackgroundColor('#Next-Btn', Prime2)
+
+    const style = document.createElement("style");
+    style.textContent = `
+      .CCB.active {
+        background-color: ${Base};
+        color: ${Prime5};
+      }
+    `;
+    document.head.appendChild(style);
+ 
+
+  }
+  function SetBIBPreviewColors(){
+    setBackgroundColor("#Title-Input", Prime3)
+    setTextColors(".fa-eye", Prime2)
+    const style = document.createElement("style");
+    style.textContent = `
+      .Preview-Blocks{
+        background-color: ${Prime4};
+      }
+      .PTB-Left h3{
+        color: ${Prime};
+      }
+      .tool-Side-Btns{
+        border: 2px solid ${Base};
+        color:${Base};
+        background-color:${Prime5};
+      }
+      .Preview-Title h1{
+        color:${Base};
+      }
+      .Main-divide-left{
+        background-color: ${Prime5};
+      }
+      .tabs-Btns{
+        color: ${Prime5};
+        background-color: ${Base};
+      }
+      .Main-divide-right{
+        background-color: ${Prime5};
+      }
+      .Main-divide-right h3{
+        color:${Base};
+      }
+      .instructor h4{
+        color:${Prime3};
+      }
+      #Teacher-Name{
+        color:${Prime};
+      }
+      #BIB-preview{
+        color:${Prime2};
+        border: 3px solid ${Prime2};
+      }
+
+    `;
+    document.head.appendChild(style);
+
+
+  }
+  
 
 
 
 
 
 
+
+
+
+
+  setGlobalFont(data.Font)
+  RenderUserInfoColors()
+  RenderNavBlock()
   sidebarcolors()
-  SetMainColors()
-  ToolSidebarColors()
-  perviewcolors()
+  SetInputColors()
+  setDescriptionColors()
+  SetInputBlockColors()
+  SetCourseCreatorNav()
+  SetBIBPreviewColors()
+
+
+
 
 });
+
+
 
 
 async function getTeacherContent() {
@@ -277,9 +324,27 @@ async function getCorsoSkillAppContent() {
     return null;
   }
 }
+async function getCorsoSkillsClassrooms() {
+  try {
+    const docRef = doc(db, "CorsoSkillsClassrooms", TBuInfo);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.error("No such business document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching business document:", error);
+    return null;
+  }
+}
 async function fetchAllContent() {
   const teacherData = await getTeacherContent();
   const businessData = await getCorsoSkillAppContent();
+  const classroomData = await getCorsoSkillsClassrooms();
+
 
   if (teacherData) {
     console.log("Teacher Document Data:", teacherData);
@@ -293,895 +358,493 @@ async function fetchAllContent() {
     console.log("No business data found.");
   }
 
+  if (classroomData) console.log("✅ Classroom Data:", classroomData);
+  else console.warn("⚠️ No classroom data found.");
+
     // Extract business colors if needed
   const { Base, Prime1, Prime2, Prime3, Prime4, Prime5 } = businessData?.BuColors?.Colors || {};
 
-  function AddVideoBtn() {
-    const addVideoBtn = document.getElementById("add-video");
+  function renderText(text, elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.textContent = text;
+    } else {
+      console.error(`Element with ID "${elementId}" not found.`);
+    }
+  }
 
-    // Inject styles only once
-    if (!document.getElementById("video-style")) {
-      const style = document.createElement("style");
-      style.id = "video-style";
-      style.textContent = `
-        .video-block-label{
-          color: ${Base};
-        }
-        .video-input-section input {
-          color: ${Base};
-          border: 1px solid ${Prime3};
-          background-color: ${Prime5};
-          transition: border-color 0.2s ease;
-        }
-        .video-input-section input:focus {
-          border-color: ${Base};
-          outline: none;
-        }
-        .remove-video-btn {
-          background: ${Prime2};
-          color: ${Prime5};
-          box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-          transition: background-color 0.2s ease;
-        }
-      `;
-      document.head.appendChild(style);
+  function renderWelcome() {
+    if (teacherData?.fullName) {
+      renderText("Hola, " + teacherData.fullName, "User-Name");
+    } else {
+      renderText("Missing", "User-Name");
+    }
+  }
+  function renderId() {
+    const userIdElement = document.getElementById("User-Id");
+
+    if (teacherData?.TeacherId) {
+      const teacherId = teacherData.TeacherId;
+      renderText("ID: " + teacherId, "User-Id");
+
+      // Make the ID clickable
+      userIdElement.style.cursor = "pointer";
+      userIdElement.title = "Haz clic para copiar el ID";
+
+      // Add click event to copy the ID
+      userIdElement.addEventListener("click", () => {
+        navigator.clipboard.writeText(teacherId).then(() => {
+          // Show feedback to the user
+          const originalText = userIdElement.textContent;
+          userIdElement.textContent = "ID copiado ✅";
+
+          // Restore after 1.5 seconds
+          setTimeout(() => {
+            userIdElement.textContent = originalText;
+          }, 1500);
+        });
+      });
+    } else {
+      renderText("Falta ID", "User-Id");
+    }
+  }
+  function renderUserIcon() {
+    const container = document.getElementById("profile-Icon");
+    if (!container) {
+      console.error("Element with ID 'profile-Icon' not found.");
+      return;
     }
 
-    addVideoBtn.addEventListener("click", function () {
-      const container = document.getElementById("Add-container");
-
-      // Create wrapper
-      const videoInputWrapper = document.createElement("div");
-      videoInputWrapper.classList.add("video-input-section");
-
-      // Block label
-      const blockLabel = document.createElement("label");
-      blockLabel.classList.add("video-block-label");
-      blockLabel.textContent = "Agregar Video";
-
-      // Remove button
-      const removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.classList.add("remove-video-btn");
-      removeBtn.textContent = "×";
-      removeBtn.title = "Eliminar este video";
-
-      removeBtn.addEventListener("click", () => {
-        container.removeChild(videoInputWrapper);
-      });
-
-      // Inputs
-      const titleInput = document.createElement("input");
-      titleInput.type = "text";
-      titleInput.placeholder = "Nombre del video";
-      titleInput.classList.add("video-title");
-
-      const urlInput = document.createElement("input");
-      urlInput.type = "url";
-      urlInput.placeholder = "URL del video (opcional)";
-      urlInput.classList.add("video-url");
-
-      const fileInput = document.createElement("input");
-      fileInput.type = "file";
-      fileInput.accept = "video/*";
-      fileInput.classList.add("video-file");
-
-
-
-      // Append everything
-      videoInputWrapper.appendChild(removeBtn);
-      videoInputWrapper.appendChild(blockLabel);
-      videoInputWrapper.appendChild(titleInput);
-      videoInputWrapper.appendChild(urlInput);
-      videoInputWrapper.appendChild(fileInput);
-
-
-      container.appendChild(videoInputWrapper);
-    });
-  }
-  function AddTextBtn() {
-    const addTextBtn = document.getElementById("add-text");
-
-    // Inject styles only once
-    if (!document.getElementById("text-style")) {
-      const style = document.createElement("style");
-      style.id = "text-style";
-      style.textContent = `
-        .text-input-section textarea {
-          color: ${Base};
-          border: 1px solid ${Prime3};   
-        }
-        .text-input-section textarea:focus {
-          border-color: ${Base};    
-          outline: none;
-        }
-        .remove-text-btn {
-          background: ${Prime2};   
-          color: ${Prime5};        
-          box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-          transition: background-color 0.2s ease;
-        }
-      `;
-      document.head.appendChild(style);
+    if (!teacherData?.profileImg) {
+      container.innerHTML = `<i class="fa-solid fa-circle-user" style="font-size: 2rem;"></i>`;
+    } else {
+      container.innerHTML = `<img src="${teacherData.profileImg}" alt="User Icon" width="50" height="50" style="border-radius: 50%;" />`;
+      
     }
-
-    addTextBtn.addEventListener("click", function () {
-      const container = document.getElementById("Add-container");
-
-      // Create wrapper
-      const textInputWrapper = document.createElement("div");
-      textInputWrapper.classList.add("text-input-section");
-
-      // Block label
-      const blockLabel = document.createElement("label");
-      blockLabel.classList.add("video-block-label");
-      blockLabel.textContent = "Contenido De Texto";
-
-      // Remove button
-      const removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.classList.add("remove-text-btn");
-      removeBtn.textContent = "×"; // the "x" symbol
-      removeBtn.title = "Eliminar este texto";
-
-      // Remove wrapper on click
-      removeBtn.addEventListener("click", () => {
-        container.removeChild(textInputWrapper);
-      });
-
-      // Create textarea
-      const textarea = document.createElement("textarea");
-      textarea.placeholder = "Escribe el contenido de texto aquí...";
-
-      // Append remove button first (top right corner)
-      textInputWrapper.appendChild(removeBtn);
-      textInputWrapper.appendChild(blockLabel);
-      // Append textarea to wrapper
-      textInputWrapper.appendChild(textarea);
-
-      // Append wrapper to container
-      container.appendChild(textInputWrapper);
-    });
-  }
-  function AddPresentBtn() {
-    const addPresentBtn = document.getElementById("add-present");
-
-    // Inject styles only once
-    if (!document.getElementById("present-style")) {
-      const style = document.createElement("style");
-      style.id = "present-style";
-      style.textContent = `
-        .present-input-section input {
-          color: ${Base};
-          border: 1px solid ${Prime3};
-          background-color: ${Prime5};
-          transition: border-color 0.2s ease;
-        }
-        .present-input-section input:focus {
-          border-color: ${Base};  
-          outline: none;
-        }
-        .remove-present-btn {
-          background: ${Prime2};   
-          color: ${Prime5};   
-          box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-          transition: background-color 0.2s ease;
-        }
-      `;
-      document.head.appendChild(style);
-    }
-
-    addPresentBtn.addEventListener("click", function () {
-      const container = document.getElementById("Add-container");
-
-      // Create wrapper
-      const presentInputWrapper = document.createElement("div");
-
-      // Block label
-      const blockLabel = document.createElement("label");
-      blockLabel.classList.add("video-block-label");
-      blockLabel.textContent = "Agregar Presentación";
-
-      presentInputWrapper.classList.add("present-input-section");
-
-      // Remove button
-      const removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.classList.add("remove-present-btn");
-      removeBtn.textContent = "×"; // the "x" symbol
-      removeBtn.title = "Eliminar esta presentación";
-
-      // Remove wrapper on click
-      removeBtn.addEventListener("click", () => {
-        container.removeChild(presentInputWrapper);
-      });
-
-      // Title input
-      const titleInput = document.createElement("input");
-      titleInput.type = "text";
-      titleInput.placeholder = "Nombre de la presentación";
-
-      // File upload input
-      const fileInput = document.createElement("input");
-      fileInput.type = "file";
-      fileInput.accept = ".ppt,.pptx,.pdf";
-
-      // Append remove button first (top right corner)
-      presentInputWrapper.appendChild(removeBtn);
-      presentInputWrapper.appendChild(blockLabel);
-      // Append inputs to wrapper
-      presentInputWrapper.appendChild(titleInput);
-      presentInputWrapper.appendChild(fileInput);
-
-      // Append wrapper to container
-      container.appendChild(presentInputWrapper);
-    });
-  }
-  function AddExamBtn() {
-    const addExamBtn = document.getElementById("add-Exam");
-
-    // Inject styles only once
-    if (!document.getElementById("exam-style")) {
-      const style = document.createElement("style");
-      style.id = "exam-style";
-      style.textContent = `
-        .question-block {
-          border: 1px solid ${Base};
-          color: ${Base};
-          background-color: ${Prime5};
-        }
-        .Exam-block-label{
-          color: ${Base};
-        }
-        .exam-input-section input[type="text"],
-        .exam-input-section select {
-          color: ${Base};
-          border: 1px solid ${Prime3};
-          background-color: ${Prime5};
-        }
-        .exam-input-section input:focus,
-        .exam-input-section select:focus {
-          border-color: ${Prime3};
-          outline: none;
-        }
-        .add-question-btn {
-          background-color: ${Prime3};
-          color: ${Prime5};
-        }
-        .add-question-btn:hover {
-          background-color: ${Prime3};
-        }
-        .remove-exam-btn {
-          background: ${Prime2};
-          color: ${Prime5};
-          box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-          transition: background-color 0.2s ease;
-        }
-      `;
-      document.head.appendChild(style);
-    }
-
-    addExamBtn.addEventListener("click", function () {
-      const container = document.getElementById("Add-container");
-
-      const examWrapper = document.createElement("div");
-      examWrapper.classList.add("exam-input-section");
-
-      // Block label
-      const blockLabel = document.createElement("label");
-      blockLabel.classList.add("Exam-block-label");
-      blockLabel.textContent = "Contenido De Texto";
-
-
-      // Remove button
-      const removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.classList.add("remove-exam-btn");
-      removeBtn.textContent = "×";
-      removeBtn.title = "Eliminar este examen";
-
-      removeBtn.addEventListener("click", () => {
-        container.removeChild(examWrapper);
-      });
-
-      const titleInput = document.createElement("input");
-      titleInput.type = "text";
-      titleInput.placeholder = "Nombre del examen";
-
-      const questionsContainer = document.createElement("div");
-      questionsContainer.classList.add("questions-container");
-
-      function createQuestionBlock(index) {
-        const questionBlock = document.createElement("div");
-        questionBlock.classList.add("question-block");
-
-        const questionInput = document.createElement("input");
-        questionInput.type = "text";
-        questionInput.placeholder = `Pregunta ${index + 1}`;
-
-        questionBlock.appendChild(questionInput);
-
-        for (let i = 0; i < 4; i++) {
-          const answerInput = document.createElement("input");
-          answerInput.type = "text";
-          answerInput.placeholder = `Opción ${i + 1}`;
-          questionBlock.appendChild(answerInput);
-        }
-
-        const correctLabel = document.createElement("label");
-        correctLabel.textContent = "Respuesta correcta:";
-
-        const correctSelect = document.createElement("select");
-        for (let i = 0; i < 4; i++) {
-          const option = document.createElement("option");
-          option.value = i;
-          option.textContent = `Opción ${i + 1}`;
-          correctSelect.appendChild(option);
-        }
-
-        questionBlock.appendChild(correctLabel);
-        questionBlock.appendChild(correctSelect);
-
-        return questionBlock;
-      }
-
-      questionsContainer.appendChild(createQuestionBlock(0));
-
-      const addQuestionBtn = document.createElement("button");
-      addQuestionBtn.classList.add("add-question-btn");
-      addQuestionBtn.textContent = "Agregar otra pregunta";
-
-      addQuestionBtn.addEventListener("click", () => {
-        const count = questionsContainer.children.length;
-        questionsContainer.appendChild(createQuestionBlock(count));
-      });
-
-      examWrapper.appendChild(removeBtn);  // Add remove button at top
-      examWrapper.appendChild(blockLabel);
-      examWrapper.appendChild(titleInput);
-      examWrapper.appendChild(questionsContainer);
-      examWrapper.appendChild(addQuestionBtn);
-
-      container.appendChild(examWrapper);
-    });
-  }
-  function AddTemaBtn() {
-    const addTemaBtn = document.getElementById("add-Tema");
-
-    // Inject styles once
-    if (!document.getElementById("tema-style")) {
-      const style = document.createElement("style");
-      style.id = "tema-style";
-      style.textContent = `
-        .tema-input-section input[type="text"] {
-          border: 1px solid ${Prime3};
-          background-color:${Prime5};
-          color: ${Base};
-        }
-        .Tema-block-label{
-         color: ${Base};
-        } 
-        .tema-input-section input:focus {
-          border-color: ${Prime3};
-          outline: none;
-        }
-        .remove-tema-btn {
-          background: ${Prime2};
-          color: ${Prime5};
-          box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }
-      `;
-      document.head.appendChild(style);
-    }
-
-    addTemaBtn.addEventListener("click", () => {
-      const container = document.getElementById("Add-container");
-
-      // Block label
-      const blockLabel = document.createElement("label");
-      blockLabel.classList.add("Tema-block-label");
-      blockLabel.textContent = "Inicio de Tema";
-
-      const temaWrapper = document.createElement("div");
-      temaWrapper.classList.add("tema-input-section");
-
-      // Remove button
-      const removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.classList.add("remove-tema-btn");
-      removeBtn.textContent = "×";
-      removeBtn.title = "Eliminar este tema";
-
-      removeBtn.addEventListener("click", () => {
-        container.removeChild(temaWrapper);
-      });
-
-      const temaInput = document.createElement("input");
-      temaInput.type = "text";
-      temaInput.placeholder = "Nombre del Tema";
-
-      temaWrapper.appendChild(blockLabel);
-      temaWrapper.appendChild(removeBtn);
-      temaWrapper.appendChild(temaInput);
-      container.appendChild(temaWrapper);
-    });
-  }
-  function AddSubTemaBtn() {
-    const addSubTemaBtn = document.getElementById("add-SubTema");
-
-    // Inject styles once
-    if (!document.getElementById("subtema-style")) {
-      const style = document.createElement("style");
-      style.id = "subtema-style";
-      style.textContent = `
-        .subtema-input-section input[type="text"] {
-          border: 1px solid ${Prime3};
-          background-color: ${Prime5};
-          color: ${Base};
-        }
-        .SubTema-block-label{
-          color: ${Base};
-        }
-        .subtema-input-section input:focus {
-          border-color: ${Prime3};
-          outline: none;
-        }
-        .remove-subtema-btn {
-          background: ${Prime2};
-          color: ${Prime5};
-          box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }
-      `;
-      document.head.appendChild(style);
-    }
-
-    addSubTemaBtn.addEventListener("click", () => {
-      const container = document.getElementById("Add-container");
-
-      const subtemaWrapper = document.createElement("div");
-      subtemaWrapper.classList.add("subtema-input-section");
-
-      // Block label
-      const blockLabel = document.createElement("label");
-      blockLabel.classList.add("SubTema-block-label");
-      blockLabel.textContent = "Inicio de Subtema";
-
-      // Remove button
-      const removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.classList.add("remove-subtema-btn");
-      removeBtn.textContent = "×";
-      removeBtn.title = "Eliminar este subtema";
-
-      removeBtn.addEventListener("click", () => {
-        container.removeChild(subtemaWrapper);
-      });
-
-      const subtemaInput = document.createElement("input");
-      subtemaInput.type = "text";
-      subtemaInput.placeholder = "Nombre del Subtema";
-      subtemaWrapper.appendChild(blockLabel);
-      subtemaWrapper.appendChild(removeBtn);
-      subtemaWrapper.appendChild(subtemaInput);
-      container.appendChild(subtemaWrapper);
-    });
   }
 
 
 
 
+  function renderCourseSelector() {
+    const AllCourses = businessData.Courses;
+    const categorias = Object.keys(AllCourses);
 
- // Variable global para guardar el nivel seleccionado
-  let selectedLevel = "All";
-
-  // Configurar los botones de nivel para selección
-  function setupLevelButtons() {
-    const buttons = document.querySelectorAll(".level-btn");
-    buttons.forEach(btn => {
-      btn.addEventListener("click", () => {
-        // Remover clase active de todos
-        buttons.forEach(b => b.classList.remove("active"));
-        // Añadir clase active al botón clickeado
-        btn.classList.add("active");
-        // Guardar nivel seleccionado
-        selectedLevel = btn.getAttribute("data-value");
-      });
-    });
-  }
-
-  // Función principal para mostrar preview
-  function AddPreviewBtn() {
-    document.getElementById("preview").addEventListener("click", function () {
-      const title = document.getElementById("titleInput").value;
-      const description = document.getElementById("descriptionInput").value;
-      const imageInput = document.getElementById("imageInput");
-      const imageFile = imageInput.files[0];
-
-      const Mainright = document.getElementById("Main-right");
-      Mainright.style.display = "flex";
-
-      // Establecer título del curso
-      document.getElementById("course-title").textContent = title;
-
-      // Establecer imagen del curso
-      if (imageFile) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          document.getElementById("img-course").src = e.target.result;
-        };
-        reader.readAsDataURL(imageFile);
-      } else {
-        document.getElementById("img-course").src = "";
-      }
-
-      // Establecer descripción
-      document.getElementById("Notes").textContent = description;
-
-      // Mostrar nivel seleccionado
-      const courseLevelDiv = document.getElementById("course-level");
-      let displayText = "";
-      switch (selectedLevel) {
-        case "Beginner":
-          displayText = "Nivel: Principiante";
-          break;
-        case "Intermediate":
-          displayText = "Nivel: Intermedio";
-          break;
-        case "Advanced":
-          displayText = "Nivel: Avanzado";
-          break;
-        default:
-           displayText = "Nivel: Principiante";
-      }
-      courseLevelDiv.textContent = displayText;
-
-      // Limpiar lista de cursos previa
-      const courseList = document.getElementById("Course-list");
-      courseList.innerHTML = "";
-
-      // Renderizado de temas, subtemas e items
-      const allInputs = Array.from(document.getElementById("Add-container").children);
-      let temaIndex = 0;
-
-      for (let i = 0; i < allInputs.length; i++) {
-        const element = allInputs[i];
-
-        if (element.classList.contains("tema-input-section")) {
-          const temaValue = element.querySelector("input[type='text']").value.trim();
-          if (!temaValue) continue;
-
-          temaIndex++;
-          let subtemaIndex = 0;
-
-          const temaBtn = document.createElement("button");
-          temaBtn.innerHTML = `<i class="fas fa-book"></i> Tema ${temaIndex}: ${temaValue}`;
-          temaBtn.classList.add("toggle-btn");
-
-          const temaContentWrapper = document.createElement("div");
-          temaContentWrapper.style.display = "none";
-          temaBtn.addEventListener("click", () => {
-            const isOpen = temaContentWrapper.style.display === "block";
-            temaContentWrapper.style.display = isOpen ? "none" : "block";
-            temaBtn.innerHTML = `<i class="fas fa-book${isOpen ? '' : '-open'}"></i> Tema ${temaIndex}: ${temaValue}`;
-          });
-
-          courseList.appendChild(temaBtn);
-          courseList.appendChild(temaContentWrapper);
-
-          let j = i + 1;
-          let lastSubtemaList = null;
-
-          while (j < allInputs.length && !allInputs[j].classList.contains("tema-input-section")) {
-            const currentElement = allInputs[j];
-
-            if (currentElement.classList.contains("subtema-input-section")) {
-              const subtemaValue = currentElement.querySelector("input[type='text']").value.trim();
-              if (subtemaValue) {
-                subtemaIndex++;
-
-                const subtemaBtn = document.createElement("button");
-                subtemaBtn.innerHTML = `<i class="fas fa-book-open"></i> Subtema ${subtemaIndex}: ${subtemaValue}`;
-                subtemaBtn.classList.add("toggle-btn");
-
-                const itemList = document.createElement("ul");
-                itemList.style.display = "none";
-
-                subtemaBtn.addEventListener("click", () => {
-                  const isOpen = itemList.style.display === "block";
-                  itemList.style.display = isOpen ? "none" : "block";
-                  subtemaBtn.innerHTML = `<i class="fas fa-book-open${isOpen ? '' : '-reader'}"></i> Subtema ${subtemaIndex}: ${subtemaValue}`;
-                });
-
-                temaContentWrapper.appendChild(subtemaBtn);
-                temaContentWrapper.appendChild(itemList);
-
-                lastSubtemaList = itemList;
-              }
-            } else {
-              const inputBlock = currentElement;
-              const titleInput = inputBlock.querySelector("input[type='text']");
-              const title = titleInput ? titleInput.value.trim() : "";
-
-              const type = inputBlock.getAttribute("data-type") || "otro";
-              let label = "📄 Otro";
-              let iconClass = "fas fa-file";
-
-              if (type === "video") {
-                label = "📹 Video";
-                iconClass = "fas fa-video";
-              } else if (type === "text") {
-                label = "📝 Texto";
-                iconClass = "fas fa-align-left";
-              } else if (type === "presentation") {
-                label = "📄 Presentación";
-                iconClass = "fas fa-file-powerpoint";
-              } else if (type === "exam") {
-                label = "🧪 Examen";
-                iconClass = "fas fa-file-alt";
-              }
-
-              const itemBtn = document.createElement("button");
-              itemBtn.innerHTML = `<i class="${iconClass}"></i> ${label}: ${title || "Sin título"}`;
-              itemBtn.classList.add("item-preview-btn");
-
-              const modal = document.createElement("div");
-              modal.classList.add("modal");
-              modal.style.display = "none";
-              modal.style.position = "fixed";
-              modal.style.top = "50%";
-              modal.style.left = "50%";
-              modal.style.transform = "translate(-50%, -50%)";
-              modal.style.backgroundColor = "#fff";
-              modal.style.border = "1px solid #ccc";
-              modal.style.padding = "20px";
-              modal.style.zIndex = "1000";
-              modal.style.maxWidth = "90%";
-              modal.style.maxHeight = "90%";
-              modal.style.overflow = "auto";
-
-              const fileInput = inputBlock.querySelector("input[type='file']");
-              const textArea = inputBlock.querySelector("textarea");
-              const video = inputBlock.querySelector("video");
-
-              if (fileInput && fileInput.files.length > 0) {
-                const file = fileInput.files[0];
-                const fileURL = URL.createObjectURL(file);
-                if (file.type.includes("pdf")) {
-                  const iframe = document.createElement("iframe");
-                  iframe.src = fileURL;
-                  iframe.style.width = "100%";
-                  iframe.style.height = "600px";
-                  modal.appendChild(iframe);
-                } else if (file.type.startsWith("video")) {
-                  const videoEl = document.createElement("video");
-                  videoEl.controls = true;
-                  videoEl.src = fileURL;
-                  videoEl.style.width = "100%";
-                  modal.appendChild(videoEl);
-                } else {
-                  const message = document.createElement("p");
-                  message.textContent = `Archivo no soportado: ${file.name}`;
-                  modal.appendChild(message);
-                }
-              } else if (textArea) {
-                const paragraph = document.createElement("p");
-                paragraph.textContent = textArea.value;
-                modal.appendChild(paragraph);
-              } else if (video) {
-                const videoClone = video.cloneNode(true);
-                videoClone.controls = true;
-                modal.appendChild(videoClone);
-              } else {
-                const fallback = document.createElement("p");
-                fallback.textContent = "Contenido no disponible.";
-                modal.appendChild(fallback);
-              }
-
-              const closeBtn = document.createElement("button");
-              closeBtn.innerHTML = `<i class="fas fa-times"></i> Cerrar`;
-              closeBtn.onclick = () => (modal.style.display = "none");
-              closeBtn.style.marginTop = "10px";
-              modal.appendChild(closeBtn);
-
-              itemBtn.onclick = () => (modal.style.display = "block");
-              document.body.appendChild(modal);
-
-              const li = document.createElement("li");
-              li.appendChild(itemBtn);
-
-              if (lastSubtemaList) {
-                lastSubtemaList.appendChild(li);
-              } else {
-                let directItemList = temaContentWrapper.querySelector("ul.direct-items");
-                if (!directItemList) {
-                  directItemList = document.createElement("ul");
-                  directItemList.classList.add("direct-items");
-                  temaContentWrapper.appendChild(directItemList);
-                }
-                directItemList.appendChild(li);
-              }
-            }
-            j++;
-          }
-          i = j - 1;
-        }
-      }
-
-      document.getElementById("Resources").textContent = "";
-      document.getElementById("Quizes").textContent = "";
-    });
-  }
-
-  // Inicializar al cargar la página
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  function SaveCourse() {
-  const saveBtn = document.getElementById("Upload");
-
-  saveBtn.addEventListener("click", async () => {
-    const title = document.getElementById("titleInput").value;
-    const description = document.getElementById("descriptionInput").value;
-    const imageInput = document.getElementById("imageInput");
-    const imageFile = imageInput.files[0];
-
-    // Get selected course level
-    const selectedLevelBtn = document.querySelector("#level-toggle-buttons .level-btn.selected");
-    const courseLevel = selectedLevelBtn ? selectedLevelBtn.getAttribute("data-value") : null;
-
-    const allInputs = Array.from(document.getElementById("Add-container").children);
-    const courseData = {
-      title,
-      description,
-      image: null, // Will be base64 if image is selected
-      level: courseLevel,
-      temas: []
+    // Traducciones opcionales
+    const traducciones = {
+      AI: "Inteligencia Artificial",
+      Business: "Negocios",
+      Design: "Diseño",
+      Finance: "Finanzas",
+      Languages: "Idiomas",
+      Leadership: "Liderazgo",
+      Marketing: "Mercadotecnia",
+      Productivity: "Productividad",
+      Programming: "Programación",
+      Sales: "Ventas",
+      Technology: "Tecnología",
+      Wellness: "Bienestar"
     };
 
-    const buildAndSave = async () => {
-      let i = 0;
-      while (i < allInputs.length) {
-        const element = allInputs[i];
-        if (element.classList.contains("tema-input-section")) {
-          const temaValue = element.querySelector("input[type='text']").value.trim();
-          if (!temaValue) {
-            i++;
-            continue;
-          }
+    const container = document.getElementById("categoriaSelect");
+    const selectedContainer = document.getElementById("selectedCategories");
 
-          const tema = {
-            title: temaValue,
-            items: [],
-            subtemas: []
-          };
+    // Crear dropdown
+    const dropdown = document.createElement("div");
+    dropdown.classList.add("dropdown");
 
-          let j = i + 1;
-          let currentSubtema = null;
+    // Agregar opciones
+    categorias.forEach(cat => {
+      const option = document.createElement("div");
+      option.classList.add("dropdown-option");
+      option.textContent = traducciones[cat] || cat;
+      option.dataset.value = cat;
+      dropdown.appendChild(option);
+    });
 
-          while (j < allInputs.length && !allInputs[j].classList.contains("tema-input-section")) {
-            const el = allInputs[j];
+    container.appendChild(dropdown);
 
-            if (el.classList.contains("subtema-input-section")) {
-              const subtemaValue = el.querySelector("input[type='text']").value.trim();
-              if (subtemaValue) {
-                currentSubtema = {
-                  title: subtemaValue,
-                  items: []
-                };
-                tema.subtemas.push(currentSubtema);
-              }
-            } else {
-              const inputBlock = el;
-              const titleInput = inputBlock.querySelector("input[type='text']");
-              const title = titleInput ? titleInput.value.trim() : "";
-              const textArea = inputBlock.querySelector("textarea");
-              const fileInput = inputBlock.querySelector("input[type='file']");
-              const type = inputBlock.getAttribute("data-type") || "otro";
+    // 🔥 Make selected global so other functions (like saveCourseData) can access it
+    window.selected = [];
 
-              const item = {
-                type,
-                title,
-                content: null
-              };
+    // Mostrar / ocultar dropdown
+    container.addEventListener("click", () => {
+      dropdown.classList.toggle("active");
+    });
 
-              if (textArea) {
-                item.content = textArea.value;
-              } else if (fileInput && fileInput.files.length > 0) {
-                item.content = fileInput.files[0].name;
-              }
+    // Seleccionar categoría
+    dropdown.addEventListener("click", (e) => {
+      if (e.target.classList.contains("dropdown-option")) {
+        const value = e.target.dataset.value;
 
-              if (currentSubtema) {
-                currentSubtema.items.push(item);
-              } else {
-                tema.items.push(item);
-              }
-            }
-
-            j++;
-          }
-
-          courseData.temas.push(tema);
-          i = j;
-        } else {
-          i++;
+        // Evitar duplicados
+        if (!window.selected.includes(value)) {
+          window.selected.push(value);
+          renderSelectedTags();
         }
       }
+    });
 
-      try {
-        const teacherRef = doc(db, "CorsoSkillsTeacher", UserUidInfo);
-        const docSnap = await getDoc(teacherRef);
+    // Renderizar etiquetas debajo
+    function renderSelectedTags() {
+      selectedContainer.innerHTML = "";
+      window.selected.forEach((value) => {
+        const tag = document.createElement("div");
+        tag.classList.add("tag");
+        tag.textContent = traducciones[value] || value;
 
-        if (!docSnap.exists()) {
-          console.error("No such teacher document!");
-          return;
-        }
-
-        const existingData = docSnap.data();
-        const updatedCourses = existingData.courses || [];
-        updatedCourses.push(courseData);
-
-        await setDoc(teacherRef, {
-          ...existingData,
-          courses: updatedCourses
+        const removeBtn = document.createElement("button");
+        removeBtn.innerHTML = "&times;";
+        removeBtn.addEventListener("click", () => {
+          window.selected = window.selected.filter(v => v !== value);
+          renderSelectedTags();
         });
 
-        alert("Curso guardado en Firestore.");
-      } catch (error) {
-        console.error("Error saving course:", error);
-      }
-    };
-
-    // Handle image loading first if exists
-    if (imageFile) {
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        courseData.image = e.target.result;
-        buildAndSave();
-      };
-      reader.readAsDataURL(imageFile);
-    } else {
-      buildAndSave();
+        tag.appendChild(removeBtn);
+        selectedContainer.appendChild(tag);
+      });
     }
-  });
 
-  // Handle level selection UI
-  const levelButtons = document.querySelectorAll("#level-toggle-buttons .level-btn");
-  levelButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      levelButtons.forEach(btn => btn.classList.remove("selected"));
-      button.classList.add("selected");
+    // Cerrar dropdown al hacer clic fuera
+    document.addEventListener("click", (e) => {
+      if (!container.contains(e.target)) {
+        dropdown.classList.remove("active");
+      }
     });
-  });
-}
+  }
+  function renderTeacherNameDescrip(){
+    renderText(teacherData.fullName, "Teacher-Name")
+    renderText(teacherData.Description, "About-Teacher")
+  }
+  function hiddeBtn(){
+    const nextBtn = document.getElementById("Next-Btn");
+    nextBtn.style.display = "none";
+  }
+  function courseCreateNav(){
+    // --- Elements ---
+    const navItems = document.querySelectorAll(".CCB-Left .CCB");
+    const nextBtn = document.getElementById("Next-Btn");
+    const blocks = [
+      document.getElementById("Basic-Info-Block-1"),
+      document.getElementById("Starter-Page-Block"),
+      document.getElementById("Course-Content-Block"),
+      document.getElementById("Add-Type-Method-Block")
+    ];
+
+    let currentIndex = 0;
+
+    // --- Activate section by index ---
+    function activateSection(index) {
+      // Update active nav item
+      navItems.forEach((item, i) => {
+        item.classList.toggle("active", i === index);
+        hiddeBtn()
+      });
+
+      // Show corresponding content block
+      blocks.forEach((block, i) => {
+        block.classList.toggle("active-block", i === index);
+        hiddeBtn()
+      });
+
+      currentIndex = index;
+    }
+
+    // --- Initialize first section ---
+    activateSection(0);
+
+    // --- Click on nav item ---
+    navItems.forEach((item, index) => {
+      item.addEventListener("click", () => activateSection(index));
+    });
+
+    // --- Next button ---
+    nextBtn.addEventListener("click", () => {
+      let nextIndex = currentIndex + 1;
+      if (nextIndex >= blocks.length) nextIndex = 0; // Loop back to start
+      activateSection(nextIndex);
+    });
 
 
+  }
+  function renderTags(){
+    const tagInput = document.getElementById("tagInput");
+    const tagList = document.getElementById("tagList");
+    let tags = [];
+
+    // Function to render tags
+    function renderTags() {
+      tagList.innerHTML = "";
+      tags.forEach((tag, index) => {
+        const tagElement = document.createElement("div");
+        tagElement.classList.add("tag");
+        tagElement.innerHTML = `
+          ${tag}
+          <button class="remove-tag" data-index="${index}">&times;</button>
+        `;
+        tagList.appendChild(tagElement);
+      });
+    }
+
+    // Add tag when pressing Enter
+    tagInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter" && tagInput.value.trim() !== "") {
+        e.preventDefault();
+        const newTag = tagInput.value.trim();
+        if (!tags.includes(newTag)) {
+          tags.push(newTag);
+          renderTags();
+        }
+        tagInput.value = "";
+      }
+    });
+
+    // Remove tag when clicking ×
+    tagList.addEventListener("click", (e) => {
+      if (e.target.classList.contains("remove-tag")) {
+        const index = e.target.getAttribute("data-index");
+        tags.splice(index, 1);
+        renderTags();
+      }
+    });
+
+  }
 
 
+  function RenderallInputs() {
+    // guard to avoid double initialization
+    if (RenderallInputs._initialized) return;
+    RenderallInputs._initialized = true;
+
+    // ---------- Elements ----------
+    const tagInput = document.getElementById("tagInput");
+    const tagList = document.getElementById("tagList");
+    const includeInput = document.getElementById("includeInput");
+    const includeList = document.getElementById("includeList");
+    const previewBtn = document.getElementById("BIB-preview");
+
+    // preview targets
+    const titleEl = document.getElementById("BIB-Course-Tittle");
+    const notesSection = document.getElementById("description-block");
+    const courseList = document.getElementById("Course-list");
+    const skillLevelEl = document.getElementById("S-Level");
+    const durationEl = document.getElementById("C-Durtation");
+    const rightDiv = document.querySelector(".Main-divide-right");
+    const videoPlayerContainer = document.getElementById("video-player");
+    const imagePreviewContainer = document.getElementById("BIB-Course-Img");
+
+    // ---------- State ----------
+    let tags = [];
+
+    // ---------- Helpers ----------
+    function safeTextFromElement(el) {
+      if (!el) return "";
+      return Array.from(el.childNodes)
+        .filter(n => n.nodeType === Node.TEXT_NODE)
+        .map(n => n.textContent)
+        .join("")
+        .trim();
+    }
+
+    function renderTags() {
+      if (!tagList) return;
+      tagList.innerHTML = "";
+      tags.forEach((tag, i) => {
+        const tagEl = document.createElement("div");
+        tagEl.className = "tag-item";
+        const span = document.createElement("span");
+        span.className = "tag-text";
+        span.textContent = tag;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "remove-tag";
+        btn.dataset.index = String(i);
+        btn.innerHTML = "&times;";
+        tagEl.appendChild(span);
+        tagEl.appendChild(btn);
+        tagList.appendChild(tagEl);
+      });
+    }
+
+    // ---------- Tag input ----------
+    if (tagInput) {
+      tagInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          const newTag = (tagInput.value || "").trim();
+          if (!newTag) return;
+          if (!tags.some(t => t.toLowerCase() === newTag.toLowerCase())) {
+            tags.push(newTag);
+            renderTags();
+          }
+          tagInput.value = "";
+        }
+      });
+    }
+
+    if (tagList) {
+      tagList.addEventListener("click", (e) => {
+        const btn = e.target.closest(".remove-tag");
+        if (!btn) return;
+        const idx = Number(btn.dataset.index);
+        if (!Number.isNaN(idx)) {
+          tags.splice(idx, 1);
+          renderTags();
+        }
+      });
+    }
+
+    // ---------- Include input ----------
+    if (includeInput && includeList) {
+      includeInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          const val = includeInput.value.trim();
+          if (!val) return;
+          const div = document.createElement("div");
+          div.className = "include-item";
+          div.textContent = val;
+          includeList.appendChild(div);
+          includeInput.value = "";
+        }
+      });
+    }
+
+    // ---------- Categories ----------
+    function getSelectedCategories() {
+      const selectedContainer = document.getElementById("selectedCategories");
+      if (!selectedContainer) return [];
+      return Array.from(selectedContainer.querySelectorAll(".tag"))
+        .map(n => safeTextFromElement(n))
+        .filter(Boolean);
+    }
+
+    // ---------- Image input ----------
+    const dropImage = document.getElementById("dropImage");
+    const browseImage = document.getElementById("browseImage");
+    const imageInput = document.getElementById("imageInput");
+
+    if (dropImage && browseImage && imageInput) {
+      ["dragenter", "dragover"].forEach(eventName => {
+        dropImage.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropImage.classList.add("highlight");
+        });
+      });
+
+      ["dragleave", "drop"].forEach(eventName => {
+        dropImage.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropImage.classList.remove("highlight");
+        });
+      });
+
+      browseImage.addEventListener("click", () => imageInput.click());
+
+      dropImage.addEventListener("drop", (e) => {
+        const file = e.dataTransfer.files[0];
+        if (file) imageInput.files = e.dataTransfer.files;
+      });
+    }
+
+    // ---------- Build preview ----------
+    function updatePreview(showAlert = false) {
+      const title = (document.getElementById("Title-Input")?.value || "").trim();
+      const description = (document.getElementById("descriptionInput")?.value || "").trim();
+      const levels = [...document.querySelectorAll('input[name="level"]:checked')]
+        .map(el => el.nextElementSibling?.textContent?.trim() || "").filter(Boolean);
+      const includes = [...document.querySelectorAll("#includeList .include-item")].map(i => i.textContent.trim());
+      const categories = getSelectedCategories();
+      const durationValue = (document.getElementById("Duration-Input")?.value || "").trim();
+      const durationUnit = (document.getElementById("Duration-Unit")?.value || "").trim();
+      const courseDuration = durationValue ? `${durationValue} ${durationUnit}` : "Sin duración";
+
+      // ---------- Text info ----------
+      if (titleEl) titleEl.textContent = title || "Sin título";
+      if (skillLevelEl) skillLevelEl.textContent = levels.join(", ") || "Sin nivel";
+      if (durationEl) durationEl.textContent = courseDuration;
+      if (notesSection) notesSection.innerHTML = `<h3>Descripción del Curso</h3><p>${description || "Sin descripción"}</p>`;
+      if (courseList) courseList.innerHTML = `
+        <h4>Categorías:</h4>
+        <ul>${categories.length ? categories.map(c => `<li>${c}</li>`).join("") : "<li>Sin categorías</li>"}</ul>
+        <h4>Etiquetas:</h4>
+        <ul>${tags.length ? tags.map(t => `<li>${t}</li>`).join("") : "<li>Sin etiquetas</li>"}</ul>
+        <h4>Incluye:</h4>
+        <ul>${includes.length ? includes.map(i => `<li>${i}</li>`).join("") : "<li>No se ha agregado contenido</li>"}</ul>
+      `;
+
+      // ---------- Render image inside #BIB-Course-Img ----------
+      if (imageInput?.files?.[0] && imagePreviewContainer) {
+        const file = imageInput.files[0];
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          imagePreviewContainer.innerHTML = `<img src="${ev.target.result}" alt="Imagen del curso" class="preview-image">`;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      // ---------- Render video link inside #video-player ----------
+      const videoLink = (document.getElementById("videoLinkInput")?.value || "").trim();
+      if (videoPlayerContainer) {
+        videoPlayerContainer.innerHTML = "";
+        if (videoLink) {
+          let embedHTML = "";
+
+          // YouTube link
+          if (videoLink.includes("youtube.com") || videoLink.includes("youtu.be")) {
+            const videoId = videoLink.split("v=")[1]?.split("&")[0] || videoLink.split("youtu.be/")[1];
+            if (videoId) {
+              embedHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" 
+                frameborder="0" allowfullscreen></iframe>`;
+            }
+          }
+          // Vimeo link
+          else if (videoLink.includes("vimeo.com")) {
+            const videoId = videoLink.split("vimeo.com/")[1];
+            if (videoId) {
+              embedHTML = `<iframe src="https://player.vimeo.com/video/${videoId}" width="560" height="315" 
+                frameborder="0" allowfullscreen></iframe>`;
+            }
+          }
+          // Generic fallback (non-embed link)
+          else {
+            embedHTML = `<p><a href="${videoLink}" target="_blank">Ver video promocional</a></p>`;
+          }
+
+          videoPlayerContainer.innerHTML = embedHTML;
+        } else {
+          videoPlayerContainer.innerHTML = "<p>No se ha agregado un video promocional.</p>";
+        }
+      }
+
+      if (showAlert) alert("Vista previa generada con éxito 🚀");
+    }
+
+    // ---------- Preview button ----------
+    if (previewBtn) previewBtn.addEventListener("click", () => updatePreview(true));
+
+    // ---------- Auto-update preview for categories ----------
+    const selectedContainer = document.getElementById("selectedCategories");
+    if (selectedContainer) {
+      const mo = new MutationObserver(() => updatePreview(false));
+      mo.observe(selectedContainer, { childList: true, subtree: true });
+    }
+  }
 
 
-  function ClearAllBtn() {
-    const clearAllBtn = document.getElementById("clearAll");
+  function ClearallInputs(Id){
+    // Get the "Borrar todo" button
+    const clearAllBtn = document.getElementById(Id);
 
+    // Add click event listener
     clearAllBtn.addEventListener("click", () => {
-      const confirmed = confirm("¿Estás seguro de que quieres borrar todo?");
-      if (confirmed) {
+      // Confirm before refreshing (optional)
+      const confirmRefresh = confirm("¿Estás seguro de que quieres borrar todo y reiniciar la página?");
+      
+      if (confirmRefresh) {
+        // Reload the page
         location.reload();
       }
     });
@@ -1189,79 +852,664 @@ async function fetchAllContent() {
 
 
 
+  
+  function CreateCourseId(){
+    const courseInfo = teacherData.Courses
+
+    console.log(courseInfo)
+    
+
+    function CreateCourseCode( SelectedC, Activelevel) {
+      const categori = SelectedC;
+      const ALevel = Activelevel;
+
+      if (categori === "AI") {
+        if (ALevel === "Beginner") return "BA";
+        else if (ALevel === "Intermediate") return "IA";
+        else if (ALevel === "Advanced") return "AA";
+      } else if (categori === "Business") {
+        if (ALevel === "Beginner") return "BB";
+        else if (ALevel === "Intermediate") return "IB";
+        else if (ALevel === "Advanced") return "AB";
+      } else if (categori === "Design") {
+        if (ALevel === "Beginner") return "BD";
+        else if (ALevel === "Intermediate") return "ID";
+        else if (ALevel === "Advanced") return "AD";
+      } else if (categori === "Finance") {
+        if (ALevel === "Beginner") return "BF";
+        else if (ALevel === "Intermediate") return "IF";
+        else if (ALevel === "Advanced") return "AF";
+      } else if (categori === "Languages") {
+        if (ALevel === "Beginner") return "BL";
+        else if (ALevel === "Intermediate") return "IL";
+        else if (ALevel === "Advanced") return "AL";
+      } else if (categori === "Leadership") {
+        if (ALevel === "Beginner") return "BLE";
+        else if (ALevel === "Intermediate") return "ILE";
+        else if (ALevel === "Advanced") return "ALE";
+      } else if (categori === "Marketing") {
+        if (ALevel === "Beginner") return "BM";
+        else if (ALevel === "Intermediate") return "IM";
+        else if (ALevel === "Advanced") return "AM";
+      } else if (categori === "Productivity") {
+        if (ALevel === "Beginner") return "BP";
+        else if (ALevel === "Intermediate") return "IP";
+        else if (ALevel === "Advanced") return "AP";
+      } else if (categori === "Programming") {
+        if (ALevel === "Beginner") return "BPR";
+        else if (ALevel === "Intermediate") return "IPR";
+        else if (ALevel === "Advanced") return "APR";
+      } else if (categori === "Sales") {
+        if (ALevel === "Beginner") return "BS";
+        else if (ALevel === "Intermediate") return "IS";
+        else if (ALevel === "Advanced") return "AS";
+      } else if (categori === "Technology") {
+        if (ALevel === "Beginner") return "BT";
+        else if (ALevel === "Intermediate") return "IT";
+        else if (ALevel === "Advanced") return "AT";
+      } else if (categori === "Wellness") {
+        if (ALevel === "Beginner") return "BW";
+        else if (ALevel === "Intermediate") return "IW";
+        else if (ALevel === "Advanced") return "AW";
+      }
+
+        return ""; // fallback
+    }
+
+    function Activechecknumber(businessData, SelectedC, Activelevel) {
+      const allCourses = businessData?.Courses || {};
+
+          // Helper function
+      function getCourseIdsAndNextNumber(coursesObject, prefix) {
+        const ids = Object.values(coursesObject)
+          .map(course => course.Id)
+          .filter(id => id && id.startsWith(prefix));
+
+        if (ids.length === 0) {
+          return { ids: [], nextNumber: "01" };
+        }
+
+        const numbers = ids.map(id => parseInt(id.replace(/\D/g, ""), 10));
+        const maxNum = Math.max(...numbers);
+        const nextNumber = (maxNum + 1).toString().padStart(2, "0");
+
+        return { ids, nextNumber };
+      }
+
+      const prefix = CreateCourseCode(SelectedC, Activelevel);
+      const result = getCourseIdsAndNextNumber(allCourses, prefix);
+
+      return result.nextNumber;
+    }
+
+  
+
+    const selectedCategori = selectedCategories;
+    const level = levels;
+        
+    const courseNum =  businessData.Courses
+        
 
 
 
+    const nextId =
+      CreateCourseCode(selectedCategori, level) +
+      Activechecknumber(courseNum, selectedCategori, level);
+
+      console.log(nextId); // ✅ "BB03"
+
+
+  }
+
+
+
+
+
+
+
+
+  // -------------------- HELPERS (colocar antes de saveCourseData) --------------------
+  function CreateCourseCode(SelectedC, Activelevel) {
+    const categori = SelectedC;
+    const ALevel = Activelevel;
+
+    if (categori === "AI") {
+      if (ALevel === "Beginner") return "BA";
+      else if (ALevel === "Intermediate") return "IA";
+      else if (ALevel === "Advanced") return "AA";
+    } else if (categori === "Business") {
+      if (ALevel === "Beginner") return "BB";
+      else if (ALevel === "Intermediate") return "IB";
+      else if (ALevel === "Advanced") return "AB";
+    } else if (categori === "Design") {
+      if (ALevel === "Beginner") return "BD";
+      else if (ALevel === "Intermediate") return "ID";
+      else if (ALevel === "Advanced") return "AD";
+    } else if (categori === "Finance") {
+      if (ALevel === "Beginner") return "BF";
+      else if (ALevel === "Intermediate") return "IF";
+      else if (ALevel === "Advanced") return "AF";
+    } else if (categori === "Languages") {
+      if (ALevel === "Beginner") return "BL";
+      else if (ALevel === "Intermediate") return "IL";
+      else if (ALevel === "Advanced") return "AL";
+    } else if (categori === "Leadership") {
+      if (ALevel === "Beginner") return "BLE";
+      else if (ALevel === "Intermediate") return "ILE";
+      else if (ALevel === "Advanced") return "ALE";
+    } else if (categori === "Marketing") {
+      if (ALevel === "Beginner") return "BM";
+      else if (ALevel === "Intermediate") return "IM";
+      else if (ALevel === "Advanced") return "AM";
+    } else if (categori === "Productivity") {
+      if (ALevel === "Beginner") return "BP";
+      else if (ALevel === "Intermediate") return "IP";
+      else if (ALevel === "Advanced") return "AP";
+    } else if (categori === "Programming") {
+      if (ALevel === "Beginner") return "BPR";
+      else if (ALevel === "Intermediate") return "IPR";
+      else if (ALevel === "Advanced") return "APR";
+    } else if (categori === "Sales") {
+      if (ALevel === "Beginner") return "BS";
+      else if (ALevel === "Intermediate") return "IS";
+      else if (ALevel === "Advanced") return "AS";
+    } else if (categori === "Technology") {
+      if (ALevel === "Beginner") return "BT";
+      else if (ALevel === "Intermediate") return "IT";
+      else if (ALevel === "Advanced") return "AT";
+    } else if (categori === "Wellness") {
+      if (ALevel === "Beginner") return "BW";
+      else if (ALevel === "Intermediate") return "IW";
+      else if (ALevel === "Advanced") return "AW";
+    }
+
+    return ""; // fallback
+  }
+
+  function Activechecknumber(businessData, SelectedC, Activelevel) {
+    const allCourses = businessData?.Courses || {};
+
+    const prefix = CreateCourseCode(SelectedC, Activelevel);
+
+    // Buscar todos los IDs que empiecen con el prefijo
+    const ids = Object.values(allCourses)
+      .map(course => course?.Id || "")
+      .filter(id => id && id.startsWith(prefix));
+
+    // Si no hay IDs que empiecen con ese prefijo, regresamos "01"
+    if (ids.length === 0) return "01";
+
+    // Tomar el número al final del ID
+    const numbers = ids.map(id => {
+      const afterPrefix = id.slice(prefix.length);
+      const onlyDigits = afterPrefix.replace(/\D/g, "");
+      return parseInt(onlyDigits, 10) || 0;
+    });
+
+    const maxNum = Math.max(...numbers);
+    const nextNumber = (maxNum + 1).toString().padStart(2, "0");
+    return nextNumber;
+  }
+  window.CreateCourseCode = CreateCourseCode;
+  window.Activechecknumber = Activechecknumber;
+
+
+
+
+  function SetModuleBlock() {
+    let moduleCount = 0;
+
+    const modulesContainer = document.getElementById('modules-container');
+    const addModuleBtn = document.getElementById('add-module');
+    const previewBtn = document.getElementById('BPSPB-preview');
+    const previewBlock = document.getElementById('spb-Prview-block');
+
+    addModuleBtn.addEventListener('click', () => createModule(true)); // true = dynamically added
+    if (previewBtn) previewBtn.addEventListener('click', renderPreview);
+
+    function createModule(isAdded = false) {
+      const moduleDiv = document.createElement('div');
+      moduleDiv.classList.add('module');
+
+      // header
+      moduleDiv.innerHTML = `
+        <div class="module-header">
+          <div>
+            <div class="Added-input-Block">
+              <h2 class="module-title"></h2>
+              ${isAdded ? `<button class="remove-module">×</button>` : ""}
+            </div>
+            <div class="module-lesson-block">
+              <input class="Titulo-Tema-Input" type="text" placeholder="Título del Tema" />   
+              <button class="add-lesson">+ Agregar Lección</button> 
+            </div>
+          </div>
+        </div>
+        <div class="lessons"></div>
+      `;
+
+      modulesContainer.appendChild(moduleDiv);
+
+      const addLessonBtn = moduleDiv.querySelector('.add-lesson');
+      const lessonsContainer = moduleDiv.querySelector('.lessons');
+      addLessonBtn.addEventListener('click', () => addLesson(lessonsContainer));
+
+      // remove module button only for added ones
+      if (isAdded) {
+        const removeModuleBtn = moduleDiv.querySelector('.remove-module');
+        removeModuleBtn.addEventListener('click', () => {
+          moduleDiv.remove();
+          renumberModules();
+        });
+      }
+
+      renumberModules();
+    }
+
+    function renumberModules() {
+      const modules = modulesContainer.querySelectorAll('.module');
+      moduleCount = modules.length;
+      modules.forEach((mod, index) => {
+        const title = mod.querySelector('.module-title');
+        if (title) title.textContent = `Módulo ${index + 1}:`;
+      });
+    }
+
+    function addLesson(container) {
+      const lessonDiv = document.createElement('div');
+      lessonDiv.classList.add('lesson');
+      lessonDiv.innerHTML = `
+        <div class="input-block">
+          <label>Descripción</label>
+          <textarea rows="3" placeholder="Describe brevemente el tema..."></textarea>
+        </div>
+
+        <div class="upload-box">Arrastra y suelta o haz clic para subir archivo</div>
+        <div class="upload-progress"></div>
+
+        <div class="add-btns">
+          <button class="add-Exam">+  Examen</button>
+          <button class="add-video">+ Video</button>
+          <button class="add-Subtema">+ Subtema</button>
+          <button class="add-description">+  Descripción</button>
+          <button class="add-Archivos">+ Archivos</button>
+          <button class="add-Live">+ Clase en Vivo</button>
+        </div>
+        <div class="dynamic-inputs"></div>
+      `;
+      container.appendChild(lessonDiv);
+
+      const uploadBox = lessonDiv.querySelector('.upload-box');
+      const progressBar = lessonDiv.querySelector('.upload-progress');
+      const dynamicContainer = lessonDiv.querySelector('.dynamic-inputs');
+
+      uploadBox.addEventListener('click', () => simulateUpload(progressBar));
+
+      // 🎯 Add event listeners for all dynamic buttons
+      lessonDiv.querySelector('.add-Exam').addEventListener('click', () => addExamInput(dynamicContainer));
+      lessonDiv.querySelector('.add-video').addEventListener('click', () => addDynamicInput(dynamicContainer, 'Video', 'URL del video o descripción'));
+      lessonDiv.querySelector('.add-Subtema').addEventListener('click', () => addDynamicInput(dynamicContainer, 'Subtema', 'Título del subtema'));
+      lessonDiv.querySelector('.add-description').addEventListener('click', () => addDynamicInput(dynamicContainer, 'Descripción', 'Texto descriptivo'));
+      lessonDiv.querySelector('.add-Archivos').addEventListener('click', () => addFileInput(dynamicContainer));
+      lessonDiv.querySelector('.add-Live').addEventListener('click', () => addLiveInput(dynamicContainer));
+    }
+
+    // 🎯 EXAM input = only a title
+    function addExamInput(container) {
+      const block = document.createElement('div');
+      block.classList.add('input-block');
+      block.innerHTML = `
+        <div class="Added-input-Block">
+          <label>Título del Examen</label>
+          <button class="remove-btn">×</button>  
+        </div>
+        <input type="text" placeholder="Ejemplo: Evaluación Final del Módulo" />
+        <div class="exam-buttons" style="margin-top: 8px;">
+          <button class="exam-mc">Opción Múltiple</button>
+          <button class="exam-tf">Verdadero / Falso</button>
+          <button class="exam-cc">Examen de Emparejamiento</button>
+          <button class="exam-oq">Pregunta Abierta</button>
+        </div>
+        <div class="exam-questions" style="margin-top: 10px;"></div>
+      `;
+      container.appendChild(block);
+
+      const removeBtn = block.querySelector('.remove-btn');
+      const questionsContainer = block.querySelector('.exam-questions');
+
+      removeBtn.addEventListener('click', () => block.remove());
+
+      // 🎯 Add event listeners for exam type buttons
+      block.querySelector('.exam-mc').addEventListener('click', () => {
+        const qBlock = document.createElement('div');
+        qBlock.classList.add('input-block');
+        qBlock.innerHTML = `
+          
+          <div class="Added-input-Block">
+            <label>Pregunta de opción múltiple</label>
+            <button class="remove-btn">×</button>
+          </div>
+
+          <input type="text" placeholder="Escribe la pregunta..." />
+          <input type="text" placeholder="Opción A" />
+          <input type="text" placeholder="Opción B" />
+          <input type="text" placeholder="Opción C" />
+          <input type="text" placeholder="Opción D" />
+          
+        `;
+        questionsContainer.appendChild(qBlock);
+        qBlock.querySelector('.remove-btn').addEventListener('click', () => qBlock.remove());
+      });
+
+      block.querySelector('.exam-tf').addEventListener('click', () => {
+        const qBlock = document.createElement('div');
+        qBlock.classList.add('input-block');
+        qBlock.innerHTML = `
+
+          <div class="Added-input-Block">
+            <label>Pregunta Verdadero / Falso</label>
+            <button class="remove-btn">×</button>
+          </div>
+
+          <input type="text" placeholder="Escribe la pregunta..." />
+          <select>
+            <option value="true">Verdadero</option>
+            <option value="false">Falso</option>
+          </select>
+          
+        `;
+        questionsContainer.appendChild(qBlock);
+        qBlock.querySelector('.remove-btn').addEventListener('click', () => qBlock.remove());
+      });
+
+      block.querySelector('.exam-cc').addEventListener('click', () => {
+      const qBlock = document.createElement('div');
+      qBlock.classList.add('input-block');
+      qBlock.innerHTML = `
+
+        <div class="Added-input-Block">
+          <label>Examen de Emparejamiento</label>
+          <button class="remove-btn">×</button>
+        </div>
+
+        <input type="text" placeholder="Elemento Izquierda 1" />
+        <input type="text" placeholder="Elemento Derecha 1" />
+        <input type="text" placeholder="Elemento Izquierda 2" />
+        <input type="text" placeholder="Elemento Derecha 2" />
+        <input type="text" placeholder="Elemento Izquierda 3" />
+        <input type="text" placeholder="Elemento Derecha 3" />
+        <input type="text" placeholder="Elemento Izquierda 4" />
+        <input type="text" placeholder="Elemento Derecha 4" />
+      `;
+      questionsContainer.appendChild(qBlock);
+      qBlock.querySelector('.remove-btn').addEventListener('click', () => qBlock.remove());
+    });
+
+
+      block.querySelector('.exam-oq').addEventListener('click', () => {
+        const qBlock = document.createElement('div');
+        qBlock.classList.add('input-block');
+        qBlock.innerHTML = `
+        
+          <div class="Added-input-Block">
+            <label>Pregunta Abierta</label>
+            <button class="remove-btn">×</button>
+          </div>
+
+          <input type="text" placeholder="Escribe la pregunta..." />
+          <textarea rows="2" placeholder="Respuesta esperada"></textarea>
+          
+        `;
+        questionsContainer.appendChild(qBlock);
+        qBlock.querySelector('.remove-btn').addEventListener('click', () => qBlock.remove());
+      });
+    }
+
+    // 🧱 Clase en Vivo input = only a title
+    function addLiveInput(container) {
+      const block = document.createElement('div');
+      block.classList.add('input-block');
+      block.innerHTML = `
+        <div class="Added-input-Block">
+          <label>Clase en Vivo</label>
+          <button class="remove-btn">×</button>
+        </div>
+
+        <div class="Added-input-Block">
+          <label>Título de la Clase</label>
+        </div>
+        <input type="text" placeholder="Ejemplo: Sesión en Vivo - Estrategias de Ventas" />
+
+        <div class="Added-input-Block">
+          <label>Fecha y Hora</label>
+        </div>
+        <input type="datetime-local" />
+
+        <div class="Added-input-Block">
+          <label>Duración (minutos)</label>
+        </div>
+        <input type="number" placeholder="60" />
+
+        <div class="Added-input-Block">
+          <label>Descripción</label>
+        </div>
+        <textarea rows="3" placeholder="Describe brevemente la clase..."></textarea>
+
+        <div class="Added-input-Block">
+          <label>Recursos / Archivos</label>
+        </div>
+        <div class="file-inputs">
+          <input type="file" multiple />
+        </div>
+        <button class="add-file-input">+Recursos / Archivo</button>
+      `;
+      container.appendChild(block);
+
+      // Botón de eliminar toda la clase
+      block.querySelector('.remove-btn').addEventListener('click', () => block.remove());
+
+      // 🎯 Event listener para agregar más inputs de archivo
+      const addFileBtn = block.querySelector('.add-file-input');
+      const fileContainer = block.querySelector('.file-inputs');
+      addFileBtn.addEventListener('click', () => {
+        const newFileInput = document.createElement('input');
+        newFileInput.type = 'file';
+        newFileInput.multiple = true;
+        fileContainer.appendChild(newFileInput);
+      });
+    }
+
+
+    // 🧱 Dynamic inputs for text/video/subtema/description
+    function addDynamicInput(container, type, placeholder) {
+      const block = document.createElement('div');
+      block.classList.add('input-block');
+      block.innerHTML = `
+        <div class="Added-input-Block">
+          <label>${type}</label>
+          <button class="remove-btn">×</button>
+        </div>
+        <input type="text" placeholder="${placeholder}" />
+      `;
+      container.appendChild(block);
+      block.querySelector('.remove-btn').addEventListener('click', () => block.remove());
+    }
+
+    // 📁 Add File Input
+    function addFileInput(container) {
+      const block = document.createElement('div');
+      block.classList.add('input-block');
+      block.innerHTML = `
+        <div class="Added-input-Block">
+          <label>Archivos</label>
+          <button class="remove-btn">×</button>
+        </div>
+        <input type="file" multiple />
+      `;
+      container.appendChild(block);
+      block.querySelector('.remove-btn').addEventListener('click', () => block.remove());
+    }
+
+    function simulateUpload(progressBar) {
+      let progress = 0;
+      progressBar.style.width = "0";
+      const interval = setInterval(() => {
+        progress += 5;
+        progressBar.style.width = `${progress}%`;
+        if (progress >= 100) clearInterval(interval);
+      }, 100);
+    }
+
+    // 🧩 RENDER PREVIEW
+    function renderPreview() {
+      previewBlock.innerHTML = ''; // clear existing content
+      const modules = document.querySelectorAll('.module');
+
+      if (modules.length === 0) {
+        previewBlock.innerHTML = `<p style="color:#999;">No hay módulos para mostrar.</p>`;
+        return;
+      }
+
+      modules.forEach((module, i) => {
+        const moduleTitle = module.querySelector('.Titulo-Tema-Input')?.value || `Módulo ${i + 1}`;
+        const modulePreview = document.createElement('div');
+        modulePreview.classList.add('preview-module');
+        modulePreview.innerHTML = `<h2>${moduleTitle}</h2>`;
+
+        const lessons = module.querySelectorAll('.lesson');
+        lessons.forEach((lesson, index) => {
+          const desc = lesson.querySelector('textarea')?.value || '';
+          const lessonPreview = document.createElement('div');
+          lessonPreview.classList.add('preview-lesson');
+          lessonPreview.innerHTML = `
+            <h3>Lección ${index + 1}</h3>
+            ${desc ? `<p>${desc}</p>` : ''}
+          `;
+
+          const dynamicInputs = lesson.querySelectorAll('.dynamic-inputs .input-block');
+          dynamicInputs.forEach(inputBlock => {
+            const label = inputBlock.querySelector('label')?.textContent || '';
+            const input = inputBlock.querySelector('input');
+            let value = '';
+
+            if (input?.type === 'file') {
+              const files = Array.from(input.files).map(f => f.name).join(', ');
+              value = files || 'No se seleccionaron archivos.';
+            } else {
+              value = input?.value || '';
+            }
+
+            if (value.trim()) {
+              lessonPreview.innerHTML += `<p><strong>${label}:</strong> ${value}</p>`;
+            }
+          });
+
+          modulePreview.appendChild(lessonPreview);
+        });
+
+        previewBlock.appendChild(modulePreview);
+      });
+
+      previewBlock.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  function RenderExamDropdown() {
+    // Container where the dropdown will be rendered
+    const previewBlock = document.getElementById('CIB-Input-Blocks');
+    if (!previewBlock) {
+      console.warn("⚠️ No se encontró el contenedor de previsualización (spb-Prview-block).");
+      return;
+    }
+
+    // 🧠 Find all exam inputs
+    const examInputs = document.querySelectorAll('.dynamic-inputs .input-block label');
+    const examTitles = [];
+
+    examInputs.forEach(label => {
+      if (label.textContent.trim() === "Título del Examen") {
+        const input = label.closest('.input-block').querySelector('input');
+        const value = input?.value.trim();
+        if (value) examTitles.push(value);
+      }
+    });
+
+    // ⚠️ No exams found
+    if (examTitles.length === 0) {
+      previewBlock.innerHTML = `<p style="color:#888;">No se encontraron exámenes.</p>`;
+      return;
+    }
+
+    // 🧱 Create dropdown
+    const dropdownWrapper = document.createElement('div');
+    dropdownWrapper.classList.add('exam-dropdown-block');
+    dropdownWrapper.innerHTML = `
+      <label for="exam-dropdown"><strong>Selecciona un Examen:</strong></label>
+      <select id="exam-dropdown">
+        ${examTitles.map(title => `<option value="${title}">${title}</option>`).join('')}
+      </select>
+    `;
+
+    // 🧩 Add below preview or standalone
+    previewBlock.appendChild(dropdownWrapper);
+
+    console.log("✅ Dropdown renderizado con exámenes:", examTitles);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SetModuleBlock()
+
+RenderExamDropdown()
 
 
 
   
 
 
+  renderWelcome()
+  renderId()
+  renderUserIcon()
+  renderCourseSelector()
+  courseCreateNav()
 
+  RenderallInputs() 
+  renderTeacherNameDescrip()
+  renderTags()
+  ClearallInputs("BIB-clearAll")
+  ClearallInputs("BIBSPB-clearAll")
 
-
-
-
-
-  // Function to show the selected tab and hide the others
-  function showTab(tabId) {
-    const tabs = ['Notes', 'Resources', 'Quizes'];
-
-    tabs.forEach(id => {
-      document.getElementById(id).style.display = (id === tabId) ? 'block' : 'none';
-    });
-  }
-
-  // Add click event listeners to buttons
-  document.getElementById('Notes-btns').addEventListener('click', () => showTab('Notes'));
-  document.getElementById('Resources-btns').addEventListener('click', () => showTab('Resources'));
-  document.getElementById('Quizes-btns').addEventListener('click', () => showTab('Quizes'));
-
-  // Optionally, show the first tab by default on page load
-  showTab('Notes');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  AddVideoBtn()
-  AddTextBtn()
-  AddPresentBtn()
-  AddExamBtn()
-  AddTemaBtn()
-  AddSubTemaBtn()
- 
-  SaveCourse()
-  ClearAllBtn()
-
-
- setupLevelButtons();
-  AddPreviewBtn();
 }
 fetchAllContent()
 
@@ -1272,6 +1520,73 @@ fetchAllContent()
 
 
 
+document.addEventListener("DOMContentLoaded", () => {
+  const fileInputs = document.querySelectorAll(".file-input");
+
+  fileInputs.forEach((input) => {
+    input.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        //alert(`File selected: ${file.name}`);
+      }
+    });
+  });
+
+  document.querySelectorAll(".remove-file").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.target.closest(".upload-progress").remove();
+    });
+  });
+
+  document.querySelectorAll(".add-module").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      //alert("Add Module clicked");
+      // You can dynamically clone a module block here
+    });
+  });
+
+  document.querySelectorAll(".add-lesson").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      //alert("Add Lesson clicked");
+      // Add new lesson dynamically
+    });
+  });
+});
+
+
+
+
+function setupPreviewNotifications() {
+  const nextBtn = document.getElementById("Next-Btn");
+
+  if (!nextBtn) return;
+
+  // Get both preview buttons
+  const previewButtons = [
+    document.getElementById("BIB-preview"),
+    document.getElementById("BPSPB-preview")
+  ].filter(Boolean); // removes any nulls if one doesn't exist
+
+  previewButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      // Show the Next Step button
+      nextBtn.style.display = "inline-block";
+
+      // Add glowing animation
+      nextBtn.classList.add("glow-border");
+
+      // Stop animation after 6 seconds (optional)
+      setTimeout(() => {
+        nextBtn.classList.remove("glow-border");
+
+      }, 6000);
+
+    });
+  });
+}
+
+// Initialize when page loads
+document.addEventListener("DOMContentLoaded", setupPreviewNotifications);
 
 
 
@@ -1286,94 +1601,157 @@ fetchAllContent()
 
 
 
- 
- 
 
 
-    
- 
- 
- 
 
- 
- 
- 
- 
- 
- 
+
+
+const includeInput = document.getElementById("includeInput");
+const includeList = document.getElementById("includeList");
+
+includeInput.addEventListener("keypress", function(e) {
+  if (e.key === "Enter" && includeInput.value.trim() !== "") {
+    e.preventDefault();
+
+    const item = document.createElement("span");
+    item.classList.add("include-item");
+    item.textContent = includeInput.value;
+
+    const removeBtn = document.createElement("i");
+    removeBtn.classList.add("fa-solid", "fa-xmark", "remove-include");
+    removeBtn.addEventListener("click", () => item.remove());
+
+    item.appendChild(removeBtn);
+    includeList.appendChild(item);
+    includeInput.value = "";
+  }
+});
+
+
+
+
+
+
+
+// === IMAGE UPLOAD ===
+const dropImage = document.getElementById("dropImage");
+const imageInput = document.getElementById("imageInput");
+const browseImage = document.getElementById("browseImage");
+
+browseImage.addEventListener("click", () => imageInput.click());
+
+dropImage.addEventListener("dragover", e => {
+  e.preventDefault();
+  dropImage.classList.add("dragover");
+});
+dropImage.addEventListener("dragleave", () => dropImage.classList.remove("dragover"));
+
+dropImage.addEventListener("drop", e => {
+  e.preventDefault();
+  dropImage.classList.remove("dragover");
+  handleFile(e.dataTransfer.files[0], "image");
+});
+
+imageInput.addEventListener("change", e => {
+  handleFile(e.target.files[0], "image");
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const dropVideo = document.getElementById("dropVideo");
+  const videoInput = document.getElementById("videoInput");
+  const browseVideo = document.getElementById("browseVideo");
+
+  if (!dropVideo || !videoInput || !browseVideo) {
+    console.warn("⚠️ Video upload elements not found in DOM.");
+    return;
+  }
+
+  browseVideo.addEventListener("click", () => videoInput.click());
+
+  dropVideo.addEventListener("dragover", e => {
+    e.preventDefault();
+    dropVideo.classList.add("dragover");
+  });
+
+  dropVideo.addEventListener("dragleave", () => dropVideo.classList.remove("dragover"));
+
+  dropVideo.addEventListener("drop", e => {
+    e.preventDefault();
+    dropVideo.classList.remove("dragover");
+    handleFile(e.dataTransfer.files[0], "video");
+  });
+
+  videoInput.addEventListener("change", e => {
+    handleFile(e.target.files[0], "video");
+  });
+});
+
+
+// === FILE HANDLER ===
+function handleFile(file, type) {
+  const validImageTypes = ["image/png", "image/jpeg"];
+  const validVideoTypes = ["video/mp4"];
+
+  if (type === "image" && validImageTypes.includes(file.type)) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = document.createElement("img");
+      img.src = e.target.result;
+      img.className = "preview";
+      dropImage.innerHTML = "";
+      dropImage.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  if (type === "video" && validVideoTypes.includes(file.type)) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const video = document.createElement("video");
+      video.src = e.target.result;
+      video.controls = true;
+      video.className = "preview";
+      dropVideo.innerHTML = "";
+      dropVideo.appendChild(video);
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+
+
+
+
+
 document.getElementById("Home").addEventListener("click", function () {
   window.location.href = "index11.html";
 });
-document.getElementById("invocie").addEventListener("click", function () {
+document.getElementById("Calander").addEventListener("click", function () {
   window.location.href = "index11.1.html";
 });
-document.getElementById("Students").addEventListener("click", function () {
+
+document.getElementById("invocie").addEventListener("click", function () {
   window.location.href = "index11.2.html";
 });
-document.getElementById("Assignments").addEventListener("click", function () {
+document.getElementById("Students").addEventListener("click", function () {
   window.location.href = "index11.3.html";
 });
-document.getElementById("Lessons").addEventListener("click", function () {
+document.getElementById("Assignments").addEventListener("click", function () {
   window.location.href = "index11.4.html";
-});   
-document.getElementById("Mensajes").addEventListener("click", function () {
+});
+document.getElementById("BCourse").addEventListener("click", function () {
   window.location.href = "index11.5.html";
 });
+
+document.getElementById("Lessons").addEventListener("click", function () {
+  window.location.href = "index11.5.html";
+}); 
+
+
+
 document.getElementById("Settings").addEventListener("click", function () {
   window.location.href = "index11.6.html";
-}); 
+});   
 document.getElementById("Logout").addEventListener("click", function () {
   window.location.href = "index4.html";
 });  
-
-
-
-
-
- document.addEventListener("DOMContentLoaded", function () {
-    const openBtn = document.getElementById("open");
-    const closeBtn = document.getElementById("close");
-    const linkNames = document.querySelectorAll(".linkName");
-
-    function showSidebarText() {
-      linkNames.forEach(el => el.style.display = "inline");
-      openBtn.style.display = "none";
-      closeBtn.style.display = "flex";
-    }
-
-    function hideSidebarText() {
-      linkNames.forEach(el => el.style.display = "none");
-      closeBtn.style.display = "none";
-      openBtn.style.display = "flex";
-    }
-
-    openBtn.addEventListener("click", showSidebarText);
-    closeBtn.addEventListener("click", hideSidebarText);
-
-    // Initial state: hide all link names, show open button only
-    hideSidebarText();
- });
-
- document.addEventListener("DOMContentLoaded", function () {
-  const openToolBtn = document.getElementById("tool-sidebar-open");
-  const closeToolBtn = document.getElementById("tool-sidebar-close");
-  const sidebarContent = document.querySelectorAll(".tool-Side-Btns span"); // Assumes labels are in <span> elements
-
-  function showToolSidebarText() {
-    sidebarContent.forEach(el => el.style.display = "inline");
-    openToolBtn.style.display = "none";
-    closeToolBtn.style.display = "flex";
-  }
-
-  function hideToolSidebarText() {
-    sidebarContent.forEach(el => el.style.display = "none");
-    closeToolBtn.style.display = "none";
-    openToolBtn.style.display = "flex";
-  }
-
-  openToolBtn.addEventListener("click", showToolSidebarText);
-  closeToolBtn.addEventListener("click", hideToolSidebarText);
-
-  // Initial state
-  hideToolSidebarText();
-});

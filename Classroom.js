@@ -409,10 +409,28 @@ async function getCorsoSkillAppContent() {
   }
 }
 
+async function getCorsoSkillsClassrooms() {
+  try {
+    const docRef = doc(db, "CorsoSkillsClassrooms", TBuInfo);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.error("No such business document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching business document:", error);
+    return null;
+  }
+}
+
 async function fetchAllContent() {
   try {
     const studentData = await getstudentContent();
     const businessData = await getCorsoSkillAppContent();
+    const ClassroomData = await getCorsoSkillsClassrooms();
     const courseData = businessData.Courses;
     if (!studentData || !businessData) {
       console.log("Missing data: studentData or businessData is null");
@@ -421,7 +439,8 @@ async function fetchAllContent() {
 
     console.log("Student Document Data:", studentData);
     console.log("Business Document Data:", businessData);
-    
+    console.log("Classroom Document Data:", ClassroomData);
+
     function renderImage(imageUrl, altUrl, UrlId) {
       const logoElement = document.getElementById(UrlId);
       if (logoElement) {
@@ -795,278 +814,315 @@ async function fetchAllContent() {
 
         return { [newSlotKey]: newSlot }; // Return new slot wrapped in key
       }
-      
-      function createEnrollButton(studentCourses, studentId, UserUidInfo, newCourseId) {
-        const btn = document.getElementById("enroll-container");
 
-        btn.addEventListener("click", async () => {
-          try {
-            // Add the slot locally
-            const newSlotData = addNewSlot(studentCourses, newCourseId);
+      const CourseStudent = studentData;
+      console.log(CourseStudent)
 
-            // Upload only the new slot to Firestore under the nested "Courses"
-            const docRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-            await setDoc(docRef, { Courses: newSlotData }, { merge: true });
+    function createEnrollButton(studentCourses, studentId, UserUidInfo, newCourseId) {
+      const btn = document.getElementById("enroll-container");
 
-            btn.textContent = "Inscrito ✔️";
-            btn.disabled = true;
-
-            alert("Información guardada correctamente.");
-
-            // Delay the reload by 2 seconds (2000ms)
-            setTimeout(() => {
-              location.reload();
-            }, 1000);
-
-          } catch (error) {
-            console.error("Error al inscribirse:", error);
-            alert("Hubo un error al inscribirse. Intenta nuevamente.");
-          }
-        });
-      }
-      const newCourseId = Id            // <-- ID of course being enrolled in
-      const studentId = newCourseId;         // You can use same or different ID
-
-      createEnrollButton(StuCour, studentId, UserUidInfo, newCourseId);
-
-
-
-function RenderViedoLineup() {
-  const ActiveCourse = checkIfCourseIdExists(StuCour, Id);
-  const videoElement = document.getElementById("courseVideo");
-  const moduleList = document.querySelector("#Module-List ul");
-  const progressCount = document.querySelector("#Module-List h4 span");
-
-  if (!videoElement || !moduleList || !progressCount) {
-    console.error("Required DOM elements not found.");
-    return;
-  }
-
-  function formatTime(time) {
-    const hours = Math.floor(time);
-    const minutes = Math.round((time - hours) * 60);
-    let result = "";
-    if (hours > 0) result += `${hours} hora${hours > 1 ? "s" : ""}`;
-    if (minutes > 0) result += (result ? " " : "") + `${minutes} min`;
-    return result || "0 min";
-  }
-
-  const orderedKeys = Object.keys(CouresIdInfo.Modules).sort((a, b) => {
-    if (a === "Intro") return -1;
-    if (b === "Intro") return 1;
-    return parseInt(a.replace("M", "")) - parseInt(b.replace("M", ""));
-  });
-
-  let currentModuleIndex = 0;
-  const watchedModules = new Set();
-
-  function findCourseSlotById(courseSlots, targetId) {
-    for (const slotName in courseSlots) {
-      const slot = courseSlots[slotName];
-      if (slot.Id === targetId) {
-        return {
-          found: true,
-          slotName: slotName,
-          slotData: slot
-        };
-      }
-    }
-    return {
-      found: false,
-      slotName: null,
-      slotData: null
-    };
-  }
-
-  function getFirstUnwatchedVideoIndex(studentCourses, courseId) {
-    const courseObject = findCourseSlotById(studentCourses, courseId);
-    const videoHistory = courseObject.found && courseObject.slotData.videoHistory
-      ? courseObject.slotData.videoHistory
-      : {};
-
-    for (let i = 0; i < orderedKeys.length; i++) {
-      const moduleKey = orderedKeys[i];
-      if (!videoHistory.hasOwnProperty(moduleKey)) {
-        return i;
-      }
-    }
-
-    return -1; // Todos los módulos completados
-  }
-
-  function loadVideoByIndex(index, autoplay = ActiveCourse) {
-    const key = orderedKeys[index];
-    const module = CouresIdInfo.Modules[key];
-
-    if (!module || !module.Video) {
-      console.warn("No video found for module", key);
-      return;
-    }
-
-    currentModuleIndex = index;
-
-    const videoParent = document.getElementById("courseVideo").parentNode;
-    const newVideo = document.createElement("video");
-    newVideo.setAttribute("id", "courseVideo");
-    newVideo.setAttribute("controls", "true");
-    newVideo.src = module.Video;
-
-    console.log(`▶️ Reproduciendo: Módulo ${index + 1} - "${module.Tittle || "Sin título"}"`);
-
-    newVideo.addEventListener("ended", async () => {
-      if (!ActiveCourse) return;
-
-      const isVideoFullyWatched = Math.abs(newVideo.currentTime - newVideo.duration) < 1;
-      if (!isVideoFullyWatched) {
-        console.warn("⚠️ El video no se vio completamente. No se guardará el progreso.");
-        return;
-      }
-
-      const moduleKey = orderedKeys[index];
-      const completedModule = CouresIdInfo.Modules[moduleKey];
-      const moduleTitle = completedModule.Tittle || "Sin título";
-
-      if (!watchedModules.has(index)) {
-        watchedModules.add(index);
-      }
-
-      const percent = Math.round((watchedModules.size / orderedKeys.length) * 100);
-      console.log(`✅ Video completado: Módulo ${index + 1} - "${moduleTitle}"`);
-      console.log(`📊 Progreso actual: ${percent}%`);
-
-      const StudentVideo = studentData.Courses;
-      const ScObject = findCourseSlotById(StudentVideo, Id);
-
-      if (ScObject.found && ScObject.slotName) {
+      btn.addEventListener("click", async () => {
         try {
-          const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
-          const currentDate = new Date().toISOString();
+          // Add the slot locally
+          const newSlotData = addNewSlot(studentCourses, newCourseId);
 
-          const currentHistory = ScObject.slotData.videoHistory || {};
-          const alreadyCompleted = currentHistory[moduleKey]?.completedAt;
+          // Save under student's "Courses"
+          const studentDocRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+          await setDoc(studentDocRef, { Courses: newSlotData }, { merge: true });
 
-          if (!alreadyCompleted) {
-            const updatedVideoHistory = {
-              ...currentHistory,
-              [moduleKey]: {
-                title: moduleTitle,
-                completedAt: currentDate,
-                progress: percent
+          console.log(studentDocRef)
+
+          // Also save a copy into Classrooms
+          const classroomDocRef = doc(db, "CorsoSkillsClassrooms", TBuInfo);
+          await setDoc(classroomDocRef, {
+            "Courses": {
+              [Type]: {
+                [level]: {
+                  [newCourseId]: {
+                    ["Students"]: {
+                      [UserUidInfo]: {
+                        name:CourseStudent.fullName,
+                        level:level,
+                        sexo:CourseStudent.sexo,
+                        id: UserUidInfo,
+                        courseId: newCourseId,
+                        enrolledAt: new Date().toISOString(),
+                        lastLogin: CourseStudent.lastLogin,
+                        
+                      }
+                    }
+                  }
+                }
               }
-            };
+            }
+          }, { merge: true });
 
-            const updatedSlot = {
-              ...ScObject.slotData,
-              progress: percent,
-              videos: {
-                ...(ScObject.slotData.videos || {}),
-                [moduleKey]: "completed"
-              },
-              videoHistory: updatedVideoHistory
-            };
+          btn.textContent = "Inscrito ✔️";
+          btn.disabled = true;
 
-            const updatedCourses = {
-              ...studentData.Courses,
-              [ScObject.slotName]: updatedSlot
-            };
+          alert("Información guardada correctamente.");
 
-            await updateDoc(studentRef, {
-              Courses: updatedCourses
-            });
+          // Delay the reload by 1 second
+          setTimeout(() => {
+                location.reload();
+              }, 1000);
 
-            console.log("📁 Progreso y video actualizado en Firestore.");
-          } else {
-            console.log("⚠️ Este módulo ya había sido registrado como completado.");
-          }
-        } catch (error) {
-          console.error("❌ Error al actualizar Firestore:", error);
-          alert("Hubo un error al guardar el progreso.");
-        }
-      }
-
-      const nextIndex = index + 1;
-      if (nextIndex < orderedKeys.length) {
-        const nextTitle = CouresIdInfo.Modules[orderedKeys[nextIndex]].Tittle || "Sin título";
-        console.log(`▶️ Reproduciendo: Módulo ${nextIndex + 1} - "${nextTitle}"`);
-        loadVideoByIndex(nextIndex, true);
-      } else {
-        alert("🎉 ¡Has completado todos los módulos!");
-      }
-    });
-
-    newVideo.addEventListener("loadedmetadata", () => {
-      if (autoplay) {
-        newVideo.play().catch((err) => {
-          console.warn("Autoplay bloqueado o falló:", err);
-        });
-      }
-    });
-
-    const oldVideo = document.getElementById("courseVideo");
-    if (videoParent && oldVideo) {
-      videoParent.replaceChild(newVideo, oldVideo);
+            } catch (error) {
+              console.error("Error al inscribirse:", error);
+              alert("Hubo un error al inscribirse. Intenta nuevamente.");
+            }
+          });
     }
 
-    renderModules(index);
-  }
+    const newCourseId = Id;            // <-- ID of course being enrolled in
+    const studentId = newCourseId;     // You can use same or different ID
 
-  function renderModules(selectedIdx = 0) {
-    moduleList.innerHTML = "";
+    createEnrollButton(StuCour, studentId, UserUidInfo, newCourseId);
 
-    const ScObject = findCourseSlotById(studentData.Courses, Id);
-    const videoHistory = ScObject.found && ScObject.slotData.videoHistory
-      ? ScObject.slotData.videoHistory
-      : {};
 
-    orderedKeys.forEach((key, i) => {
-      const mod = CouresIdInfo.Modules[key];
-      const li = document.createElement("li");
 
-      const icon = document.createElement("i");
-      const title = document.createTextNode(" " + (mod.Tittle || "Sin título") + " ");
-      const timeSpan = document.createElement("span");
-      timeSpan.textContent = formatTime(mod.Time || 0);
 
-      const isCompleted = !!videoHistory[key];
 
-      if (i === selectedIdx) {
-        li.classList.add("active");
-        icon.className = "fas fa-play-circle";
-      } else if (isCompleted) {
-        li.classList.add("completed");
-        icon.className = "fas fa-check-circle";
-      } else {
-        icon.className = ActiveCourse ? "far fa-circle" : "fas fa-lock";
-      }
 
-      if (ActiveCourse) {
-        li.style.cursor = "pointer";
-        li.addEventListener("click", () => loadVideoByIndex(i, true));
-      } else {
-        li.style.cursor = i === 0 ? "pointer" : "not-allowed";
-        if (i === 0) {
-          li.addEventListener("click", () => loadVideoByIndex(0, true));
+
+
+
+      function RenderViedoLineup() {
+        const ActiveCourse = checkIfCourseIdExists(StuCour, Id);
+        const videoElement = document.getElementById("courseVideo");
+        const moduleList = document.querySelector("#Module-List ul");
+        const progressCount = document.querySelector("#Module-List h4 span");
+
+        if (!videoElement || !moduleList || !progressCount) {
+          console.error("Required DOM elements not found.");
+          return;
+        }
+
+        function formatTime(time) {
+          const hours = Math.floor(time);
+          const minutes = Math.round((time - hours) * 60);
+          let result = "";
+          if (hours > 0) result += `${hours} hora${hours > 1 ? "s" : ""}`;
+          if (minutes > 0) result += (result ? " " : "") + `${minutes} min`;
+          return result || "0 min";
+        }
+
+        const orderedKeys = Object.keys(CouresIdInfo.Modules).sort((a, b) => {
+          if (a === "Intro") return -1;
+          if (b === "Intro") return 1;
+          return parseInt(a.replace("M", "")) - parseInt(b.replace("M", ""));
+        });
+
+        let currentModuleIndex = 0;
+        const watchedModules = new Set();
+
+        function findCourseSlotById(courseSlots, targetId) {
+          for (const slotName in courseSlots) {
+            const slot = courseSlots[slotName];
+            if (slot.Id === targetId) {
+              return {
+                found: true,
+                slotName: slotName,
+                slotData: slot
+              };
+            }
+          }
+          return {
+            found: false,
+            slotName: null,
+            slotData: null
+          };
+        }
+
+        function getFirstUnwatchedVideoIndex(studentCourses, courseId) {
+          const courseObject = findCourseSlotById(studentCourses, courseId);
+          const videoHistory = courseObject.found && courseObject.slotData.videoHistory
+            ? courseObject.slotData.videoHistory
+            : {};
+
+          for (let i = 0; i < orderedKeys.length; i++) {
+            const moduleKey = orderedKeys[i];
+            if (!videoHistory.hasOwnProperty(moduleKey)) {
+              return i;
+            }
+          }
+
+          return -1; // Todos los módulos completados
+        }
+
+        function loadVideoByIndex(index, autoplay = ActiveCourse) {
+          const key = orderedKeys[index];
+          const module = CouresIdInfo.Modules[key];
+
+          if (!module || !module.Video) {
+            console.warn("No video found for module", key);
+            return;
+          }
+
+          currentModuleIndex = index;
+
+          const videoParent = document.getElementById("courseVideo").parentNode;
+          const newVideo = document.createElement("video");
+          newVideo.setAttribute("id", "courseVideo");
+          newVideo.setAttribute("controls", "true");
+          newVideo.src = module.Video;
+
+          console.log(`▶️ Reproduciendo: Módulo ${index + 1} - "${module.Tittle || "Sin título"}"`);
+
+          newVideo.addEventListener("ended", async () => {
+            if (!ActiveCourse) return;
+
+            const isVideoFullyWatched = Math.abs(newVideo.currentTime - newVideo.duration) < 1;
+            if (!isVideoFullyWatched) {
+              console.warn("⚠️ El video no se vio completamente. No se guardará el progreso.");
+              return;
+            }
+
+            const moduleKey = orderedKeys[index];
+            const completedModule = CouresIdInfo.Modules[moduleKey];
+            const moduleTitle = completedModule.Tittle || "Sin título";
+
+            if (!watchedModules.has(index)) {
+              watchedModules.add(index);
+            }
+
+            const percent = Math.round((watchedModules.size / orderedKeys.length) * 100);
+            console.log(`✅ Video completado: Módulo ${index + 1} - "${moduleTitle}"`);
+            console.log(`📊 Progreso actual: ${percent}%`);
+
+            const StudentVideo = studentData.Courses;
+            const ScObject = findCourseSlotById(StudentVideo, Id);
+
+            if (ScObject.found && ScObject.slotName) {
+              try {
+                const studentRef = doc(db, "CorsoSkillsStudents", UserUidInfo);
+                const currentDate = new Date().toISOString();
+
+                const currentHistory = ScObject.slotData.videoHistory || {};
+                const alreadyCompleted = currentHistory[moduleKey]?.completedAt;
+
+                if (!alreadyCompleted) {
+                  const updatedVideoHistory = {
+                    ...currentHistory,
+                    [moduleKey]: {
+                      title: moduleTitle,
+                      completedAt: currentDate,
+                      progress: percent
+                    }
+                  };
+
+                  const updatedSlot = {
+                    ...ScObject.slotData,
+                    progress: percent,
+                    videos: {
+                      ...(ScObject.slotData.videos || {}),
+                      [moduleKey]: "completed"
+                    },
+                    videoHistory: updatedVideoHistory
+                  };
+
+                  const updatedCourses = {
+                    ...studentData.Courses,
+                    [ScObject.slotName]: updatedSlot
+                  };
+
+                  await updateDoc(studentRef, {
+                    Courses: updatedCourses
+                  });
+
+                  console.log("📁 Progreso y video actualizado en Firestore.");
+                } else {
+                  console.log("⚠️ Este módulo ya había sido registrado como completado.");
+                }
+              } catch (error) {
+                console.error("❌ Error al actualizar Firestore:", error);
+                alert("Hubo un error al guardar el progreso.");
+              }
+            }
+
+            const nextIndex = index + 1;
+            if (nextIndex < orderedKeys.length) {
+              const nextTitle = CouresIdInfo.Modules[orderedKeys[nextIndex]].Tittle || "Sin título";
+              console.log(`▶️ Reproduciendo: Módulo ${nextIndex + 1} - "${nextTitle}"`);
+              loadVideoByIndex(nextIndex, true);
+            } else {
+              alert("🎉 ¡Has completado todos los módulos!");
+            }
+          });
+
+          newVideo.addEventListener("loadedmetadata", () => {
+            if (autoplay) {
+              newVideo.play().catch((err) => {
+                console.warn("Autoplay bloqueado o falló:", err);
+              });
+            }
+          });
+
+          const oldVideo = document.getElementById("courseVideo");
+          if (videoParent && oldVideo) {
+            videoParent.replaceChild(newVideo, oldVideo);
+          }
+
+          renderModules(index);
+        }
+
+        function renderModules(selectedIdx = 0) {
+          moduleList.innerHTML = "";
+
+          const ScObject = findCourseSlotById(studentData.Courses, Id);
+          const videoHistory = ScObject.found && ScObject.slotData.videoHistory
+            ? ScObject.slotData.videoHistory
+            : {};
+
+          orderedKeys.forEach((key, i) => {
+            const mod = CouresIdInfo.Modules[key];
+            const li = document.createElement("li");
+
+            const icon = document.createElement("i");
+            const title = document.createTextNode(" " + (mod.Tittle || "Sin título") + " ");
+            const timeSpan = document.createElement("span");
+            timeSpan.textContent = formatTime(mod.Time || 0);
+
+            const isCompleted = !!videoHistory[key];
+
+            if (i === selectedIdx) {
+              li.classList.add("active");
+              icon.className = "fas fa-play-circle";
+            } else if (isCompleted) {
+              li.classList.add("completed");
+              icon.className = "fas fa-check-circle";
+            } else {
+              icon.className = ActiveCourse ? "far fa-circle" : "fas fa-lock";
+            }
+
+            if (ActiveCourse) {
+              li.style.cursor = "pointer";
+              li.addEventListener("click", () => loadVideoByIndex(i, true));
+            } else {
+              li.style.cursor = i === 0 ? "pointer" : "not-allowed";
+              if (i === 0) {
+                li.addEventListener("click", () => loadVideoByIndex(0, true));
+              }
+            }
+
+            li.appendChild(icon);
+            li.appendChild(title);
+            li.appendChild(timeSpan);
+            moduleList.appendChild(li);
+          });
+
+          progressCount.textContent = `${selectedIdx + 1}/${orderedKeys.length}`;
+        }
+
+        // ⏯ Reproducir primer módulo NO completado
+        const nextUnwatchedIndex = getFirstUnwatchedVideoIndex(studentData.Courses, Id);
+
+        if (nextUnwatchedIndex >= 0 && nextUnwatchedIndex < orderedKeys.length) {
+          loadVideoByIndex(nextUnwatchedIndex, ActiveCourse);
+        } else {
+          alert("🎉 ¡Has completado todos los módulos!");
         }
       }
-
-      li.appendChild(icon);
-      li.appendChild(title);
-      li.appendChild(timeSpan);
-      moduleList.appendChild(li);
-    });
-
-    progressCount.textContent = `${selectedIdx + 1}/${orderedKeys.length}`;
-  }
-
-  // ⏯ Reproducir primer módulo NO completado
-  const nextUnwatchedIndex = getFirstUnwatchedVideoIndex(studentData.Courses, Id);
-
-  if (nextUnwatchedIndex >= 0 && nextUnwatchedIndex < orderedKeys.length) {
-    loadVideoByIndex(nextUnwatchedIndex, ActiveCourse);
-  } else {
-    alert("🎉 ¡Has completado todos los módulos!");
-  }
-}
 
 
 

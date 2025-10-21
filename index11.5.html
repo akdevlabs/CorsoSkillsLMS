@@ -17,203 +17,482 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TeacherMensajes|CorsoSkills</title>
-  <link rel="stylesheet" href="TeacherMensajes.css">
+  <title>CreateCourse|CorsoSkills</title>
+  <link rel="stylesheet" href="CreateCourse.css">
 
 </head>
 <body>  
-  <section class="nav" id="sidebar">
-      
-      <div class="sidebar-content">
-        
-        <div class="sidebar-top">  
-          <img id="Bulogos"></img>
-          
-          <div class="Side-Btns" id="Home">
-            <i class="fa-solid fa-table-cells"></i>
-            <span class="linkName">Dashboard</span>
-          </div>
 
-          <div class="Side-Btns" id="Books">
-            <i class="fa-solid fa-book-open"></i>
-            <span class="linkName">eBooks</span>
-          </div>
+  <section class="User-Info">
+      <h1>Portal de Creación de Cursos</h1>
+      <div class="Alerts-User">
+        <div class="Active-Portal-Alerts"
+        id="APA"></div>
 
-          <div class="Side-Btns" id="Classroom">
-            <i class="fa-solid fa-school"></i>
-            <span class="linkName">Salon</span>
-          </div>
 
-          <div class="Side-Btns" id="Videos">
-            <i class="fa-solid fa-file-video"></i>
-            <span class="linkName">Cursos</span>
-          </div>
 
-          <div class="Side-Btns" id="Trophy">
-            <i class="fa-solid fa-trophy"></i>
-            <span class="linkName">Logros</span>
+        <div class="User-Block">
+          <div id="profile-Icon"></div>
+          <div class="User-Info-Block">
+            <h2 id="User-Id"></h2>
+            <h1 id="User-Name"></h1>
           </div>
-
-          <div class="Side-Btns" id="Multi-User">    
-            <i class="fa-solid fa-users"></i>
-            <span class="linkName">Comunidad</span>
-          </div>
-
-          <div class="Side-Btns" id="carrer">    
-            <i class="fa-solid fa-graduation-cap"></i>
-            <span class="linkName">Ruta Profesional</span>
-          </div>
-
         </div>
-
-        <div class="sidebar-bottom">
-
-          <div class="Side-Btns" id="Settings">
-            <i class="fa-solid fa-gear"></i>
-            <span class="linkName">Settings</span>
-          </div>
-   
-          <div class="Side-Btns" id="profile">
-            <i class="fa-solid fa-user-tie"></i>
-            <span class="linkName">Profesor</span>
-          </div>
-
-          <div class="Side-Btns" id="Logout">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span class="linkName">Cerrar sesión</span>
-          </div>
-        </div> 
-        
       </div>
 
-    
-
-    
-
-      <div class="Action-nav-btns">
-      
-      <div class="Side-caret" id="open">
-          <i class="fa-solid fa-caret-right"></i>
-      </div>
-
-      <div class="Side-caret" id="close">
-          <i class="fa-solid fa-caret-left"></i>
-      </div>
-
-      </div>
   </section>
 
-
-  <section class="main" id="main">
-    <div class="header" id="header">
-      <h1 id="wecome-banner-tittle"></h1>
-      <div id="profile-Icon"></div>
-    </div>
-
-    <div class="Cursos-Ofrecidos-block">
-      <div class="Cursos-Ofrecidos-block-top">
-        <h1 class="COB-tittle">Cursos Ofrecidos</h1>
+  <main>
+    <section class="nav" id="sidebar">
         
-      </div>
-      <div class="tabs-wrapper">
-        <div class="Level-Btns-blocks">
-          <button class="Level-Btns" id="Beginner">Principiante</button>
-          <button class="Level-Btns" id="Intermediate">Intermedio</button>
-          <button class="Level-Btns" id="Advanced">Avanzado</button>
-          <div id="line"></div>
-        </div>
-        
-        <div class="tabs-container">
-          <div class="tabs" id="tabs"></div>
-          <div>
-            <button class="scroll-btn" id="scroll-left"><</button>
-            <button class="scroll-btn" id="scroll-right">></button>
+        <div class="sidebar-content">
+          
+          <div class="sidebar-top" id="sidebar-top">  
+            <img id="Bulogos"></img>
+            
+            <div class="Side-Btns" id="Home">
+              <i class="fa-solid fa-square-poll-vertical"></i>
+              <span class="linkName">Dashboard</span>
+            </div>
+
+            <div class="Side-Btns" id="Calander">
+              <i class="fa-solid fa-calendar-days"></i>
+              <span class="linkName">Calendario</span>
+            </div>
+
+            <div class="Side-Btns" id="invocie">
+              <i class="fa-solid fa-file-invoice-dollar"></i>
+              <span class="linkName">Pagos</span>
+            </div>
+
+            <div class="Side-Btns" id="Students">
+              <i class="fa-solid fa-school"></i>
+              <span class="linkName">Estudiantes</span>
+            </div>
+
+            <div class="Side-Btns" id="Assignments">
+              <i class="fa-solid fa-list-check"></i>
+              <span class="linkName">Tareas</span>
+            </div>
+
+            <div class="Side-Btns" id="BCourse">    
+              <i class="fa-solid fa-atom"></i>
+              <span class="linkName">Crear Curso</span>
+            </div>
+
+            <div class="Side-Btns" id="Lessons">    
+              <i class="fa-solid fa-person-chalkboard"></i>
+              <span class="linkName">Lecciones</span>
+            </div>
+
+            <div class="Side-Btns" id="Mensajes">    
+              <i class="fa-solid fa-message"></i>
+              <span class="linkName">Mensajes</span>
+            </div>
+
           </div>
+
+          <div class="sidebar-bottom">
+
+            <div class="Side-Btns" id="Settings">
+              <i class="fa-solid fa-gear"></i>
+              <span class="linkName">Settings</span>
+            </div>
+    
+            <div class="Side-Btns" id="Logout">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <span class="linkName">Cerrar sesión</span>
+            </div>
+          </div> 
+          
+        </div>
+
+        <div class="Action-nav-btns">
+        
+        <div class="Side-caret" id="open">
+            <i class="fa-solid fa-caret-right"></i>
+        </div>
+
+        <div class="Side-caret" id="close">
+            <i class="fa-solid fa-caret-left"></i>
+        </div>
+
+        </div>
+    </section>
+
+    <section class="Course-Creator-Block">
+
+      <div class="Course-Nav-block">
+        <div class="CCB-Left">
+          <span class="CCB" id="Basic-Info">Información Básica</span>
+          <span class="CCB" id="Course-Landing">Diseñador de Temas</span>
+          <span class="CCB" id="final-review">Creador de Evaluaciones</span>
+
+        </div>
+
+        <div class="CCB-Right">
+          <span class="CCB" id="Next-Btn">Próximo Paso</span>
         </div>
       </div>
-    </div>
-
-    <div class="stats">
-
-      <div class="card" id="Student-card">
-        <h3>Students</h3>
-        <p class="Alerts" id="amount-of-students">88</p>
-        <small id="new-students">3 new</small>
-      </div>
-
-      <div class="card" id="Classes-card">
-        <h3>Classes</h3>
-        <p class="Alerts" id="amount-of-Classes">10</p>
-        <small id="new-Classes">2 new</small>
-      </div>
-
-      <div class="card" id="Submissions-card">
-        <h3>Submissions</h3>
-        <p class="Alerts" id="amount-of-Submissions">10</p>
-      </div>  
-
-      <div class="card" id="Tasks-card">
-        <h3>Pending Tasks</h3>
-        <p class="Alerts" id="amount-of-Tasks">10</p>
-      </div>
-
-      <div class="card" id="Messages-card">
-        <h3>Messages</h3>
-        <p class="Alerts" id="amount-of-Messages">2</p>
-      </div>
-
-    </div>  
-
-    <div class="Action-btns">
-      <div class="Action-btns-card" id="lesson-Btn">
-        <p>Subir una nueva lección</p>
-      </div>
-      <div class="Action-btns-card" id="Course-Btn">
-        <p>Crear un nuevo curso</p>
-      </div>
-    </div>
-
-    <div class="charts">
-      <div class="chart-block" id="student-chart">
-        <h3>Estudiantes Inscritos</h3>
-        <canvas id="chart1"></canvas>
-      </div>
-      <div class="chart-block" id="Cursos-chart">
-        <h3>Rendimiento De Cursos Promedio</h3>
-        <canvas id="chart2"></canvas>
-      </div>
-    </div>
 
 
-    <div class="overview-section">
-      <div class="card">
-        <h3>Total Students</h3>
-        <p>72,056</p>
-        <small style="color:green">+12.05%</small>
-      </div>
-      <div class="card">
-        <h3>Total Courses</h3>
-        <p>12,056</p>
-        <small style="color:red">-12.25%</small>
-      </div>
-      <div class="card">
-        <h3>Total Videos</h3>
-        <p>31,056</p>
-        <small style="color:green">+25.21%</small>
-      </div>
-      <div class="card">
-        <h3>Total Earnings</h3>
-        <p>$8,05,056</p>
-        <small style="color:green">+25.21%</small>
-      </div>
-    </div>
+      <div class="Course-Input-Blocks" id="Basic-Info-Block-1">
+
+        <div class="Input-Blocks">
+
+          <div class="Title-Block">
+            <input type="text" id="Title-Input" placeholder="El título de tu curso va aquí............" />
+          </div>
+
+          <div class="categoria-selector">
+            <div  class="Label-Block">
+              <label class="Point">*</label>
+              <label class="Point-Lable" for="categoriaSelect">Selecciona Una O Varias Categorías:</label>
+            </div>
+            
+            <div class="multi-select" id="categoriaSelect">
+              <span class="placeholder-text">Haz clic para seleccionar...</span>
+            </div>
+
+            <!-- Selected tags will render here -->
+            <div id="selectedCategories" class="selected-tags"></div>
+          </div>
+
+          <div class="Duration-Blocks">
+            <div class="Label-Block">
+              <label class="Point">*</label>
+              <label class="Point-Label" for="Duration-Input">Duración del Curso:</label>
+            </div>
+
+            <div class="Duration-Block">
+              <input 
+                type="number" 
+                id="Duration-Input" 
+                placeholder="Ej. 10" 
+                min="1" 
+                required 
+              />
+              <select id="Duration-Unit">
+                <option value="minutos">Minutos</option>
+                <option value="horas" selected>Horas</option>
+                <option value="días">Días</option>
+                <option value="semanas">Semanas</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="Level-Block">
+            <div  class="Label-Block">
+              <label class="Point">*</label>
+              <label class="Point-Lable">Nivel de Cursos</label>
+            </div>
+    
+            <div class="level-checkboxes">
+              <label class="level-option">
+                <input type="checkbox" name="level" value="Beginner">
+                <span>Principiante</span>
+              </label>
+
+              <label class="level-option">
+                <input type="checkbox" name="level" value="Intermediate">
+                <span>Intermedio</span>
+              </label>
+
+              <label class="level-option">
+                <input type="checkbox" name="level" value="Advanced">
+                <span>Avanzado</span>
+              </label>
+            </div>
+            
+          </div>
+
+          <div class="tag-input-container">
+            <div  class="Label-Block">
+              <label class="Point">*</label>
+              <label class="Point-Lable" for="tagInput">Agregar Etiquetas (Temas, Categorías, etc.)</label>
+            </div>
+           
+            <div class="tag-box">
+              <input type="text" id="tagInput" placeholder="Escribe y presiona Enter..." />
+            </div>
+            <div id="tagList" class="tag-list"></div>
+          </div>
+
+          <div class="Description-blocks">
+            <div  class="Label-Block">
+              <label class="Point">*</label>
+              <label class="Point-Lable">Descripcion</label>
+            </div>
+            
+            <textarea class="input-tool" id="descriptionInput" placeholder="Escribe la descripción"></textarea>
+          
+          </div>
+
+          <div class="Course-Include-Block">
+            <div  class="Label-Block">
+              <label class="Point">*</label>
+              <label class="Point-Lable" for="includeInput">¿Qué incluye el curso?</label>
+            </div>
+            <div class="include-box">
+              <input 
+                type="text" 
+                id="includeInput" 
+                placeholder="Ejemplo: Certificado de finalización, Material descargable, Acceso de por vida..." 
+              />
+            </div>
+            <div id="includeList" class="include-list"></div>
+          </div>
+
+          <div class="upload-section">
+            <!-- Imagen de Portada -->
+            <div class="upload-box" id="imageBox">
+              <div  class="Label-Block">
+                <label class="Point">*</label>
+                <label class="Point-Lable">Imagen de Portada</label>
+                <i class="fa-solid fa-circle-question" title="Usa una imagen clara para representar tu curso"></i>
+              </div>
+              <div class="drop-area" id="dropImage">
+                <i class="fa-solid fa-image"></i>
+                <p>Arrastra y suelta una imagen, o <span class="browse" id="browseImage">Explorar</span></p>
+                <small>400x300 o superior recomendado. Máx 5 MB (png, jpg)</small>
+                <input type="file" id="imageInput" accept="image/png, image/jpeg" hidden>
+              </div>
+            </div>
+
+            <!-- Video Promocional -->
+<div class="upload-box" id="videoBox">
+  <div class="Label-Block">
+    <label class="Point">*</label>
+    <label class="Point-Lable">Video Promocional</label>
+    <i class="fa-solid fa-circle-question" title="Agrega el enlace de tu video promocional (YouTube, Vimeo, etc.)"></i>
   </div>
+
+  <div class="video-drop-area">
+    <i class="fa-solid fa-video"></i>
+    <p>Pega o escribe el enlace del video</p>
+    <small>Ejemplo: https://www.youtube.com/watch?v=abc123</small>
+
+    <input 
+      type="url" 
+      id="videoLinkInput" 
+      placeholder="Pega aquí el enlace..." 
+      required
+    />
+  </div>
+</div>
+
+
+
+          </div>
+
+        </div>
+        
+        <div class="Preview-Blocks">
+
+          <div class="Preview-Tools-Block">
+
+            <div class="PTB-Left">
+              <h3>Previsualización</h3>
+            </div>
+
+            <div class="PTB-Right">
+
+              <div class="tool-Side-Btns" id="BIB-preview">
+                <i class="fa-solid fa-eye"></i>
+                <span class="linkName">Previsualizar</span>
+              </div>
+
+              <div class="tool-Side-Btns" id="BIB-clearAll">
+                <i class="fa-solid fa-trash"></i>
+                <span class="linkName">Borrar todo</span>
+              </div>
+
+
+            </div>
+
+          </div>
+
+          <div class="Preview-Title"> 
+            <div id="BIB-Course-Img"></div>
+            <h1 id="BIB-Course-Tittle"></h1>
+            <div id="BIB-Course-Ranking"></div>
+          </div>
+
+          <div class="Main-divide">
+            
+            <div class="Main-divide-left">
+              <div class="Main-divide-top">
+                <div class="MDT-Left"> 
+                  <div id="video-player"></div>
+                </div>
+              </div>
+              <div class="Main-divide-Bottom">
+                <div class="tabs">
+                  <button class="tabs-Btns" id="Detials-btns">Detalles</button>
+                  <button class="tabs-Btns" id="Notes-btns">Notas</button>
+                  <button class="tabs-Btns" id="Resources-btns">Recursos</button>
+                  <button class="tabs-Btns" id="Quizes-btns">Cuestionario</button>
+                  <button class="tabs-Btns" id="Test-btns">Examen Final</button>
+                </div>
+
+                <div class="render-instr-block">
+
+                  <div class="render-tabs">
+                    <div class="hidden-tabs" id="Detiales">
+                      <div class="hidden-Teacher-Info-block">
+                        <img id="Teacher-Img">
+                        <div class="hidden-Teacher-Info-block-text">
+                          <h3 id="Teacher-Name"></h3>
+                          <p id="About-Teacher"></p>
+                        </div>
+                      </div>
+                      
+
+                    </div>
+                    <div class="hidden-tabs" id="Notes"></div>
+                    <div class="hidden-tabs"  id="Resources"></div>
+                    <div class="hidden-tabs"  id="Quizes"></div>
+                  </div>
+
+                  <div id="description-block"></div>
+
+   
+                </div>
+
+
+
+              </div>
+            </div>
+
+            <div class="Main-divide-right">
+              <h3>Charateristicas Del Curso</h3>
+
+              <div class="Course-Detials">
+                <div class="Course-Detials-info">
+                  
+                  <div class="Duraction-Block">
+                    <i class="fa-solid fa-hourglass-start"></i>
+                    <h3 id="C-Durtation"></h3>
+                  </div>
+
+                  <div class="Skill-Level-Block">
+                    <i class="fa-solid fa-ranking-star"></i>
+                    <h3 id="S-Level"></h3>
+                  </div>
+
+                </div>
+              </div>
+
+              <div id="Course-list"></div>
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+      <div class="Course-Input-Blocks" id="Starter-Page-Block">
+
+        <div class="Input-Blocks">
+
+          <h1>Creador de Contenido:</h1>
+
+          <div id="modules-container">
+            <!-- Modules dynamically inserted here -->
+          </div>
+
+          <button id="add-module" class="add-module">+ Add Module</button>
+
+     
+          
+
+
+
+
+
+          
+
+
+        </div>
+        
+        <div class="Preview-Blocks">
+         
+
+          <div class="Preview-Tools-Block">
+
+            <div class="PTB-Left">
+              <h3>Previsualización</h3>
+            </div>
+
+            <div class="PTB-Right">
+
+              <div class="tool-Side-Btns" id="BPSPB-preview">
+                <i class="fa-solid fa-eye"></i>
+                <span class="linkName">Previsualizar</span>
+              </div>
+
+              <div class="tool-Side-Btns" id="BIBSPB-clearAll">
+                <i class="fa-solid fa-trash"></i>
+                <span class="linkName">Borrar todo</span>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div id="spb-Prview-block"></div>
+        </div>
+
+      </div>
+
+
+
+
+      <div class="Course-Input-Blocks" id="Course-Content-Block">
+
+        <div class="Input-Blocks">
+          <h1>Creador de Contenido:</h1>
+<button id="show-exams" class="show-exams">Mostrar Exámenes</button>
+
+          <div id="CIB-Input-Blocks"></div>
+
+
+
+
+
+        </div>
+        
+        <div class="Preview-Blocks">
+          <div>Preview</div>
+        </div>
+
+      </div>
+
+
 
       
-  </div>
+      <div class="Course-Input-Blocks" id="Add-Type-Method-Block">
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ 
 
-  <script  src="TeacherMensajes.js" type="module"></script>
+      </div>
+
+
+
+
+
+
+
+
+  
+    </section>  
+  </main>
+
+
+
+
+  <script  src="CreateCourse.js" type="module"></script>
 </body>
 </html>

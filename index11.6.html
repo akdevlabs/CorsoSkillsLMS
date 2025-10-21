@@ -22,7 +22,25 @@
 
 </head>
 <body>  
-  <section class="nav" id="sidebar">
+
+  <section class="User-Info">
+    <h1>Portal de Configuración del Profesor</h1>
+    <div class="Alerts-User">
+      <div class="Active-Portal-Alerts"
+        id="APA"></div>
+      <div class="User-Block">
+        <div id="profile-Icon"></div>
+        <div class="User-Info-Block">
+          <h2 id="User-Id"></h2>
+          <h1 id="User-Name"></h1>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="main">
+
+    <section class="Main-Blocks" id="sidebar">
       
       <div class="sidebar-content">
         
@@ -30,38 +48,33 @@
           <img id="Bulogos"></img>
           
           <div class="Side-Btns" id="Home">
-            <i class="fa-solid fa-table-cells"></i>
+            <i class="fa-solid fa-square-poll-vertical"></i>
             <span class="linkName">Dashboard</span>
           </div>
 
-          <div class="Side-Btns" id="Books">
-            <i class="fa-solid fa-book-open"></i>
-            <span class="linkName">eBooks</span>
+          <div class="Side-Btns" id="invocie">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+            <span class="linkName">Pagos</span>
           </div>
 
-          <div class="Side-Btns" id="Classroom">
+          <div class="Side-Btns" id="Students">
             <i class="fa-solid fa-school"></i>
-            <span class="linkName">Salon</span>
+            <span class="linkName">Estudiantes</span>
           </div>
 
-          <div class="Side-Btns" id="Videos">
-            <i class="fa-solid fa-file-video"></i>
-            <span class="linkName">Cursos</span>
+          <div class="Side-Btns" id="Assignments">
+            <i class="fa-solid fa-list-check"></i>
+            <span class="linkName">Tareas</span>
           </div>
 
-          <div class="Side-Btns" id="Trophy">
-            <i class="fa-solid fa-trophy"></i>
-            <span class="linkName">Logros</span>
+          <div class="Side-Btns" id="Lessons">    
+            <i class="fa-solid fa-person-chalkboard"></i>
+            <span class="linkName">Lecciones</span>
           </div>
 
-          <div class="Side-Btns" id="Multi-User">    
-            <i class="fa-solid fa-users"></i>
-            <span class="linkName">Comunidad</span>
-          </div>
-
-          <div class="Side-Btns" id="carrer">    
-            <i class="fa-solid fa-graduation-cap"></i>
-            <span class="linkName">Ruta Profesional</span>
+          <div class="Side-Btns" id="Mensajes">    
+            <i class="fa-solid fa-message"></i>
+            <span class="linkName">Mensajes</span>
           </div>
 
         </div>
@@ -73,11 +86,6 @@
             <span class="linkName">Settings</span>
           </div>
    
-          <div class="Side-Btns" id="profile">
-            <i class="fa-solid fa-user-tie"></i>
-            <span class="linkName">Profesor</span>
-          </div>
-
           <div class="Side-Btns" id="Logout">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span class="linkName">Cerrar sesión</span>
@@ -85,10 +93,6 @@
         </div> 
         
       </div>
-
-    
-
-    
 
       <div class="Action-nav-btns">
       
@@ -101,87 +105,416 @@
       </div>
 
       </div>
-  </section>
 
+    </section>
 
-  <section class="main" id="main">
-      <div class="container">
-    <div class="header">Portal de Configuración</div>
+    <section class="Main-Blocks" id="Content">
+      <h1>Configuraciónes</h1>
+      <div id="Line"></div>
 
-    <!-- Perfil -->
-    <div class="card">
-      <h3><i class="fas fa-user"></i> Perfil</h3>
-      <div class="flex-row">
-        <img src="https://via.placeholder.com/60" alt="Foto de perfil">
-        <input type="file" accept="image/*">
+      <div class="Config-Nav-Btns">
+        <button class="Setting-Btns" id="Details">Detalles</button>
+        <button class="Setting-Btns" id="Profile">Perfil</button>
+        <button class="Setting-Btns" id="Password">Contraseña</button>
+        <button class="Setting-Btns" id="Email">Correo</button>
+        <button class="Setting-Btns" id="Notifications">Notificaciones</button>
+        <button class="Setting-Btns" id="Billing">Pagos</button>
       </div>
 
-      <label>Nombre completo:</label>
-      <input type="text" placeholder="Ej. María Pérez">
+      <!-- 🟦 DETAILS -->
+      <div class="Config-Blocks show" id="Details-Block">
 
-      <label>Email:</label>
-      <input type="email" placeholder="Ej. maria@example.com">
+        <div class="CB-Tittle">
+          <h2>Detalles del Docente</h2>
+          <i class="fa-solid fa-pencil" id="DD"></i>
+        </div>
 
-      <label>Biografía:</label>
-      <textarea rows="3" placeholder="Cuéntanos sobre ti..."></textarea>
 
-      <button class="btn"><i class="fas fa-save"></i> Guardar cambios</button>
-    </div>
+        <div class="Input-blocks">
+          <div class="input-line">
+            <div class="Content-block">
+              <label>ID del Docente:</label>
+              <span id="TeacherId"></span>
+            </div>
+            <div class="Content-block">
+              <label>Fecha de Registro:</label>
+              <span id="Reg-Date"></span>
+            </div>
+          </div>
 
-    <!-- Notificaciones -->
-    <div class="card">
-      <h3><i class="fas fa-bell"></i> Notificaciones</h3>
-      <label>
-        <input type="checkbox"> Recibir notificaciones por email
-      </label>
-      <label>
-        <input type="checkbox"> Notificaciones dentro de la plataforma
-      </label>
-      <label>
-        <input type="checkbox"> Recordatorios de clase en vivo
-      </label>
+          <div class="input-line">
+            <div class="Content-block">
+              <label>Rol:</label>
+              <span id="Teacher-Rol"></span>
+            </div>
+            <div class="Content-block">
+              <label>Estado de la Cuenta:</label>
+              <span id="Status"></span>
+            </div>
+          </div>
 
-      <button class="btn"><i class="fas fa-save"></i> Guardar configuración</button>
-    </div>
+          <div class="input-line">
+            <div class="Content-block">
+              <label>Miembro desde:</label>
+              <span id="MemberDuration"></span>
+            </div>
+            <div class="Content-block">
+              <label>Última sesión:</label>
+              <span id="lastLogin"></span>
+            </div>
+          </div>
 
-    <!-- Seguridad -->
-    <div class="card">
-      <h3><i class="fas fa-lock"></i> Seguridad</h3>
-      <label>Contraseña actual:</label>
-      <input type="password">
+          <div class="input-line">
+            
+            <div class="Content-block">
+              <label>Idioma Preferido:</label>
+              <select id="Teacher-Language">
+                <option value="es">Español</option>
+                <option value="en">Inglés</option>
+                <option value="pt">Portugués</option>
+              </select>
+            </div>
 
-      <label>Nueva contraseña:</label>
-      <input type="password">
+            <div class="Content-block"> 
+              <label for="Teacher-Timezone">Zona horaria:</label>
 
-      <label>Confirmar nueva contraseña:</label>
-      <input type="password">
+              <span class="Info" id="TTimezone"></span> 
 
-      <button class="btn"><i class="fas fa-key"></i> Cambiar contraseña</button>
-    </div>
+              <select class="Hidden-Input" id="Teacher-Timezone"> 
+                <option value="">Selecciona tu zona horaria</option> <!-- 🌎 América --> 
+                <option value="America/Anchorage">(GMT-9) Alaska</option> <option value="America/Los_Angeles">(GMT-8) Los Ángeles</option>
+                <option value="America/Denver">(GMT-7) Denver</option> 
+                <option value="America/Chicago">(GMT-6) Chicago</option> <option value="America/Mexico_City">(GMT-6) Ciudad de México</option> 
+                <option value="America/Bogota">(GMT-5) Bogotá</option> 
+                <option value="America/Lima">(GMT-5) Lima</option> 
+                <option value="America/New_York">(GMT-4) Nueva York</option> <option value="America/Santiago">(GMT-3) Santiago</option> <option value="America/Argentina/Buenos_Aires">(GMT-3) Buenos Aires</option> 
+                <option value="America/Sao_Paulo">(GMT-3) São Paulo</option> <!-- 🌍 Europa --> 
+                <option value="Europe/London">(GMT+0) Londres</option> 
+                <option value="Europe/Lisbon">(GMT+0) Lisboa</option> 
+                <option value="Europe/Madrid">(GMT+1) Madrid</option> 
+                <option value="Europe/Paris">(GMT+1) París</option> 
+                <option value="Europe/Berlin">(GMT+1) Berlín</option> 
+                <option value="Europe/Rome">(GMT+1) Roma</option> 
+                <option value="Europe/Athens">(GMT+2) Atenas</option> 
+                <option value="Europe/Moscow">(GMT+3) Moscú</option> 
+                <!-- 🌍 África --> 
+                <option value="Africa/Casablanca">(GMT+0) Casablanca</option> <option value="Africa/Lagos">(GMT+1) Lagos</option> 
+                <option value="Africa/Cairo">(GMT+2) El Cairo</option> 
+                <option value="Africa/Nairobi">(GMT+3) Nairobi</option> 
+                <option value="Africa/Johannesburg">(GMT+2) Johannesburgo</option>
+                <!-- 🌏 Asia --> 
+                <option value="Asia/Dubai">(GMT+4) Dubái</option> 
+                <option value="Asia/Karachi">(GMT+5) Karachi</option> 
+                <option value="Asia/Kolkata">(GMT+5:30) Nueva Delhi</option> <option value="Asia/Bangkok">(GMT+7) Bangkok</option> 
+                <option value="Asia/Singapore">(GMT+8) Singapur</option> <option value="Asia/Hong_Kong">(GMT+8) Hong Kong</option> <option value="Asia/Tokyo">(GMT+9) Tokio</option> 
+                <option value="Asia/Seoul">(GMT+9) Seúl</option> 
+                <option value="Asia/Shanghai">(GMT+8) Shanghái</option> 
+                <!-- 🌏 Oceanía --> 
+                <option value="Australia/Perth">(GMT+8) Perth</option> 
+                <option value="Australia/Brisbane">(GMT+10) Brisbane</option> <option value="Australia/Sydney">(GMT+11) Sídney</option> <option value="Pacific/Auckland">(GMT+12) Auckland</option> <!-- 🌐 Universal --> 
+                <option value="UTC">(GMT±0) UTC</option> 
+              </select> 
 
-    <!-- Preferencias -->
-    <div class="card">
-      <h3><i class="fas fa-cog"></i> Preferencias</h3>
-      <label>Idioma:</label>
-      <select>
-        <option>Español</option>
-        <option>Inglés</option>
-      </select>
+              <button class="Hidden-Input" id="Save-Teacher-Timezone">Guardar</button> 
+            </div> 
+          </div>
+          
+        </div>
+      </div>
 
-      <label>Modo de pantalla:</label>
-      <select>
-        <option>Claro</option>
-        <option>Oscuro</option>
-      </select>
+      <!-- 🟩 PROFILE -->
+      <div class="Config-Blocks" id="Profile-Block">
+        <div class="CB-Tittle">
+          <h2>Perfil Personal</h2>
+          <i class="fa-solid fa-pencil" id="FN"></i>
+        </div>
+    
+        <div class="Profile-Img-Block">
+          <div id="Profile-Imgs" alt="Foto de perfil"></div> 
 
-      <button class="btn"><i class="fas fa-save"></i> Guardar preferencias</button>
-    </div>
-  </div>  
+
+          <div class="PIB" id="PIB-Block"> 
+            <input id="Add-Profile-Img" type="file" accept="image/*"> 
+            <button id="Save-Profile-Img">Guardar</button> 
+          </div> 
+        </div>
+
+        <div class="Input-blocks">
+          
+          <div class="input-line">
+            <div class="Content-block">
+              <label>Nombre completo:</label>
+              <span class="Info" id="TFN"></span>      
+              <input type="text" class="Hidden-Input" id="Teacher-fullName" placeholder="Ej. María Pérez"> 
+              <button class="Hidden-Input" id="Save-Teacher-fullName">Guardar</button> 
+            </div>
+
+            <div class="Content-block">
+              <label>Número de teléfono:</label> 
+              <span class="Info" id="TelPhone"></span>
+              <input type="tel" class="Hidden-Input" id="Teacher-Phone" placeholder="Ej. +52 55 1234 5678"> 
+              <button class="Hidden-Input" id="Save-Teacher-Phone">Guardar</button>
+            </div>
+
+
+
+
+          </div>
+
+          <div class="input-line">
+
+
+            <div class="Content-block">
+              <label>Especialidad:</label>
+              <input type="text" id="Teacher-Specialty" placeholder="Ej. Entrenamiento deportivo, nutrición...">
+            </div>
+
+            <div class="Content-block">
+              <label>Género:</label>
+              <span  id="TGender"></span>
+            </div>
+          </div>
+
+          <div class="input-line">
+            <div class="Content-block">
+              <label>LinkedIn:</label>
+               <span  id="LinkedIn"></span>
+              <input type="url" class="Hidden-Input" id="Teacher-LinkedIn" placeholder="Ej. https://linkedin.com/in/maria-perez">
+              <button class="Hidden-Input" id="Save-Teacher-LinkedIn">Guardar</button>
+            </div>
+
+            <div class="Content-block">
+              <label>Fecha de nacimiento:</label>
+              <span  id="TBirth"></span>
+              <input type="date" class="Hidden-Input" id="Teacher-Birthday">
+              <button class="Hidden-Input" id="Save-Teacher-Birthday">Guardar</button>
+            </div>
+          </div>
+
+          <div class="input-line">
+            <div class="Content-block">
+              <label>Biografía:</label>
+              <span class="Info" id="Teacher-Bio"></span> 
+              <textarea class="Hidden-Input" id="Teacher-Bio-W" rows="3" placeholder="Cuéntanos sobre ti..."></textarea> 
+              <button class="Hidden-Input" id="Save-Teacher-Bio">Guardar</button> 
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+
+      <!-- 🟨 PASSWORD -->
+      <div class="Config-Blocks" id="Password-Block">
+        <div class="CB-Tittle">
+          <h2>Seguridad de la Cuenta</h2>
+          <i class="fa-solid fa-pencil" id="PS"></i>
+        </div>
+
+        <div class="Input-blocks">
+          <div class="Content-block">
+            <label>Contraseña actual:</label>
+            <input type="password" id="Current-Password" placeholder="********">
+          </div>
+          <div class="Content-block"  id="New-Password-Block">
+            <label>Nueva contraseña:</label>
+            <input type="password" id="New-Password" placeholder="Mínimo 8 caracteres">
+          </div>
+          <div class="Content-block" id="Confirm-Password-Block">
+            <label>Confirmar nueva contraseña:</label>
+            <input type="password" id="Confirm-Password" placeholder="Repite tu contraseña">
+          </div>
+
+          <button class="Hidden-Input" id="Save-Password">Actualizar Contraseña</button>
+        </div>
+      </div>
+
+      <!-- 🟧 EMAIL -->
+      <div class="Config-Blocks" id="Email-Block">
+        <div class="CB-Tittle">
+          <h2>Configuración de Correo</h2>
+          <i class="fa-solid fa-pencil" id="CE"></i>
+        </div>
+
+        <div class="Content-block"> 
+          <label for="Teacher-Email">Correo actual:</label> 
+          <span id="T-Current-Email"></span>   
+        </div> 
+
+        <div class="Input-blocks" id="Email-Input-blocks">
+
+          <div class="Content-block">
+            <label for="New-Email">Nuevo correo electrónico:</label>
+            <input type="email" id="New-Email" placeholder="Ej. maria.nueva@correo.com">
+          </div>
+
+          <div class="Content-block">
+            <label for="Confirm-Email">Confirmar nuevo correo:</label>
+            <input type="email" id="Confirm-Email" placeholder="Repite el nuevo correo">
+          </div>
+
+          <button id="Save-New-Email">Actualizar Correo</button>
+        </div>
+      </div>
+
       
+      <!-- 🟪 NOTIFICATIONS -->
+      <div class="Config-Blocks" id="Notifications-Block">
+        <div class="CB-Tittle">
+          <h2>Notificaciones y Privacidad</h2>
+          <i class="fa-solid fa-pencil" id="NP"></i>
+        </div>
+        
+        <div class="Input-blocks">
+          <h3>Preferencias</h3>
+          <div class="Content-block">
+            <label><input type="checkbox" checked> Actualizaciones de cursos</label>
+          </div>
+          <div class="Content-block">
+            <label><input type="checkbox" checked> Nuevos estudiantes inscritos</label>
+          </div>
+          <div class="Content-block">
+            <label><input type="checkbox" checked> Avisos del sistema</label>
+          </div>
+          <div class="Content-block">
+            <label><input type="checkbox" checked> Promociones y noticias</label>
+          </div>
+
+          <h3>Privacidad</h3>
+          <div class="Content-block">
+            <label><input type="checkbox" checked> Mostrar mi perfil públicamente</label>
+          </div>
+          <div class="Content-block">
+            <label><input type="checkbox" checked> Compartir mi actividad con otros usuarios</label>
+          </div>
+
+          <button id="Save-Notifications">Guardar Preferencias</button>
+        </div>
+      </div>
+
+      <!-- 🟥 BILLING -->
+      <div class="Config-Blocks" id="Billing-Block">
+
+        <div class="CB-Tittle">
+          <h2>Pagos y Facturación</h2>
+          <i class="fa-solid fa-pencil" id="PF"></i>
+        </div>
+
+        <div class="Input-blocks" id="Input-Billing-Block">
+
+          <!-- 🧍 Personal Info -->
+          <div class="input-line">
+            <div class="Content-block">
+              <label>Nombre completo:</label>
+              <span id="PTFN"></span>      
+              <input type="text" class="Hidden-Input" id="Teacher-fullName-Pagos" placeholder="Ej. María Pérez"> 
+              <button class="Hidden-Input" id="Save-Teacher-fullName-Pagos">Guardar</button> 
+            </div>
+
+            <div class="Content-block">
+              <label>Correo de pago:</label>
+              <span id="PTEmail"></span>      
+              <input type="email" class="Hidden-Input" id="Teacher-email-Pagos" placeholder="Ej. maria.perez@gmail.com"> 
+              <button class="Hidden-Input" id="Save-Teacher-email-Pagos">Guardar</button> 
+            </div>
+          </div>
+
+          <!-- 🏠 Address + Phone -->
+          <div class="input-line">
+            <div class="Content-block">
+              <label>Dirección (Calle, Ciudad, Código Postal, País):</label>
+              <span id="PTAddress"></span>      
+              <input type="text" class="Hidden-Input" id="Teacher-address-Pagos" placeholder="Ej. Calle 123, Ciudad de México, 04510, México"> 
+              <button class="Hidden-Input" id="Save-Teacher-address-Pagos">Guardar</button> 
+            </div>
+
+            <div class="Content-block">
+              <label>Número de teléfono:</label>
+              <span id="PTPhone"></span>      
+              <input type="tel" class="Hidden-Input" id="Teacher-phone-Pagos" placeholder="Ej. +52 55 1234 5678"> 
+              <button class="Hidden-Input" id="Save-Teacher-phone-Pagos">Guardar</button> 
+            </div>
+          </div>
+
+          <!-- 🪪 ID Info -->
+          <div class="input-line">
+            <div class="Content-block">
+              <label>CURP:</label>
+              <span id="PTCURP"></span>
+              <input type="text" class="Hidden-Input" id="Teacher-CURP-Pagos" placeholder="Ej. AEMV890123HDFRRS09">
+              <button class="Hidden-Input" id="Save-Teacher-CURP-Pagos">Guardar</button>
+            </div>
+
+            <div class="Content-block">
+              <label>RFC (Registro Federal de Contribuyentes):</label>
+              <span id="PTRFC"></span>
+              <input type="text" class="Hidden-Input" id="Teacher-RFC-Pagos" placeholder="Ej. AEMV890123AB1">
+              <button class="Hidden-Input" id="Save-Teacher-RFC-Pagos">Guardar</button>
+            </div>
+          </div>
+
+          <div class="input-line">
+            <div class="Content-block">
+              <label>Número de identificación oficial:</label>
+              <span id="PTIDNumber"></span>      
+              <input type="text" class="Hidden-Input" id="Teacher-idNumber-Pagos" placeholder="Ej. CURP, RFC, o número de pasaporte"> 
+              <button class="Hidden-Input" id="Save-Teacher-idNumber-Pagos">Guardar</button> 
+            </div>
+
+            <div class="Content-block">
+              <label>Copia del documento de identidad (INE, Pasaporte, Licencia):</label>
+              <span id="PTIDFile"></span>
+              <input type="file" class="Hidden-Input" id="Teacher-idFile-Pagos" accept="image/*,application/pdf">
+              <button class="Hidden-Input" id="Save-Teacher-idFile-Pagos">Guardar</button>
+            </div>
+          </div>
+
+          <!-- 🏦 Bank Info -->
+          <div class="input-line">
+            <div class="Content-block">
+              <label>Nombre del banco:</label>
+              <span id="PTBankName"></span>      
+              <input type="text" class="Hidden-Input" id="Teacher-bankName-Pagos" placeholder="Ej. BBVA, Santander, Citibanamex"> 
+              <button class="Hidden-Input" id="Save-Teacher-bankName-Pagos">Guardar</button> 
+            </div>
+
+            <div class="Content-block">
+              <label>Nombre del titular de la cuenta:</label>
+              <span id="PTAccountHolder"></span>      
+              <input type="text" class="Hidden-Input" id="Teacher-accountHolder-Pagos" placeholder="Debe coincidir con el documento de identidad"> 
+              <button class="Hidden-Input" id="Save-Teacher-accountHolder-Pagos">Guardar</button> 
+            </div>
+          </div>
+
+          <div class="input-line">
+            <div class="Content-block">
+              <label>Número de cuenta / CLABE:</label>
+              <span id="PTAccountNumber"></span>      
+              <input type="text" class="Hidden-Input" id="Teacher-accountNumber-Pagos" placeholder="Ej. 012345678901234567"> 
+              <button class="Hidden-Input" id="Save-Teacher-accountNumber-Pagos">Guardar</button> 
+            </div>
+
+            <div class="Content-block">
+              <label>Factura de servicios (XML y PDF):</label>
+              <span id="PTInvoice"></span>
+              <input type="file" class="Hidden-Input" id="Teacher-invoice-Pagos" accept=".xml,.pdf">
+              <button class="Hidden-Input" id="Save-Teacher-invoice-Pagos">Guardar</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+
+
+      
+
+    </section>
+
   </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <script  src="TeacherSettings.js" type="module"></script>
 </body>
+  <script  src="TeacherSettings.js" type="module"></script>
 </html>

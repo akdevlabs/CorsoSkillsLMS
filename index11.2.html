@@ -17,153 +17,441 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Teacher'sStudents|CorsoSkills</title>
-  <link rel="stylesheet" href="TeacherStudents.css">
+  <title>TeacherPagos|CorsoSkills</title>
+  <link rel="stylesheet" href="TeacherPagos.css">
 
 </head>
 <body>  
-  <section class="nav" id="sidebar">
-      
-      <div class="sidebar-content">
-        
-        <div class="sidebar-top" id="sidebar-top">  
-          <img id="Bulogos"></img>
+
+  <section class="User-Info">
+    <h1>Portal de Pagos del Profesor</h1>
+    <div class="Alerts-User">
+      <div class="Active-Portal-Alerts"
+        id="APA"></div>
+
+
+
+      <div class="User-Block">
+        <div id="profile-Icon"></div>
+        <div class="User-Info-Block">
+          <h2 id="User-Id"></h2>
+          <h1 id="User-Name"></h1>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="body-Bottom">
+    
+    <section class="nav" id="sidebar">
           
-          <div class="Side-Btns" id="Home">
-            <i class="fa-solid fa-square-poll-vertical"></i>
-            <span class="linkName">Dashboard</span>
+          <div class="sidebar-content">
+            
+            <div class="sidebar-top" id="sidebar-top">  
+              <img id="Bulogos"></img>
+              
+              <div class="Side-Btns" id="Home">
+                <i class="fa-solid fa-square-poll-vertical"></i>
+                <span class="linkName">Dashboard</span>
+              </div>
+
+              <div class="Side-Btns" id="Calander">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span class="linkName">Calendario</span>
+              </div>
+              
+              <div class="Side-Btns" id="invocie">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+                <span class="linkName">Pagos</span>
+              </div>
+
+              <div class="Side-Btns" id="Students">
+                <i class="fa-solid fa-school"></i>
+                <span class="linkName">Estudiantes</span>
+              </div>
+
+              <div class="Side-Btns" id="Assignments">
+                <i class="fa-solid fa-list-check"></i>
+                <span class="linkName">Tareas</span>
+              </div>
+
+              <div class="Side-Btns" id="BCourse">    
+                <i class="fa-solid fa-atom"></i>
+                <span class="linkName">Crear Curso</span>
+              </div>
+
+              <div class="Side-Btns" id="Lessons">    
+                <i class="fa-solid fa-person-chalkboard"></i>
+                <span class="linkName">Lecciones</span>
+              </div>
+
+              <div class="Side-Btns" id="Mensajes">    
+                <i class="fa-solid fa-message"></i>
+                <span class="linkName">Mensajes</span>
+              </div>
+
+            </div>
+
+            <div class="sidebar-bottom">
+
+              <div class="Side-Btns" id="Settings">
+                <i class="fa-solid fa-gear"></i>
+                <span class="linkName">Settings</span>
+              </div>
+      
+              <div class="Side-Btns" id="Logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span class="linkName">Cerrar sesión</span>
+              </div>
+            </div> 
+            
           </div>
 
-          <div class="Side-Btns" id="invocie">
-            <i class="fa-solid fa-file-invoice-dollar"></i>
-            <span class="linkName">Pagos</span>
+          <div class="Action-nav-btns">
+          
+          <div class="Side-caret" id="open">
+              <i class="fa-solid fa-caret-right"></i>
           </div>
 
-          <div class="Side-Btns" id="Students">
-            <i class="fa-solid fa-school"></i>
-            <span class="linkName">Estudiantes</span>
+          <div class="Side-caret" id="close">
+              <i class="fa-solid fa-caret-left"></i>
           </div>
 
-          <div class="Side-Btns" id="Assignments">
-            <i class="fa-solid fa-list-check"></i>
-            <span class="linkName">Tareas</span>
+          </div>
+    </section>
+
+    <section class="main" id="main">
+ 
+      <h1>Pagos de Profesorado</h1>
+      <div id="Line"></div>
+
+        <div class="Content">
+
+          <div class="summary">
+            <div class="summary-card">
+              <h3>Total Recibido (2025)</h3>
+              <p>$12,350.00 MXN</p>
+            </div>
+            <div class="summary-card">
+              <h3>Total Pendiente</h3>
+              <p>$2,100.00 MXN</p>
+            </div>
+            <div class="summary-card">
+              <h3>Último Pago</h3>
+              <p>15 Septiembre 2025 - $850.00</p>
+            </div>
+            <div class="summary-card">
+              <h3>Próximo Pago Estimado</h3>
+              <p>15 Octubre 2025</p>
+            </div>
           </div>
 
-          <div class="Side-Btns" id="Lessons">    
-            <i class="fa-solid fa-person-chalkboard"></i>
-            <span class="linkName">Lecciones</span>
+          <div class="Payment-Nav-Btns">
+            <button class="Payment-Btns active" id="bank-info-Btn">Información Bancaria</button>
+            <button class="Payment-Btns" id="Salary-Btn">Ingresos</button>
+            <button class="Payment-Btns" id="History-Btn">Historial de Pagos</button>
+            <button class="Payment-Btns" id="Download-Btn">Descargar y Facturas</button>
+            <button class="Payment-Btns" id="Support-Btn">Soporte y Asistencia</button>
           </div>
 
-          <div class="Side-Btns" id="Mensajes">    
-            <i class="fa-solid fa-message"></i>
-            <span class="linkName">Mensajes</span>
+          <div class ="Payment-Blocks show" id ="bank-info-card">
+            <div class="Tittle-Block" >
+              <h2>Información Bancaria</h2>
+            </div>
+            <div  class="Card-Devider">
+                <div class="Block-Content">
+                  <a><strong>Banco:</strong></a>
+                  <span id="BankName"></span>
+                </div>
+
+                <div class="Block-Content">
+                  <a><strong>Titular:</strong></a>
+                  <span id="AccountHolder"></span>
+                </div>
+
+                <div class="Block-Content">
+                  <a><strong>Número de cuenta:</strong></a>
+                  <span id="AccountNumber"></span>
+                </div>
+
+                <div class="Block-Content">
+                  <a><strong>Estado de verificación:</strong></a>
+                  <span id="VerificationStatus" class="verified">✅ Verificado</span>
+                </div>
+
+                <button id="UpdateBankInfo"><i class="fas fa-bank"></i> Actualizar Datos Bancarios</button>
+            </div>
+
           </div>
 
-        </div>
+          <div class ="Payment-Blocks" id ="chart-section">
 
-        <div class="sidebar-bottom">
+            <div class="Tittle-Block" >
+              <h2>Ingresos Mensuales</h2>
+            </div>
 
-          <div class="Side-Btns" id="Settings">
-            <i class="fa-solid fa-gear"></i>
-            <span class="linkName">Settings</span>
+            <div class="alert-Containors">
+              <div class="Alerts-Blocks" id ="Ingresos Quincenal">
+                <div class="IQ-Block">
+                   <div>
+                      <a><strong>Pago Quincenal de <span id="ActiveMonth"><span>Octubre 2025</strong></a>
+                      <span id="ActiveQPay">$0.00</span>
+                   </div> 
+                    <a><i class="fas fa-chart-line"></i> Ver Desglose Completo</a>
+                </div>
+              </div>
+
+              <div class="Alerts-Blocks" id ="Ingresos Mensuales">
+                <div class="IM-Block">
+                  <div>
+                    <a><strong>Pago Mensual de <span id="LastActiveMonthPaid"><span>Octubre 2025</strong></a>
+                    <span id="LastMonthPay">$0.00</span>
+                  </div>
+                  <a><i class="fas fa-chart-line"></i> Ver Desglose Completo</a>
+                   
+                </div>
+              </div>
+            </div>
+
+            <div  class="Hidden-block" id ="Break-Down">
+
+              <div class="Break-Down-Add">
+                <div class="BD-Tittle">
+                  <h3>Desglose Mensual</h3>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>Mes actual:</strong></a>
+                  <span id="CurrentMonth">Octubre 2025</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>Pago base:</strong></a>
+                  <span span id="BasePay">$0.00</span>
+                </div> 
+                          
+                <div class="BD-Block">
+                  <a><strong>Bonificaciones:</strong></a>
+                  <span id="Bonuses">$0.00</span>
+                </div> 
+
+                <div class="BD-Block">
+                  <a><strong>Días sin trabajar (sin goce de sueldo):</strong></a>
+                  <span id="MissedDays">0</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>Deducción por días sin pago:</strong></a>
+                  <span id="DeductionWithoutPay">$0.00</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>Días por enfermedad:</strong></a>
+                  <span id="SickDays">0</span>
+                </div>
+                
+                <div class="BD-Block">
+                  <a><strong>Compensación por enfermedad:</strong></a>
+                  <span id="SickLeavePay">$0.00</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a class="Total"><strong>Salario mensual bruto (antes de impuestos):</strong></a>
+                  <span class="Total-Sub" id="TotalMonthlyEarnings">$0.00</span>
+                </div>          
+
+              </div>
+
+              <div class="Break-Down-Less">
+                <div class="BD-Tittle">
+                  <h3>Desglose De Impuestos</h3>
+                </div>
+                
+                <div class="BD-Block">
+                  <a><strong>Salario bruto (antes de impuestos):</strong></a>
+                  <span id="GrossSalary">$0.00</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>ISR (Impuesto Sobre la Renta):</strong></a>
+                  <span id="ISR">$0.00</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>IMSS (Seguridad Social):</strong></a>
+                  <span id="IMSS">$0.00</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>INFONAVIT (Fondo de Vivienda):</strong></a>
+                  <span id="INFONAVIT">$0.00</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>Otras deducciones:</strong></a>
+                  <span id="OtherDeductions">$0.00</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>Total de impuestos y deducciones:</strong></a>
+                  <span id="TotalDeductions">$0.00</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a class="Total" ><strong>Pago neto:</strong></a>
+                  <span class="Total-Sub" id="NetPay">$0.00</span>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="Hidden-block" id="Break-Down-Quincenal">
+
+              <div class="Break-Down-Add">
+                <div class="BD-Tittle">
+                  <h3>Desglose Quincenal</h3>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>Quincena actual:</strong></a>
+                  <span id="CurrentFortnight">1ª Quincena Octubre 2025</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>Pago base quincenal:</strong></a>
+                  <span id="BasePayFortnight">$0.00</span>
+                </div> 
+                            
+                <div class="BD-Block">
+                  <a><strong>Bonificaciones:</strong></a>
+                  <span id="BonusesFortnight">$0.00</span>
+                </div> 
+
+                <div class="BD-Block">
+                  <a><strong>Días sin trabajar (sin goce de sueldo):</strong></a>
+                  <span id="MissedDaysFortnight">0</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>Deducción por días sin pago:</strong></a>
+                  <span id="DeductionWithoutPayFortnight">$0.00</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>Días por enfermedad:</strong></a>
+                  <span id="SickDaysFortnight">0</span>
+                </div>
+                
+                <div class="BD-Block">
+                  <a><strong>Compensación por enfermedad:</strong></a>
+                  <span id="SickLeavePayFortnight">$0.00</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a class="Total"><strong>Total estimado esta quincena:</strong></a>
+                  <span class="Total-Sub" id="TotalFortnightlyEarnings">$0.00</span>
+                </div>          
+
+              </div>
+
+              <div class="Break-Down-Less">
+                <div class="BD-Tittle">
+                  <h3>Desglose De Impuestos</h3>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>Salario bruto quincenal (antes de impuestos):</strong></a>
+                  <span id="GrossSalaryFortnight">$0.00</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>ISR (Impuesto Sobre la Renta):</strong></a>
+                  <span id="ISRFortnight">$0.00</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>IMSS (Seguridad Social):</strong></a>
+                  <span id="IMSSFortnight">$0.00</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>INFONAVIT (Fondo de Vivienda):</strong></a>
+                  <span id="INFONAVITFortnight">$0.00</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>Otras deducciones:</strong></a>
+                  <span id="OtherDeductionsFortnight">$0.00</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a><strong>Total de impuestos y deducciones:</strong></a>
+                  <span id="TotalDeductionsFortnight">$0.00</span>
+                </div>
+
+                <div class="BD-Block">
+                  <a class="Total"><strong>Pago neto quincenal:</strong></a>
+                  <span class="Total-Sub" id="NetPayFortnight">$0.00</span>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div> 
+
+          <div class ="Payment-Blocks" id ="table-container">
+            <h3>Historial de Pagos</h3>
+            <div id="PaymentHistoryContainer"></div>
+
+
+
           </div>
-   
-          <div class="Side-Btns" id="Logout">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span class="linkName">Cerrar sesión</span>
-          </div>
-        </div> 
+
+          <div class ="Payment-Blocks" id ="support-section">
+            <div class="SS-Block"> 
+              <div class="Tittle-Block" >
+                <h2>Soporte y Asistencia</h2>
+              </div>
         
-      </div>
+              <p>¿Tienes dudas sobre tus pagos o tu información bancaria?</p>
+              <a id="SupportEmail">📧 <strong>soporte@corsoskills.com</strong></a>
+              <span id="CopyNotice" style="display:none; margin-left:8px; color:green; font-weight:bold;">¡Copiado!</span>
 
+              <button><i class="fas fa-headset"></i> Contactar Soporte</button>
+            </div>
+
+          </div>
+
+          <div class ="Payment-Blocks" id ="Download-section">
+            <div class="buttons">
+              <button><i class="fas fa-download"></i> Descargar Reporte PDF</button>
+              <button><i class="fas fa-file-invoice"></i> Ver Facturas</button>
+            </div>
+          </div>
+
+
+
+        </div>
+
+ </div>
     
+    </section>
 
-    
 
-      <div class="Action-nav-btns">
-      
-      <div class="Side-caret" id="open">
-          <i class="fa-solid fa-caret-right"></i>
-      </div>
-
-      <div class="Side-caret" id="close">
-          <i class="fa-solid fa-caret-left"></i>
-      </div>
-
-      </div>
   </section>
+  
 
 
-  <section class="main" id="main">
-     <div class="container">
-    <div class="header">Portal de Estudiantes</div>
 
-    <!-- Students Section -->
-    <div class="section">
-      <h3>Mis Estudiantes</h3>
-      <div class="students-list">
-        <div class="student-card">
-          <h3>Laura Gómez</h3>
-          <p>Lección: Pilates Intermedio</p>
-          <p>Próxima clase: 3 junio - 10:00 AM</p>
-          <button><i class="fas fa-calendar-alt"></i> Reprogramar</button>
-        </div>
-        <div class="student-card">
-          <h3>Carlos Díaz</h3>
-          <p>Lección: Yoga Básico</p>
-          <p>Próxima clase: 5 junio - 12:00 PM</p>
-          <button><i class="fas fa-calendar-alt"></i> Reprogramar</button>
-        </div>
-        <div class="student-card">
-          <h3>Andrea Ruiz</h3>
-          <p>Lección: Stretch Avanzado</p>
-          <p>Próxima clase: 7 junio - 3:00 PM</p>
-          <button><i class="fas fa-calendar-alt"></i> Reprogramar</button>
-        </div>
-      </div>
-    </div>
 
-    <!-- Calendar Section -->
-    <div class="section calendar">
-      <h3>Calendario de Clases – Junio</h3>
-      <div class="calendar-grid">
-        <div class="calendar-day">
-          <div class="date">1</div>
-        </div>
-        <div class="calendar-day">
-          <div class="date">2</div>
-        </div>
-        <div class="calendar-day">
-          <div class="date">3</div>
-          <div class="session">Laura (10 AM)</div>
-          <button>Reprogramar</button>
-        </div>
-        <div class="calendar-day">
-          <div class="date">4</div>
-        </div>
-        <div class="calendar-day">
-          <div class="date">5</div>
-          <div class="session">Carlos (12 PM)</div>
-          <button>Reprogramar</button>
-        </div>
-        <div class="calendar-day">
-          <div class="date">6</div>
-        </div>
-        <div class="calendar-day">
-          <div class="date">7</div>
-          <div class="session">Andrea (3 PM)</div>
-          <button>Reprogramar</button>
-        </div>
-        <!-- Add more days as needed -->
-      </div>
-    </div>
-  </div>
-
-      
-  </section>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <script  src="TeacherStudents.js" type="module"></script>
+  <script  src="TeacherPagos.js" type="module"></script>
 </body>
 </html>
+
+
+

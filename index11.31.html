@@ -17,33 +17,16 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TeacherDashboard|CorsoSkills</title>
-  <link rel="stylesheet" href="TeacherDashboard.css">
+  <title>TeacherTareas|CorsoSkills</title>
+  <link rel="stylesheet" href="TeacherTareas.css">
 
 </head>
-<body>
-  <section class="User-Info">
-    <h1>Portal De Vista General Del Profesor</h1>
-    <div class="Alerts-User">
-      <div class="Active-Portal-Alerts"
-        id="APA"></div>
-      <div class="User-Block">
-        <div id="profile-Icon"></div>
-        <div class="User-Info-Block">
-          <h2 id="User-Id"></h2>
-          <h1 id="User-Name"></h1>
-        </div>
-      </div>
-    </div>
-  </section> 
-
-  <section class="main">
-
-    <section class="Main-Blocks" id="sidebar">
+<body>  
+  <section class="nav" id="sidebar">
       
       <div class="sidebar-content">
         
-        <div class="sidebar-top">  
+        <div class="sidebar-top" id="sidebar-top">  
           <img id="Bulogos"></img>
           
           <div class="Side-Btns" id="Home">
@@ -55,7 +38,7 @@
             <i class="fa-solid fa-calendar-days"></i>
             <span class="linkName">Calendario</span>
           </div>
-          
+
           <div class="Side-Btns" id="invocie">
             <i class="fa-solid fa-file-invoice-dollar"></i>
             <span class="linkName">Pagos</span>
@@ -75,7 +58,7 @@
             <i class="fa-solid fa-atom"></i>
             <span class="linkName">Crear Curso</span>
           </div>
-          
+
           <div class="Side-Btns" id="Lessons">    
             <i class="fa-solid fa-person-chalkboard"></i>
             <span class="linkName">Lecciones</span>
@@ -114,101 +97,67 @@
       </div>
 
       </div>
-
-    </section>
-
-    <section class="Main-Blocks" id="Content">
-      <h1 id="wecome-banner-tittle"></h1>
-      
-      <p>Aquí tienes las novedades para que te pongas al día mientras estuviste fuera.</p>
-      <div id="Line"></div>
-
-
-      <div class="stats-container">
-        <div class="stat-card">
-          <div class="stat-icon"><i class="fa-solid fa-user-graduate"></i></div>
-          <div class="stat-value" id="Astudents">132k</div>
-          <div class="stat-label">Estudiantes</div>
-        </div>
-
-        <div class="stat-card-active">
-          <div class="stat-icon"><i class="fa-solid fa-book"></i></div>
-          <div class="stat-value" id="Cclasses">28</div>
-          <div class="stat-label" id="stat-label-active">Clases que has creado</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon"><i class="fa-solid fa-calendar"></i></div>
-          <div class="stat-value" id="CVideos">42</div>
-          <div class="stat-label">Events</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-icon"><i class="fa-solid fa-laptop-file"></i></div>
-          <div class="stat-value" id="Cclasses">101k</div>
-          <div class="stat-label">Enrolled</div>
-        </div>
-      </div>
-
-      <div class="UpComingClasses">
-        <div class="UCC-Block">
-          <div class="UCC-Title">
-            <h1>Próxima clase</h1>
-            <p>Hoy tienes <span id="UUCN"></span> clase próxima</p>
-          </div>
-          <div class="UCC-Btn-block">
-            <div class="UCC-Btn"></div>
-            <i class="fa-regular fa-calendar" id="Cal-Icon"></i>
-          </div>
-        </div>
-
-        <div class="carousel-container">
-        <div class="carousel-track" id="cardContainer"></div>
-        <button class="carousel-btn prev">&#10094;</button>
-        <button class="carousel-btn next">&#10095;</button>
-        </div>
-    
-      </div>
-
-      <div class="ActiveCourses">
-        <div class="AC-Title">
-          <h1>My Courses</h1>
-          <span>View All</span>
-        </div>
-
-        <div class="Course-List">
-
-
-
-          <div class="Course-Categories">
-            <h4>Course Name</h4>
-          
-            <div class="Course-Categories-points">
-              <h4>Start</h4>
-              <h4>Rate</h4>
-              <h4>Level</h4>
-            </div>
-          </div>
-
-  
-        </div>
-
-      </div>
-
-
-
-      
-
-    </section>
-
   </section>
 
 
+  <section class="main" id="main">
+    <div class="container">
+    <div class="header">Portal de Tareas</div>
 
-    
+    <!-- Homework Card 1 -->
+    <div class="homework-card">
+      <div class="homework-header">
+        <h3>Laura Gómez</h3>
+        <span class="download-link"><i class="fas fa-download"></i> Descargar tarea</span>
+      </div>
+      <div class="homework-info">
+        <p><strong>Lección:</strong> Pilates Intermedio</p>
+        <p><strong>Archivo:</strong> tarea-laura.pdf</p>
+      </div>
+      <div class="actions">
+        <label for="note1">Nota para el estudiante:</label>
+        <textarea id="note1" rows="3" placeholder="Escribe una retroalimentación..."></textarea>
+
+        <label for="grade1">Calificación:</label>
+        <input id="grade1" type="number" min="0" max="100" placeholder="0 - 100">
+
+        <div class="action-buttons">
+          <button><i class="fas fa-paper-plane"></i> Enviar resultado</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Homework Card 2 -->
+    <div class="homework-card">
+      <div class="homework-header">
+        <h3>Carlos Díaz</h3>
+        <span class="download-link"><i class="fas fa-download"></i> Descargar tarea</span>
+      </div>
+      <div class="homework-info">
+        <p><strong>Lección:</strong> Yoga Básico</p>
+        <p><strong>Archivo:</strong> carlos-ejercicio.docx</p>
+      </div>
+      <div class="actions">
+        <label for="note2">Nota para el estudiante:</label>
+        <textarea id="note2" rows="3" placeholder="Escribe una retroalimentación..."></textarea>
+
+        <label for="grade2">Calificación:</label>
+        <input id="grade2" type="number" min="0" max="100" placeholder="0 - 100">
+
+        <div class="action-buttons">
+          <button><i class="fas fa-paper-plane"></i> Enviar resultado</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add more cards dynamically as needed -->
+
+  </div>
+      
+  </section>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <script  src="TeacherDashboard.js" type="module"></script>
+  <script  src="TeacherTareas.js" type="module"></script>
 </body>
 </html>

@@ -73,7 +73,9 @@ body {
   width: 100%;
   margin: 2rem 1rem;
 }
-
+#Multi-User{
+  display: none;
+}
 
 /*----------- Top ------------*/
 .Top {
