@@ -3,21 +3,17 @@
   margin: 0;
   padding: 0;
 }
-html, body {
-  width: 100%;
-  min-height: 100vh;
-  overflow-x: hidden;
-  display: flex;
-}
+
 body {
+  gap: 1rem;
   display: flex;
-  align-items: center;
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
-  flex-direction:row; /* Helps small screens stack better */
-  /*overflow-y: auto;*/
+  flex-direction: column;
+  margin: 1rem;
+  height: 100vh; /* fixed height */
+  overflow: hidden; /* prevent full page scroll */
 }
+
+
 /* ---------- nav -------------- */
 .hamburger {
   position: fixed;
@@ -89,31 +85,130 @@ body {
 #Multi-User{
   display: none;
 }  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #d3e0ea;
-      margin: 0;
-      padding: 0;
-    }
+/*----------- main ------------*/
+.main{
+  gap: 1rem;
+  width: 100%;
+  height: 89vh;
+  display: flex;
+} 
+/*----------- Main-Blocks ------------*/
+.Main-Blocks{
+  padding: 1rem;
+  border-radius: 1rem;
+}  
+/*----------- Sidebar ------------*/
+#sidebar{
+  display: flex;
+  align-items: center;
+  height:  87.5vh;
+}
+.nav {
+  padding: 1rem;
+  display: flex;
+  margin: 1rem;
+  border-radius: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.205);
+  flex-wrap: wrap;
+}
+.sidebar-content{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#Bulogos {
+  width: 3rem;
+  display: flex;
+  align-items: left;
+}
+.Side-Btns{
 
-    .container {
-      max-width: 1400px;
-      margin: auto;
-      padding: 20px;
-    }
+  display: flex;
+}
+.Side-Btns span {
+  display: none;
+}
+.sidebar-top {
+  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.Side-caret {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  font-size: 1.5rem;
+}
+.Action-nav-btns,
+.Side-Btns {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.Side-Btns i {
+  font-size: 1.5rem;
+}
+.linkName {
+  font-size: 0.8rem;
+}
+#open {
+  margin: 0 -1.3rem;
+}
+#close{
+  display: none;
+}
+.sidebar-bottom {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+/*----------- header ------------*/
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 1rem 1rem 1rem;
+  flex-wrap: wrap;
+}
+.header h1 {
+  font-size: 1.3rem;
+}
+.header p {
+  font-size: .9rem;
+  margin: -.5rem 0 0 0;
+}
+.Cursos-Ofrecidos-block-top {
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+.COB-tittle {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 0 0 -0.5rem 0;
+}  
+  
+/*----------- Content ------------*/
+#Content{
+  width: 100%;
+  height:  87.5vh;
+  padding: 0.1rem  2rem;
+}
+#Line{
+  padding: .1rem;
+  margin: -1rem 0 1rem 0;
+}
+
+  
+  
+  
+  
+  
+
+
 
     .header {
       font-size: 24px;

@@ -895,17 +895,23 @@ document.getElementById("BCourse").addEventListener("click", function () {
 });
 
 document.getElementById("Lessons").addEventListener("click", function () {
-  window.location.href = "index11.5.html";
+  window.location.href = "index11.6.html";
 }); 
+document.getElementById("Mensajes").addEventListener("click", function () {
+  window.location.href = "index11.7.html";
+});
+
+
+
 
 
 
 document.getElementById("Settings").addEventListener("click", function () {
-  window.location.href = "index11.6.html";
+  window.location.href = "index11.8.html";
 });   
 document.getElementById("Logout").addEventListener("click", function () {
-  window.location.href = "index4.html";
-});  
+  window.location.href = "index4.1.html";
+}); 
 
  
 
