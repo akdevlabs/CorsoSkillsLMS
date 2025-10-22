@@ -425,7 +425,6 @@ async function fetchAllContent() {
 
 
 
-
   function renderCourseSelector() {
     const AllCourses = businessData.Courses;
     const categorias = Object.keys(AllCourses);
@@ -527,8 +526,8 @@ async function fetchAllContent() {
     const blocks = [
       document.getElementById("Basic-Info-Block-1"),
       document.getElementById("Starter-Page-Block"),
-      document.getElementById("Course-Content-Block"),
-      document.getElementById("Add-Type-Method-Block")
+      document.getElementById("Finalizar-Curso-Block"),
+
     ];
 
     let currentIndex = 0;
@@ -819,7 +818,7 @@ async function fetchAllContent() {
         }
       }
 
-      if (showAlert) alert("Vista previa generada con éxito 🚀");
+      //if (showAlert) alert("Vista previa generada con éxito 🚀");
     }
 
     // ---------- Preview button ----------
@@ -1055,183 +1054,209 @@ async function fetchAllContent() {
 
 
 
+function SetModuleBlock() {
+  let moduleCount = 0;
 
-  function SetModuleBlock() {
-    let moduleCount = 0;
+  const modulesContainer = document.getElementById('modules-container');
+  const addModuleBtn = document.getElementById('add-module');
+  const previewBtn = document.getElementById('BPSPB-preview');
+  const previewBlock = document.getElementById('spb-Prview-block');
 
-    const modulesContainer = document.getElementById('modules-container');
-    const addModuleBtn = document.getElementById('add-module');
-    const previewBtn = document.getElementById('BPSPB-preview');
-    const previewBlock = document.getElementById('spb-Prview-block');
+  addModuleBtn.addEventListener('click', () => createModule(true));
+  if (previewBtn) previewBtn.addEventListener('click', renderPreview);
 
-    addModuleBtn.addEventListener('click', () => createModule(true)); // true = dynamically added
-    if (previewBtn) previewBtn.addEventListener('click', renderPreview);
+  // === CREATE MODULE ===
+  function createModule(isAdded = false) {
+    const moduleDiv = document.createElement('div');
+    moduleDiv.classList.add('module');
 
-    function createModule(isAdded = false) {
-      const moduleDiv = document.createElement('div');
-      moduleDiv.classList.add('module');
-
-      // header
-      moduleDiv.innerHTML = `
-        <div class="module-header">
-          <div>
-            <div class="Added-input-Block">
-              <h2 class="module-title"></h2>
-              ${isAdded ? `<button class="remove-module">×</button>` : ""}
-            </div>
-            <div class="module-lesson-block">
-              <input class="Titulo-Tema-Input" type="text" placeholder="Título del Tema" />   
-              <button class="add-lesson">+ Agregar Lección</button> 
-            </div>
+    moduleDiv.innerHTML = `
+      <div class="module-header">
+        <div>
+          <div class="Added-input-Block">
+            <h2 class="module-title"></h2>
+            ${isAdded ? `<button class="remove-module">×</button>` : ""}
+          </div>
+          <div class="module-lesson-block">
+            <input class="Titulo-Tema-Input" type="text" placeholder="Título del Tema" />   
+            <button class="add-lesson">+ Agregar Lección</button> 
           </div>
         </div>
-        <div class="lessons"></div>
-      `;
+      </div>
+      <div class="lessons"></div>
+    `;
 
-      modulesContainer.appendChild(moduleDiv);
+    modulesContainer.appendChild(moduleDiv);
 
-      const addLessonBtn = moduleDiv.querySelector('.add-lesson');
-      const lessonsContainer = moduleDiv.querySelector('.lessons');
-      addLessonBtn.addEventListener('click', () => addLesson(lessonsContainer));
+    const addLessonBtn = moduleDiv.querySelector('.add-lesson');
+    const lessonsContainer = moduleDiv.querySelector('.lessons');
+    addLessonBtn.addEventListener('click', () => addLesson(lessonsContainer));
 
-      // remove module button only for added ones
-      if (isAdded) {
-        const removeModuleBtn = moduleDiv.querySelector('.remove-module');
-        removeModuleBtn.addEventListener('click', () => {
-          moduleDiv.remove();
-          renumberModules();
-        });
-      }
-
-      renumberModules();
-    }
-
-    function renumberModules() {
-      const modules = modulesContainer.querySelectorAll('.module');
-      moduleCount = modules.length;
-      modules.forEach((mod, index) => {
-        const title = mod.querySelector('.module-title');
-        if (title) title.textContent = `Módulo ${index + 1}:`;
+    if (isAdded) {
+      const removeModuleBtn = moduleDiv.querySelector('.remove-module');
+      removeModuleBtn.addEventListener('click', () => {
+        moduleDiv.remove();
+        renumberModules();
       });
     }
 
-    function addLesson(container) {
-      const lessonDiv = document.createElement('div');
-      lessonDiv.classList.add('lesson');
-      lessonDiv.innerHTML = `
-        <div class="input-block">
-          <label>Descripción</label>
-          <textarea rows="3" placeholder="Describe brevemente el tema..."></textarea>
-        </div>
+    renumberModules();
+  }
 
-        <div class="upload-box">Arrastra y suelta o haz clic para subir archivo</div>
-        <div class="upload-progress"></div>
+  // === RENUMBER MODULES ===
+  function renumberModules() {
+    const modules = modulesContainer.querySelectorAll('.module');
+    moduleCount = modules.length;
+    modules.forEach((mod, index) => {
+      const title = mod.querySelector('.module-title');
+      if (title) title.textContent = `Módulo ${index + 1}:`;
+    });
+  }
 
-        <div class="add-btns">
-          <button class="add-Exam">+  Examen</button>
-          <button class="add-video">+ Video</button>
-          <button class="add-Subtema">+ Subtema</button>
-          <button class="add-description">+  Descripción</button>
-          <button class="add-Archivos">+ Archivos</button>
-          <button class="add-Live">+ Clase en Vivo</button>
-        </div>
-        <div class="dynamic-inputs"></div>
-      `;
-      container.appendChild(lessonDiv);
+  // === ADD LESSON ===
+  function addLesson(container) {
+    const lessonDiv = document.createElement('div');
+    lessonDiv.classList.add('lesson');
+    lessonDiv.innerHTML = `
+      <div class="input-block">
+        <label>Descripción</label>
+        <textarea rows="3" placeholder="Describe brevemente el tema..."></textarea>
+      </div>
 
-      const uploadBox = lessonDiv.querySelector('.upload-box');
-      const progressBar = lessonDiv.querySelector('.upload-progress');
-      const dynamicContainer = lessonDiv.querySelector('.dynamic-inputs');
+      <div class="upload-box">Arrastra y suelta o haz clic para subir archivo</div>
+      <div class="upload-progress"></div>
 
-      uploadBox.addEventListener('click', () => simulateUpload(progressBar));
+      <div class="add-btns">
+        <button class="add-Exam">+ Examen</button>
+        <button class="add-video">+ Video</button>
+        <button class="add-Subtema">+ Subtema</button>
+        <button class="add-description">+ Descripción</button>
+        <button class="add-Homework">+ Tarea</button>
+        <button class="add-Archivos">+ Archivos</button>
+        <button class="add-Live">+ Clase en Vivo</button>
+      </div>
+      <div class="dynamic-inputs"></div>
+    `;
+    container.appendChild(lessonDiv);
 
-      // 🎯 Add event listeners for all dynamic buttons
-      lessonDiv.querySelector('.add-Exam').addEventListener('click', () => addExamInput(dynamicContainer));
-      lessonDiv.querySelector('.add-video').addEventListener('click', () => addDynamicInput(dynamicContainer, 'Video', 'URL del video o descripción'));
-      lessonDiv.querySelector('.add-Subtema').addEventListener('click', () => addDynamicInput(dynamicContainer, 'Subtema', 'Título del subtema'));
-      lessonDiv.querySelector('.add-description').addEventListener('click', () => addDynamicInput(dynamicContainer, 'Descripción', 'Texto descriptivo'));
-      lessonDiv.querySelector('.add-Archivos').addEventListener('click', () => addFileInput(dynamicContainer));
-      lessonDiv.querySelector('.add-Live').addEventListener('click', () => addLiveInput(dynamicContainer));
-    }
+    const uploadBox = lessonDiv.querySelector('.upload-box');
+    const progressBar = lessonDiv.querySelector('.upload-progress');
+    const dynamicContainer = lessonDiv.querySelector('.dynamic-inputs');
 
-    // 🎯 EXAM input = only a title
-    function addExamInput(container) {
-      const block = document.createElement('div');
-      block.classList.add('input-block');
-      block.innerHTML = `
+    uploadBox.addEventListener('click', () => simulateUpload(progressBar));
+
+    // === Dynamic buttons ===
+    lessonDiv.querySelector('.add-Exam').addEventListener('click', () => addExamInput(dynamicContainer));
+    lessonDiv.querySelector('.add-video').addEventListener('click', () => addDynamicInput(dynamicContainer, 'Video', 'URL del video o descripción'));
+    lessonDiv.querySelector('.add-Subtema').addEventListener('click', () => addDynamicInput(dynamicContainer, 'Subtema', 'Título del subtema'));
+    lessonDiv.querySelector('.add-description').addEventListener('click', () => addDynamicInput(dynamicContainer, 'Descripción', 'Texto descriptivo'));
+    lessonDiv.querySelector('.add-Homework').addEventListener('click', () => addHomeworkInput(dynamicContainer));
+    lessonDiv.querySelector('.add-Archivos').addEventListener('click', () => addFileInput(dynamicContainer));
+    lessonDiv.querySelector('.add-Live').addEventListener('click', () => addLiveInput(dynamicContainer));
+  }
+
+  // === HOMEWORK INPUT ===
+  function addHomeworkInput(container) {
+    const block = document.createElement('div');
+    block.classList.add('input-block');
+    block.innerHTML = `
+      <div class="Added-input-Block">
+        <label>Tarea</label>
+        <button class="remove-btn">×</button>
+      </div>
+
+      <div class="Added-input-Block"><label>Título de la Tarea</label></div>
+      <input type="text" placeholder="Ejemplo: Análisis de Caso - Semana 2" />
+
+      <div class="Added-input-Block"><label>Descripción</label></div>
+      <textarea rows="3" placeholder="Describe las instrucciones de la tarea..."></textarea>
+
+      <div class="Added-input-Block"><label>Fecha de Entrega</label></div>
+      <input type="date" />
+
+      <div class="Added-input-Block"><label>Recursos / Archivos Adjuntos</label></div>
+      <div class="file-inputs"><input type="file" multiple /></div>
+      <button class="add-file-input">+ Agregar Archivo</button>
+    `;
+    container.appendChild(block);
+
+    block.querySelector('.remove-btn').addEventListener('click', () => block.remove());
+    const addFileBtn = block.querySelector('.add-file-input');
+    const fileContainer = block.querySelector('.file-inputs');
+    addFileBtn.addEventListener('click', () => {
+      const newFileInput = document.createElement('input');
+      newFileInput.type = 'file';
+      newFileInput.multiple = true;
+      fileContainer.appendChild(newFileInput);
+    });
+  }
+
+  // === EXAM INPUT ===
+  function addExamInput(container) {
+    const block = document.createElement('div');
+    block.classList.add('input-block');
+    block.innerHTML = `
+      <div class="Added-input-Block">
+        <label>Título del Examen</label>
+        <button class="remove-btn">×</button>  
+      </div>
+      <input type="text" placeholder="Ejemplo: Evaluación Final del Módulo" />
+      <div class="exam-buttons" style="margin-top: 8px;">
+        <button class="exam-mc">Opción Múltiple</button>
+        <button class="exam-tf">Verdadero / Falso</button>
+        <button class="exam-cc">Examen de Emparejamiento</button>
+        <button class="exam-oq">Pregunta Abierta</button>
+      </div>
+      <div class="exam-questions" style="margin-top: 10px;"></div>
+    `;
+    container.appendChild(block);
+
+    const removeBtn = block.querySelector('.remove-btn');
+    const questionsContainer = block.querySelector('.exam-questions');
+    removeBtn.addEventListener('click', () => block.remove());
+
+    // === Question types ===
+    block.querySelector('.exam-mc').addEventListener('click', () => {
+      const q = document.createElement('div');
+      q.classList.add('input-block');
+      q.innerHTML = `
         <div class="Added-input-Block">
-          <label>Título del Examen</label>
-          <button class="remove-btn">×</button>  
+          <label>Pregunta de Opción Múltiple</label>
+          <button class="remove-btn">×</button>
         </div>
-        <input type="text" placeholder="Ejemplo: Evaluación Final del Módulo" />
-        <div class="exam-buttons" style="margin-top: 8px;">
-          <button class="exam-mc">Opción Múltiple</button>
-          <button class="exam-tf">Verdadero / Falso</button>
-          <button class="exam-cc">Examen de Emparejamiento</button>
-          <button class="exam-oq">Pregunta Abierta</button>
-        </div>
-        <div class="exam-questions" style="margin-top: 10px;"></div>
+        <input type="text" placeholder="Escribe la pregunta..." />
+        <input type="text" placeholder="Opción A" />
+        <input type="text" placeholder="Opción B" />
+        <input type="text" placeholder="Opción C" />
+        <input type="text" placeholder="Opción D" />
       `;
-      container.appendChild(block);
+      questionsContainer.appendChild(q);
+      q.querySelector('.remove-btn').addEventListener('click', () => q.remove());
+    });
 
-      const removeBtn = block.querySelector('.remove-btn');
-      const questionsContainer = block.querySelector('.exam-questions');
+    block.querySelector('.exam-tf').addEventListener('click', () => {
+      const q = document.createElement('div');
+      q.classList.add('input-block');
+      q.innerHTML = `
+        <div class="Added-input-Block">
+          <label>Pregunta Verdadero / Falso</label>
+          <button class="remove-btn">×</button>
+        </div>
+        <input type="text" placeholder="Escribe la pregunta..." />
+        <select><option value="true">Verdadero</option><option value="false">Falso</option></select>
+      `;
+      questionsContainer.appendChild(q);
+      q.querySelector('.remove-btn').addEventListener('click', () => q.remove());
+    });
 
-      removeBtn.addEventListener('click', () => block.remove());
-
-      // 🎯 Add event listeners for exam type buttons
-      block.querySelector('.exam-mc').addEventListener('click', () => {
-        const qBlock = document.createElement('div');
-        qBlock.classList.add('input-block');
-        qBlock.innerHTML = `
-          
-          <div class="Added-input-Block">
-            <label>Pregunta de opción múltiple</label>
-            <button class="remove-btn">×</button>
-          </div>
-
-          <input type="text" placeholder="Escribe la pregunta..." />
-          <input type="text" placeholder="Opción A" />
-          <input type="text" placeholder="Opción B" />
-          <input type="text" placeholder="Opción C" />
-          <input type="text" placeholder="Opción D" />
-          
-        `;
-        questionsContainer.appendChild(qBlock);
-        qBlock.querySelector('.remove-btn').addEventListener('click', () => qBlock.remove());
-      });
-
-      block.querySelector('.exam-tf').addEventListener('click', () => {
-        const qBlock = document.createElement('div');
-        qBlock.classList.add('input-block');
-        qBlock.innerHTML = `
-
-          <div class="Added-input-Block">
-            <label>Pregunta Verdadero / Falso</label>
-            <button class="remove-btn">×</button>
-          </div>
-
-          <input type="text" placeholder="Escribe la pregunta..." />
-          <select>
-            <option value="true">Verdadero</option>
-            <option value="false">Falso</option>
-          </select>
-          
-        `;
-        questionsContainer.appendChild(qBlock);
-        qBlock.querySelector('.remove-btn').addEventListener('click', () => qBlock.remove());
-      });
-
-      block.querySelector('.exam-cc').addEventListener('click', () => {
-      const qBlock = document.createElement('div');
-      qBlock.classList.add('input-block');
-      qBlock.innerHTML = `
-
+    block.querySelector('.exam-cc').addEventListener('click', () => {
+      const q = document.createElement('div');
+      q.classList.add('input-block');
+      q.innerHTML = `
         <div class="Added-input-Block">
           <label>Examen de Emparejamiento</label>
           <button class="remove-btn">×</button>
         </div>
-
         <input type="text" placeholder="Elemento Izquierda 1" />
         <input type="text" placeholder="Elemento Derecha 1" />
         <input type="text" placeholder="Elemento Izquierda 2" />
@@ -1241,232 +1266,543 @@ async function fetchAllContent() {
         <input type="text" placeholder="Elemento Izquierda 4" />
         <input type="text" placeholder="Elemento Derecha 4" />
       `;
-      questionsContainer.appendChild(qBlock);
-      qBlock.querySelector('.remove-btn').addEventListener('click', () => qBlock.remove());
+      questionsContainer.appendChild(q);
+      q.querySelector('.remove-btn').addEventListener('click', () => q.remove());
     });
 
+    block.querySelector('.exam-oq').addEventListener('click', () => {
+      const q = document.createElement('div');
+      q.classList.add('input-block');
+      q.innerHTML = `
+        <div class="Added-input-Block">
+          <label>Pregunta Abierta</label>
+          <button class="remove-btn">×</button>
+        </div>
+        <input type="text" placeholder="Escribe la pregunta..." />
+        <textarea rows="2" placeholder="Respuesta esperada"></textarea>
+      `;
+      questionsContainer.appendChild(q);
+      q.querySelector('.remove-btn').addEventListener('click', () => q.remove());
+    });
+  }
 
-      block.querySelector('.exam-oq').addEventListener('click', () => {
-        const qBlock = document.createElement('div');
-        qBlock.classList.add('input-block');
-        qBlock.innerHTML = `
-        
-          <div class="Added-input-Block">
-            <label>Pregunta Abierta</label>
-            <button class="remove-btn">×</button>
-          </div>
+  // === LIVE CLASS INPUT ===
+  function addLiveInput(container) {
+    const block = document.createElement('div');
+    block.classList.add('input-block');
+    block.innerHTML = `
+      <div class="Added-input-Block">
+        <label>Clase en Vivo</label>
+        <button class="remove-btn">×</button>
+      </div>
+      <div class="Added-input-Block"><label>Título de la Clase</label></div>
+      <input type="text" placeholder="Ejemplo: Sesión en Vivo - Estrategias de Ventas" />
+      <div class="Added-input-Block"><label>Fecha y Hora</label></div>
+      <input type="datetime-local" />
+      <div class="Added-input-Block"><label>Duración (minutos)</label></div>
+      <input type="number" placeholder="60" />
+      <div class="Added-input-Block"><label>Descripción</label></div>
+      <textarea rows="3" placeholder="Describe brevemente la clase..."></textarea>
+      <div class="Added-input-Block"><label>Recursos / Archivos</label></div>
+      <div class="file-inputs"><input type="file" multiple /></div>
+      <button class="add-file-input">+ Recursos / Archivo</button>
+    `;
+    container.appendChild(block);
 
-          <input type="text" placeholder="Escribe la pregunta..." />
-          <textarea rows="2" placeholder="Respuesta esperada"></textarea>
-          
+    block.querySelector('.remove-btn').addEventListener('click', () => block.remove());
+    const addFileBtn = block.querySelector('.add-file-input');
+    const fileContainer = block.querySelector('.file-inputs');
+    addFileBtn.addEventListener('click', () => {
+      const newFileInput = document.createElement('input');
+      newFileInput.type = 'file';
+      newFileInput.multiple = true;
+      fileContainer.appendChild(newFileInput);
+    });
+  }
+
+  // === TEXT / VIDEO / DESCRIPTION / SUBTOPIC INPUT ===
+  function addDynamicInput(container, type, placeholder) {
+    const block = document.createElement('div');
+    block.classList.add('input-block');
+    block.innerHTML = `
+      <div class="Added-input-Block">
+        <label>${type}</label>
+        <button class="remove-btn">×</button>
+      </div>
+      <input type="text" placeholder="${placeholder}" />
+    `;
+    container.appendChild(block);
+    block.querySelector('.remove-btn').addEventListener('click', () => block.remove());
+  }
+
+  // === FILE INPUT ===
+  function addFileInput(container) {
+    const block = document.createElement('div');
+    block.classList.add('input-block');
+    block.innerHTML = `
+      <div class="Added-input-Block">
+        <label>Archivos</label>
+        <button class="remove-btn">×</button>
+      </div>
+      <input type="file" multiple />
+    `;
+    container.appendChild(block);
+    block.querySelector('.remove-btn').addEventListener('click', () => block.remove());
+  }
+
+  // === SIMULATE UPLOAD ===
+  function simulateUpload(progressBar) {
+    let progress = 0;
+    progressBar.style.width = "0";
+    const interval = setInterval(() => {
+      progress += 5;
+      progressBar.style.width = `${progress}%`;
+      if (progress >= 100) clearInterval(interval);
+    }, 100);
+  }
+
+  // === RENDER PREVIEW ===
+  function renderPreview() {
+    previewBlock.innerHTML = ''; 
+    const modules = document.querySelectorAll('.module');
+
+    if (modules.length === 0) {
+      previewBlock.innerHTML = `<p style="color:#999;">No hay módulos para mostrar.</p>`;
+      return;
+    }
+
+    modules.forEach((module, i) => {
+      const moduleTitle = module.querySelector('.Titulo-Tema-Input')?.value || `Módulo ${i + 1}`;
+      const modulePreview = document.createElement('div');
+      modulePreview.classList.add('preview-module');
+      modulePreview.innerHTML = `<h2>${moduleTitle}</h2>`;
+
+      const lessons = module.querySelectorAll('.lesson');
+      lessons.forEach((lesson, index) => {
+        const desc = lesson.querySelector('textarea')?.value || '';
+        const lessonPreview = document.createElement('div');
+        lessonPreview.classList.add('preview-lesson');
+        lessonPreview.innerHTML = `
+          <h3>Lección ${index + 1}</h3>
+          ${desc ? `<p>${desc}</p>` : ''}
         `;
-        questionsContainer.appendChild(qBlock);
-        qBlock.querySelector('.remove-btn').addEventListener('click', () => qBlock.remove());
+
+        const dynamicInputs = lesson.querySelectorAll('.dynamic-inputs .input-block');
+        dynamicInputs.forEach(inputBlock => {
+          const label = inputBlock.querySelector('label')?.textContent || '';
+          const input = inputBlock.querySelector('input');
+          let value = '';
+
+          if (input?.type === 'file') {
+            const files = Array.from(input.files).map(f => f.name).join(', ');
+            value = files || 'No se seleccionaron archivos.';
+          } else {
+            value = input?.value || '';
+          }
+
+          if (value.trim()) {
+            lessonPreview.innerHTML += `<p><strong>${label}:</strong> ${value}</p>`;
+          }
+        });
+
+        modulePreview.appendChild(lessonPreview);
+      });
+
+      previewBlock.appendChild(modulePreview);
+    });
+
+    previewBlock.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+
+
+
+
+
+
+
+  function RenderNOW() {
+    // guard to avoid double initialization
+    if (RenderallInputs._initialized) return;
+    RenderallInputs._initialized = true;
+
+    // ---------- Elements ----------
+    const tagInput = document.getElementById("tagInput");
+    const tagList = document.getElementById("tagList");
+    const includeInput = document.getElementById("includeInput");
+    const includeList = document.getElementById("includeList");
+    const previewBtn = document.getElementById("BIB-preview");
+
+    // preview targets
+    const titleEl = document.getElementById("BIB-Course-Tittle");
+    const notesSection = document.getElementById("description-block");
+    const courseList = document.getElementById("Course-list");
+    const skillLevelEl = document.getElementById("S-Level");
+    const durationEl = document.getElementById("C-Durtation");
+    const rightDiv = document.querySelector(".Main-divide-right");
+    const videoPlayerContainer = document.getElementById("video-player");
+    const imagePreviewContainer = document.getElementById("BIB-Course-Img");
+
+    // ---------- State ----------
+    let tags = [];
+
+    // ---------- Helpers ----------
+    function safeTextFromElement(el) {
+      if (!el) return "";
+      return Array.from(el.childNodes)
+        .filter(n => n.nodeType === Node.TEXT_NODE)
+        .map(n => n.textContent)
+        .join("")
+        .trim();
+    }
+
+    function renderTags() {
+      if (!tagList) return;
+      tagList.innerHTML = "";
+      tags.forEach((tag, i) => {
+        const tagEl = document.createElement("div");
+        tagEl.className = "tag-item";
+        const span = document.createElement("span");
+        span.className = "tag-text";
+        span.textContent = tag;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "remove-tag";
+        btn.dataset.index = String(i);
+        btn.innerHTML = "&times;";
+        tagEl.appendChild(span);
+        tagEl.appendChild(btn);
+        tagList.appendChild(tagEl);
       });
     }
 
-    // 🧱 Clase en Vivo input = only a title
-    function addLiveInput(container) {
-      const block = document.createElement('div');
-      block.classList.add('input-block');
-      block.innerHTML = `
-        <div class="Added-input-Block">
-          <label>Clase en Vivo</label>
-          <button class="remove-btn">×</button>
-        </div>
-
-        <div class="Added-input-Block">
-          <label>Título de la Clase</label>
-        </div>
-        <input type="text" placeholder="Ejemplo: Sesión en Vivo - Estrategias de Ventas" />
-
-        <div class="Added-input-Block">
-          <label>Fecha y Hora</label>
-        </div>
-        <input type="datetime-local" />
-
-        <div class="Added-input-Block">
-          <label>Duración (minutos)</label>
-        </div>
-        <input type="number" placeholder="60" />
-
-        <div class="Added-input-Block">
-          <label>Descripción</label>
-        </div>
-        <textarea rows="3" placeholder="Describe brevemente la clase..."></textarea>
-
-        <div class="Added-input-Block">
-          <label>Recursos / Archivos</label>
-        </div>
-        <div class="file-inputs">
-          <input type="file" multiple />
-        </div>
-        <button class="add-file-input">+Recursos / Archivo</button>
-      `;
-      container.appendChild(block);
-
-      // Botón de eliminar toda la clase
-      block.querySelector('.remove-btn').addEventListener('click', () => block.remove());
-
-      // 🎯 Event listener para agregar más inputs de archivo
-      const addFileBtn = block.querySelector('.add-file-input');
-      const fileContainer = block.querySelector('.file-inputs');
-      addFileBtn.addEventListener('click', () => {
-        const newFileInput = document.createElement('input');
-        newFileInput.type = 'file';
-        newFileInput.multiple = true;
-        fileContainer.appendChild(newFileInput);
+    // ---------- Tag input ----------
+    if (tagInput) {
+      tagInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          const newTag = (tagInput.value || "").trim();
+          if (!newTag) return;
+          if (!tags.some(t => t.toLowerCase() === newTag.toLowerCase())) {
+            tags.push(newTag);
+            renderTags();
+          }
+          tagInput.value = "";
+        }
       });
     }
 
+    if (tagList) {
+      tagList.addEventListener("click", (e) => {
+        const btn = e.target.closest(".remove-tag");
+        if (!btn) return;
+        const idx = Number(btn.dataset.index);
+        if (!Number.isNaN(idx)) {
+          tags.splice(idx, 1);
+          renderTags();
+        }
+      });
+    }
 
-    // 🧱 Dynamic inputs for text/video/subtema/description
-    function addDynamicInput(container, type, placeholder) {
-      const block = document.createElement('div');
-      block.classList.add('input-block');
-      block.innerHTML = `
-        <div class="Added-input-Block">
-          <label>${type}</label>
-          <button class="remove-btn">×</button>
-        </div>
-        <input type="text" placeholder="${placeholder}" />
+    // ---------- Include input ----------
+    if (includeInput && includeList) {
+      includeInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          const val = includeInput.value.trim();
+          if (!val) return;
+          const div = document.createElement("div");
+          div.className = "include-item";
+          div.textContent = val;
+          includeList.appendChild(div);
+          includeInput.value = "";
+        }
+      });
+    }
+
+    // ---------- Categories ----------
+    function getSelectedCategories() {
+      const selectedContainer = document.getElementById("selectedCategories");
+      if (!selectedContainer) return [];
+      return Array.from(selectedContainer.querySelectorAll(".tag"))
+        .map(n => safeTextFromElement(n))
+        .filter(Boolean);
+    }
+
+    // ---------- Image input ----------
+    const dropImage = document.getElementById("dropImage");
+    const browseImage = document.getElementById("browseImage");
+    const imageInput = document.getElementById("imageInput");
+
+    if (dropImage && browseImage && imageInput) {
+      ["dragenter", "dragover"].forEach(eventName => {
+        dropImage.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropImage.classList.add("highlight");
+        });
+      });
+
+      ["dragleave", "drop"].forEach(eventName => {
+        dropImage.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          dropImage.classList.remove("highlight");
+        });
+      });
+
+      browseImage.addEventListener("click", () => imageInput.click());
+
+      dropImage.addEventListener("drop", (e) => {
+        const file = e.dataTransfer.files[0];
+        if (file) imageInput.files = e.dataTransfer.files;
+      });
+    }
+
+    // ---------- Build preview ----------
+    function updatePreview(showAlert = false) {
+      const title = (document.getElementById("Title-Input")?.value || "").trim();
+      const description = (document.getElementById("descriptionInput")?.value || "").trim();
+      const levels = [...document.querySelectorAll('input[name="level"]:checked')]
+        .map(el => el.nextElementSibling?.textContent?.trim() || "").filter(Boolean);
+      const includes = [...document.querySelectorAll("#includeList .include-item")].map(i => i.textContent.trim());
+      const categories = getSelectedCategories();
+      const durationValue = (document.getElementById("Duration-Input")?.value || "").trim();
+      const durationUnit = (document.getElementById("Duration-Unit")?.value || "").trim();
+      const courseDuration = durationValue ? `${durationValue} ${durationUnit}` : "Sin duración";
+
+      // ---------- Text info ----------
+      if (titleEl) titleEl.textContent = title || "Sin título";
+      if (skillLevelEl) skillLevelEl.textContent = levels.join(", ") || "Sin nivel";
+      if (durationEl) durationEl.textContent = courseDuration;
+      if (notesSection) notesSection.innerHTML = `<h3>Descripción del Curso</h3><p>${description || "Sin descripción"}</p>`;
+      if (courseList) courseList.innerHTML = `
+        <h4>Categorías:</h4>
+        <ul>${categories.length ? categories.map(c => `<li>${c}</li>`).join("") : "<li>Sin categorías</li>"}</ul>
+        <h4>Etiquetas:</h4>
+        <ul>${tags.length ? tags.map(t => `<li>${t}</li>`).join("") : "<li>Sin etiquetas</li>"}</ul>
+        <h4>Incluye:</h4>
+        <ul>${includes.length ? includes.map(i => `<li>${i}</li>`).join("") : "<li>No se ha agregado contenido</li>"}</ul>
       `;
-      container.appendChild(block);
-      block.querySelector('.remove-btn').addEventListener('click', () => block.remove());
-    }
 
-    // 📁 Add File Input
-    function addFileInput(container) {
-      const block = document.createElement('div');
-      block.classList.add('input-block');
-      block.innerHTML = `
-        <div class="Added-input-Block">
-          <label>Archivos</label>
-          <button class="remove-btn">×</button>
-        </div>
-        <input type="file" multiple />
-      `;
-      container.appendChild(block);
-      block.querySelector('.remove-btn').addEventListener('click', () => block.remove());
-    }
-
-    function simulateUpload(progressBar) {
-      let progress = 0;
-      progressBar.style.width = "0";
-      const interval = setInterval(() => {
-        progress += 5;
-        progressBar.style.width = `${progress}%`;
-        if (progress >= 100) clearInterval(interval);
-      }, 100);
-    }
-
-    // 🧩 RENDER PREVIEW
-    function renderPreview() {
-      previewBlock.innerHTML = ''; // clear existing content
-      const modules = document.querySelectorAll('.module');
-
-      if (modules.length === 0) {
-        previewBlock.innerHTML = `<p style="color:#999;">No hay módulos para mostrar.</p>`;
-        return;
+      // ---------- Render image inside #BIB-Course-Img ----------
+      if (imageInput?.files?.[0] && imagePreviewContainer) {
+        const file = imageInput.files[0];
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          imagePreviewContainer.innerHTML = `<img src="${ev.target.result}" alt="Imagen del curso" class="preview-image">`;
+        };
+        reader.readAsDataURL(file);
       }
 
-      modules.forEach((module, i) => {
-        const moduleTitle = module.querySelector('.Titulo-Tema-Input')?.value || `Módulo ${i + 1}`;
-        const modulePreview = document.createElement('div');
-        modulePreview.classList.add('preview-module');
-        modulePreview.innerHTML = `<h2>${moduleTitle}</h2>`;
+      // ---------- Render video link inside #video-player ----------
+      const videoLink = (document.getElementById("videoLinkInput")?.value || "").trim();
+      if (videoPlayerContainer) {
+        videoPlayerContainer.innerHTML = "";
+        if (videoLink) {
+          let embedHTML = "";
 
-        const lessons = module.querySelectorAll('.lesson');
-        lessons.forEach((lesson, index) => {
-          const desc = lesson.querySelector('textarea')?.value || '';
-          const lessonPreview = document.createElement('div');
-          lessonPreview.classList.add('preview-lesson');
-          lessonPreview.innerHTML = `
-            <h3>Lección ${index + 1}</h3>
-            ${desc ? `<p>${desc}</p>` : ''}
-          `;
+          // YouTube link
+          if (videoLink.includes("youtube.com") || videoLink.includes("youtu.be")) {
+            const videoId = videoLink.split("v=")[1]?.split("&")[0] || videoLink.split("youtu.be/")[1];
+            if (videoId) {
+              embedHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" 
+                frameborder="0" allowfullscreen></iframe>`;
+            }
+          }
+          // Vimeo link
+          else if (videoLink.includes("vimeo.com")) {
+            const videoId = videoLink.split("vimeo.com/")[1];
+            if (videoId) {
+              embedHTML = `<iframe src="https://player.vimeo.com/video/${videoId}" width="560" height="315" 
+                frameborder="0" allowfullscreen></iframe>`;
+            }
+          }
+          // Generic fallback (non-embed link)
+          else {
+            embedHTML = `<p><a href="${videoLink}" target="_blank">Ver video promocional</a></p>`;
+          }
+
+          videoPlayerContainer.innerHTML = embedHTML;
+        } else {
+          videoPlayerContainer.innerHTML = "<p>No se ha agregado un video promocional.</p>";
+        }
+      }
+
+      if (showAlert) alert("Vista previa generada con éxito 🚀");
+    }
+
+    // ---------- Preview button ----------
+    if (previewBtn) previewBtn.addEventListener("click", () => updatePreview(true));
+
+    // ---------- Auto-update preview for categories ----------
+    const selectedContainer = document.getElementById("selectedCategories");
+    if (selectedContainer) {
+      const mo = new MutationObserver(() => updatePreview(false));
+      mo.observe(selectedContainer, { childList: true, subtree: true });
+    }
+  }
+RenderNOW()
+
+function Renderall() {
+  if (RenderallInputs._initialized) return;
+  RenderallInputs._initialized = true;
+
+  const tagInput = document.getElementById("tagInput");
+  const tagList = document.getElementById("tagList");
+  const includeInput = document.getElementById("includeInput");
+  const includeList = document.getElementById("includeList");
+  const previewBtn = document.getElementById("Final-review-Btn");
+  const finalReview = document.getElementById("Final-review");
+
+  const modulesContainer = document.getElementById('modules-container');
+
+  let tags = [];
+
+  function safeTextFromElement(el) {
+    if (!el) return "";
+    return Array.from(el.childNodes)
+      .filter(n => n.nodeType === Node.TEXT_NODE)
+      .map(n => n.textContent)
+      .join("")
+      .trim();
+  }
+
+  function renderTags() {
+    if (!tagList) return;
+    tagList.innerHTML = "";
+    tags.forEach((tag, i) => {
+      const tagEl = document.createElement("div");
+      tagEl.className = "tag-item";
+      const span = document.createElement("span");
+      span.className = "tag-text";
+      span.textContent = tag;
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "remove-tag";
+      btn.dataset.index = String(i);
+      btn.innerHTML = "&times;";
+      tagEl.appendChild(span);
+      tagEl.appendChild(btn);
+      tagList.appendChild(tagEl);
+    });
+  }
+
+  if (tagInput) {
+    tagInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const newTag = (tagInput.value || "").trim();
+        if (!newTag) return;
+        if (!tags.some(t => t.toLowerCase() === newTag.toLowerCase())) {
+          tags.push(newTag);
+          renderTags();
+        }
+        tagInput.value = "";
+      }
+    });
+  }
+
+  if (tagList) {
+    tagList.addEventListener("click", (e) => {
+      const btn = e.target.closest(".remove-tag");
+      if (!btn) return;
+      const idx = Number(btn.dataset.index);
+      if (!Number.isNaN(idx)) {
+        tags.splice(idx, 1);
+        renderTags();
+      }
+    });
+  }
+
+  if (includeInput && includeList) {
+    includeInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const val = includeInput.value.trim();
+        if (!val) return;
+        const div = document.createElement('div');
+        div.className = "include-item";
+        div.textContent = val;
+        includeList.appendChild(div);
+        includeInput.value = "";
+      }
+    });
+  }
+
+  function getSelectedCategories() {
+    const selectedContainer = document.getElementById("selectedCategories");
+    if (!selectedContainer) return [];
+    return Array.from(selectedContainer.querySelectorAll(".tag"))
+      .map(n => safeTextFromElement(n))
+      .filter(Boolean);
+  }
+
+  // ---------- RENDER PREVIEW ----------
+  function updatePreview() {
+    const title = (document.getElementById("Title-Input")?.value || "").trim();
+    const description = (document.getElementById("descriptionInput")?.value || "").trim();
+    const levels = [...document.querySelectorAll('input[name="level"]:checked')]
+      .map(el => el.nextElementSibling?.textContent?.trim() || "").filter(Boolean);
+    const includes = [...document.querySelectorAll("#includeList .include-item")].map(i => i.textContent.trim());
+    const categories = getSelectedCategories();
+    const durationValue = (document.getElementById("Duration-Input")?.value || "").trim();
+    const durationUnit = (document.getElementById("Duration-Unit")?.value || "").trim();
+    const courseDuration = durationValue ? `${durationValue} ${durationUnit}` : "Sin duración";
+
+    let html = `
+      <h1>${title || "Sin título"}</h1>
+      <p><strong>Nivel:</strong> ${levels.join(", ") || "Sin nivel"}</p>
+      <p><strong>Duración:</strong> ${courseDuration}</p>
+      <h3>Descripción</h3>
+      <p>${description || "Sin descripción"}</p>
+      <h4>Categorías:</h4>
+      <ul>${categories.length ? categories.map(c => `<li>${c}</li>`).join("") : "<li>Sin categorías</li>"}</ul>
+      <h4>Etiquetas:</h4>
+      <ul>${tags.length ? tags.map(t => `<li>${t}</li>`).join("") : "<li>Sin etiquetas</li>"}</ul>
+      <h4>Incluye:</h4>
+      <ul>${includes.length ? includes.map(i => `<li>${i}</li>`).join("") : "<li>No se ha agregado contenido</li>"}</ul>
+      <h3>Módulos y Lecciones:</h3>
+    `;
+
+    // ---------- Render modules and lessons ----------
+    const modules = modulesContainer?.querySelectorAll('.module') || [];
+    if (modules.length === 0) {
+      html += `<p>No hay módulos agregados.</p>`;
+    } else {
+      modules.forEach((mod, mi) => {
+        const moduleTitle = mod.querySelector('.Titulo-Tema-Input')?.value || `Módulo ${mi + 1}`;
+        html += `<div style="margin-left:10px;"><h4>${moduleTitle}</h4>`;
+        const lessons = mod.querySelectorAll('.lesson');
+        lessons.forEach((lesson, li) => {
+          const lessonDesc = lesson.querySelector('textarea')?.value || '';
+          html += `<div style="margin-left:20px;"><strong>Lección ${li+1}:</strong> ${lessonDesc}</div>`;
 
           const dynamicInputs = lesson.querySelectorAll('.dynamic-inputs .input-block');
           dynamicInputs.forEach(inputBlock => {
             const label = inputBlock.querySelector('label')?.textContent || '';
             const input = inputBlock.querySelector('input');
             let value = '';
-
             if (input?.type === 'file') {
               const files = Array.from(input.files).map(f => f.name).join(', ');
               value = files || 'No se seleccionaron archivos.';
             } else {
               value = input?.value || '';
             }
-
-            if (value.trim()) {
-              lessonPreview.innerHTML += `<p><strong>${label}:</strong> ${value}</p>`;
-            }
+            if (value.trim()) html += `<div style="margin-left:40px;"><strong>${label}:</strong> ${value}</div>`;
           });
-
-          modulePreview.appendChild(lessonPreview);
         });
-
-        previewBlock.appendChild(modulePreview);
+        html += `</div>`;
       });
-
-      previewBlock.scrollIntoView({ behavior: 'smooth' });
     }
+
+    finalReview.innerHTML = html;
+    finalReview.scrollIntoView({ behavior: "smooth" });
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-  function RenderExamDropdown() {
-    // Container where the dropdown will be rendered
-    const previewBlock = document.getElementById('CIB-Input-Blocks');
-    if (!previewBlock) {
-      console.warn("⚠️ No se encontró el contenedor de previsualización (spb-Prview-block).");
-      return;
-    }
-
-    // 🧠 Find all exam inputs
-    const examInputs = document.querySelectorAll('.dynamic-inputs .input-block label');
-    const examTitles = [];
-
-    examInputs.forEach(label => {
-      if (label.textContent.trim() === "Título del Examen") {
-        const input = label.closest('.input-block').querySelector('input');
-        const value = input?.value.trim();
-        if (value) examTitles.push(value);
-      }
-    });
-
-    // ⚠️ No exams found
-    if (examTitles.length === 0) {
-      previewBlock.innerHTML = `<p style="color:#888;">No se encontraron exámenes.</p>`;
-      return;
-    }
-
-    // 🧱 Create dropdown
-    const dropdownWrapper = document.createElement('div');
-    dropdownWrapper.classList.add('exam-dropdown-block');
-    dropdownWrapper.innerHTML = `
-      <label for="exam-dropdown"><strong>Selecciona un Examen:</strong></label>
-      <select id="exam-dropdown">
-        ${examTitles.map(title => `<option value="${title}">${title}</option>`).join('')}
-      </select>
-    `;
-
-    // 🧩 Add below preview or standalone
-    previewBlock.appendChild(dropdownWrapper);
-
-    console.log("✅ Dropdown renderizado con exámenes:", examTitles);
-  }
+  if (previewBtn) previewBtn.addEventListener("click", updatePreview);
+}
 
 
 
@@ -1480,6 +1816,57 @@ async function fetchAllContent() {
 
 
 
+function RenderAllCourseInputs() {
+  const title = document.getElementById("Title-Input")?.value || "";
+  const description = document.getElementById("descriptionInput")?.value || "";
+  const durationValue = document.getElementById("Duration-Input")?.value || "";
+  const durationUnit = document.getElementById("Duration-Unit")?.value || "";
+  const selectedLevel = document.querySelector('input[name="level"]:checked')?.value || "";
+  const category = document.getElementById("categorySelect")?.value || "";
+  const imagePreview = document.getElementById("courseImagePreview")?.src || "";
+  const instructorName = document.getElementById("teacherName")?.value || "";
+  const aboutTeacher = document.getElementById("aboutTeacher")?.value || "";
+
+  const reviewSection = document.getElementById("Final-review");
+
+  // 🧹 Clear previous preview
+  reviewSection.innerHTML = "";
+
+  // 🧩 Create layout dynamically
+  const reviewHTML = `
+    <div class="Final-Preview-Container">
+      <div class="Preview-Header">
+        <h2>${title || "Sin título"}</h2>
+        <p><strong>Categoría:</strong> ${category || "No especificada"}</p>
+        <p><strong>Nivel:</strong> ${selectedLevel || "No especificado"}</p>
+      </div>
+
+      <div class="Preview-Body">
+        <div class="Preview-Image">
+          <img src="${imagePreview || 'https://via.placeholder.com/300x200?text=Sin+Imagen'}" alt="Vista previa del curso">
+        </div>
+        <div class="Preview-Description">
+          <h3>Descripción del Curso</h3>
+          <p>${description || "Sin descripción disponible."}</p>
+        </div>
+      </div>
+
+      <div class="Preview-Details">
+        <p><strong>Duración:</strong> ${durationValue ? `${durationValue} ${durationUnit}` : "No especificada"}</p>
+        <p><strong>Instructor:</strong> ${instructorName || "No asignado"}</p>
+        <p><strong>Sobre el Instructor:</strong> ${aboutTeacher || "Sin información del instructor."}</p>
+      </div>
+    </div>
+  `;
+
+  reviewSection.innerHTML = reviewHTML;
+}
+
+// 🎯 Event Listener
+const finalReviewBtn = document.getElementById("PTB-Left");
+if (finalReviewBtn) {
+  finalReviewBtn.addEventListener("click", RenderAllCourseInputs);
+}
 
 
 
@@ -1489,14 +1876,13 @@ async function fetchAllContent() {
 
 
 
-SetModuleBlock()
-
-RenderExamDropdown()
 
 
 
-  
 
+
+
+  SetModuleBlock()
 
   renderWelcome()
   renderId()
@@ -1504,11 +1890,17 @@ RenderExamDropdown()
   renderCourseSelector()
   courseCreateNav()
 
-  RenderallInputs() 
   renderTeacherNameDescrip()
   renderTags()
   ClearallInputs("BIB-clearAll")
   ClearallInputs("BIBSPB-clearAll")
+
+
+
+
+
+
+  
 
 }
 fetchAllContent()
@@ -1555,20 +1947,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-
 function setupPreviewNotifications() {
   const nextBtn = document.getElementById("Next-Btn");
+  const videoInput = document.getElementById("videoLinkInput");
 
-  if (!nextBtn) return;
+  if (!nextBtn || !videoInput) return;
 
-  // Get both preview buttons
-  const previewButtons = [
-    document.getElementById("BIB-preview"),
-    document.getElementById("BPSPB-preview")
-  ].filter(Boolean); // removes any nulls if one doesn't exist
-
-  previewButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
+  // Listen for input changes
+  videoInput.addEventListener("input", () => {
+    // Check if there is a value
+    if (videoInput.value.trim() !== "") {
       // Show the Next Step button
       nextBtn.style.display = "inline-block";
 
@@ -1578,16 +1966,16 @@ function setupPreviewNotifications() {
       // Stop animation after 6 seconds (optional)
       setTimeout(() => {
         nextBtn.classList.remove("glow-border");
-
       }, 6000);
-
-    });
+    } else {
+      // Hide the button again if input is cleared
+      nextBtn.style.display = "none";
+    }
   });
 }
 
 // Initialize when page loads
 document.addEventListener("DOMContentLoaded", setupPreviewNotifications);
-
 
 
 
@@ -1744,14 +2132,20 @@ document.getElementById("BCourse").addEventListener("click", function () {
 });
 
 document.getElementById("Lessons").addEventListener("click", function () {
-  window.location.href = "index11.5.html";
+  window.location.href = "index11.6.html";
 }); 
+document.getElementById("Mensajes").addEventListener("click", function () {
+  window.location.href = "index11.7.html";
+});
+
+
+
 
 
 
 document.getElementById("Settings").addEventListener("click", function () {
-  window.location.href = "index11.6.html";
+  window.location.href = "index11.8.html";
 });   
 document.getElementById("Logout").addEventListener("click", function () {
-  window.location.href = "index4.html";
-});  
+  window.location.href = "index4.1.html";
+}); 

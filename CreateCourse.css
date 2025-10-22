@@ -970,6 +970,21 @@ button {
 
 
 
+#Finalizar-Curso-Block{
+  width:100%;
+  margin:1rem;
+}
+.Finalizar-Curso-Review{
+  width: 100%;
+}
+.FCB-Top-Block{
 
+  display: flex;
+  justify-content: space-between;
+
+
+
+
+}
 
 

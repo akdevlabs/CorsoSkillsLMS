@@ -17,8 +17,8 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CreateCourse|CorsoSkills</title>
-  <link rel="stylesheet" href="CreateCourse.css">
+  <title>TeacherMensajes|CorsoSkills</title>
+  <link rel="stylesheet" href="TeacherMensajes.css">
 
 </head>
 <body>  
@@ -34,6 +34,11 @@
             <span class="linkName">Dashboard</span>
           </div>
 
+          <div class="Side-Btns" id="Calander">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span class="linkName">Calendario</span>
+          </div>
+
           <div class="Side-Btns" id="invocie">
             <i class="fa-solid fa-file-invoice-dollar"></i>
             <span class="linkName">Pagos</span>
@@ -47,6 +52,11 @@
           <div class="Side-Btns" id="Assignments">
             <i class="fa-solid fa-list-check"></i>
             <span class="linkName">Tareas</span>
+          </div>
+
+          <div class="Side-Btns" id="BCourse">    
+            <i class="fa-solid fa-atom"></i>
+            <span class="linkName">Crear Curso</span>
           </div>
 
           <div class="Side-Btns" id="Lessons">    
@@ -90,202 +100,116 @@
   </section>
 
 
-
-
-
-  <section class="Main" id="Main">
-    <div>
-      <h1 id="Main-Title-header">Crea tu curso</h1>
+  <section class="main" id="main">
+    <div class="header" id="header">
+      <h1 id="wecome-banner-tittle"></h1>
+      <div id="profile-Icon"></div>
     </div>
 
-    <div class="Main-divide">
-
-      <div class="Main-divide-sections" id="Main-left">
-      
-        <div class="form-container" id="form-c">
-
-          <div class="Q-blocks" id="Img-Q-blocks">
-            <label for="imageInput">Imagen Del Curso</label>
-            <input type="file" id="imageInput" accept="image/*" />
-          </div>
-
-          <div class="Q-blocks">
-            <label>Nivel de Cursos</label>
-            <div id="level-toggle-buttons" class="toggle-buttons">
-              <button type="button" class="level-btn" data-value="Beginner">Principiante</button>
-              <button type="button" class="level-btn" data-value="Intermediate">Intermedio</button>
-              <button type="button" class="level-btn" data-value="Advanced">Avanzado</button>
-            </div>
-          </div>
-
-          <div class="Q-blocks">
-            <input type="text" class="input-tool" id="titleInput" placeholder="Escribe el título" />
-          </div>
-
-          <div class="Q-blocks">
-            <textarea class="input-tool" id="descriptionInput" placeholder="Escribe la descripción"></textarea>
-          </div>
-
-
-          <!-- Placeholder for additional components -->
-          <div id="Add-container"></div>
-
-        </div>
-
+    <div class="Cursos-Ofrecidos-block">
+      <div class="Cursos-Ofrecidos-block-top">
+        <h1 class="COB-tittle">Cursos Ofrecidos</h1>
+        
       </div>
-
-      <div class="Main-divide-sections" id="Main-right">
-        <div id="Main-right-left">
-          <div id="course-title"></div>
-          <div class="img-course-block">
-            <img id="img-course"/>
-          </div>
-          <div class="tabs">
-            <button id="Notes-btns">Notas</button>
-            <button id="Resources-btns">Recursos</button>
-            <button id="Quizes-btns">Examens</button>
-          </div>
-
-          <div class="render-instr-block">
-            <div class="render-tabs">
-              <div class="hidden-tabs" id="Notes"></div>
-              <div class="hidden-tabs"  id="Resources"></div>
-              <div class="hidden-tabs"  id="Quizes"></div>
-            </div>
-
-            <div class="instructor">
-              <h4 >About Instructor</h4>
-              <p id="Teacher-Name"><strong>Natalie Storm</strong><br/>Natalie is a freelance designer who occasionally dabbles with graphic design, motion and development. She loves beaches...</p>
-            </div>
-          </div>
-
-          
-
+      <div class="tabs-wrapper">
+        <div class="Level-Btns-blocks">
+          <button class="Level-Btns" id="Beginner">Principiante</button>
+          <button class="Level-Btns" id="Intermediate">Intermedio</button>
+          <button class="Level-Btns" id="Advanced">Avanzado</button>
+          <div id="line"></div>
         </div>
-        <div id="Main-right-right">
-            <div class="sidebar">
-            <div class="progress">
-              <strong>Masterclass: Designing for web</strong><br />
-              
-              <div id="course-level"></div>
-              <div class="progress-bar">
-                <div class="progress-bar-fill"></div>
-              </div>
-            </div>
-            <div id="Course-list"></div>
-
-            
-        </div>
-
+        
+        <div class="tabs-container">
+          <div class="tabs" id="tabs"></div>
+          <div>
+            <button class="scroll-btn" id="scroll-left"><</button>
+            <button class="scroll-btn" id="scroll-right">></button>
+          </div>
         </div>
       </div>
+    </div>
 
+    <div class="stats">
+
+      <div class="card" id="Student-card">
+        <h3>Students</h3>
+        <p class="Alerts" id="amount-of-students">88</p>
+        <small id="new-students">3 new</small>
+      </div>
+
+      <div class="card" id="Classes-card">
+        <h3>Classes</h3>
+        <p class="Alerts" id="amount-of-Classes">10</p>
+        <small id="new-Classes">2 new</small>
+      </div>
+
+      <div class="card" id="Submissions-card">
+        <h3>Submissions</h3>
+        <p class="Alerts" id="amount-of-Submissions">10</p>
+      </div>  
+
+      <div class="card" id="Tasks-card">
+        <h3>Pending Tasks</h3>
+        <p class="Alerts" id="amount-of-Tasks">10</p>
+      </div>
+
+      <div class="card" id="Messages-card">
+        <h3>Messages</h3>
+        <p class="Alerts" id="amount-of-Messages">2</p>
+      </div>
+
+    </div>  
+
+    <div class="Action-btns">
+      <div class="Action-btns-card" id="lesson-Btn">
+        <p>Subir una nueva lección</p>
+      </div>
+      <div class="Action-btns-card" id="Course-Btn">
+        <p>Crear un nuevo curso</p>
+      </div>
+    </div>
+
+    <div class="charts">
+      <div class="chart-block" id="student-chart">
+        <h3>Estudiantes Inscritos</h3>
+        <canvas id="chart1"></canvas>
+      </div>
+      <div class="chart-block" id="Cursos-chart">
+        <h3>Rendimiento De Cursos Promedio</h3>
+        <canvas id="chart2"></canvas>
+      </div>
+    </div>
+
+
+    <div class="overview-section">
+      <div class="card">
+        <h3>Total Students</h3>
+        <p>72,056</p>
+        <small style="color:green">+12.05%</small>
+      </div>
+      <div class="card">
+        <h3>Total Courses</h3>
+        <p>12,056</p>
+        <small style="color:red">-12.25%</small>
+      </div>
+      <div class="card">
+        <h3>Total Videos</h3>
+        <p>31,056</p>
+        <small style="color:green">+25.21%</small>
+      </div>
+      <div class="card">
+        <h3>Total Earnings</h3>
+        <p>$8,05,056</p>
+        <small style="color:green">+25.21%</small>
+      </div>
+    </div>
   </div>
 
-
-
-
-
-    
-
-
-         
-       
-
-
       
+  </div>
 
-  
-
-
-
-      </div>
-    </div>  
-  </section>
-
-
-
-
-
-  <section class="Action-side-bar" id="Action-tool-side-bar">
-
-    <div class="sidebar-container">
-
-        <div  id="tool-sidebar-top">  
-
-  
-          <div class="tool-Sidebar-Icon">
-            <i class="fa-solid fa-screwdriver-wrench"></i>
-           </div>
-        
-
-          <div class="tool-Side-Btns" id="add-video">
-            <i class="fa-solid fa-video"></i>
-            <span class="linkName">Agregar Video</span>
-          </div>
-          
-          <div class="tool-Side-Btns" id="add-text">
-            <i class="fa-solid fa-font"></i>
-            <span class="linkName">Agregar Texto</span>
-          </div>
-
-          <div class="tool-Side-Btns" id="add-present">
-            <i class="fa-solid fa-file-powerpoint"></i>
-            <span class="linkName">Agregar Presentación</span>
-          </div>
-
-          <div class="tool-Side-Btns" id="add-Exam">   
-            <i class="fa-solid fa-list-check"></i>
-            <span class="linkName">Agregar Examen</span>
-          </div>
-
-          <div class="tool-Side-Btns" id="add-Tema">
-            <i class="fa-solid fa-comment-dots"></i>
-            <span class="linkName">Agregar Tema</span>
-          </div>
-
-          <div class="tool-Side-Btns" id="add-SubTema">
-            <i class="fa-solid fa-diagram-predecessor"></i>
-            <span class="linkName">Agregar Subtema</span>
-          </div>
-
-        </div>
-
-        <div  id="tool-sidebar-bottom">
-
-          <div class="tool-Side-Btns" id="preview">
-            <i class="fa-solid fa-eye"></i>
-            <span class="linkName">Previsualizar</span>
-          </div>
-
-          <div class="tool-Side-Btns" id="clearAll">
-            <i class="fa-solid fa-trash"></i>
-            <span class="linkName">Borrar todo</span>
-          </div>
-
-          <div class="tool-Side-Btns" id="Upload">
-            <i class="fa-solid fa-upload"></i>
-            <span class="linkName">Subir Contenido</span>
-          </div>
-
-        </div>
-        
-    </div>
-
-    <div class="tool-Action-nav-btns">
-        <div class="tool-Side-caret" id="tool-sidebar-open" >
-          <i class="fa-solid fa-caret-left"></i>
-        </div>  
-        
-        <div class="tool-Side-caret" id="tool-sidebar-close">
-          <i class="fa-solid fa-caret-right"></i>
-        </div>
-    </div>
-
-  </section>
- 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <script  src="CreateCourse.js" type="module"></script>
+  <script  src="TeacherMensajes.js" type="module"></script>
 </body>
 </html>
