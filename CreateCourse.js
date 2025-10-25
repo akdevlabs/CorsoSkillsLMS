@@ -132,7 +132,6 @@ applyBranding().then((data) => {
     document.body.style.fontFamily = fontFamily;
   }
 
-
   function RenderUserInfoColors(){
     setBackgroundColor(".User-Info", Prime)
     setTextColors( ".User-Info", Prime5)
@@ -160,28 +159,600 @@ applyBranding().then((data) => {
       });
     });
   }
-  function SetInputColors(){
-    setBackgroundColor("#Title-Input", Prime3)
+
+
+  function SetCourseCreatorNav(){
+    setBackgroundColor('.Course-Nav-block', Prime4)
+   setTextColors('.Course-Nav-block', Prime5) 
+     
     const style = document.createElement("style");
     style.textContent = `
-      #Title-Input::placeholder{
+      #Next-Btn {
+        border: 2px solid  ${Prime2};
+        color: ${Prime2};
+      }
+      .CCB.active {
+        background-color: ${Base};
+        color: ${Prime5};
+      }
+      .CCB.active {
+        background-color: ${Base};
         color:${Prime5};
       }
-      #Title-Input{
-        color:${Prime5};
-      }
-      #Title-Input:focus {
-        border-color:${Prime3};
-      }
+      @keyframes borderGlow {
+        0% { 
+          box-shadow: 0 0 0px  ${Prime2};
+          border-color:  ${Prime2};
+        }
+        50% { 
+          box-shadow: 0 0 15px  ${Prime2};
+          border-color:  ${Prime2};
+        }
+        100% { 
+          box-shadow: 0 0 0px  ${Prime2};
+          border-color:  ${Prime2};
+        }
+      }  
     `;
     document.head.appendChild(style);
-
+ 
 
   }
-  function setDescriptionColors(){
-    setTextColors(".Point",Prime2)
-    setTextColors(".Point-Lable", Base)
+  function RenderBasicInfo(){
+    function SetInputColors(){
+      setBackgroundColor("#Title-Input", Prime3)
+      const style = document.createElement("style");
+      style.textContent = `
+        #Title-Input::placeholder{
+          color:${Prime5};
+        }
+        #Title-Input{
+          color:${Prime5};
+        }
+        #Title-Input:focus {
+          border-color:${Prime3};
+        }
+      `;
+      document.head.appendChild(style);
+
+
+    }
+    function setPointsColors(){
+      setTextColors(".Point",Prime2)
+      setTextColors(".Point-Lable", Prime1)
+    }
+    function SetDropdownColors(){
+      const style = document.createElement("style");
+      style.textContent = `
+        .dropdown {
+          color: ${Prime};  
+          background: ${Prime5};
+          border: 2px solid ${Prime3};
+        }
+        .dropdown-option:hover {
+          background-color:${Prime4};
+        }
+        .tag {
+          background-color: ${Base};
+          color: ${Prime5};
+        }
+        .tag button {
+          color: ${Prime5};
+
+        }
+        .tag button:hover {
+          color: ${Prime2};
+        }
+        .tag:hover {
+          background-color:${Prime1};
+        }
+      `;
+      document.head.appendChild(style);
+
+
+    }
+    function SetDurationColors(){
+      const style = document.createElement("style");
+      style.textContent = `
+        .Duration-Block {
+          background: ${Prime5}; 
+          border: 1px solid ${Prime1}; 
+        }
+        .Duration-Block:focus-within {  
+          box-shadow: 0 0 0 2px ${Prime3};  
+        }
+        .Duration-Block input[type="number"] {
+          color: ${Prime}; 
+        }
+        .Duration-Block select {
+          color:${Prime2}; 
+        }
+        .Duration-Block input::placeholder{
+          color:${Prime}; 
+        }
+      `;
+      document.head.appendChild(style);
+
+
+    }
+    function SetmultiselectColors(){
+      const style = document.createElement("style");
+      style.textContent = `
+        .Duration-Block {
+          background: ${Prime5}; 
+          border: 1px solid ${Prime1}; 
+        }
+        .categoria-selector label {
+          color: ${Prime3}; 
+        }
+        .multi-select {
+          border: 1px solid  ${Prime1}; 
+          background-color: ${Prime5}; 
+        }
+        .multi-select:hover {
+          border-color: ${Prime3}; 
+        }
+        .placeholder-text {
+          color: ${Prime1}; 
+        }
+      `;
+      document.head.appendChild(style);
+
+
+    }
+    function SetLevelColors(){
+      const style = document.createElement("style");
+          style.textContent = `
+        .Level-Block label {
+          color: ${Prime3}; 
+        }
+        .level-option {
+          background-color: ${Prime5}; 
+        }
+        .level-option:hover {
+          background-color: ${Prime5};
+          border-color: ${Prime3};
+        }
+        .level-option input[type="checkbox"] {
+          border: 2px solid ${Prime3}; 
+        }
+        .level-option input[type="checkbox"]:checked {
+          border-color:${Base};
+          background-color: ${Base};
+        }
+        .level-option input[type="checkbox"]:checked::after {
+          background-color: ${Prime5};
+        }
+        .level-option input[type="checkbox"]:checked + span {
+          color: ${Base};
+        }
+
+
+
+      `;
+          document.head.appendChild(style);
+    }
+    function SetTagsColors(){
+      const style = document.createElement("style");
+      style.textContent = `
+        #tagInput{
+          color: ${Prime3}; 
+          background-color: ${Prime5}; 
+          border: 2px solid ${Prime1}; 
+        }
+        #tagInput::placeholder{
+          color:${Prime1}; 
+        }
+        #tagInput:hover {
+          border: 1px solid ${Prime3}; 
+        }
+        #tagList:focus-within {
+          background: ${Prime3}; 
+          border-color: ${Prime3}; 
+        }
+        .tag-list div{
+          background-color: ${Base}; 
+          color: ${Prime5}; 
+        }  
+        .tag-list div:hover {
+          color: ${Prime5}; 
+          background-color: ${Prime1}; 
+        }
+        .tag-list div .remove-tag {
+          color:${Prime5}; 
+        }  
+
+        .remove-tag {
+          color:${Prime5}; 
+        }
+        .remove-tag:hover {
+          color: ${Prime2}; 
+        }
+
+
+      `;
+      document.head.appendChild(style);
+
+
+    }
+    function SetDescriptionColors(){
+      const style = document.createElement("style");
+      style.textContent = `
+        #descriptionInput{
+          color: ${Prime3}; 
+          border: 2px solid ${Prime1}; 
+        }
+        #descriptionInput:focus {
+          border-color:${Prime3}; 
+        }
+
+      `;
+      document.head.appendChild(style);
+    }
+    function SetCICBlockColors(){
+      const style = document.createElement("style");
+      style.textContent = `
+        #includeInput {
+          color: ${Prime3}; 
+          border: 2px solid ${Prime1}; 
+        }
+        #includeInput:focus {
+          border-color:${Prime3}; 
+        }
+        .include-item {
+          color: ${Prime5};
+          background: ${Base}; 
+        }
+        .include-item:hover{
+          color: ${Prime5};
+          background: ${Prime1};
+        }
+      `;
+      document.head.appendChild(style);
+    }
+    function SetFileuploadColors(){
+      const style = document.createElement("style");
+      style.textContent = `
+        .upload-box h4 {
+          color:${Prime2}; 
+        }
+        .drop-area {
+          border: 2px dashed ${Prime3}; 
+          background-color: ${Prime5}; 
+        }
+        .drop-area.dragover {
+          border-color:${Prime2}; 
+          background-color: ${Prime4}; 
+        }
+        .drop-area p {
+          color: ${Prime1}; 
+        }
+        .browse {
+          color: ${Prime3}; 
+        }
+        .drop-area small {
+          color:${Prime4}; 
+        }
+      `;
+      document.head.appendChild(style);
+
+
+    }
+    function SetVideoColors(){
+      const style = document.createElement("style");
+      style.textContent = `
+
+        .video-drop-area {
+          border: 2px dashed  ${Prime3}; 
+          background-color: ${Prime5}; 
+        }
+        .video-drop-area:hover {
+          border-color: #007bff;
+          background-color: #f1f8ff;
+        }
+        .video-drop-area i {
+          color: ${Base}; 
+        }
+
+        .video-drop-area p {
+          color: ${Prime1}; 
+        }
+
+        .video-drop-area small {
+          color:${Prime1}; 
+        }
+
+        .video-drop-area input {
+          border: 1px solid${Prime1}; 
+        }
+
+        .video-drop-area input:focus {
+          border-color:${Prime3}; 
+
+
+      `;
+      document.head.appendChild(style);
+
+
+    }
+
+    SetInputColors()
+    setPointsColors()
+    SetDropdownColors()
+    SetDurationColors()
+    SetmultiselectColors()
+    SetLevelColors()
+    SetTagsColors()
+    SetDescriptionColors()
+    SetCICBlockColors()
+    SetFileuploadColors()
+    SetVideoColors()
   }
+  function RenderContentBlock(){
+    function SetStarterPageColors(){
+      const style = document.createElement("style");
+      style.textContent = `       
+        #Starter-Page-Block h1{
+          color: ${Base}; 
+        }
+      #add-module{
+          color: ${Prime5}; 
+          background-color: ${Prime3}; 
+        }
+      #add-module:hover {
+          background-color: ${Prime1}; 
+        }
+        #Tema-Title:focus{
+          border-color:${Prime3}; 
+        }
+
+
+
+
+        .Line{
+          background-color: ${Prime}; 
+        }
+        .Line2{
+          background-color: ${Prime2}; 
+        }
+        .Line3{
+          background-color: #b0572e;
+        }
+
+
+      `;
+      document.head.appendChild(style);
+
+
+    }
+    function SetModulescontainerColors(){
+      const style = document.createElement("style");
+      style.textContent = `       
+        /*-------- Added-input-Block --------*/
+        .Added-input-Block h2{
+          color: ${Prime3}; 
+        }
+        .remove-module{
+          color: ${Prime3}; 
+        }
+        .remove-module:hover{
+          color: ${Prime2}; 
+        }
+        /*-------- module-lesson-block --------*/
+        .module-lesson-block input{
+          border: 2px solid ${Prime1}; 
+        }
+        #Titulo-Tema-Input:focus{
+          border-color:${Prime3}; 
+        }
+        .module-lesson-block button{
+          color:${Prime5}; 
+          background-color: ${Base}; 
+        }
+        .module-lesson-block button:hover{
+          background-color:${Prime1}; 
+        }
+        /*-------- lessons --------*/
+        .Lesson-Point{
+          color: ${Prime2}; 
+        }
+        .Lesson-Point-Lable{
+          color:${Prime1}; 
+        }
+        .input-block textarea{
+          border: 2px solid${Prime1}; 
+        }
+        .input-block textarea:focus{
+          border-color:${Prime3}; 
+        }
+        /*-------- add-btns --------*/
+        .add-btns button{
+          color: ${Prime5}; 
+          background-color: ${Base}; 
+        }
+        .add-btns button:hover{
+          background-color:${Prime3}; 
+        }
+        /*-------- Up-load-btn --------*/
+        .Up-load-btn {
+          color: ${Prime3}; 
+        }
+        .Up-load-btn::before {
+          background-color: ${Base}; 
+          color: ${Prime5}; 
+        }
+        .Up-load-btn:hover::before {
+          background-color: ${Prime2}; 
+        }
+        /*-------- Up-load-btn --------*/
+        .Added-input-Block button{
+          color: ${Base}; 
+        }
+        .Added-input-Block button:hover{
+          color: ${Prime2}; 
+        }
+
+
+
+
+
+
+
+      `;
+      document.head.appendChild(style);
+    }
+    function SetHomeworkColors(){
+      const style = document.createElement("style");
+      style.textContent = `       
+      .Tarea-Block a{
+        color: ${Base}; 
+      }
+      #HW-Title{
+        color:  ${Prime3};  
+        border: 2px solid ${Prime1}; 
+      }
+      #HW-Title::placeholder{
+        color:  ${Prime1};      
+      }
+      #HW-Title:focus{
+        border-color:${Prime3}; 
+      }
+      #HW-Text{
+        color:  ${Prime3};  
+        border: 2px solid ${Prime1}; 
+      }
+      #HW-Text::placeholder{
+        color:  ${Prime1};      
+      }
+      #HW-Text:focus{
+        border-color:${Prime3}; 
+      }
+      .hw-date {
+        background-color: ${Prime3};     
+        border: 2px solid  ${Prime3};     
+        color:${Prime3};  
+      }
+      .hw-date:hover {
+        border-color: ${Prime2};  
+      }
+      .hw-date:focus {
+        border-color: ${Prime2};  
+      }
+      .hw-date:valid {
+        border-color: ${Prime1};  
+        background-color: ${Prime5};  
+        color: ${Prime1};  
+      }
+      .hw-files::before {
+        color: ${Prime5};
+        background-color: ${Prime3};     
+      }
+      .hw-files:hover::before {
+        background-color:${Prime2};    
+      }
+      .hw-files:active::before {
+        background-color: ${Prime4};
+      }
+      .add-file-input{
+        color: ${Prime5};
+        background-color: ${Prime3};
+      }
+      .add-file-input{
+        color: ${Prime5};
+        background-color: ${Base};
+      }
+      .add-file-input:hover { 
+        background-color: ${Prime1};
+      }
+      `;
+      document.head.appendChild(style);
+    } 
+    function SetExamColors(){
+      const style = document.createElement("style");
+      style.textContent = `       
+        .exam-title{
+          color:${Prime3}; 
+          border: 2px solid ${Prime1}; 
+        }
+        #examTitle:focus {
+          border-color:${Prime3}; 
+        }
+        .exam-buttons button{
+          color:${Prime5}; 
+          background-color: ${Base};
+        }
+        .exam-buttons button:hover { 
+          background-color: ${Prime3};
+        }
+
+
+
+
+
+      `;
+      document.head.appendChild(style);
+    } 
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function SetPreviewColors(){
+      const style = document.createElement("style");
+      style.textContent = `       
+        .Preview-Blocks{
+          background-color: ${Prime4}; 
+        }
+        .Preview-Blocks h3{
+          color:${Base}; 
+        }
+
+
+
+
+
+      `;
+      document.head.appendChild(style);
+    } 
+    
+
+
+
+
+    SetModulescontainerColors()
+    SetStarterPageColors()
+    SetHomeworkColors()
+SetExamColors()
+
+SetPreviewColors()
+  }
+
+
+
+
+
+
   function SetInputBlockColors(){
     setBackgroundColor("#Title-Input", Prime3)
     const style = document.createElement("style");
@@ -198,23 +769,7 @@ applyBranding().then((data) => {
 
 
   }
-  function SetCourseCreatorNav(){
 
-    setBackgroundColor('.Course-Nav-block', Prime4)
-    setTextColors('.Course-Nav-block', Prime5) 
-    setBackgroundColor('#Next-Btn', Prime2)
-
-    const style = document.createElement("style");
-    style.textContent = `
-      .CCB.active {
-        background-color: ${Base};
-        color: ${Prime5};
-      }
-    `;
-    document.head.appendChild(style);
- 
-
-  }
   function SetBIBPreviewColors(){
     setBackgroundColor("#Title-Input", Prime3)
     setTextColors(".fa-eye", Prime2)
@@ -263,11 +818,17 @@ applyBranding().then((data) => {
 
 
   }
-  
 
 
 
 
+
+
+
+
+
+
+ 
 
 
 
@@ -278,11 +839,15 @@ applyBranding().then((data) => {
   RenderUserInfoColors()
   RenderNavBlock()
   sidebarcolors()
-  SetInputColors()
-  setDescriptionColors()
-  SetInputBlockColors()
+ 
+
   SetCourseCreatorNav()
-  SetBIBPreviewColors()
+  RenderBasicInfo()
+  RenderContentBlock()
+
+
+
+
 
 
 
@@ -566,21 +1131,28 @@ async function fetchAllContent() {
 
 
   }
-  function renderTags(){
+  function renderTags() {
     const tagInput = document.getElementById("tagInput");
     const tagList = document.getElementById("tagList");
     let tags = [];
 
     // Function to render tags
-    function renderTags() {
+    function updateTagList() {
       tagList.innerHTML = "";
+
       tags.forEach((tag, index) => {
         const tagElement = document.createElement("div");
-        tagElement.classList.add("tag");
+        tagElement.classList.add("Input-Tags"); // ✅ your requested class
+
+        // Optional unique class (for styling or tracking)
+        tagElement.classList.add(`Input-Tags-${index + 1}`);
+
+        // Insert tag content
         tagElement.innerHTML = `
-          ${tag}
-          <button class="remove-tag" data-index="${index}">&times;</button>
+          <span class="tag-text">${tag}</span>
+          <button class="remove-tag" data-index="${index}" aria-label="Eliminar etiqueta">&times;</button>
         `;
+
         tagList.appendChild(tagElement);
       });
     }
@@ -592,7 +1164,7 @@ async function fetchAllContent() {
         const newTag = tagInput.value.trim();
         if (!tags.includes(newTag)) {
           tags.push(newTag);
-          renderTags();
+          updateTagList();
         }
         tagInput.value = "";
       }
@@ -603,11 +1175,11 @@ async function fetchAllContent() {
       if (e.target.classList.contains("remove-tag")) {
         const index = e.target.getAttribute("data-index");
         tags.splice(index, 1);
-        renderTags();
+        updateTagList();
       }
     });
-
   }
+
 
 
   function RenderallInputs() {
@@ -833,21 +1405,6 @@ async function fetchAllContent() {
   }
 
 
-  function ClearallInputs(Id){
-    // Get the "Borrar todo" button
-    const clearAllBtn = document.getElementById(Id);
-
-    // Add click event listener
-    clearAllBtn.addEventListener("click", () => {
-      // Confirm before refreshing (optional)
-      const confirmRefresh = confirm("¿Estás seguro de que quieres borrar todo y reiniciar la página?");
-      
-      if (confirmRefresh) {
-        // Reload the page
-        location.reload();
-      }
-    });
-  }
 
 
 
@@ -1053,73 +1610,117 @@ async function fetchAllContent() {
   window.Activechecknumber = Activechecknumber;
 
 
-
 function SetModuleBlock() {
   let moduleCount = 0;
 
-  const modulesContainer = document.getElementById('modules-container');
-  const addModuleBtn = document.getElementById('add-module');
-  const previewBtn = document.getElementById('BPSPB-preview');
-  const previewBlock = document.getElementById('spb-Prview-block');
+  const modulesContainer = document.getElementById("modules-container");
+  const addModuleBtn = document.getElementById("add-module");
+  const previewBlock = document.getElementById("modules-Prview-block");
 
-  addModuleBtn.addEventListener('click', () => createModule(true));
-  if (previewBtn) previewBtn.addEventListener('click', renderPreview);
+  // ✅ Create first module automatically on load
+  createModule(true);
+
+  // Add new modules dynamically
+  addModuleBtn.addEventListener("click", () => {
+    createModule(true);
+    renderPreview();
+  });
 
   // === CREATE MODULE ===
-  function createModule(isAdded = false) {
-    const moduleDiv = document.createElement('div');
-    moduleDiv.classList.add('module');
+function createModule(isAdded = false, isHidden = true) {
+  const moduleDiv = document.createElement("div");
+  moduleDiv.classList.add("module");
 
-    moduleDiv.innerHTML = `
-      <div class="module-header">
-        <div>
-          <div class="Added-input-Block">
-            <h2 class="module-title"></h2>
+  moduleDiv.innerHTML = `
+    <div class="module-header">
+      <div>
+        <div class="Added-input-Block">
+          <h2 class="module-title"></h2>
+          <div  class="Module-Action-Btns">
+           <button class="hide-module">-</button>
             ${isAdded ? `<button class="remove-module">×</button>` : ""}
           </div>
-          <div class="module-lesson-block">
-            <input class="Titulo-Tema-Input" type="text" placeholder="Título del Tema" />   
-            <button class="add-lesson">+ Agregar Lección</button> 
-          </div>
+        </div>
+        <div class="module-lesson-block">
+          <input id="Tema-Title" class="Titulo-Tema-Input" type="text" placeholder="Título del Tema" />    
+          <button class="add-lesson">+ Agregar Lección</button> 
         </div>
       </div>
-      <div class="lessons"></div>
-    `;
+    </div>
+    <div class="lessons"></div>
+    <div class="Line"></div>
+  `;
 
-    modulesContainer.appendChild(moduleDiv);
+  modulesContainer.appendChild(moduleDiv);
 
-    const addLessonBtn = moduleDiv.querySelector('.add-lesson');
-    const lessonsContainer = moduleDiv.querySelector('.lessons');
-    addLessonBtn.addEventListener('click', () => addLesson(lessonsContainer));
+  const addLessonBtn = moduleDiv.querySelector(".add-lesson");
+  const lessonsContainer = moduleDiv.querySelector(".lessons");
+  const titleInput = moduleDiv.querySelector(".Titulo-Tema-Input");
+  const hideBtn = moduleDiv.querySelector(".hide-module");
+  const block = moduleDiv.querySelector(".module-lesson-block");
 
-    if (isAdded) {
-      const removeModuleBtn = moduleDiv.querySelector('.remove-module');
-      removeModuleBtn.addEventListener('click', () => {
-        moduleDiv.remove();
-        renumberModules();
-      });
+  // === Collapse / Expand functionality ===
+  hideBtn.addEventListener("click", () => {
+    const isHidden = block.style.display === "none"; // check current state
+
+    if (isHidden) {
+      block.style.display = "flex"; // show lesson block
+      lessonsContainer.style.display = "block"; // show lessons
+      hideBtn.textContent = "-";
+    } else {
+      block.style.display = "none"; // hide lesson block
+      lessonsContainer.style.display = "none"; // hide lessons
+      hideBtn.textContent = "+";
     }
+  });
 
-    renumberModules();
+  // === Live update on typing ===
+  titleInput.addEventListener("input", renderPreview);
+
+
+    // === Add lesson button ===
+    addLessonBtn.addEventListener("click", () => {
+      addLesson(lessonsContainer);
+      renderPreview();
+    })
+
+
+
+  // === Remove module button ===
+  if (isAdded) {
+    const removeModuleBtn = moduleDiv.querySelector(".remove-module");
+    removeModuleBtn.addEventListener("click", () => {
+      moduleDiv.remove();
+      renumberModules();
+      renderPreview();
+    });
   }
+
+  renumberModules();
+  renderPreview();
+}
 
   // === RENUMBER MODULES ===
   function renumberModules() {
-    const modules = modulesContainer.querySelectorAll('.module');
+    const modules = modulesContainer.querySelectorAll(".module");
     moduleCount = modules.length;
     modules.forEach((mod, index) => {
-      const title = mod.querySelector('.module-title');
+      const title = mod.querySelector(".module-title");
       if (title) title.textContent = `Módulo ${index + 1}:`;
     });
   }
 
   // === ADD LESSON ===
   function addLesson(container) {
-    const lessonDiv = document.createElement('div');
-    lessonDiv.classList.add('lesson');
+    const lessonDiv = document.createElement("div");
+    lessonDiv.classList.add("lesson");
+
     lessonDiv.innerHTML = `
       <div class="input-block">
-        <label>Descripción</label>
+        <div class="Label-Block">
+          <label class="Lesson-Point">*</label>
+          <label class="Lesson-Point-Lable">Descripción</label>
+        </div>
         <textarea rows="3" placeholder="Describe brevemente el tema..."></textarea>
       </div>
 
@@ -1135,123 +1736,267 @@ function SetModuleBlock() {
         <button class="add-Archivos">+ Archivos</button>
         <button class="add-Live">+ Clase en Vivo</button>
       </div>
+      <div class="Line2"></div>
       <div class="dynamic-inputs"></div>
     `;
+
     container.appendChild(lessonDiv);
 
-    const uploadBox = lessonDiv.querySelector('.upload-box');
-    const progressBar = lessonDiv.querySelector('.upload-progress');
-    const dynamicContainer = lessonDiv.querySelector('.dynamic-inputs');
+    const uploadBox = lessonDiv.querySelector(".upload-box");
+    const progressBar = lessonDiv.querySelector(".upload-progress");
+    const dynamicContainer = lessonDiv.querySelector(".dynamic-inputs");
+    const descArea = lessonDiv.querySelector("textarea");
 
-    uploadBox.addEventListener('click', () => simulateUpload(progressBar));
+    descArea.addEventListener("input", renderPreview);
+    uploadBox.addEventListener("click", () => {
+      simulateUpload(progressBar);
+      renderPreview();
+    });
 
     // === Dynamic buttons ===
-    lessonDiv.querySelector('.add-Exam').addEventListener('click', () => addExamInput(dynamicContainer));
-    lessonDiv.querySelector('.add-video').addEventListener('click', () => addDynamicInput(dynamicContainer, 'Video', 'URL del video o descripción'));
-    lessonDiv.querySelector('.add-Subtema').addEventListener('click', () => addDynamicInput(dynamicContainer, 'Subtema', 'Título del subtema'));
-    lessonDiv.querySelector('.add-description').addEventListener('click', () => addDynamicInput(dynamicContainer, 'Descripción', 'Texto descriptivo'));
-    lessonDiv.querySelector('.add-Homework').addEventListener('click', () => addHomeworkInput(dynamicContainer));
-    lessonDiv.querySelector('.add-Archivos').addEventListener('click', () => addFileInput(dynamicContainer));
-    lessonDiv.querySelector('.add-Live').addEventListener('click', () => addLiveInput(dynamicContainer));
+    lessonDiv.querySelector(".add-Exam").addEventListener("click", () => { addExamInput(dynamicContainer); renderPreview(); });
+    lessonDiv.querySelector(".add-video").addEventListener("click", () => { addDynamicInput(dynamicContainer, "Video", "URL del video o descripción"); renderPreview(); });
+    lessonDiv.querySelector(".add-Subtema").addEventListener("click", () => { addDynamicInput(dynamicContainer, "Subtema", "Título del subtema"); renderPreview(); });
+    lessonDiv.querySelector(".add-description").addEventListener("click", () => { addDynamicInput(dynamicContainer, "Descripción", "Texto descriptivo"); renderPreview(); });
+    lessonDiv.querySelector(".add-Homework").addEventListener("click", () => { addHomeworkInput(dynamicContainer); renderPreview(); });
+    lessonDiv.querySelector(".add-Archivos").addEventListener("click", () => { addFileInput(dynamicContainer); renderPreview(); });
+    lessonDiv.querySelector(".add-Live").addEventListener("click", () => { addLiveInput(dynamicContainer); renderPreview(); });
+  }
+
+  // === SIMULATE UPLOAD ===
+  function simulateUpload(progressBar) {
+    let progress = 0;
+    progressBar.style.width = "0";
+    const interval = setInterval(() => {
+      progress += 5;
+      progressBar.style.width = `${progress}%`;
+      if (progress >= 100) clearInterval(interval);
+    }, 100);
+  }
+
+  // === DYNAMIC INPUTS (Homework, Exam, Live, Dynamic, Files) ===
+  function addDynamicInput(container, type, placeholder) {
+    const block = document.createElement("div");
+    block.classList.add("input-block");
+    block.innerHTML = `
+      <div class="Added-input-Block">
+        <div class="Label-Block">
+          <label class="Lesson-Point">*</label>
+          <label class="Lesson-Point-Lable">${type}</label>
+        </div>        
+        <button class="remove-btn">×</button>
+      </div>
+      <input type="text" placeholder="${placeholder}" />
+      <div class="Line3"></div>
+    `;
+    container.appendChild(block);
+
+    const input = block.querySelector("input");
+    input.addEventListener("input", renderPreview);
+    block.querySelector(".remove-btn").addEventListener("click", () => {
+      block.remove();
+      renderPreview();
+    });
+  }
+
+  // === FILE INPUT ===
+  function addFileInput(container) {
+    const block = document.createElement("div");
+    block.classList.add("input-block");
+    block.innerHTML = `
+      <div class="Added-input-Block">
+        <div class="Label-Block">
+          <label class="Lesson-Point">*</label>
+          <label class="Lesson-Point-Lable">Archivos</label>
+        </div>  
+        <button class="remove-btn">×</button>
+      </div>
+      <input class="Up-load-btn" type="file" multiple />
+      <div class="Line3"></div>
+    `;
+    container.appendChild(block);
+
+    const input = block.querySelector("input[type='file']");
+    input.addEventListener("change", renderPreview);
+
+    block.querySelector(".remove-btn").addEventListener("click", () => {
+      block.remove();
+      renderPreview();
+    });
+
+    return block;
   }
 
   // === HOMEWORK INPUT ===
   function addHomeworkInput(container) {
-    const block = document.createElement('div');
-    block.classList.add('input-block');
+    const block = document.createElement("div");
+    block.classList.add("input-block");
     block.innerHTML = `
       <div class="Added-input-Block">
-        <label>Tarea</label>
+        <div class="Label-Block">
+          <label class="Lesson-Point">*</label>
+          <label class="Lesson-Point-Lable">Tarea</label>
+        </div>  
         <button class="remove-btn">×</button>
       </div>
 
-      <div class="Added-input-Block"><label>Título de la Tarea</label></div>
-      <input type="text" placeholder="Ejemplo: Análisis de Caso - Semana 2" />
+      <div class="Tarea-Block">
+        <div class="Added-input-Block">
+          <a>Título de la Tarea</a>
+        </div>
 
-      <div class="Added-input-Block"><label>Descripción</label></div>
-      <textarea rows="3" placeholder="Describe las instrucciones de la tarea..."></textarea>
+        <input type="text" id="HW-Title" class="hw-title" placeholder="Ejemplo: Análisis de Caso - Semana 2" />
 
-      <div class="Added-input-Block"><label>Fecha de Entrega</label></div>
-      <input type="date" />
+        <div class="Added-input-Block">
+          <a>Descripción</a>
+        </div>
+        
+        <textarea rows="3" id="HW-Text" class="hw-desc" placeholder="Describe las instrucciones de la tarea..."></textarea>
 
-      <div class="Added-input-Block"><label>Recursos / Archivos Adjuntos</label></div>
-      <div class="file-inputs"><input type="file" multiple /></div>
-      <button class="add-file-input">+ Agregar Archivo</button>
+        <div class="HW-Bottom-Block">
+
+          <div class="B">
+            <div class="Added-input-Block">
+              <a>Fecha de Entrega</a>
+            </div>
+
+            <input type="date" class="hw-date" />
+          </div>
+
+          <div class="B"
+            <a>Recursos / Archivos Adjuntos</a>
+       
+            <div class="file-inputs">
+              <input type="file" class="hw-files" multiple />
+            </div>
+          </div>
+        </div>
+
+        <button class="add-file-input">+ Agregar Archivo</button>
+        <div class="Line3"></div>
+      </div>
     `;
     container.appendChild(block);
 
-    block.querySelector('.remove-btn').addEventListener('click', () => block.remove());
-    const addFileBtn = block.querySelector('.add-file-input');
-    const fileContainer = block.querySelector('.file-inputs');
-    addFileBtn.addEventListener('click', () => {
-      const newFileInput = document.createElement('input');
-      newFileInput.type = 'file';
+    // wire events
+    block.querySelector(".remove-btn").addEventListener("click", () => {
+      block.remove();
+      renderPreview();
+    });
+
+    const title = block.querySelector(".hw-title");
+    const desc = block.querySelector(".hw-desc");
+    const date = block.querySelector(".hw-date");
+    const files = block.querySelector(".hw-files");
+    const addFileBtn = block.querySelector(".add-file-input");
+    const fileContainer = block.querySelector(".file-inputs");
+
+    [title, desc, date].forEach(el => el.addEventListener("input", renderPreview));
+    files.addEventListener("change", renderPreview);
+
+    addFileBtn.addEventListener("click", () => {
+      const newFileInput = document.createElement("input");
+      newFileInput.type = "file";
       newFileInput.multiple = true;
+      newFileInput.addEventListener("change", renderPreview);
       fileContainer.appendChild(newFileInput);
+      renderPreview();
     });
   }
 
   // === EXAM INPUT ===
   function addExamInput(container) {
-    const block = document.createElement('div');
-    block.classList.add('input-block');
+    const block = document.createElement("div");
+    block.classList.add("input-block");
     block.innerHTML = `
       <div class="Added-input-Block">
-        <label>Título del Examen</label>
-        <button class="remove-btn">×</button>  
+        <div class="Label-Block">
+          <label class="Lesson-Point">*</label>
+          <label class="Lesson-Point-Lable">Título del Examen</label>
+        </div>  
+        <button class="remove-btn">×</button>
       </div>
-      <input type="text" placeholder="Ejemplo: Evaluación Final del Módulo" />
-      <div class="exam-buttons" style="margin-top: 8px;">
+      <input type="text" id="examTitle" class="exam-title" placeholder="Ejemplo: Evaluación Final del Módulo" />
+
+      <div class="exam-buttons">
         <button class="exam-mc">Opción Múltiple</button>
         <button class="exam-tf">Verdadero / Falso</button>
         <button class="exam-cc">Examen de Emparejamiento</button>
         <button class="exam-oq">Pregunta Abierta</button>
       </div>
-      <div class="exam-questions" style="margin-top: 10px;"></div>
+      <div class="exam-questions"></div>
     `;
     container.appendChild(block);
 
-    const removeBtn = block.querySelector('.remove-btn');
-    const questionsContainer = block.querySelector('.exam-questions');
-    removeBtn.addEventListener('click', () => block.remove());
+    const removeBtn = block.querySelector(".remove-btn");
+    const questionsContainer = block.querySelector(".exam-questions");
+    const examTitle = block.querySelector(".exam-title");
 
-    // === Question types ===
-    block.querySelector('.exam-mc').addEventListener('click', () => {
-      const q = document.createElement('div');
-      q.classList.add('input-block');
+    removeBtn.addEventListener("click", () => { block.remove(); renderPreview(); });
+    examTitle.addEventListener("input", renderPreview);
+
+    // helper to add a generic question block with listeners
+    function wireQuestion(qEl) {
+      // add remove behavior to any inner remove buttons
+      const rm = qEl.querySelector(".remove-btn");
+      if (rm) rm.addEventListener("click", () => { qEl.remove(); renderPreview(); });
+
+      // add input listeners on each input/textarea/select inside the question
+      qEl.querySelectorAll("input, textarea, select").forEach(inp => inp.addEventListener("input", renderPreview));
+      qEl.querySelectorAll("input[type='file']").forEach(f => f.addEventListener("change", renderPreview));
+    }
+
+    // multiple choice
+    block.querySelector(".exam-mc").addEventListener("click", () => {
+      const q = document.createElement("div");
+      q.classList.add("input-block");
       q.innerHTML = `
-        <div class="Added-input-Block">
-          <label>Pregunta de Opción Múltiple</label>
-          <button class="remove-btn">×</button>
+        <div class="exam-question-block">
+          <div class="Added-input-Block">
+            <div class="Label-Block">
+              <label class="Lesson-Point">*</label>
+              <label class="Lesson-Point-Lable">Pregunta de Opción Múltiple</label>
+            </div>  
+            <button class="remove-btn">×</button>
+          </div>
+
+          <input type="text" class="Main-Question" placeholder="Escribe la pregunta..." />
+          
+          <input class="A1" type="text" placeholder="Opción A" />
+          <input class="A2" type="text" placeholder="Opción B" />
+          <input class="A3" type="text" placeholder="Opción C" />
+          <input class="A4" type="text" placeholder="Opción D" />
         </div>
-        <input type="text" placeholder="Escribe la pregunta..." />
-        <input type="text" placeholder="Opción A" />
-        <input type="text" placeholder="Opción B" />
-        <input type="text" placeholder="Opción C" />
-        <input type="text" placeholder="Opción D" />
       `;
       questionsContainer.appendChild(q);
-      q.querySelector('.remove-btn').addEventListener('click', () => q.remove());
+      wireQuestion(q);
+      renderPreview();
     });
 
-    block.querySelector('.exam-tf').addEventListener('click', () => {
-      const q = document.createElement('div');
-      q.classList.add('input-block');
+    // true/false
+    block.querySelector(".exam-tf").addEventListener("click", () => {
+      const q = document.createElement("div");
+      q.classList.add("input-block");
       q.innerHTML = `
         <div class="Added-input-Block">
           <label>Pregunta Verdadero / Falso</label>
           <button class="remove-btn">×</button>
         </div>
         <input type="text" placeholder="Escribe la pregunta..." />
-        <select><option value="true">Verdadero</option><option value="false">Falso</option></select>
+        <select>
+          <option value="true">Verdadero</option>
+          <option value="false">Falso</option>
+        </select>
       `;
       questionsContainer.appendChild(q);
-      q.querySelector('.remove-btn').addEventListener('click', () => q.remove());
+      wireQuestion(q);
+      renderPreview();
     });
 
-    block.querySelector('.exam-cc').addEventListener('click', () => {
-      const q = document.createElement('div');
-      q.classList.add('input-block');
+    // matching
+    block.querySelector(".exam-cc").addEventListener("click", () => {
+      const q = document.createElement("div");
+      q.classList.add("input-block");
       q.innerHTML = `
         <div class="Added-input-Block">
           <label>Examen de Emparejamiento</label>
@@ -1267,12 +2012,14 @@ function SetModuleBlock() {
         <input type="text" placeholder="Elemento Derecha 4" />
       `;
       questionsContainer.appendChild(q);
-      q.querySelector('.remove-btn').addEventListener('click', () => q.remove());
+      wireQuestion(q);
+      renderPreview();
     });
 
-    block.querySelector('.exam-oq').addEventListener('click', () => {
-      const q = document.createElement('div');
-      q.classList.add('input-block');
+    // open question
+    block.querySelector(".exam-oq").addEventListener("click", () => {
+      const q = document.createElement("div");
+      q.classList.add("input-block");
       q.innerHTML = `
         <div class="Added-input-Block">
           <label>Pregunta Abierta</label>
@@ -1282,89 +2029,61 @@ function SetModuleBlock() {
         <textarea rows="2" placeholder="Respuesta esperada"></textarea>
       `;
       questionsContainer.appendChild(q);
-      q.querySelector('.remove-btn').addEventListener('click', () => q.remove());
+      wireQuestion(q);
+      renderPreview();
     });
   }
 
   // === LIVE CLASS INPUT ===
   function addLiveInput(container) {
-    const block = document.createElement('div');
-    block.classList.add('input-block');
+    const block = document.createElement("div");
+    block.classList.add("input-block");
     block.innerHTML = `
       <div class="Added-input-Block">
         <label>Clase en Vivo</label>
         <button class="remove-btn">×</button>
       </div>
       <div class="Added-input-Block"><label>Título de la Clase</label></div>
-      <input type="text" placeholder="Ejemplo: Sesión en Vivo - Estrategias de Ventas" />
+      <input type="text" class="live-title" placeholder="Ejemplo: Sesión en Vivo - Estrategias de Ventas" />
       <div class="Added-input-Block"><label>Fecha y Hora</label></div>
-      <input type="datetime-local" />
+      <input type="datetime-local" class="live-datetime" />
       <div class="Added-input-Block"><label>Duración (minutos)</label></div>
-      <input type="number" placeholder="60" />
+      <input type="number" class="live-duration" placeholder="60" />
       <div class="Added-input-Block"><label>Descripción</label></div>
-      <textarea rows="3" placeholder="Describe brevemente la clase..."></textarea>
+      <textarea rows="3" class="live-desc" placeholder="Describe brevemente la clase..."></textarea>
       <div class="Added-input-Block"><label>Recursos / Archivos</label></div>
-      <div class="file-inputs"><input type="file" multiple /></div>
+      <div class="file-inputs"><input type="file" class="live-files" multiple /></div>
       <button class="add-file-input">+ Recursos / Archivo</button>
     `;
     container.appendChild(block);
 
-    block.querySelector('.remove-btn').addEventListener('click', () => block.remove());
-    const addFileBtn = block.querySelector('.add-file-input');
-    const fileContainer = block.querySelector('.file-inputs');
-    addFileBtn.addEventListener('click', () => {
-      const newFileInput = document.createElement('input');
-      newFileInput.type = 'file';
+    block.querySelector(".remove-btn").addEventListener("click", () => { block.remove(); renderPreview(); });
+
+    const title = block.querySelector(".live-title");
+    const datetime = block.querySelector(".live-datetime");
+    const duration = block.querySelector(".live-duration");
+    const desc = block.querySelector(".live-desc");
+    const files = block.querySelector(".live-files");
+    const addFileBtn = block.querySelector(".add-file-input");
+    const fileContainer = block.querySelector(".file-inputs");
+
+    [title, datetime, duration, desc].forEach(el => el.addEventListener("input", renderPreview));
+    files.addEventListener("change", renderPreview);
+
+    addFileBtn.addEventListener("click", () => {
+      const newFileInput = document.createElement("input");
+      newFileInput.type = "file";
       newFileInput.multiple = true;
+      newFileInput.addEventListener("change", renderPreview);
       fileContainer.appendChild(newFileInput);
+      renderPreview();
     });
-  }
-
-  // === TEXT / VIDEO / DESCRIPTION / SUBTOPIC INPUT ===
-  function addDynamicInput(container, type, placeholder) {
-    const block = document.createElement('div');
-    block.classList.add('input-block');
-    block.innerHTML = `
-      <div class="Added-input-Block">
-        <label>${type}</label>
-        <button class="remove-btn">×</button>
-      </div>
-      <input type="text" placeholder="${placeholder}" />
-    `;
-    container.appendChild(block);
-    block.querySelector('.remove-btn').addEventListener('click', () => block.remove());
-  }
-
-  // === FILE INPUT ===
-  function addFileInput(container) {
-    const block = document.createElement('div');
-    block.classList.add('input-block');
-    block.innerHTML = `
-      <div class="Added-input-Block">
-        <label>Archivos</label>
-        <button class="remove-btn">×</button>
-      </div>
-      <input type="file" multiple />
-    `;
-    container.appendChild(block);
-    block.querySelector('.remove-btn').addEventListener('click', () => block.remove());
-  }
-
-  // === SIMULATE UPLOAD ===
-  function simulateUpload(progressBar) {
-    let progress = 0;
-    progressBar.style.width = "0";
-    const interval = setInterval(() => {
-      progress += 5;
-      progressBar.style.width = `${progress}%`;
-      if (progress >= 100) clearInterval(interval);
-    }, 100);
   }
 
   // === RENDER PREVIEW ===
   function renderPreview() {
-    previewBlock.innerHTML = ''; 
-    const modules = document.querySelectorAll('.module');
+    previewBlock.innerHTML = "";
+    const modules = document.querySelectorAll(".module");
 
     if (modules.length === 0) {
       previewBlock.innerHTML = `<p style="color:#999;">No hay módulos para mostrar.</p>`;
@@ -1372,35 +2091,48 @@ function SetModuleBlock() {
     }
 
     modules.forEach((module, i) => {
-      const moduleTitle = module.querySelector('.Titulo-Tema-Input')?.value || `Módulo ${i + 1}`;
-      const modulePreview = document.createElement('div');
-      modulePreview.classList.add('preview-module');
+      const moduleTitle = module.querySelector(".Titulo-Tema-Input")?.value || `Módulo ${i + 1}`;
+      const modulePreview = document.createElement("div");
+      modulePreview.classList.add("preview-module");
       modulePreview.innerHTML = `<h2>${moduleTitle}</h2>`;
 
-      const lessons = module.querySelectorAll('.lesson');
+      const lessons = module.querySelectorAll(".lesson");
       lessons.forEach((lesson, index) => {
-        const desc = lesson.querySelector('textarea')?.value || '';
-        const lessonPreview = document.createElement('div');
-        lessonPreview.classList.add('preview-lesson');
+        const desc = lesson.querySelector("textarea")?.value || "";
+        const lessonPreview = document.createElement("div");
+        lessonPreview.classList.add("preview-lesson");
         lessonPreview.innerHTML = `
           <h3>Lección ${index + 1}</h3>
-          ${desc ? `<p>${desc}</p>` : ''}
+          ${desc ? `<p>${desc}</p>` : ""}
         `;
 
-        const dynamicInputs = lesson.querySelectorAll('.dynamic-inputs .input-block');
-        dynamicInputs.forEach(inputBlock => {
-          const label = inputBlock.querySelector('label')?.textContent || '';
-          const input = inputBlock.querySelector('input');
-          let value = '';
+        const dynamicInputs = lesson.querySelectorAll(".dynamic-inputs .input-block");
+        dynamicInputs.forEach((inputBlock) => {
+          const label = inputBlock.querySelector("label")?.textContent || "";
+          const input = inputBlock.querySelector("input, textarea, select");
+          let value = "";
 
-          if (input?.type === 'file') {
-            const files = Array.from(input.files).map(f => f.name).join(', ');
-            value = files || 'No se seleccionaron archivos.';
+          // handle file lists (multiple inputs possible)
+          const fileInputs = inputBlock.querySelectorAll("input[type='file']");
+          if (fileInputs.length) {
+            const names = [];
+            fileInputs.forEach(fi => {
+              if (fi.files && fi.files.length) {
+                Array.from(fi.files).forEach(f => names.push(f.name));
+              }
+            });
+            value = names.join(", ") || "No se seleccionaron archivos.";
+          } else if (input) {
+            value = input.value || "";
           } else {
-            value = input?.value || '';
+            // fallback: collect textareas/selects inside
+            const ta = inputBlock.querySelector("textarea");
+            const sel = inputBlock.querySelector("select");
+            if (ta) value = ta.value || "";
+            else if (sel) value = sel.value || "";
           }
 
-          if (value.trim()) {
+          if (value && value.toString().trim()) {
             lessonPreview.innerHTML += `<p><strong>${label}:</strong> ${value}</p>`;
           }
         });
@@ -1411,9 +2143,11 @@ function SetModuleBlock() {
       previewBlock.appendChild(modulePreview);
     });
 
-    previewBlock.scrollIntoView({ behavior: 'smooth' });
+    // optionally scroll preview into view
+    // previewBlock.scrollIntoView({ behavior: 'smooth' });
   }
 }
+
 
 
 
@@ -1892,8 +2626,7 @@ if (finalReviewBtn) {
 
   renderTeacherNameDescrip()
   renderTags()
-  ClearallInputs("BIB-clearAll")
-  ClearallInputs("BIBSPB-clearAll")
+
 
 
 
@@ -2108,7 +2841,37 @@ function handleFile(file, type) {
 
 
 
+document.addEventListener("DOMContentLoaded", function () {
+  const openBtn = document.getElementById("open");
+  const closeBtn = document.getElementById("close");
+  const menuToggle = document.getElementById("menuToggle");
+  const linkNames = document.querySelectorAll(".linkName");
+  const mobileSidebar = document.getElementById("Mobile-sidebar"); // Make sure this ID exists
 
+  function showSidebarText() {
+    linkNames.forEach(el => el.style.display = "inline");
+    openBtn.style.display = "none";
+    closeBtn.style.display = "flex";
+  }
+
+  function hideSidebarText() {
+    linkNames.forEach(el => el.style.display = "none");
+    closeBtn.style.display = "none";
+    openBtn.style.display = "flex";
+  }
+
+  function toggleMobileSidebar() {
+    mobileSidebar.classList.toggle("show"); // Add a class like .show to handle visibility in CSS
+  }
+
+  // Attach event listeners
+  openBtn.addEventListener("click", showSidebarText);
+  closeBtn.addEventListener("click", hideSidebarText);
+
+
+  // Initial state
+  hideSidebarText();
+});
 
 
 document.getElementById("Home").addEventListener("click", function () {

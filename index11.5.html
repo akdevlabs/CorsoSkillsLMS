@@ -157,10 +157,10 @@
             <div id="selectedCategories" class="selected-tags"></div>
           </div>
 
-          <div class="Duration-Blocks">
-            <div class="Label-Block">
+          <div class="Main-Duration-Blocks">
+            <div  class="Label-Block">
               <label class="Point">*</label>
-              <label class="Point-Label" for="Duration-Input">Duración del Curso:</label>
+              <label class="Point-Lable">Duración del Curso:</label>
             </div>
 
             <div class="Duration-Block">
@@ -181,9 +181,10 @@
           </div>
 
           <div class="Level-Block">
+
             <div  class="Label-Block">
               <label class="Point">*</label>
-              <label class="Point-Lable">Nivel de Cursos</label>
+              <label class="Point-Lable" for="categoriaSelect"  >Nivel de Cursos:</label>
             </div>
     
             <div class="level-checkboxes">
@@ -214,7 +215,9 @@
             <div class="tag-box">
               <input type="text" id="tagInput" placeholder="Escribe y presiona Enter..." />
             </div>
+
             <div id="tagList" class="tag-list"></div>
+
           </div>
 
           <div class="Description-blocks">
@@ -232,14 +235,19 @@
               <label class="Point">*</label>
               <label class="Point-Lable" for="includeInput">¿Qué incluye el curso?</label>
             </div>
-            <div class="include-box">
+
+            <div class="CIC-Block">
+
               <input 
                 type="text" 
                 id="includeInput" 
                 placeholder="Ejemplo: Certificado de finalización, Material descargable, Acceso de por vida..." 
               />
+
             </div>
-            <div id="includeList" class="include-list"></div>
+
+            <div id="includeList" class="CIC-list"></div>
+          
           </div>
 
           <div class="upload-section">
@@ -248,10 +256,10 @@
               <div  class="Label-Block">
                 <label class="Point">*</label>
                 <label class="Point-Lable">Imagen de Portada</label>
-                <i class="fa-solid fa-circle-question" title="Usa una imagen clara para representar tu curso"></i>
+                <i class="fa-solid fa-circle-question"               title="Usa una imagen clara para representar tu curso"></i>
               </div>
               <div class="drop-area" id="dropImage">
-                <i class="fa-solid fa-image"></i>
+                <i class="fa-solid fa-image" id="FCQ" ></i>
                 <p>Arrastra y suelta una imagen, o <span class="browse" id="browseImage">Explorar</span></p>
                 <small>400x300 o superior recomendado. Máx 5 MB (png, jpg)</small>
                 <input type="file" id="imageInput" accept="image/png, image/jpeg" hidden>
@@ -296,54 +304,20 @@
 
           <h1>Creador de Contenido:</h1>
 
-          <div id="modules-container">
-            <!-- Modules dynamically inserted here -->
-          </div>
-
-          <button id="add-module" class="add-module">+ Add Module</button>
-
-     
           
 
+          <div id="modules-container"></div>
 
-
-
-
-          
-
+          <button id="add-module" class="add-module">+ Agregar Módulo</button>
 
         </div>
         
         <div class="Preview-Blocks">
-         
-
-          <div class="Preview-Tools-Block">
-
-            <div class="PTB-Left">
-              <h3>Previsualización</h3>
-            </div>
-
-            <div class="PTB-Right">
-
-              <div class="tool-Side-Btns" id="BPSPB-preview">
-                <i class="fa-solid fa-eye"></i>
-                <span class="linkName">Previsualizar</span>
-              </div>
-
-              <div class="tool-Side-Btns" id="BIBSPB-clearAll">
-                <i class="fa-solid fa-trash"></i>
-                <span class="linkName">Borrar todo</span>
-              </div>
-
-            </div>
-
-          </div>
-
-          <div id="spb-Prview-block"></div>
+          <h3>Previsualización</h3>
+      
+          <div id="modules-Prview-block"></div>
         </div>
-
       </div>
-
 
 
 
