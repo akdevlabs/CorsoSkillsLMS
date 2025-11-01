@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LearnHub - Descubre tu pasión y aprende a tu propio ritmo con cursos interactivos">
+  <!-- Fuentes y estilos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdminAssessment|CorsoSkills</title>
+  <link rel="stylesheet" href="AdminAssessment.css">
+
+</head>
+<body>
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img id="Bulogos"></img>
+      </div>
+      <ul class="menu">
+        <li id="Dashboard"><i class="fa-solid fa-gauge"></i>Dashboard</li>
+        <li id="UserManagement"><i class="fa-solid fa-users"></i>User Management</li>
+        <li id="CourseManagement"><i class="fa-solid fa-book"></i>Course Management</li>
+        <li id="Categories"><i class="fa-solid fa-layer-group"></i>Categories</li>
+        <li id="Groups"><i class="fa-solid fa-user-group"></i>Groups</li>
+        <li id="Branches"><i class="fa-solid fa-code-branch"></i>Branches</li>
+        <li id="Assessment" class="active"><i class="fa-solid fa-clipboard-check"></i>Assessment</li>
+        <li id="QuestionBank"><i class="fa-solid fa-database"></i>Question Bank</li>
+        <li id="TrainingManagement"><i class="fa-solid fa-chalkboard-user"></i>Training Management</li>
+        <li id="Files"><i class="fa-solid fa-folder"></i>Files</li>
+        <li id="Library"><i class="fa-solid fa-book-open"></i>Library</li>
+        <li id="Reports"><i class="fa-solid fa-chart-bar"></i>Reports</li>
+        <li id="Announcements"><i class="fa-solid fa-bullhorn"></i>Announcements</li>
+        <li id="Settings"><i class="fa-solid fa-gear"></i>Settings</li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      
+      <!-- Header -->
+      <header class="header">
+        <input type="text" placeholder="Search assessments...">
+        <div class="profile">
+          <i class="fa-regular fa-bell"></i>
+          <img src="https://i.pravatar.cc/40?img=13" alt="User">
+          <div>
+            <p class="name">Dipak Deb Nath</p>
+            <p class="role">Super Admin</p>
+          </div>
+        </div>
+      </header>
+
+      <!-- Assessment Section -->
+      <section class="users">
+        <div class="users-header">
+          <div>
+            <h2>Assessment Management</h2>
+            <p>Home > Assessment</p>
+          </div>
+          <div>
+            <button class="btn-secondary"><i class="fa-solid fa-upload"></i> Import</button>
+            <button class="btn-primary"><i class="fa-solid fa-plus"></i> New Assessment</button>
+          </div>
+        </div>
+
+        <!-- Assessment Stats Cards -->
+        <div class="dashboard-cards">
+          <div class="card">
+            <i class="fa-solid fa-clipboard-check"></i>
+            <div>
+              <p>Total Assessments</p>
+              <h3>64</h3>
+            </div>
+          </div>
+
+          <div class="card">
+            <i class="fa-solid fa-file-lines"></i>
+            <div>
+              <p>Pending Reviews</p>
+              <h3>9</h3>
+            </div>
+          </div>
+
+          <div class="card">
+            <i class="fa-solid fa-user-graduate"></i>
+            <div>
+              <p>Completed by Learners</p>
+              <h3>1,280</h3>
+            </div>
+          </div>
+
+          <div class="card">
+            <i class="fa-solid fa-trophy"></i>
+            <div>
+              <p>Average Score</p>
+              <h3>84%</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Assessment Table -->
+        <div class="table-section">
+          <table>
+            <thead>
+              <tr>
+                <th><input type="checkbox"></th>
+                <th>Assessment Title</th>
+                <th>Course</th>
+                <th>Category</th>
+                <th>Attempts</th>
+                <th>Status</th>
+                <th>Created On</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>Business Strategy Quiz</td>
+                <td>Business 101</td>
+                <td>Business</td>
+                <td>432</td>
+                <td><span class="status active">Active</span></td>
+                <td>Oct 10, 2025</td>
+                <td class="actions">
+                  <i class="fa-solid fa-eye"></i>
+                  <i class="fa-solid fa-pen"></i>
+                  <i class="fa-solid fa-trash"></i>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>Advanced Leadership Test</td>
+                <td>Leadership Essentials</td>
+                <td>Leadership</td>
+                <td>350</td>
+                <td><span class="status active">Active</span></td>
+                <td>Sep 5, 2025</td>
+                <td class="actions">
+                  <i class="fa-solid fa-eye"></i>
+                  <i class="fa-solid fa-pen"></i>
+                  <i class="fa-solid fa-trash"></i>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>Design Fundamentals Exam</td>
+                <td>UI Design Basics</td>
+                <td>Design</td>
+                <td>298</td>
+                <td><span class="status inactive">Inactive</span></td>
+                <td>Jul 18, 2025</td>
+                <td class="actions">
+                  <i class="fa-solid fa-eye"></i>
+                  <i class="fa-solid fa-pen"></i>
+                  <i class="fa-solid fa-trash"></i>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>AI for Business Assessment</td>
+                <td>AI in Practice</td>
+                <td>Technology</td>
+                <td>420</td>
+                <td><span class="status active">Active</span></td>
+                <td>Aug 1, 2025</td>
+                <td class="actions">
+                  <i class="fa-solid fa-eye"></i>
+                  <i class="fa-solid fa-pen"></i>
+                  <i class="fa-solid fa-trash"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <p>Showing 1 to 4 of 64 assessments</p>
+          <div class="pages">
+            <button>&lt;</button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>&gt;</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script  src="AdminAssessment.js" type="module"></script>
+</body>
+</html>

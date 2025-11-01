@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LearnHub - Descubre tu pasión y aprende a tu propio ritmo con cursos interactivos">
+  <!-- Fuentes y estilos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdminCategories|CorsoSkills</title>
+  <link rel="stylesheet" href="AdminCategories.css">
+
+</head>
+<body>
+
+  <div class="dashboard">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img id="Bulogos"></img>
+      </div>
+      <ul class="menu">
+        <li id="Dashboard"><i class="fa-solid fa-gauge"></i>Dashboard</li>
+        <li id="UserManagement"><i class="fa-solid fa-users"></i>User Management</li>
+        <li id="CourseManagement"><i class="fa-solid fa-book"></i>Course Management</li>
+        <li id="Categories" class="active"><i class="fa-solid fa-layer-group"></i>Categories</li>
+        <li id="Groups"><i class="fa-solid fa-user-group"></i>Groups</li>
+        <li id="Branches"><i class="fa-solid fa-code-branch"></i>Branches</li>
+        <li id="Assessment"><i class="fa-solid fa-clipboard-check"></i>Assessment</li>
+        <li id="QuestionBank"><i class="fa-solid fa-database"></i>Question Bank</li>
+        <li id="TrainingManagement"><i class="fa-solid fa-chalkboard-user"></i>Training Management</li>
+        <li id="Files"><i class="fa-solid fa-folder"></i>Files</li>
+        <li id="Library"><i class="fa-solid fa-book-open"></i>Library</li>
+        <li id="Reports"><i class="fa-solid fa-chart-bar"></i>Reports</li>
+        <li id="Announcements"><i class="fa-solid fa-bullhorn"></i>Announcements</li>
+        <li id="Settings"><i class="fa-solid fa-gear"></i>Settings</li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      
+      <!-- Header -->
+      <header class="header">
+        <input type="text" placeholder="Search categories...">
+        <div class="profile">
+          <i class="fa-regular fa-bell"></i>
+          <img src="https://i.pravatar.cc/40?img=10" alt="User">
+          <div>
+            <p class="name">Dipak Deb Nath</p>
+            <p class="role">Super Admin</p>
+          </div>
+        </div>
+      </header>
+
+      <!-- Categories Section -->
+      <section class="users">
+        <div class="users-header">
+          <div>
+            <h2>Categories Management</h2>
+            <p>Home > Categories</p>
+          </div>
+          <div>
+            <button class="btn-secondary"><i class="fa-solid fa-upload"></i> Import CSV</button>
+            <button class="btn-primary"><i class="fa-solid fa-plus"></i> New Category</button>
+          </div>
+        </div>
+
+        <!-- Category Cards Overview -->
+        <div class="dashboard-cards">
+          <div class="card">
+            <i class="fa-solid fa-book"></i>
+            <div>
+              <p>Total Categories</p>
+              <h3>12</h3>
+            </div>
+          </div>
+
+          <div class="card">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <div>
+              <p>Courses Assigned</p>
+              <h3>128</h3>
+            </div>
+          </div>
+
+          <div class="card">
+            <i class="fa-solid fa-layer-group"></i>
+            <div>
+              <p>Top Category</p>
+              <h3>Business</h3>
+            </div>
+          </div>
+
+          <div class="card">
+            <i class="fa-solid fa-star"></i>
+            <div>
+              <p>Most Popular</p>
+              <h3>AI & Data</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category Table -->
+        <div class="table-section">
+          <table>
+            <thead>
+              <tr>
+                <th><input type="checkbox"></th>
+                <th>Category Name</th>
+                <th>Description</th>
+                <th>Courses</th>
+                <th>Status</th>
+                <th>Created On</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>Business</td>
+                <td>Courses related to management, strategy, and operations.</td>
+                <td>32</td>
+                <td><span class="status active">Active</span></td>
+                <td>Feb 14, 2025</td>
+                <td class="actions">
+                  <i class="fa-solid fa-pen"></i>
+                  <i class="fa-solid fa-trash"></i>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>Technology</td>
+                <td>Courses on programming, AI, and modern tech skills.</td>
+                <td>27</td>
+                <td><span class="status active">Active</span></td>
+                <td>Mar 2, 2025</td>
+                <td class="actions">
+                  <i class="fa-solid fa-pen"></i>
+                  <i class="fa-solid fa-trash"></i>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>Design</td>
+                <td>UI/UX, product, and graphic design related topics.</td>
+                <td>14</td>
+                <td><span class="status inactive">Inactive</span></td>
+                <td>May 10, 2025</td>
+                <td class="actions">
+                  <i class="fa-solid fa-pen"></i>
+                  <i class="fa-solid fa-trash"></i>
+                </td>
+              </tr>
+              <tr>
+                <td><input type="checkbox"></td>
+                <td>Languages</td>
+                <td>Language learning and communication skill courses.</td>
+                <td>8</td>
+                <td><span class="status active">Active</span></td>
+                <td>Jun 23, 2025</td>
+                <td class="actions">
+                  <i class="fa-solid fa-pen"></i>
+                  <i class="fa-solid fa-trash"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <p>Showing 1 to 4 of 12 categories</p>
+          <div class="pages">
+            <button>&lt;</button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>&gt;</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+
+
+    
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script  src="AdminCategories.js" type="module"></script>
+</body>
+</html>
