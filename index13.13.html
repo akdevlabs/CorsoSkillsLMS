@@ -103,6 +103,79 @@
                 <option>GMT+8 (Singapore)</option>
               </select>
             </div>
+
+              <div class="color-container">
+    <h2>Pick 7 Hex Colors</h2>
+
+    <div class="color-input">
+      <label>Base:</label>
+      <input type="color" id="color1" value="#ff0000">
+      <input type="text" id="hex1" value="#ff0000">
+    </div>
+    <div class="color-input">
+      <label>Prime:</label>
+      <input type="color" id="color2" value="#00ff00">
+      <input type="text" id="hex2" value="#00ff00">
+    </div>
+    <div class="color-input">
+      <label>Prime1:</label>
+      <input type="color" id="color3" value="#0000ff">
+      <input type="text" id="hex3" value="#0000ff">
+    </div>
+    <div class="color-input">
+      <label>Prime2:</label>
+      <input type="color" id="color4" value="#ffff00">
+      <input type="text" id="hex4" value="#ffff00">
+    </div>
+    <div class="color-input">
+      <label>Prime3:</label>
+      <input type="color" id="color5" value="#ff00ff">
+      <input type="text" id="hex5" value="#ff00ff">
+    </div>
+    <div class="color-input">
+      <label>Prime4:</label>
+      <input type="color" id="color6" value="#00ffff">
+      <input type="text" id="hex6" value="#00ffff">
+    </div>
+    <div class="color-input">
+      <label>Prime5:</label>
+      <input type="color" id="color7" value="#000000">
+      <input type="text" id="hex7" value="#000000">
+    </div>
+  </div>
+ <div class="brand-container">
+    <h2>Brand Information</h2>
+
+    <div class="input-group">
+      <label for="brandName">Name:</label>
+      <input type="text" id="brandName" placeholder="Enter brand or organization name">
+    </div>
+
+    <div class="input-group">
+      <label for="brandDescription">Description:</label>
+      <textarea id="brandDescription" placeholder="Write a short description..."></textarea>
+    </div>
+
+    <div class="input-group">
+      <label for="iconInput">Icon:</label>
+      <input type="file" id="iconInput" accept="image/*">
+      <img id="iconPreview" src="" alt="Icon Preview" style="display:none;">
+    </div>
+
+    <div class="input-group">
+      <label for="fullLogoInput">Full Logo:</label>
+      <input type="file" id="fullLogoInput" accept="image/*">
+      <img id="fullLogoPreview" src="" alt="Full Logo Preview" style="display:none;">
+    </div>
+
+    <div class="input-group">
+      <label for="simpleLogoInput">Simple Logo:</label>
+      <input type="file" id="simpleLogoInput" accept="image/*">
+      <img id="simpleLogoPreview" src="" alt="Simple Logo Preview" style="display:none;">
+    </div>
+
+    <button id="saveBtn">Save</button>
+  </div>
           </div>
 
           <!-- Account Settings -->
@@ -138,6 +211,136 @@
               <label>Email Notifications</label>
               <input type="checkbox" checked>
             </div>
+
+  <div class="quotes-container">
+    <h2>Add a New Quote</h2>
+
+    <div class="input-group">
+      <label for="quoteText">Quote:</label>
+      <textarea id="quoteText" placeholder="Write your quote here..."></textarea>
+    </div>
+
+
+    <button id="addQuoteBtn">Add Quote</button>
+
+    <div class="quote-list" id="quoteList" style="display:none;">
+      <h3 style="margin-top:0; font-size:16px;">Added Quotes</h3>
+      <div id="quoteItems"></div>
+    </div>
+  </div>
+
+
+
+  <div class="fonts-container">
+    <h2>Add a New Font</h2>
+
+    <div class="input-group">
+      <label for="fontName">Font Name:</label>
+      <input type="text" id="fontName" placeholder="e.g., Modern Display">
+    </div>
+
+    <div class="input-group">
+      <label for="fontFamily">Font Family:</label>
+      <input type="text" id="fontFamily" placeholder="e.g., Poppins, Roboto, Open Sans">
+    </div>
+
+    <div class="input-group">
+      <label for="fontURL">Font URL (Google or custom):</label>
+      <input type="text" id="fontURL" placeholder="e.g., https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    </div>
+
+    <div class="input-group">
+      <label for="fontWeight">Font Weight:</label>
+      <input type="text" id="fontWeight" placeholder="e.g., 400, 500, 700">
+    </div>
+
+    <button id="previewFontBtn">Preview Font</button>
+    <div id="fontPreview" class="preview-box" style="display:none;">The quick brown fox jumps over the lazy dog</div>
+
+    <button id="addFontBtn">Add Font</button>
+
+    <div class="font-list" id="fontList" style="display:none;">
+      <h3 style="margin-top:0; font-size:16px;">Added Fonts</h3>
+      <div id="fontItems"></div>
+    </div>
+
+
+    <form>
+  <h3>Add Course</h3>
+
+  <label for="courseName">Course Name:</label><br>
+  <input type="text" id="courseName" name="courseName"><br><br>
+
+  <label for="courseDescription">Description:</label><br>
+  <textarea id="courseDescription" name="courseDescription"></textarea><br><br>
+
+  <label for="courseCategory">Category:</label><br>
+  <input type="text" id="courseCategory" name="courseCategory"><br><br>
+
+  <label for="courseLevel">Level:</label><br>
+  <input type="text" id="courseLevel" name="courseLevel"><br><br>
+
+  <label for="courseCode">Course Code:</label><br>
+  <input type="text" id="courseCode" name="courseCode"><br><br>
+
+  <label for="courseTags">Tags:</label><br>
+  <input type="text" id="courseTags" name="courseTags" placeholder="e.g. Business, Marketing, Leadership"><br><br>
+
+  <input type="submit" value="Save Course">
+</form>
+
+
+
+<form>
+  <h3>Create Certificate Template</h3>
+
+  <label for="certificateName">Certificate Name:</label><br>
+  <input type="text" id="certificateName" name="certificateName"><br><br>
+
+  <label for="certificateTitle">Title Text:</label><br>
+  <input type="text" id="certificateTitle" name="certificateTitle" placeholder="e.g. Certificate of Completion"><br><br>
+
+  <label for="certificateMessage">Main Message:</label><br>
+  <textarea id="certificateMessage" name="certificateMessage" placeholder="e.g. This certifies that..."></textarea><br><br>
+
+  <label for="recipientName">Recipient Placeholder:</label><br>
+  <input type="text" id="recipientName" name="recipientName" placeholder="e.g. {{name}}"><br><br>
+
+  <label for="backgroundImage">Background Image:</label><br>
+  <input type="file" id="backgroundImage" name="backgroundImage" accept="image/*"><br><br>
+
+  <label for="fontFamily">Font Family:</label><br>
+  <input type="text" id="fontFamily" name="fontFamily" placeholder="e.g. Poppins, Roboto"><br><br>
+
+  <label for="fontColor">Font Color:</label><br>
+  <input type="color" id="fontColor" name="fontColor"><br><br>
+
+  <label for="accentColor">Accent Color:</label><br>
+  <input type="color" id="accentColor" name="accentColor"><br><br>
+
+  <label for="signatureText">Signature Text:</label><br>
+  <input type="text" id="signatureText" name="signatureText" placeholder="e.g. John Doe, Director"><br><br>
+
+  <label for="dateText">Date Text:</label><br>
+  <input type="text" id="dateText" name="dateText" placeholder="e.g. {{date}}"><br><br>
+
+  <input type="submit" value="Save Certificate Template">
+</form>
+
+  </div>
+
+
+
+
+
+
+
+
+  </div>
+
+
+
+  
           </div>
 
         </div>
