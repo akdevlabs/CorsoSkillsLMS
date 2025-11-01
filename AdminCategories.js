@@ -164,12 +164,99 @@ applyBranding().then((data) => {
 
   function SetMainColors(){
     renderImage(data.BuLogos.Icons[0], "BuLogo", "Bulogos")
-   // setBodyBackgroundColor(Prime4)
-   // setBackgroundColor("sidebar", Prime5)
+    setBodyBackgroundColor(Prime4)
+    setallBackgroundColor(".sidebar", Prime5)
 
   }
+  function setSidebarColors() {
+    const style = document.createElement("style");
+    style.textContent = `
+      .sidebar {
+        border-right: 1px solid ${Prime3};
+      }
+      .menu li {
+        color: ${Prime};
+      }  
+      .menu li:hover,
+      .menu li.active {
+        background-color: ${Base};
+        color: ${Prime5};
+        border-right: 3px solid ${Prime3};
+      } 
+    `;
+    document.head.appendChild(style);
+  }
+    function setBodyColors() {
+    const style = document.createElement("style");
+    style.textContent = `
+      /* === HEADER === */
+      .header {
+        background-color: ${Prime5};
+      }
+      .header input {
+        border: 1px solid  ${Base};
+      }
+      .profile i {
+        color: ${Base};
+      }
+      .profile .role {
+        color: ${Prime3};
+      }
+      .users-header h2 {
+        color: ${Base};
+      }
+      .users-header p {
+        color: ${Prime};
+      }
+      .card {
+        background-color:${Prime5};
+      }
+      .card i {
+        color: ${Base};
+      }
+      .card p {
+        color:${Prime1};
+      }
+      .card h3 {
+        color:${Prime3};
+      }
+      /* === CHART & TABLE SECTION === */
+      .chart-section,
+      .table-section {
+        background-color: ${Prime5};
+      }
+      .chart-section h4,
+      .table-section h4 {
+        color: ${Base};
+      }
+      .chart-placeholder {
+        border: 2px dashed ${Prime3};
+        color: ${Prime1};
+      }
+      /* === TABLE === */
+      .table-section thead {
+        color: ${Prime};
+        background-color: ${Prime4};
+      }
+      .table-section th,
+      .table-section td {
+      color: ${Prime};
+        border-bottom: 1px solid ${Base};
+      }
+      .table-section tbody tr:hover {
+        color: ${Prime5};
+        background-color: ${Prime3};
+      }
 
-SetMainColors()
+
+    `;
+    document.head.appendChild(style);
+  }
+
+  SetMainColors()
+  setSidebarColors()
+  setBodyColors()
+
 });
 
 
