@@ -224,17 +224,28 @@ applyBranding().then((data) => {
   setSidebarColors()
   setBodyColors()
 
+
 });
 
 
+  for (let i = 1; i <= 7; i++) {
+      const colorInput = document.getElementById(`color${i}`);
+      const hexInput = document.getElementById(`hex${i}`);
+
+      colorInput.addEventListener("input", () => hexInput.value = colorInput.value);
+      hexInput.addEventListener("input", () => {
+        if(/^#([0-9A-F]{3}){1,2}$/i.test(hexInput.value)){
+          colorInput.value = hexInput.value;
+        }
+      });
+    }
 
 
 
 
 
 
-
-
+  
 
 
 
