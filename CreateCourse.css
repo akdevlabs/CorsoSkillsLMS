@@ -138,6 +138,17 @@ main{
   font-weight: 600;
   transition: all 0.3s ease;
 }
+#Save-Btn{
+  display: none;
+  color: #f30101;
+  cursor: pointer;
+   font-weight: 600;
+  padding: .3rem 1rem;
+  border-radius: .5rem;
+  border: 2px solid red;
+  transition: all 0.3s ease;
+}
+
 .CCB {
   cursor: pointer;
   font-size: 1rem;
@@ -462,6 +473,15 @@ main{
   cursor: pointer;
 }
 /*-------- upload-section  --------*/
+.Uploads-Block{
+  width: 100%;
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+
+}
 .upload-section {
   display: flex;
   flex-wrap: wrap;
@@ -501,6 +521,11 @@ main{
   max-width: 100%;
   border-radius: 8px;
 }
+#dropImage img{
+  width: 10rem;
+}
+
+
 /*-------- video-section  --------*/
 .video-drop-area {
   border-radius: 8px;
@@ -548,6 +573,9 @@ main{
 
 
 /*-------- Starter-Page-Block  --------*/
+#Starter-Page-Block {
+  max-width: 110rem;
+}
 #Starter-Page-Block h1{
   padding: 0 1rem;
 }
@@ -732,6 +760,7 @@ main{
 }
 .add-file-input{
   padding: .5rem 1rem;
+  margin: .5rem 0;
 }
 .HW-Bottom-Block{
   display: flex;
@@ -778,19 +807,14 @@ main{
   padding: .5rem 0;
   margin: 1rem auto;
 }
-
-
 .exam-question-block {
   display: flex;
   flex-direction: column;
-
-
   padding: 15px;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.671);
   margin-bottom: 20px;
 }
-
 .Main-Question{
   color: blue;
   font-size: 1.3rem;
@@ -807,34 +831,97 @@ main{
   border-radius: .5rem;
   padding: .4rem 1rem;
 }
-
-.A1{
-  color: aqua;
+.QA{
+  padding: .5rem;
+  border-radius: .5rem;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-.A2{
-  color: rgb(51, 255, 0);
+/*-------- TFselector --------*/
+.TFselector {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.3s ease;
+  appearance: none;
+  cursor: pointer;
+  background-position: calc(100% - 18px) calc(1em + 2px), 
+  calc(100% - 13px) calc(1em + 2px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
 }
-.A3{
-  color: rgb(183, 0, 255);;
+.TFselector option {
+  padding: 8px;
+  font-size: 15px;
 }
-.A4{
-  color: rgb(255, 94, 0);
+/*-------- Element --------*/
+.Element-input{
+  padding: .5rem;
+  border-radius: .5rem;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* === Dynamic Input Container === */
+.dynamic-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 12px;
+}
+.input-block {
+  position: relative;
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.692);
+  transition: all 0.25s ease;
+}
+.input-block label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.input-block input[type="text"],
+.input-block input[type="file"],
+.input-block textarea,
+.input-block select {
+  width: 100%;
+  font-size: 14px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.25s ease;
+}
+.input-block input[type="file"] {
+  border: none;
+  background-color: transparent;
+  font-size: 14px;
+  cursor: pointer;
+}
+.remove-input {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  border: none;
+  font-size: 13px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  line-height: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+.input-block select {
+  appearance: none;
+  background-size: 12px;
+}
 #add-module{
   display: flex;
   align-items:center ;
@@ -848,35 +935,816 @@ main{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*-------- Preview-Tools-Block  --------*/
-.Preview-Blocks{
+/*-------- SPB-Preview-Blocks  --------*/
+.SPB-Preview-Blocks{
   width: 40%;
   padding: 1rem;
   margin: 1rem;
   border-radius: 1rem;
 }
-.Preview-Blocks h3{
-  margin: .5rem 0;
-
+#modules-Prview-block {
+  width: 30rem;
+  border-radius: 16px;
+  padding: 25px;
+  margin-top: 25px;
+  max-height: 600px;
+  overflow-y: auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  scroll-behavior: smooth;
 }
-#modules-Prview-block{
-  margin: 0 .5rem ;
+.preview-module {
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: box-shadow 0.3s ease;
+}
+.preview-module:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+}
+
+.preview-module h2 {
+  font-size: 1.4rem;
+  font-weight: 700;;
+  margin-bottom: 12px;
+  padding-bottom: 6px;
+}
+.preview-lesson {
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+.preview-lesson h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.preview-lesson .description-section {
+  border-radius: 10px;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.preview-lesson .description-section p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.preview-lesson p {
+  font-size: 0.95rem;
+  margin: 5px 0;
+  line-height: 1.5;
+}
+.preview-lesson p strong {
+  font-weight: 600;
+}
+#modules-Prview-block p[style*="color:#999"] {
+  text-align: center;
+  font-size: 0.95rem;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+
+
+
+
+
+/*-------- Preview-Blocks  --------*/
+.Preview-Container{
+  width: 100%;
+}
+.Preview-Block{
+  display: flex;
+  width: 100%;
+}
+.Preview-Left-Block{
+  width: 100%;
+  display: flex;
+  margin: 0 1rem;
+  flex-direction: column;
+}
+.Preview-Title-Block{
+  display: flex;
+  align-items: center;
+  font-size: .8rem;
+  border-radius: 1rem;
+  padding: .3rem 1rem;
+}
+#Preview-Course-Img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#Preview-Course-Img img {
+  width: 3rem;           
+  height: 3rem;
+  border-radius: 50%;      
+  object-fit: cover;       
+}
+.Preview-Title-Block h1{
+  margin: 0 auto;
+}
+/*-------- PCBBL-Teacher-Block  --------*/
+.PCBBL-Top{
+  margin: .5rem 1rem;
+}
+.PCBBL-Teacher-Block{
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+}
+.PCBBL-Teacher-Block span{
+  padding: .5rem 0;
+}
+/* --- Video Preview --- */
+#Preview-Video-Intro iframe,
+#Preview-Video-Intro video {
+  width: 80%;
+  max-width: 40%;
+  border-radius: 10px;
+  aspect-ratio: 16 / 9; /* maintains 16:9 ratio */
+  display: block;
+  margin: 1rem auto;
+}
+#Preview-Video-Intro {
+  overflow: hidden;
+}
+/*-------- Preview-Content-BTN-Block  --------*/
+.Preview-Content-BTN-Block{
+  padding: 1rem;
+  border-radius: 1rem;
+}
+/*-------- tabs-Block  --------*/
+.tabs{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 1rem;
+  padding: .5rem 1rem;
+}
+.tabs-Btns{
+  width: 13rem;
+  border-radius: .5rem;
+  padding: .5rem 0;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s, color 0.3s;
+}
+.tabs-Btns.active {
+  border-radius: 6px;
+  padding: 6px 12px;
+  margin: 0 .5rem;
+}
+[id^="PCBB-Bottom-"] {
+  display: none;
+}
+.active-block {
+  display: block;
+}
+/*-------- PCBB-Bottom --------*/
+.PCBB{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.PCBB-Bottom {
+  height: 15rem;
+  overflow-y: auto;  
+  overflow-x: hidden; 
+  padding: 10px;      
+  box-sizing: border-box;
+}
+.PCBB-Bottom::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+/*-------- PCBBL-Bottom --------*/
+.PCBBL-Bottom{
+  margin:0 1rem;
+}
+.PCBBL-Bottom h2{
+  font-size:1.3rem;
+}
+.PCBBL-Bottom h3{
+  font-size:1rem;
+  margin: 0.3rem 1rem 0 1rem;
+}
+/*-------- Course-content-List  --------*/
+#Course-content-List{
+  list-style: none;
+  margin: 1rem 0;
+  max-height: 7rem; 
+  overflow-y: auto;  
+  overflow-x: hidden; 
+  border-radius: 1rem;
+  padding: .5rem  1rem;      
+  box-sizing: border-box;
+}
+#Course-content-List::-webkit-scrollbar {
+  width: 6px;
+}
+#Course-content-List::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+}
+ #Course-content-List li {
+  position: relative;
+  padding: .2rem 0;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+ #Course-content-List li::before {
+  content: "✔";
+  padding: 0 1rem 0 0;
+}
+ #Course-content-List li:only-child::before {
+  content: "";
+}
+/*-------- Course-Description  --------*/
+#Course-Description{
+  width: 40rem;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+#Course-Description p {
+ margin: .5rem;
+}
+/*-------- Preview-Right-Block  --------*/
+.Preview-Right-Block{
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-radius:1rem;
+}
+.Preview-Right-Block h1{
+  font-size: 1.5rem;
+}
+
+
+/*-------- Course-Characteristics-block  --------*/
+.Course-Characteristics-block{
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+.Course-Detials{
+  gap:1rem;
+  display:flex;
+  flex-direction: row;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+.Course-Detials-Blocks{
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+.Course-Detials-Blocks i{
+  font-size:  1.2rem;
+}
+.Course-Detials-Blocks h3{
+  font-size: 1rem;
+}
+.Preview-Categorías-Block{
+  gap: .3rem;
+  display: flex;
+  font-size: 1rem;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 600;
+}
+/*-------- Avtive-Course-Tags  --------*/
+.Avtive-Course-Tags h3{
+  color: aqua;
+}
+.Preview-Active-Tags-Block{
+  gap: 1rem;
+  color: aquamarine;
+  max-width: 25rem;
+  display: flex;
+  flex-wrap: wrap;
+  margin: .5rem 1rem;
+  
+}
+.Preview-lines{
+  padding: .07rem 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ==============================
+   CORSOSKILLS COURSE STRUCTURE
+   ============================== */
+#module-curse-coontent {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 25px 30px;
+  margin-top: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  font-family: "Poppins", sans-serif;
+  color: #1e293b;
+  max-height: 550px;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+  border: 1px solid #e5e7eb;
+}
+
+/* Scrollbar Styling */
+#module-curse-coontent::-webkit-scrollbar {
+  width: 8px;
+}
+#module-curse-coontent::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #007bff, #00c6ff);
+  border-radius: 10px;
+}
+#module-curse-coontent::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #0066cc, #00aaff);
+}
+
+/* === MODULE LEVEL === */
+#module-curse-coontent .structure-module {
+  margin-bottom: 28px;
+  padding: 18px 20px;
+  border-left: 5px solid transparent;
+  border-image: linear-gradient(180deg, #007bff, #00c6ff) 1;
+  background: #f8fafc;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+#module-curse-coontent .structure-module:hover {
+  background: #f1f5f9;
+  transform: translateY(-2px);
+}
+
+#module-curse-coontent .structure-module h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  background: linear-gradient(90deg, #007bff, #00c6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.5px;
+}
+
+/* === TEMA LEVEL === */
+#module-curse-coontent .tema-list {
+  list-style: none;
+  margin: 0;
+  padding-left: 20px;
+}
+
+#module-curse-coontent .tema-list li {
+  position: relative;
+  margin: 10px 0;
+  padding-left: 28px;
+  font-size: 0.95rem;
+  color: #334155;
+  transition: all 0.2s ease;
+}
+
+#module-curse-coontent .tema-list li::before {
+  content: "📘";
+  position: absolute;
+  left: 0;
+  top: -2px;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+#module-curse-coontent .tema-list li:hover {
+  color: #007bff;
+  transform: translateX(3px);
+}
+
+/* === SUBTEMA LEVEL === */
+#module-curse-coontent .subtema-list {
+  list-style: none;
+  margin: 8px 0 0 25px;
+  padding-left: 15px;
+  border-left: 2px dashed rgba(0, 123, 255, 0.3);
+}
+
+#module-curse-coontent .subtema-list li {
+  margin: 6px 0;
+  font-size: 0.9rem;
+  color: #475569;
+  padding-left: 18px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+#module-curse-coontent .subtema-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 7px;
+  height: 7px;
+  background: linear-gradient(90deg, #007bff, #00c6ff);
+  border-radius: 50%;
+}
+
+#module-curse-coontent .subtema-list li:hover {
+  color: #00aaff;
+  transform: translateX(3px);
+}
+
+/* === ANIMATION === */
+#module-curse-coontent .structure-module,
+#module-curse-coontent .tema-list li,
+#module-curse-coontent .subtema-list li {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: curseFadeInUp 0.4s ease forwards;
+}
+
+@keyframes curseFadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
+
+
+/* ===== PCBB-HW Container ===== */
+#PCBB-HW {
+  font-family: 'Arial', sans-serif;
+  padding: 15px;
+  background-color: #fefefe;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  max-width: 800px;
+  margin: 20px auto;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Each module inside PCBB-HW */
+#PCBB-HW .tareas-module {
+  margin-bottom: 18px;
+  background-color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Module title */
+#PCBB-HW .tareas-module h2 {
+  font-size: 1.25rem;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  cursor: pointer;
+  position: relative;
+  padding-left: 22px;
+}
+
+/* Arrow indicator for collapse/expand */
+#PCBB-HW .tareas-module h2::before {
+  content: '▾';
+  position: absolute;
+  left: 0;
+  top: 1px;
+  font-size: 1rem;
+  color: #3498db;
+  transition: transform 0.3s ease;
+}
+
+/* Collapsed state arrow rotation */
+#PCBB-HW .tareas-module.collapsed h2::before {
+  transform: rotate(-90deg);
+}
+
+/* List of tareas */
+#PCBB-HW .tarea-list {
+  list-style: none;
+  padding-left: 20px;
+  margin: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+/* Each tarea item */
+#PCBB-HW .tarea-list li {
+  padding: 6px 0;
+  font-size: 0.95rem;
+  color: #555;
+  position: relative;
+}
+
+/* Bullet style for tareas */
+#PCBB-HW .tarea-list li::before {
+  content: '📌';
+  margin-right: 8px;
+}
+
+/* No tareas message */
+#PCBB-HW .tareas-module p {
+  font-size: 0.9rem;
+  color: #999;
+  margin: 5px 0 0 0;
+}
+
+/* Hover effect on module */
+#PCBB-HW .tareas-module:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Smooth collapse effect */
+#PCBB-HW .tarea-list.collapsed {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+/* ===== PCBB-Exams Container ===== */
+#PCBB-Exams {
+  font-family: 'Arial', sans-serif;
+  padding: 15px;
+  background-color: #fefefe;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  max-width: 800px;
+  margin: 20px auto;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Each exam module inside PCBB-Exams */
+#PCBB-Exams .exam-module {
+  margin-bottom: 18px;
+  background-color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Exam title */
+#PCBB-Exams .exam-module h2 {
+  font-size: 1.25rem;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  cursor: pointer;
+  position: relative;
+  padding-left: 22px;
+}
+
+/* Arrow indicator for collapse/expand */
+#PCBB-Exams .exam-module h2::before {
+  content: '▾';
+  position: absolute;
+  left: 0;
+  top: 1px;
+  font-size: 1rem;
+  color: #3498db;
+  transition: transform 0.3s ease;
+}
+
+/* Collapsed state arrow rotation */
+#PCBB-Exams .exam-module.collapsed h2::before {
+  transform: rotate(-90deg);
+}
+
+/* Questions list */
+#PCBB-Exams .question-list {
+  list-style: none;
+  padding-left: 20px;
+  margin: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+/* Each question item */
+#PCBB-Exams .question-list li {
+  padding: 6px 0;
+  font-size: 0.95rem;
+  color: #555;
+  position: relative;
+}
+
+/* Bullet style for questions */
+#PCBB-Exams .question-list li::before {
+  content: '❓';
+  margin-right: 8px;
+}
+
+/* Message for empty state */
+#PCBB-Exams .exam-module p {
+  font-size: 0.9rem;
+  color: #999;
+  margin: 5px 0 0 0;
+}
+
+/* Hover effect on module */
+#PCBB-Exams .exam-module:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Smooth collapse effect */
+#PCBB-Exams .question-list.collapsed {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ===== PCBB-Resources Container ===== */
+#PCBB-Resources {
+  font-family: 'Arial', sans-serif;
+  padding: 15px;
+  background-color: #fefefe;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  max-width: 800px;
+  margin: 20px auto;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Each module block */
+#PCBB-Resources .resources-module {
+  margin-bottom: 18px;
+  background-color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Module title (click to collapse) */
+#PCBB-Resources .resources-module h2 {
+  font-size: 1.25rem;
+  color: #2c3e50;
+  margin-bottom: 10px;
+  cursor: pointer;
+  position: relative;
+  padding-left: 22px;
+}
+
+/* Arrow indicator for collapse/expand */
+#PCBB-Resources .resources-module h2::before {
+  content: '▾';
+  position: absolute;
+  left: 0;
+  top: 1px;
+  font-size: 1rem;
+  color: #3498db;
+  transition: transform 0.3s ease;
+}
+
+/* Collapsed state arrow rotation */
+#PCBB-Resources .resources-module.collapsed h2::before {
+  transform: rotate(-90deg);
+}
+
+/* File list inside module */
+#PCBB-Resources .resource-list {
+  list-style: none;
+  padding-left: 20px;
+  margin: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
+/* Each file item */
+#PCBB-Resources .resource-list li {
+  padding: 6px 0;
+  font-size: 0.95rem;
+  color: #555;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* File icon */
+#PCBB-Resources .resource-list li::before {
+  content: '📁';
+  margin-right: 8px;
+  font-size: 1rem;
+}
+
+/* Empty module message */
+#PCBB-Resources .resources-module p {
+  font-size: 0.9rem;
+  color: #999;
+  margin: 5px 0 0 0;
+}
+
+/* Hover effect */
+#PCBB-Resources .resources-module:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Smooth collapse animation */
+#PCBB-Resources .resource-list.collapsed {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+
+
+
+
+/* =========================
+   LIVE CLASSES TREE
+   ========================= */
+
+#PCBB-Live-Class {
+  margin: 1rem 0;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fefefe;
+  font-family: 'Arial', sans-serif;
+}
+
+#PCBB-Live-Class .live-module {
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  border-left: 4px solid #4CAF50; /* Highlight for module */
+  background-color: #f9fff9;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+#PCBB-Live-Class .live-module h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  color: #333;
+  cursor: pointer;
+  user-select: none;
+}
+
+#PCBB-Live-Class .live-module p {
+  margin: 0.2rem 0 0.2rem 1.5rem; /* Indent for hierarchical style */
+  font-size: 0.95rem;
+  color: #555;
+  position: relative;
+}
+
+#PCBB-Live-Class .live-module p::before {
+  content: '▶';
+  font-size: 0.8rem;
+  color: #4CAF50;
+  position: absolute;
+  left: -1.2rem;
+  top: 0;
+}
+
+/* Optional: collapse/expand functionality styling */
+#PCBB-Live-Class .live-module.collapsed p {
+  display: none;
+}
+
+#PCBB-Live-Class .live-module:hover {
+  background-color: #f0fff0;
+}
+
+/* Style for empty module message */
+#PCBB-Live-Class .live-module p.empty {
+  color: #888;
+  font-style: italic;
+  margin-left: 1rem;
 }
