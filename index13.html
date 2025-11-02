@@ -29,22 +29,28 @@
       <div class="logo">
         <img id="Bulogos"></img>
       </div>
-      <ul class="menu">
-        <li id="Dashboard"  class="active"><i class="fa-solid fa-gauge"></i>Dashboard</li>
-        <li id="UserManagement"><i class="fa-solid fa-users"></i>User Management</li>
-        <li id="CourseManagement"><i class="fa-solid fa-book"></i>Course Management</li>
-        <li id="Categories"><i class="fa-solid fa-layer-group"></i>Categories</li>
-        <li id="Groups"><i class="fa-solid fa-user-group"></i>Groups</li>
-        <li id="Branches"><i class="fa-solid fa-code-branch"></i>Branches</li>
-        <li id="Assessment"><i class="fa-solid fa-clipboard-check"></i>Assessment</li>
-        <li id="QuestionBank"><i class="fa-solid fa-database"></i>Question Bank</li>
-        <li id="TrainingManagement"><i class="fa-solid fa-chalkboard-user"></i>Training Management</li>
-        <li id="Files"><i class="fa-solid fa-folder"></i>Files</li>
-        <li id="Library"><i class="fa-solid fa-book-open"></i>Library</li>
-        <li id="Reports"><i class="fa-solid fa-chart-bar"></i>Reports</li>
-        <li id="Announcements"><i class="fa-solid fa-bullhorn"></i>Announcements</li>
-        <li id="Settings"><i class="fa-solid fa-gear"></i>Settings</li>
-      </ul>
+      <div class="menu-btns">
+        <ul class="menu">
+          <li id="Dashboard"  class="active"><i class="fa-solid fa-gauge"></i>Dashboard</li>
+          <li id="UserManagement"><i class="fa-solid fa-users"></i>User Management</li>
+          <li id="CourseManagement"><i class="fa-solid fa-book"></i>Course Management</li>
+          <li id="Categories"><i class="fa-solid fa-layer-group"></i>Categories</li>
+          <li id="Groups"><i class="fa-solid fa-user-group"></i>Groups</li>
+          <li id="Branches"><i class="fa-solid fa-code-branch"></i>Branches</li>
+          <li id="Assessment"><i class="fa-solid fa-clipboard-check"></i>Assessment</li>
+          <li id="QuestionBank"><i class="fa-solid fa-database"></i>Question Bank</li>
+          <li id="TrainingManagement"><i class="fa-solid fa-chalkboard-user"></i>Training Management</li>
+          <li id="Files"><i class="fa-solid fa-folder"></i>Files</li>
+          <li id="Library"><i class="fa-solid fa-book-open"></i>Library</li>
+          <li id="Reports"><i class="fa-solid fa-chart-bar"></i>Reports</li>
+          <li id="Announcements"><i class="fa-solid fa-bullhorn"></i>Announcements</li>
+          <li id="Settings"><i class="fa-solid fa-gear"></i>Settings</li>
+        </ul>
+        <ul class="menu">
+          <li id="Logout"   class="active"><i class="fa-solid fa-right-from-bracket"></i>Cerrar Sesión</li>
+        </ul>
+      </div>
+
     </aside>
 
     <!-- Main Content -->
@@ -55,10 +61,12 @@
         <input type="text" placeholder="Search...">
         <div class="profile">
           <i class="fa-regular fa-bell"></i>
+          <div id="profile-Icon"></div>
           <img src="https://i.pravatar.cc/40?img=12" alt="User">
           <div>
-            <p class="name">Dipak Deb Nath</p>
-            <p class="role">Super Admin</p>
+            <p class="name" id="User-Id"></p>
+            <p id="User-Name"></p>
+            <a class="role"id="User-Role"></a>
           </div>
         </div>
       </header>
@@ -67,7 +75,7 @@
       <section class="users">
         <div class="users-header">
           <div>
-            <h2>Dashboard Overview</h2>
+            <h2>Dashboard</h2>
             <p>Home > Dashboard</p>
           </div>
         </div>
@@ -77,35 +85,56 @@
           <div class="card">
             <i class="fa-solid fa-users"></i>
             <div>
-              <p>Total Users</p>
-              <h3>3,240</h3>
+              <p>Total de Usuarios</p>
+              <h3 id="TotalAll"></h3>
             </div>
           </div>
 
           <div class="card">
             <i class="fa-solid fa-book"></i>
             <div>
-              <p>Total Courses</p>
-              <h3>128</h3>
+              <p>Total de Cursos</p>
+              <h3 id="TotalCourse"></h3>
             </div>
           </div>
 
           <div class="card">
             <i class="fa-solid fa-chalkboard-teacher"></i>
             <div>
-              <p>Active Trainers</p>
-              <h3>42</h3>
+              <p>Docentes Activos</p>
+              <h3 id="TotalTeachers"></h3>
             </div>
           </div>
 
           <div class="card">
             <i class="fa-solid fa-user-graduate"></i>
             <div>
-              <p>Active Learners</p>
-              <h3>2,890</h3>
+              <p>Estudiantes Activos</p>
+              <h3 id="TotalStudents"></h3>
+            </div>
+          </div>
+
+          <div class="card">
+            <i class="fa-solid fa-handshake"></i>
+            <div>
+              <p>Afiliados Activos</p>
+              <h3 id="Totalaffiliates"></h3>
+            </div>
+          </div>
+
+          <div class="card">
+            <i class="fa-solid fa-envelope"></i>
+            <div>
+              <p>Mensajes Recibidos</p>
+              <h3 id="TotalMensajes"></h3>
             </div>
           </div>
         </div>
+
+        <div id="Teacher-Block"></div>
+        <div id="Students-Block"></div>
+        <div id="Affiliates-Block"></div>
+
 
         <!-- Chart & Table Section -->
         <div class="dashboard-content">
