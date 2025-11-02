@@ -115,6 +115,7 @@ body {
   align-items: center;
   padding: 20px;
   border-radius: 12px;
+    cursor: pointer;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
   transition: 0.3s ease;
 }
@@ -133,6 +134,220 @@ body {
   font-size: 20px;
   margin-top: 5px;
 }
+
+
+
+
+
+
+#Teacher-Block {
+  margin-top: 20px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
+  transition: all 0.3s ease;
+}
+
+#Teacher-Block h3 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+#Teacher-Block h3:first-of-type {
+  color: #2ecc71; /* green for active */
+}
+
+#Teacher-Block h3:last-of-type {
+  color: #e74c3c; /* red for inactive */
+}
+
+#Teacher-Block table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fafafa;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#Teacher-Block th,
+#Teacher-Block td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+#Teacher-Block thead th {
+  background-color: #f4f4f4;
+  font-weight: 600;
+}
+
+#Teacher-Block tbody tr:hover {
+  background-color: #f9f9f9;
+  transition: background 0.2s ease;
+}
+
+#Teacher-Block td:last-child {
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+
+
+
+
+
+
+
+
+
+/* 🔹 Container block */
+#Students-Block {
+  margin-top: 20px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  overflow-x: auto; /* makes table scroll on small screens */
+  transition: all 0.3s ease;
+}
+
+/* 🔹 Section headings */
+#Students-Block h3 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+/* ✅ Active heading */
+#Students-Block h3:first-of-type {
+  color: #2ecc71; /* green */
+}
+
+/* 🛑 Inactive heading */
+#Students-Block h3:last-of-type {
+  color: #e74c3c; /* red */
+}
+
+/* 🔹 Table styling */
+#Students-Block table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fafafa;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Header row */
+#Students-Block thead {
+  background-color: #f4f4f4;
+}
+
+#Students-Block th {
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #ddd;
+}
+
+/* Table body */
+#Students-Block td {
+  padding: 8px 14px;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+/* Hover effect for rows */
+#Students-Block tbody tr:hover {
+  background-color: #f9f9f9;
+  transition: background 0.2s ease;
+}
+
+/* Status icons (✅/❌) */
+#Students-Block td:last-child {
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+
+
+
+
+
+#Affiliates-Block {
+  margin-top: 20px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
+  transition: all 0.3s ease;
+}
+
+#Affiliates-Block h3 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+#Affiliates-Block h3:first-of-type {
+  color: #2ecc71; /* green for active */
+}
+
+#Affiliates-Block h3:last-of-type {
+  color: #e74c3c; /* red for inactive */
+}
+
+#Affiliates-Block table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fafafa;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#Affiliates-Block th,
+#Affiliates-Block td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+}
+
+#Affiliates-Block thead th {
+  background-color: #f4f4f4;
+  font-weight: 600;
+}
+
+#Affiliates-Block tbody tr:hover {
+  background-color: #f9f9f9;
+  transition: background 0.2s ease;
+}
+
+#Affiliates-Block td:last-child {
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* === CHART & TABLE SECTION === */
 .dashboard-content {
   display: grid;

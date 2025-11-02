@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 
 import { 
-  getFirestore, doc, getDoc, collection, addDoc, setDoc, 
+  getFirestore, doc, getDoc,getDocs, collection, addDoc, setDoc, 
   Timestamp, deleteField, updateDoc, arrayUnion, serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
@@ -37,7 +37,29 @@ const auth = getAuth(app);
 //console.log(auth)
 
 const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
+const UserUidInfo = localStorage.getItem("UserUidInfo");
+ console.log(UserUidInfo);
+// Initialize Auth
 
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    //✅ Authenticated
+    console.log("🔐 User is authenticated:");
+    console.log("UID:", user.uid);
+    console.log("Email:", user.email);
+
+    // Optional: Store in localStorage if needed
+    localStorage.setItem("ActiveLogedin", "true");
+    localStorage.setItem("UserUidInfo", user.uid);
+    localStorage.setItem("UserEmail", user.email);
+
+  } else {
+    // ❌ Not authenticated
+    console.warn("🚫 Usuario no autenticado. Redirigiendo al login...");
+    localStorage.removeItem("ActiveLogedin");
+    window.location.href = "login.html"; // or your login route
+  }
+});
 
 
 async function applyBranding() {
@@ -266,6 +288,554 @@ applyBranding().then((data) => {
 
 
 
+async function getAdminContent() {
+  try {
+    const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+    const docSnap = await getDoc(docRef);
+    return docSnap.exists() ? docSnap.data() : null;
+  } catch (error) {
+    console.error("⚠️ Error fetching Admin document:", error);
+    return null;
+  }
+}
+async function getCorsoSkillAppContent() {
+  try {
+    const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
+    const docSnap = await getDoc(docRef);
+    return docSnap.exists() ? docSnap.data() : null;
+  } catch (error) {
+    console.error("⚠️ Error fetching Business document:", error);
+    return null;
+  }
+}
+async function getStudentsContent() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "CorsoSkillsStudents"));
+    return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error("⚠️ Error fetching Students:", error);
+    return [];
+  }
+}
+async function getTeachersContent() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "CorsoSkillsTeacher"));
+    return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error("⚠️ Error fetching Teachers:", error);
+    return [];
+  }
+}
+async function getClassroomsContent() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "CorsoSkillsClassrooms"));
+    return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error("⚠️ Error fetching Classrooms:", error);
+    return [];
+  }
+}
+async function getAffiliateContent() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "CorsoSkillsAffiliate"));
+    return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error("⚠️ Error fetching Affiliates:", error);
+    return [];
+  }
+}
+async function getMessagesContent() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "CorsoSkillMessages"));
+    return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error("⚠️ Error fetching Messages:", error);
+    return [];
+  }
+}
+async function getWebsiteContent() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "CorsoSkillsWebsite"));
+    return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error("⚠️ Error fetching Website data:", error);
+    return [];
+  }
+}
+
+async function fetchAllContent() {
+  console.log("🔄 Fetching all Corso Skills data...");
+
+  // Fetch all in parallel for speed ⚡
+  const [
+    AdminData,
+    BusinessData,
+    StudentsData,
+    TeachersData,
+    ClassroomsData,
+    AffiliatesData,
+    MessagesData,
+    WebsiteData
+  ] = await Promise.all([
+    getAdminContent(),
+    getCorsoSkillAppContent(),
+    getStudentsContent(),
+    getTeachersContent(),
+    getClassroomsContent(),
+    getAffiliateContent(),
+    getMessagesContent(),
+    getWebsiteContent()
+  ]);
+
+  // ✅ Logging summary
+  console.group("✅ All Firestore Data Loaded");
+  console.log("Admin:", AdminData);
+  console.log("Business:", BusinessData);
+  console.log("Students:", StudentsData);
+  console.log("Teachers:", TeachersData);
+  console.log("Classrooms:", ClassroomsData);
+  console.log("Affiliates:", AffiliatesData);
+  console.log("Messages:", MessagesData);
+  console.log("Website:", WebsiteData);
+
+
+
+
+
+
+  function renderText(text, elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.textContent = text;
+    } else {
+      console.error(`Element with ID "${elementId}" not found.`);
+    }
+  }
+
+  function renderTextById(id, text, append = false) {
+    const element = document.getElementById(id);
+    if (!element) {
+      console.warn(`⚠️ No element found with ID: ${id}`);
+      return;
+    }
+
+    if (append) {
+      element.textContent += text;
+    } else {
+      element.textContent = text;
+    }
+  }
+
+  function convertFirestoreTimestampToDate(timestamp) {
+    if (!timestamp || typeof timestamp.seconds !== "number") {
+      console.error("Invalid Firestore timestamp:", timestamp);
+      return null;
+    }
+
+    const date = new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1e6);
+
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    const year = date.getFullYear();
+
+    return `${month}/${day}/${year}`;
+  }
+
+
+
+  function renderWelcome() {
+    if (AdminData?.fullName) {
+      renderText("Hola, " + AdminData.fullName, "User-Name");
+    } else {
+      renderText("Hola, Administrador", "User-Name");
+    }
+  }
+
+  function renderId() {
+    const userIdElement = document.getElementById("User-Id");
+
+    if (AdminData?.AdminId) {
+      const adminId = AdminData.AdminId;
+      renderText("ID: " + adminId, "User-Id");
+
+      userIdElement.style.cursor = "pointer";
+      userIdElement.title = "Haz clic para copiar el ID";
+
+      userIdElement.addEventListener("click", () => {
+        navigator.clipboard.writeText(adminId).then(() => {
+          const originalText = userIdElement.textContent;
+          userIdElement.textContent = "ID copiado ✅";
+
+          setTimeout(() => {
+            userIdElement.textContent = originalText;
+          }, 1500);
+        });
+      });
+    } else {
+      renderText("Falta ID", "User-Id");
+    }
+  }
+
+
+
+  function renderCardInfo(){
+    function checkActiveStudents(students) {
+      if (!Array.isArray(students)) {
+        console.error("❌ Invalid students data");
+        return;
+      }
+
+      const activeStudents = students.filter(student => student.Uactive === true);
+      const inactiveStudents = students.filter(student => !student.Uactive);
+
+      console.log(`✅ Active Students: ${activeStudents.length}`);
+      console.log(`🛑 Inactive Students: ${inactiveStudents.length}`);
+
+      // Update dashboard count
+      renderText(activeStudents.length, "TotalStudents");
+
+      // --- Render both active and inactive students ---
+      const studentsBlock = document.getElementById("Students-Block");
+      if (!studentsBlock) return;
+      studentsBlock.innerHTML = ""; // clear previous
+
+      // Helper: create table
+      function createTable(title, studentsArray, color) {
+        const section = document.createElement("div");
+        section.style.marginBottom = "30px";
+
+        const header = document.createElement("h3");
+        header.textContent = title;
+        header.style.color = color;
+        header.style.marginBottom = "10px";
+        section.appendChild(header);
+
+        if (studentsArray.length === 0) {
+          section.innerHTML += `<p>No hay estudiantes en esta categoría.</p>`;
+          return section;
+        }
+
+        const table = document.createElement("table");
+        table.innerHTML = `
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>ID</th>
+              <th>Activo</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${studentsArray
+              .map(
+                s => `
+                <tr>
+                  <td>${s.fullName || "N/A"}</td>
+                  <td>${s.email || "N/A"}</td>
+                  <td>${s.id || "—"}</td>
+                  <td>${s.Uactive ? "✅" : "❌"}</td>
+                </tr>
+              `
+              )
+              .join("")}
+          </tbody>
+        `;
+
+        // Minimal styling
+        table.style.width = "100%";
+        table.style.borderCollapse = "collapse";
+        table.querySelectorAll("th, td").forEach(cell => {
+          cell.style.border = "1px solid #ccc";
+          cell.style.padding = "8px";
+          cell.style.textAlign = "left";
+        });
+        table.querySelectorAll("th").forEach(th => {
+          th.style.background = "#f4f4f4";
+        });
+
+        section.appendChild(table);
+        return section;
+      }
+
+      // Append both sections
+      studentsBlock.appendChild(
+        createTable("✅ Estudiantes Activos", activeStudents, "green")
+      );
+      studentsBlock.appendChild(
+        createTable("🛑 Estudiantes Inactivos", inactiveStudents, "red")
+      );
+
+      return { activeStudents, inactiveStudents };
+    }
+    function checkActiveTeachers(teachers) {
+      if (!Array.isArray(teachers)) {
+        console.error("❌ Invalid teachers data");
+        return;
+      }
+
+      const activeTeachers = teachers.filter(t => t.Uactive === true);
+      const inactiveTeachers = teachers.filter(t => !t.Uactive);
+
+      console.log(`✅ Active Teachers: ${activeTeachers.length}`);
+      console.log(`🛑 Inactive Teachers: ${inactiveTeachers.length}`);
+
+      // Update dashboard count
+      renderText(activeTeachers.length, "TotalTeachers");
+
+      // --- Render both active and inactive teachers ---
+      const teacherBlock = document.getElementById("Teacher-Block");
+      if (!teacherBlock) return;
+      teacherBlock.innerHTML = ""; // clear previous content
+
+      // Helper: create table for each group
+      function createTable(title, data, color) {
+        const section = document.createElement("div");
+        section.style.marginBottom = "30px";
+
+        const header = document.createElement("h3");
+        header.textContent = title;
+        header.style.color = color;
+        header.style.marginBottom = "10px";
+        section.appendChild(header);
+
+        if (data.length === 0) {
+          section.innerHTML += `<p>No hay docentes en esta categoría.</p>`;
+          return section;
+        }
+
+        const table = document.createElement("table");
+        table.innerHTML = `
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>ID</th>
+              <th>Activo</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data
+              .map(
+                t => `
+                <tr>
+                  <td>${t.fullName || "N/A"}</td>
+                  <td>${t.email || "N/A"}</td>
+                  <td>${t.id || "—"}</td>
+                  <td>${t.Uactive ? "✅" : "❌"}</td>
+                </tr>
+              `
+              )
+              .join("")}
+          </tbody>
+        `;
+
+        // Basic inline table styles
+        table.style.width = "100%";
+        table.style.borderCollapse = "collapse";
+        table.querySelectorAll("th, td").forEach(cell => {
+          cell.style.border = "1px solid #ccc";
+          cell.style.padding = "8px";
+          cell.style.textAlign = "left";
+        });
+        table.querySelectorAll("th").forEach(th => {
+          th.style.background = "#f4f4f4";
+        });
+
+        section.appendChild(table);
+        return section;
+      }
+
+      // Append both tables
+      teacherBlock.appendChild(
+        createTable("✅ Docentes Activos", activeTeachers, "green")
+      );
+      teacherBlock.appendChild(
+        createTable("🛑 Docentes Inactivos", inactiveTeachers, "red")
+      );
+
+      return { activeTeachers, inactiveTeachers };
+    }
+
+
+
+    function renderTotalActive(activeStudentsCount, activeTeachersCount) {
+      const totalActive = (activeStudentsCount || 0) + (activeTeachersCount || 0);
+      console.log(`📊 Total Active (Students + Teachers): ${totalActive}`);
+      renderText(totalActive, "TotalAll");
+    }
+
+
+    function checkActiveAffiliates(affiliates) {
+      if (!Array.isArray(affiliates)) {
+        console.error("❌ Invalid affiliates data");
+        return;
+      }
+
+      const activeAffiliates = affiliates.filter(a => a.Uactive === true);
+      const inactiveAffiliates = affiliates.filter(a => !a.Uactive);
+
+      console.log(`✅ Active Affiliates: ${activeAffiliates.length}`);
+      console.log(`🛑 Inactive Affiliates: ${inactiveAffiliates.length}`);
+
+      // Update total count in dashboard
+      renderText(activeAffiliates.length, "Totalaffiliates");
+
+      // --- Render active and inactive affiliates ---
+      const affiliatesBlock = document.getElementById("Affiliates-Block");
+      if (!affiliatesBlock) return;
+      affiliatesBlock.innerHTML = ""; // clear previous render
+
+      // Helper function to build each table
+      function createTable(title, data, color) {
+        const section = document.createElement("div");
+        section.style.marginBottom = "30px";
+
+        const header = document.createElement("h3");
+        header.textContent = title;
+        header.style.color = color;
+        header.style.marginBottom = "10px";
+        section.appendChild(header);
+
+        if (data.length === 0) {
+          section.innerHTML += `<p>No hay afiliados en esta categoría.</p>`;
+          return section;
+        }
+
+        const table = document.createElement("table");
+        table.innerHTML = `
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>ID</th>
+              <th>Activo</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data
+              .map(
+                a => `
+                <tr>
+                  <td>${a.fullName || "N/A"}</td>
+                  <td>${a.email || "N/A"}</td>
+                  <td>${a.id || "—"}</td>
+                  <td>${a.Uactive ? "✅" : "❌"}</td>
+                </tr>
+              `
+              )
+              .join("")}
+          </tbody>
+        `;
+
+        // Inline table styles (same as others)
+        table.style.width = "100%";
+        table.style.borderCollapse = "collapse";
+        table.querySelectorAll("th, td").forEach(cell => {
+          cell.style.border = "1px solid #ccc";
+          cell.style.padding = "8px";
+          cell.style.textAlign = "left";
+        });
+        table.querySelectorAll("th").forEach(th => {
+          th.style.background = "#f4f4f4";
+        });
+
+        section.appendChild(table);
+        return section;
+      }
+
+      // Append both tables
+      affiliatesBlock.appendChild(
+        createTable("✅ Afiliados Activos", activeAffiliates, "green")
+      );
+      affiliatesBlock.appendChild(
+        createTable("🛑 Afiliados Inactivos", inactiveAffiliates, "red")
+      );
+
+      return { activeAffiliates, inactiveAffiliates };
+    }
+
+    function checkActiveCourses(coursesData) {
+      if (!coursesData || typeof coursesData !== "object") {
+        console.error("❌ Invalid courses data");
+        return;
+      }
+
+      let totalActiveCourses = 0;
+
+      for (const category of Object.values(coursesData)) {
+        for (const levelData of Object.values(category)) {
+          // Count only if the level is an object with data (not an empty string)
+          if (levelData && typeof levelData === "object" && Object.keys(levelData).length > 0) {
+            totalActiveCourses++;
+          }
+        }
+      }
+
+      console.log(`🎓 Total Active Courses: ${totalActiveCourses}`);
+      renderText(totalActiveCourses, "TotalCourse");
+
+      return totalActiveCourses;
+    }
+
+    
+
+
+    const { activeStudents, inactiveStudents } = checkActiveStudents(StudentsData);
+    const { activeTeachers, inactiveTeachers } = checkActiveTeachers(TeachersData);
+    renderTotalActive(activeStudents.length, activeTeachers.length);
+    const { activeAffiliates, inactiveAffiliates } = checkActiveAffiliates(AffiliatesData);
+    //renderText(MessagesData?.length, "TotalMensajes")
+
+
+    const Courses = BusinessData.Courses;
+    const totalActiveCourses = checkActiveCourses(Courses);
+
+
+    console.log(Courses)
+
+
+    console.log("Students:", StudentsData?.length || 0, "students loaded");
+    //console.log("Teachers:", TeachersData?.length || 0, "teachers loaded");
+    //console.log("Affiliates:", AffiliatesData?.length || 0, "affiliates loaded");
+    //console.log("Messages:", MessagesData?.length || 0, "messages loaded");
+    //console.log("Website:", WebsiteData?.length || 0, "website docs loaded");
+    //console.groupEnd();
+
+
+
+    
+
+
+
+
+  }
+
+
+  renderId()
+  renderWelcome()
+  renderCardInfo()
+
+
+
+
+  // Optionally return all for later use
+  return {
+    AdminData,
+    BusinessData,
+    StudentsData,
+    TeachersData,
+    ClassroomsData,
+    AffiliatesData,
+    MessagesData,
+    WebsiteData
+  };
+
+ 
+
+}
+
+
+fetchAllContent();
 
 
 
@@ -274,6 +844,37 @@ applyBranding().then((data) => {
 
 
 
+
+
+function setupDashboardCards() {
+  const teacherCard = document.querySelector('.card:nth-child(3)');
+  const studentCard = document.querySelector('.card:nth-child(4)');
+  const affiliateCard = document.querySelector('.card:nth-child(5)');
+
+  const teacherBlock = document.getElementById('Teacher-Block');
+  const studentBlock = document.getElementById('Students-Block');
+  const affiliateBlock = document.getElementById('Affiliates-Block');
+
+  const blocks = [teacherBlock, studentBlock, affiliateBlock];
+
+  // Hide all blocks initially
+  blocks.forEach(block => block.style.display = 'none');
+
+  // Helper to show one and hide others
+  function showBlock(blockToShow) {
+    blocks.forEach(block => {
+      block.style.display = (block === blockToShow) ? 'block' : 'none';
+    });
+  }
+
+  // Add click listeners
+  teacherCard.addEventListener('click', () => showBlock(teacherBlock));
+  studentCard.addEventListener('click', () => showBlock(studentBlock));
+  affiliateCard.addEventListener('click', () => showBlock(affiliateBlock));
+}
+
+// Run after DOM is loaded
+document.addEventListener('DOMContentLoaded', setupDashboardCards);
 
 
 

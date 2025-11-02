@@ -239,8 +239,75 @@ applyBranding().then((data) => {
         }
       });
     }
+async function getTeacherContent() {
+  try {
+    const docRef = doc(db, "CorsoSkillsTeacher", UserUidInfo);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.error("No such teacher document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching teacher document:", error);
+    return null;
+  }
+}
+async function getCorsoSkillAppContent() {
+  try {
+    const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      console.error("No such business document!");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching business document:", error);
+    return null;
+  }
+}
+async function fetchAllContent() {
+  const TeacherData = await getTeacherContent();
+  const businessData = await getCorsoSkillAppContent();
+
+  if (!TeacherData && !businessData) {
+    console.error("❌ Could not load teacher or business data");
+    return;
+  }
+
+  console.log("✅ Teacher Data:", TeacherData);
+  console.log("✅ Business Data:", businessData);
+
+  // destructure colors if businessData exists
+  let Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5;
+  if (businessData?.BuColors?.Colors) {
+    ({ Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5 } = businessData.BuColors.Colors);
+  }
+
+  
+  function renderText(text, elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.textContent = text;
+    } else {
+      console.error(`Element with ID "${elementId}" not found.`);
+    }
+  }
 
 
+
+
+
+
+
+}
+
+fetchAllContent()
 
 
 
