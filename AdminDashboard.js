@@ -927,3 +927,6 @@ document.getElementById("Announcements").addEventListener("click", function () {
 document.getElementById("Settings").addEventListener("click", function () {
   window.location.href = "index13.13.html";
 });
+document.getElementById("Logout").addEventListener("click", function () {
+  window.location.href = "index4.2.html";
+}); 

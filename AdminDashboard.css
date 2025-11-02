@@ -29,6 +29,21 @@ body {
   text-align: center;
   margin-bottom: 30px;
 }
+.menu-btns{
+  gap: 8rem;
+  display: flex;
+  flex-direction: column;
+
+
+
+
+
+}
+
+
+
+
+
 .menu {
   list-style: none;
 }
