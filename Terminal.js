@@ -112,7 +112,6 @@ console.log("What:", userUid);
   }
 });
 
-
 async function checkUserRoleAndStoreSession(user) {
   const uid = user.uid;
   const email = user.email.toLowerCase();
@@ -120,22 +119,24 @@ async function checkUserRoleAndStoreSession(user) {
   const studentDocRef = doc(db, "CorsoSkillsStudents", uid);
   const teacherDocRef = doc(db, "CorsoSkillsTeacher", uid);
   const affiliateDocRef = doc(db, "CorsoSkillsAffiliate", uid);
+  const adminDocRef = doc(db, "CorsoSkillsAdmin", uid); // 🆕 Admin collection reference
 
   // Get all docs in parallel
-  const [studentDoc, teacherDoc, affiliateDoc] = await Promise.all([
+  const [studentDoc, teacherDoc, affiliateDoc, adminDoc] = await Promise.all([
     getDoc(studentDocRef),
     getDoc(teacherDocRef),
-    getDoc(affiliateDocRef)
+    getDoc(affiliateDocRef),
+    getDoc(adminDocRef) // 🆕 Fetch Admin document
   ]);
 
   let role = null;
   let roleRef = null;
   let userData = null;
 
-  if (studentDoc.exists()) {
-    role = "student";
-    roleRef = studentDocRef;
-    userData = studentDoc.data();
+  if (adminDoc.exists()) { // 🆕 Check admin first (highest priority)
+    role = "admin";
+    roleRef = adminDocRef;
+    userData = adminDoc.data();
   } else if (teacherDoc.exists()) {
     role = "teacher";
     roleRef = teacherDocRef;
@@ -144,13 +145,15 @@ async function checkUserRoleAndStoreSession(user) {
     role = "affiliate";
     roleRef = affiliateDocRef;
     userData = affiliateDoc.data();
+  } else if (studentDoc.exists()) {
+    role = "student";
+    roleRef = studentDocRef;
+    userData = studentDoc.data();
   }
 
   if (!role) {
-    // None found
     console.warn("⚠️ Usuario no encontrado en Firestore en ninguna colección.");
-    // Optional: you can redirect or alert user here
-    alert("Este usuario no está registrado como estudiante, profesor o afiliado.");
+    alert("Este usuario no está registrado como estudiante, profesor, afiliado o administrador.");
     return null;
   }
 
@@ -167,7 +170,7 @@ async function checkUserRoleAndStoreSession(user) {
   console.log("UserRole:", localStorage.getItem("UserRole"));
   console.log("UserEmail:", localStorage.getItem("UserEmail"));
 
-  // Log the login timestamp and update login history
+  // Update login activity
   await updateDoc(roleRef, {
     lastLogin: serverTimestamp(),
     loginHistory: arrayUnion(new Date().toISOString())
@@ -269,6 +272,16 @@ async function getAffiliateContent() {
     return null;
   }
 }
+async function getAdminContent() {
+  try {
+    const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+    const docSnap = await getDoc(docRef);
+    return docSnap.exists() ? docSnap.data() : null;
+  } catch (error) {
+    console.error("Error fetching admin document:", error);
+    return null;
+  }
+}
 
 // Login streak calculation function
 function calculateLoginStreak(loginHistory) {
@@ -321,6 +334,9 @@ async function updateLoginStreakInFirestore(uid, roleCollection, loginHistory) {
 
 // Main function to fetch user data, update streak, and redirect accordingly
 async function fetchUserDataAndRedirect() {
+  const UserUidInfo = localStorage.getItem("UserUidInfo");
+  const UserRole = localStorage.getItem("UserRole");
+
   if (!UserUidInfo || !UserRole) {
     console.error("User info missing in localStorage.");
     return;
@@ -329,11 +345,14 @@ async function fetchUserDataAndRedirect() {
   try {
     // Fetch user data according to role
     let userData = null;
-    if (UserRole === "teacher") {
+
+    if (UserRole === "Admin") {
+      userData = await getAdminContent(); // 🆕 Admin content loader
+    } else if (UserRole === "teacher") {
       userData = await getTeacherContent();
-    } else if (UserRole === "Affiliate") {
+    } else if (UserRole === "affiliate") {
       userData = await getAffiliateContent();
-    } else {
+    } else if (UserRole === "student") {
       userData = await getStudentContent();
     }
 
@@ -348,9 +367,11 @@ async function fetchUserDataAndRedirect() {
     const loginHistory = userData.loginHistory || [];
     await updateLoginStreakInFirestore(
       UserUidInfo,
-      UserRole === "teacher"
+      UserRole === "admin"
+        ? "CorsoSkillsAdmin"
+        : UserRole === "teacher"
         ? "CorsoSkillsTeacher"
-        : UserRole === "Affiliate"
+        : UserRole === "affiliate"
         ? "CorsoSkillsAffiliate"
         : "CorsoSkillsStudents",
       loginHistory
@@ -359,24 +380,16 @@ async function fetchUserDataAndRedirect() {
     // Wait 3 seconds before redirect
     setTimeout(() => {
       const completed = userData.question;
-      if (UserRole === "teacher") {
-        if (completed === true) {
-        window.location.href = "index11.html";
-        } else {
-          window.location.href = "index5.4.html";
-        }
-      } else if (UserRole === "Affiliate") {
-        if (completed === true) {
-          window.location.href = "index12.html";
-        } else {
-          window.location.href = "index5.6.html";
-        }
+
+      if (UserRole === "Admin") {
+        // 🆕 Redirect admin
+        window.location.href = "index13.html";
+      } else if (UserRole === "teacher") {
+        window.location.href = completed === true ? "index11.html" : "index5.4.html";
+      } else if (UserRole === "affiliate") {
+        window.location.href = completed === true ? "index12.html" : "index5.6.html";
       } else {
-        if (completed === true) {
-           window.location.href = "index10.html";
-        } else {
-          window.location.href = "index6.1.html";
-        }
+      //  window.location.href = completed === true ? "index10.html" : "index6.1.html";
       }
     }, 3000);
 
@@ -384,6 +397,7 @@ async function fetchUserDataAndRedirect() {
     console.error("Error in fetchUserDataAndRedirect:", error);
   }
 }
+
 
 
 // Call the main function after page load or when ready
