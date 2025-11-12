@@ -4,12 +4,6 @@
   padding: 0;
 }
 
-body {
-  color: #0d1b2a;
-  font-family: 'Poppins', sans-serif;
-  background-color: #f5f6f8;
-}
-
 /* Header */
 #header {
   display: flex;
@@ -20,173 +14,94 @@ body {
   flex-wrap: wrap;
   gap: 1rem;
 }
-
+#exit-link{
+  border-radius: .5rem;
+  padding: .4rem 1rem;
+}
 #Bulogos,
 #header-logo {
   width: 10rem;
   max-width: 100%;
 }
-
-.exit-link {
-  text-decoration: none;
-  font-weight: 600;
-  padding: 6px 14px;
-  border-radius: 6px;
-}
-
-/* Container */
-.container {
-  margin: 2rem auto;
-  text-align: center;
-  padding: 0 1rem;
-  max-width: 1200px;
-}
-
-/* Top & Bottom Blocks */
-.IFTop,
-.IFBottom {
-  gap: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.tittle-block {
-  margin-bottom: 1rem;
-}
-
-/* Form Fields */
-.form-group {
-  width: 16rem;
+main{
   margin: 1rem;
-}
-
-.form-group label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 6px;
-}
-
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: #0056d2;
-  box-shadow: 0 0 0 2px rgba(0, 86, 210, 0.2);
-}
-
-/* Cards */
-.cards {
-  gap: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 1rem 0;
+  flex-direction: column;
+}
+.tittle-block{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.tittle-block img{
+  margin: 1.5rem 0;
+}
+.tittle-block h2{
+  margin: .4rem 0;
+}
+
+.Questions {
+  width: 50rem;
+  display: grid;
   flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px;
 }
-
-.Card-Icons {
-  font-size: 3rem;
-  padding: 1.5rem 3.5rem;
-  border-radius: 1rem;
-}
-
-.card.toggle-btn {
-  gap: 1rem;
+.Question {
   display: flex;
   flex-direction: column;
-  padding: 0 0 1rem 0;
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
-  border-radius: 1rem;
+  gap: 6px;
 }
-
-.card.toggle-btn span {
-  font-weight: bold;
+.Question label {
+  font-weight: 600;
 }
-
-/* Hidden content */
-.hidden-Info-block {
-  width: 50%;
-  display: none;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-}
-
-/* Buttons */
-.next-button {
-  border: none;
-  padding: 14px 28px;
-  border-radius: 8px;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.2s ease;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
-  margin-top: 1rem;
-}
-
-.course-btn {
-  margin: 5px;
+.Question input,
+.Question select {
   padding: 10px;
+  border-radius: 10px;
+  outline: none;
+  font-size: 14px;
+  transition: border 0.2s ease;
 }
 
-.see-more-btn {
-  display: block;
-  margin: 15px auto;
-  padding: 10px 20px;
-  background-color: #007BFF;
-  color: white;
+.Cards{
+  gap: 1rem;
+  display: flex;
+}
+.Card{
+  gap: 1rem;
+  width: 13rem;
+  display: flex;
+  font-size: 1rem;
+  padding: 1rem;
+  font-weight: bolder;
+  border-radius: 1rem;
+  align-items: center;
+  flex-direction: column;
+    cursor: pointer;
+  transition: 0.2s ease;
+  border: 2px solid transparent;
+}
+.Card.selected {
+  transform: scale(1.03);
+}
+.Card i {
+  font-size: 2.3rem;
+}
+#imagen{
   border: none;
-  cursor: pointer;
+}
+#Save-Btn{
+  width: 15rem;
+  margin: 1.5rem;
+  padding: .5rem 1rem;
+  border-radius: .5rem;
+  border: none;
+  font-weight: bolder;
 }
 
-.course-btn.selected {
-  background-color: #4CAF50;
-  color: white;
-}
 
-/* -------- Responsive Section -------- */
-@media (max-width: 768px) {
-  #header {
-    flex-direction: row;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-  }
-
-  .form-group {
-    width: 100%;
-    max-width: 90vw;
-  }
-
-  .hidden-Info-block {
-    width: 100%;
-    flex-direction: column;
-  }
-
-  .next-button {
-    width: 100%;
-    max-width: 320px;
-  }
-
-  .Card-Icons {
-    padding: 1rem 2rem;
-    font-size: 2.5rem;
-  }
-
-  .container {
-    padding: 0 1rem;
-  }
-}

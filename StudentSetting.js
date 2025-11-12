@@ -1186,6 +1186,7 @@ async function fetchAllContent() {
 
       try {
         await updateDoc(studentRef, {
+          
           "Settings.Notificaciones": newSettings
         });
         console.log("✅ Notificaciones actualizadas:", newSettings);

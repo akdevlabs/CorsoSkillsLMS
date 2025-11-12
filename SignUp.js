@@ -46,6 +46,7 @@
         level:"Beginner",
         role: "student",
         Uactive: true,
+        school: ActiveAcount,
         StudentId: user.uid,
         createdAt: Timestamp.now()
       };
@@ -58,7 +59,7 @@
 
        alert("¡Registro exitoso!");
       document.getElementById("signupForm").reset();
-      window.location.href = "index4.html";
+      window.location.href = "index5.2.html";
 
     }catch (error) {
       console.error("Error al registrarse:", error);

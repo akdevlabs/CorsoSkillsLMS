@@ -43,9 +43,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase
       const userData = {
         fullName,
         email,
-        role: "teacher",
+        role: "Teacher",
         Uactive: true,
-        StudentId: user.uid,
+        TeacherId: user.uid,
         createdAt: Timestamp.now()
       };
 

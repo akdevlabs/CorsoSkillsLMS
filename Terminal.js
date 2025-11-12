@@ -388,8 +388,10 @@ async function fetchUserDataAndRedirect() {
         window.location.href = completed === true ? "index11.html" : "index5.4.html";
       } else if (UserRole === "affiliate") {
         window.location.href = completed === true ? "index12.html" : "index5.6.html";
+      } else if (UserRole === "student") {
+        window.location.href = completed === true ? "index10.html" : "index5.2.html";
       } else {
-      //  window.location.href = completed === true ? "index10.html" : "index6.1.html";
+        window.location.href = "index.html";
       }
     }, 3000);
 

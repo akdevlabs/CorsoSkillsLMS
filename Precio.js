@@ -216,62 +216,76 @@ async function applyContent() {
   }
 }
 
-// Fetch and log both documents
-Promise.all([RenderCoursesContent(), applyContent()]).then(([coursesData, websiteData]) => {
-  console.log("Courses Data:", coursesData);
-  console.log("Website Content Data:", websiteData);
 
-  function renderText(elementId, text) {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.textContent = text;
-    } else {
-      console.error(`Element with ID '${elementId}' not found.`);
-    }
-  }
-  function renderFeatures(features, targetElementId) {
-    const ul = document.getElementById(targetElementId);
-    ul.innerHTML = ''; // Clear existing content
 
-    features.forEach(feature => {
-      const li = document.createElement('li');
-      li.textContent = feature;
-      ul.appendChild(li);
+
+
+
+// ✅ Stripe connection
+const stripe = Stripe("pk_live_51RVlJfAm4abMk6SePmUcLSH6hHznmLPkaiI2A5ek2h4QWMR6QoWXveraM6hZILiYKDSkSx9ymUa3sUMlBmdVORI800ynWaolC4");
+
+// 🔹 Define Stripe Price IDs (from your Stripe Dashboard)
+const PRICE_IDS = {
+  basic: "9.99", // Replace with your actual Basic price ID
+  pro: "price_PRO_ID",     // Replace with your actual Pro price ID
+  anual: "price_ANUAL_ID", // Replace with your actual Annual price ID
+};
+
+// 🔹 Select buttons
+const basicBtn = document.getElementById("Basic-btn");
+const proBtn = document.getElementById("pro-btn");
+const anualBtn = document.getElementById("Anual-btn");
+
+// 🔹 Redirect helper
+async function redirectToCheckout(priceId) {
+  try {
+    const { error } = await stripe.redirectToCheckout({
+      lineItems: [{ price: priceId, quantity: 1 }],
+      mode: "subscription", // "payment" if it's a one-time purchase
+      successUrl: window.location.origin + "/success.html",
+      cancelUrl: window.location.origin + "/cancel.html",
     });
-  } 
-  
-  function RenderBasicPriceTier() {
-    const Pricing = websiteData.Constent.Pricing;
-    renderText("Basic-Tittle", Pricing.Starter.Tittle);
-    renderText("Basic-Price", `$${Pricing.Starter.Cost} mxn/mes`);
-    renderFeatures(Pricing.Starter.Features, "Basic-features")
-    
-  }
 
-  function RenderProPriceTier() {
-    const Pricing = websiteData.Constent.Pricing;
-    renderText("Pro-Tittle", Pricing.Pro.Tittle);
-    renderText("Pro-Price", `$${Pricing.Pro.Cost} mxn/mes`);
-    renderFeatures(Pricing.Pro.Features, "Pro-features")
+    if (error) {
+      console.error("❌ Stripe Checkout error:", error.message);
+      alert("Hubo un error al procesar el pago. Inténtalo de nuevo.");
+    }
+  } catch (err) {
+    console.error("❌ Error al conectar con Stripe:", err);
   }
+}
 
-  function RenderYearlyPriceTier() {
-    const Pricing = websiteData.Constent.Pricing;
-    renderText("Anual-Tittle", Pricing.Yearly.Tittle);
-    renderText("Anual-Price", `$${Pricing.Yearly.Cost} mxn/mes`);
-    renderFeatures(Pricing.Yearly.Features, "Anual-features")
-  }
+// 🔹 Event Listeners
+if (basicBtn) basicBtn.addEventListener("click", () => redirectToCheckout(PRICE_IDS.basic));
+if (proBtn) proBtn.addEventListener("click", () => redirectToCheckout(PRICE_IDS.pro));
+if (anualBtn) anualBtn.addEventListener("click", () => redirectToCheckout(PRICE_IDS.anual));
 
-  
-  
-  
-  RenderBasicPriceTier()
-  RenderProPriceTier() 
-  RenderYearlyPriceTier()
- 
+// 🔹 Optional: Auto-fill pricing info
+document.addEventListener("DOMContentLoaded", () => {
+  // Basic Plan
+  document.getElementById("Basic-Tittle").textContent = "Plan Starter";
+  document.getElementById("Basic-Price").textContent = "$9.99/mes";
+  document.getElementById("Basic-features").innerHTML = `
+    <li>Acceso a cursos básicos</li>
+    <li>Certificados incluidos</li>
+    <li>Soporte por correo</li>
+  `;
+
+  // Pro Plan
+  document.getElementById("Pro-Tittle").textContent = "Plan Pro";
+  document.getElementById("Pro-Price").textContent = "$19.99/mes";
+  document.getElementById("Pro-features").innerHTML = `
+    <li>Acceso a todos los cursos</li>
+    <li>Mentorías personalizadas</li>
+    <li>Soporte prioritario</li>
+  `;
+
+  // Annual Plan
+  document.getElementById("Anual-Tittle").textContent = "Plan Anual";
+  document.getElementById("Anual-Price").textContent = "$199/año";
+  document.getElementById("Anual-features").innerHTML = `
+    <li>12 meses de acceso ilimitado</li>
+    <li>Certificaciones premium</li>
+    <li>Descuento exclusivo</li>
+  `;
 });
-
-
-
-
-

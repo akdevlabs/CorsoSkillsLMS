@@ -671,10 +671,10 @@ async function fetchAllContent() {
       function RenderProfileInfo(){
         renderTextById("TFN", TeacherData.fullName)
         renderTextById("TEmail", TeacherData.email)
-        renderTextById("TelPhone",TeacherData.telefono)
+        renderTextById("TelPhone",TeacherData?.Personal.telefono)
         renderTextById("TTimezone",TeacherData.timezone)
         renderTextById("Teacher-Bio",TeacherData.bio)
-        renderTextById("TGender",TeacherData.sexo)
+        renderTextById("TGender",TeacherData.Personal.sexo)
         renderTextById("TBirth",TeacherData.birthday)   
       }
     function renderProfileIcon() {

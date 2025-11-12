@@ -1,26 +1,67 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
-import { getFirestore, doc, getDoc, collection, addDoc, setDoc, Timestamp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
-// Your web app's Firebase configuration
+import { 
+  getFirestore, doc, getDoc,getDocs, collection, addDoc, setDoc, 
+  Timestamp, deleteField, updateDoc, arrayUnion, serverTimestamp 
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
+
+import { 
+  getStorage, ref, uploadBytes, getDownloadURL, listAll 
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-storage.js";
+
+import { 
+  getAuth, EmailAuthProvider, reauthenticateWithCredential, 
+  updateEmail, verifyBeforeUpdateEmail, signInWithEmailAndPassword,  
+  sendPasswordResetEmail, confirmPasswordReset, applyActionCode, 
+  onAuthStateChanged, signOut, updatePassword   
+} from "https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js";
+
+// Configuración Firebase (tuya)
 const firebaseConfig = {
   apiKey: "AIzaSyD2w5sXCGRBxne-23FRCTAXQrMwHt4nHTY",
   authDomain: "corsoskills-1ba50.firebaseapp.com",
   projectId: "corsoskills-1ba50",
-  storageBucket: "corsoskills-1ba50.appspot.com", // corrected to .com
+  storageBucket: "corsoskills-1ba50.appspot.com",
   messagingSenderId: "813928863826",
   appId: "1:813928863826:web:771cd8ad820570441fa78b",
   measurementId: "G-MYT63ZNNCC"
 };
 
-// First, make sure you already have this part:
+// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const storage = getStorage(app, 'gs://corsoskills-1ba50.firebasestorage.app');
+const auth = getAuth(app);
+
+//console.log(auth)
 
 const TBuInfo =  "CorsoSkills";  // Example variable (not used in the current code)
 const UserUidInfo = localStorage.getItem("UserUidInfo");
+ console.log(UserUidInfo);
+// Initialize Auth
 
-console.log(UserUidInfo)
+
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    //✅ Authenticated
+    console.log("🔐 User is authenticated:");
+    console.log("UID:", user.uid);
+    console.log("Email:", user.email);
+
+    // Optional: Store in localStorage if needed
+    localStorage.setItem("ActiveLogedin", "true");
+    localStorage.setItem("UserUidInfo", user.uid);
+    localStorage.setItem("UserEmail", user.email);
+
+  } else {
+    // ❌ Not authenticated
+    console.warn("🚫 Usuario no autenticado. Redirigiendo al login...");
+    localStorage.removeItem("ActiveLogedin");
+    window.location.href = "login.html"; // or your login route
+  }
+});
 
 async function applyBranding() {
   try {
@@ -40,12 +81,7 @@ async function applyBranding() {
   }
 }
 applyBranding().then((data) => {  
-  console.log(data.BuLogos.Icons[0])
-  const {Base, Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
-  function setGlobalFont(fontFamily) {
-    document.body.style.fontFamily = fontFamily;
-  }
-  setGlobalFont(data.Font)
+  const {Base,Prime, Prime1, Prime2, Prime3, Prime4, Prime5} = data.BuColors.Colors;
   
   function renderImage(imageUrl, altUrl, UrlId) {
     const logoElement = document.getElementById(UrlId);
@@ -91,31 +127,10 @@ applyBranding().then((data) => {
       console.error(`Element with ID '${elementId}' not found.`);
     }
   }
-  function setBackgroundColorWithTransparency(elementId, colorName, alpha) {
-    const element = document.getElementById(elementId);
-    if (!element) {
-      console.error(`Element with ID '${elementId}' not found.`);
-      return;
-    }
-  
-    // Create temporary element to compute RGB value
-    const temp = document.createElement('div');
-    temp.style.color = colorName;
-    document.body.appendChild(temp);
-  
-    // Get computed RGB color
-    const computedColor = window.getComputedStyle(temp).color;
-    document.body.removeChild(temp);
-  
-    // Extract RGB values from string like "rgb(255, 0, 0)"
-    const rgbMatch = computedColor.match(/\d+/g);
-    if (rgbMatch && rgbMatch.length === 3) {
-      const [r, g, b] = rgbMatch;
-      element.style.backgroundColor = `rgba(${r}, ${g}, ${b}, ${alpha})`;
-    } else {
-      console.error(`Could not parse color: ${computedColor}`);
-    }
+  function setGlobalFont(fontFamily) {
+    document.body.style.fontFamily = fontFamily;
   }
+  setGlobalFont(data.Font)
   
 
 
@@ -133,23 +148,55 @@ applyBranding().then((data) => {
     setTextColors("exit-link", Prime2)
 
   }
-  function setcontainercolor(){
+  function settittleblockcolor(){
     renderImage(data.BuLogos.Icons[0], "BuLogo", "Bulogos")
-    setTextColors("container", Base)
-    setBackgroundColor("next-button", Prime2)
-    setTextColors("next-button", Prime5)
-
+    setTextColors("T1", Prime2)
+    setTextColors("T2", Base)
 
 
 
   }
 
+  function setQuestionsColors() {
+    const style = document.createElement("style");
+    style.textContent = `
+      /* === HEADER === */
+      .Question label {
+        color:${Prime3};
+      }
+      .Question input,
+      .Question select {
+        border: 1px solid ${Prime3};
+      }    
+      .Question input:focus,
+      .Question select:focus {
+        border-color: ${Prime2};
+      }
 
-
+    `;
+    document.head.appendChild(style);
+  }
+  function setCardsColors() {
+    const style = document.createElement("style");
+    style.textContent = `
+    #Save-Btn{
+      color:${Prime5}
+      background-color:${Prime};
+    }
+    #Save-Btn:hover{
+      color: ${Prime5};
+      background-color: ${Prime2};
+    }
+    `;
+    document.head.appendChild(style);
+  }
 
   SetMainColors()
   headerColors()
-  setcontainercolor()
+  settittleblockcolor()
+  setQuestionsColors()
+  setCardsColors()
+
 
 });
 
@@ -162,14 +209,18 @@ async function getTeacherContent() {
     if (docSnap.exists()) {
       return docSnap.data();
     } else {
-      console.error("No such student document!");
+      console.error("❌ No existe el documento del profesor.");
       return null;
     }
   } catch (error) {
-    console.error("Error fetching student document:", error);
+    console.error("Error al obtener el documento del profesor:", error);
     return null;
   }
 }
+
+// ==========================
+// 🔹 Obtener información del negocio (empresa)
+// ==========================
 async function getCorsoSkillAppContent() {
   try {
     const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
@@ -178,141 +229,119 @@ async function getCorsoSkillAppContent() {
     if (docSnap.exists()) {
       return docSnap.data();
     } else {
-      console.error("No such business document!");
+      console.error("❌ No existe el documento del negocio.");
       return null;
     }
   } catch (error) {
-    console.error("Error fetching business document:", error);
+    console.error("Error al obtener el documento del negocio:", error);
     return null;
   }
 }
+
+// ==========================
+// 🔹 Cargar todo el contenido
+// ==========================
 async function fetchAllContent() {
   const teacherData = await getTeacherContent();
   const businessData = await getCorsoSkillAppContent();
 
   if (teacherData) {
-    console.log("Teacher Document Data:", teacherData);
+    console.log("📘 Datos del Profesor:", teacherData);
   } else {
-    console.log("No teacher data found.");
+    console.log("No se encontró información del profesor.");
   }
 
   if (businessData) {
-    console.log("Business Document Data:", businessData);
+    console.log("🏢 Datos del Negocio:", businessData);
   } else {
-    console.log("No business data found.");
+    console.log("No se encontró información del negocio.");
   }
 
-  const { Base, Prime1, Prime2, Prime3, Prime4, Prime5 } = businessData.BuColors.Colors;
+  // ==========================
+  // 🔹 Manejar el formulario
+  // ==========================
+  const saveBtn = document.getElementById("Save-Btn");
 
-  
-  function renderText(text, elementId) {
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.textContent = text;
-    } else {
-      console.error(`Element with ID "${elementId}" not found.`);
+  saveBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    // Obtener valores del formulario
+    const edad = document.getElementById("edad")?.value.trim();
+    const sexo = document.getElementById("sexo")?.value.trim();
+    const telefono = document.getElementById("telefono")?.value.trim();
+    const imagen = document.getElementById("imagen")?.files[0];
+    const zonaHoraria = document.getElementById("zonaHoraria")?.value.trim();
+    const puestoActual = document.getElementById("puestoActual")?.value.trim();
+    const nivelDificultad = document.getElementById("nivelDificultad")?.value.trim();
+    const cuenta = document.getElementById("cuenta")?.value.trim();
+    const carrera = document.getElementById("career")?.value.trim();
+
+    // Validar campos requeridos
+    if (
+      !edad ||
+      !sexo ||
+      !telefono ||
+      !zonaHoraria ||
+      !puestoActual ||
+      !nivelDificultad ||
+      !cuenta ||
+      !carrera
+    ) {
+      alert("⚠️ Por favor completa todos los campos obligatorios del formulario.");
+      return;
     }
-  }
-  function renderWelcome() {
-    renderText("¡Hola, " + teacherData.fullName + "!", "wecome-banner-tittle");
-  }
-  function setupToggleButtons() {
-    const toggleCards = document.querySelectorAll('.toggle-btn');
 
-    toggleCards.forEach(card => {
-      card.addEventListener('click', () => {
-        // Clear styles from all cards
-        toggleCards.forEach(c => {
-          c.style.backgroundColor = "#f1f1f1";
-          c.style.border = "2px solid transparent";
-          c.style.color = Base;
-          const icon = c.querySelector("i");
-          if (icon) icon.style.color = Prime5;
-        });
+    // Crear objeto con los datos del formulario
+    const formData = {
+      edad: parseInt(edad),
+      sexo,
+      telefono,
+      zonaHoraria,
+      puestoActual,
+      nivelDificultad,
+      cuenta,
+      carrera,
+      school: TBuInfo,
+      
+      filled: true,
+      updatedAt: Timestamp.now(),
+    };
 
-        // Apply active styles to selected card
-        card.style.backgroundColor = Prime2;
-        card.style.border = `2px solid ${Prime2}`;
-        card.style.color = "#ffffff";
-        const selectedIcon = card.querySelector("i");
-        if (selectedIcon) selectedIcon.style.color = Prime5;
-      });
-    });
-  }
+    try {
+      const docRef = doc(db, "CorsoSkillsTeacher", UserUidInfo);
 
-  // Call rendering functions
-  renderWelcome();
-  setupToggleButtons();
-}
+      // Guardar información principal
+      await setDoc(docRef, { 
+        
+        Personal: formData,
+        question: true,
+      
+      }, { merge: true });
 
+      // Subir imagen si existe
+      if (imagen) {
+        const storageRef = ref(storage, `teacherImages/${UserUidInfo}.jpg`);
+        await uploadBytes(storageRef, imagen);
+        const imageURL = await getDownloadURL(storageRef);
 
-const selectedLevels = new Set();
-
-function setupLevelToggleButtons() {
-  const buttons = document.querySelectorAll('.level-btn');
-
-  buttons.forEach(button => {
-    button.addEventListener('click', () => {
-      const value = button.getAttribute('data-value');
-
-      if (selectedLevels.has(value)) {
-        selectedLevels.delete(value);
-        button.classList.remove('active');
-      } else {
-        selectedLevels.add(value);
-        button.classList.add('active');
+        await setDoc(
+          docRef,
+          { Personal: { imagen: imageURL } },
+          { merge: true }
+        );
       }
 
-      console.log('Selected Levels:', Array.from(selectedLevels));
-    });
+      alert("✅ Información guardada correctamente.");
+      window.location.href = "index11.html";
+    } catch (error) {
+      console.error("❌ Error al guardar los datos:", error);
+      alert("Hubo un error al guardar la información. Intenta nuevamente.");
+    }
   });
 }
 
-document.addEventListener("DOMContentLoaded", setupLevelToggleButtons);
-
-document.querySelector(".info-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  // 📝 Get form values
-  const edad = document.getElementById("edad").value;
-  const sexo = document.getElementById("sexo").value;
-  const carrera = document.getElementById("career").value;
-  const telefono = document.getElementById("telefono").value;
-  const cuenta = document.getElementById("cuenta").value;
-
-  // 🎯 Get selected course level
-  let selectedLevel = "";
-  document.querySelectorAll(".level-btn").forEach(button => {
-    if (button.classList.contains("active")) {
-      selectedLevel = button.getAttribute("data-value");
-    }
-  });
-
-  // 📦 Prepare data to update
-  const formData = {
-    edad: parseInt(edad),
-    sexo: sexo,
-    carrera: carrera,
-    telefono: telefono,
-    cuenta: cuenta,
-    nivelCursos: selectedLevel || "No seleccionado",
-    question: true,
-    school: TBuInfo,
-    filled: true,
-    updatedAt: Timestamp.now()
-  };
-
-  try {
-    const docRef = doc(db, "CorsoSkillsTeacher", UserUidInfo);
-    await setDoc(docRef, formData, { merge: true });
-    alert("Información guardada correctamente.");
-     window.location.href = "index11.html"; // Uncomment if needed
-  } catch (error) {
-    console.error("Error al guardar los datos:", error);
-    alert("Hubo un error al guardar la información.");
-  }
-});
-
-
-
+// Ejecutar al cargar
 fetchAllContent();
+document.getElementById("exit-link").addEventListener("click", function () {
+  window.location.href = "index4.1.html";
+});
