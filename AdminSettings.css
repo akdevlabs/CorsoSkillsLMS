@@ -348,3 +348,105 @@ body {
   .password-container .toggle-password:hover {
     color: #000;
   }
+
+
+  .Blocks-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr ;
+}
+
+
+
+
+
+.Security {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  margin-bottom:  -4rem;
+}
+
+.Password-Title{ 
+  padding: 1rem;
+  grid-area: 1 / 1 / 3 / 2; 
+}
+.Password-Result{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-area: 1 / 2 / 3 / 3; 
+}
+.Password-Input{ 
+  display: flex;
+  padding: .5rem;
+  align-items: center;
+  justify-content: center;
+  grid-area: 1 / 3 / 2 / 5; 
+}
+.Password-Input-Recap{ 
+  display: flex;
+  padding: .5rem;
+  align-items: center;
+  justify-content: center;
+  grid-area: 2 / 3 / 3 / 5;
+}
+
+.Password-Btns{ 
+  gap:1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-area:  1 / 5 / 3 / 6;
+}
+
+
+
+/* Scrollbar styling */
+.Blocks-Sections::-webkit-scrollbar {
+  width: 8px;
+}
+.Blocks-Sections::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 4px;
+}
+.Blocks-Sections::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+#Signe-Block{
+  display:flex ;
+  flex-direction: column;
+  padding: .5rem;
+}
+
+
+
+
+
+.Block-Roles{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+.Lists {
+  width: 100%;
+  height: 6rem;
+  margin: .5rem;
+  overflow-y: auto; /* Enables vertical scrolling */
+  padding: 1.2rem; /* Optional: Adds some inner spacing */
+  border: none; /* Optional: Gives a visible boundary */
+  border-radius: 6px; /* Optional: Rounded corners for a clean look */
+}
+.Lists ul {
+  list-style-type: disc; /* or none if you prefer no bullets */
+  padding-left: 1rem; /* indentation */
+  margin: 0;
+}
+
+.Lists li {
+  margin-bottom: 0.5rem; /* space between list items */
+  line-height: 1.4;      /* improves readability */
+}
+

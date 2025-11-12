@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 
 import { 
-  getFirestore, doc, getDoc, getDocs, collection, addDoc, setDoc, 
+  getFirestore, doc, getDoc, getDocs, runTransaction, collection, addDoc, setDoc, 
   Timestamp, deleteField, updateDoc, arrayUnion, serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
@@ -101,6 +101,9 @@ applyBranding().then((data) => {
     console.error("Selector must start with '#' for ID or '.' for class.");
   }
   }
+
+
+
   function setGlobalFont(fontFamily) {
     document.body.style.fontFamily = fontFamily;
   }
@@ -162,8 +165,6 @@ applyBranding().then((data) => {
       }
     }
   }
-
-
   function SetMainColors(){
     renderImage(data.BuLogos.Icons[0], "BuLogo", "Bulogos")
     setBodyBackgroundColor(Prime4)
@@ -332,6 +333,27 @@ applyBranding().then((data) => {
 
 
 
+
+
+
+
+
+
+      .Blocks-facts div{
+        border: 1px solid ${Prime};
+      }
+      .Security div{
+        border: 1px solid ${Prime};
+      }
+      .Password-Title label{
+        color: ${Base};
+      }
+      .Password-Result{
+      color: ${Prime3};
+      }
+
+
+
     `;
     document.head.appendChild(style);
   }
@@ -339,7 +361,7 @@ applyBranding().then((data) => {
   SetMainColors()
   setSidebarColors()
   setBodyColors()
-setContentColors()
+  setContentColors()
 
 });
 
@@ -644,18 +666,91 @@ async function fetchAllContent() {
     // Append image to the div
     container.appendChild(img);
   }
+  function renderLink(url, text, linkContainer) {
+    const container = document.getElementById(linkContainer);
+
+    // Clear previous content
+    container.innerHTML = "";
+
+    // Create the <a> element
+    const link = document.createElement("a");
+    link.href = url;
+    link.textContent = text;
+    link.target = "_blank"; // opens in new tab
+    link.style.color = "#007BFF";
+    link.style.textDecoration = "none";
+    link.style.cursor = "pointer";
+
+    // Optional: hover effect
+    link.addEventListener("mouseover", () => link.style.textDecoration = "underline");
+    link.addEventListener("mouseout", () => link.style.textDecoration = "none");
+
+    // Add to container
+    container.appendChild(link);
+  }
+  function renderEmailLink(email, subject = "", body = "",emailContainer) {
+    const container = document.getElementById(emailContainer);
+    container.innerHTML = "";
+
+    // Encode parameters for safety
+    const mailto = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    // Create link element
+    const link = document.createElement("a");
+    link.href = mailto;
+    link.textContent = `${email}`;
+    link.style.color = "#007BFF";
+    link.style.textDecoration = "none";
+    link.style.cursor = "pointer";
+
+    // Hover effect
+    link.addEventListener("mouseover", () => link.style.textDecoration = "underline");
+    link.addEventListener("mouseout", () => link.style.textDecoration = "none");
+
+    container.appendChild(link);
+  }
+  function renderList(array, containerId) {
+    const container = document.getElementById(containerId);
+
+    if (!container) {
+      console.error(`❌ No se encontró el contenedor con id "${containerId}"`);
+      return;
+    }
+
+    if (!Array.isArray(array)) {
+      console.error("⚠️ El parámetro proporcionado no es un arreglo.");
+      return;
+    }
+
+    // Limpia el contenido anterior
+    container.innerHTML = "";
+
+    // Crea una lista (ul)
+    const list = document.createElement("ul");
+
+    // Rellena la lista con los elementos del arreglo
+    array.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      list.appendChild(li);
+    });
+
+    // Agrega la lista al contenedor
+    container.appendChild(list);
+  }
 
 
 
-
+  function renderUserImg(){
+    createImageInDiv("AdimImgUser", AdminData.Personal.Profile, "Placeholder Image", "sampleImg", "img-style");
+  }
   function renderWelcome() {
-    if (AdminData?.fullName) {
-      renderText("Hola, " + AdminData.fullName, "User-Name");
+    if (AdminData?.Personal?.FullName) {
+      renderText( AdminData.Personal.FullName, "User-Name");
     } else {
       renderText("Hola, Administrador", "User-Name");
     }
   }
-
   function renderId() {
     const userIdElement = document.getElementById("User-Id");
 
@@ -681,341 +776,9 @@ async function fetchAllContent() {
     }
   }
 
-
-
-  function renderCardInfo(){
-    function checkActiveStudents(students) {
-      if (!Array.isArray(students)) {
-        console.error("❌ Invalid students data");
-        return;
-      }
-
-      const activeStudents = students.filter(student => student.Uactive === true);
-      const inactiveStudents = students.filter(student => !student.Uactive);
-
-      console.log(`✅ Active Students: ${activeStudents.length}`);
-      console.log(`🛑 Inactive Students: ${inactiveStudents.length}`);
-
-      // Update dashboard count
-      renderText(activeStudents.length, "TotalStudents");
-
-      // --- Render both active and inactive students ---
-      const studentsBlock = document.getElementById("Students-Block");
-      if (!studentsBlock) return;
-      studentsBlock.innerHTML = ""; // clear previous
-
-      // Helper: create table
-      function createTable(title, studentsArray, color) {
-        const section = document.createElement("div");
-        section.style.marginBottom = "30px";
-
-        const header = document.createElement("h3");
-        header.textContent = title;
-        header.style.color = color;
-        header.style.marginBottom = "10px";
-        section.appendChild(header);
-
-        if (studentsArray.length === 0) {
-          section.innerHTML += `<p>No hay estudiantes en esta categoría.</p>`;
-          return section;
-        }
-
-        const table = document.createElement("table");
-        table.innerHTML = `
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Email</th>
-              <th>ID</th>
-              <th>Activo</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${studentsArray
-              .map(
-                s => `
-                <tr>
-                  <td>${s.fullName || "N/A"}</td>
-                  <td>${s.email || "N/A"}</td>
-                  <td>${s.id || "—"}</td>
-                  <td>${s.Uactive ? "✅" : "❌"}</td>
-                </tr>
-              `
-              )
-              .join("")}
-          </tbody>
-        `;
-
-        // Minimal styling
-        table.style.width = "100%";
-        table.style.borderCollapse = "collapse";
-        table.querySelectorAll("th, td").forEach(cell => {
-          cell.style.border = "1px solid #ccc";
-          cell.style.padding = "8px";
-          cell.style.textAlign = "left";
-        });
-        table.querySelectorAll("th").forEach(th => {
-          th.style.background = "#f4f4f4";
-        });
-
-        section.appendChild(table);
-        return section;
-      }
-
-      // Append both sections
-      studentsBlock.appendChild(
-        createTable("✅ Estudiantes Activos", activeStudents, "green")
-      );
-      studentsBlock.appendChild(
-        createTable("🛑 Estudiantes Inactivos", inactiveStudents, "red")
-      );
-
-      return { activeStudents, inactiveStudents };
-    }
-    function checkActiveTeachers(teachers) {
-      if (!Array.isArray(teachers)) {
-        console.error("❌ Invalid teachers data");
-        return;
-      }
-
-      const activeTeachers = teachers.filter(t => t.Uactive === true);
-      const inactiveTeachers = teachers.filter(t => !t.Uactive);
-
-      console.log(`✅ Active Teachers: ${activeTeachers.length}`);
-      console.log(`🛑 Inactive Teachers: ${inactiveTeachers.length}`);
-
-      // Update dashboard count
-      renderText(activeTeachers.length, "TotalTeachers");
-
-      // --- Render both active and inactive teachers ---
-      const teacherBlock = document.getElementById("Teacher-Block");
-      if (!teacherBlock) return;
-      teacherBlock.innerHTML = ""; // clear previous content
-
-      // Helper: create table for each group
-      function createTable(title, data, color) {
-        const section = document.createElement("div");
-        section.style.marginBottom = "30px";
-
-        const header = document.createElement("h3");
-        header.textContent = title;
-        header.style.color = color;
-        header.style.marginBottom = "10px";
-        section.appendChild(header);
-
-        if (data.length === 0) {
-          section.innerHTML += `<p>No hay docentes en esta categoría.</p>`;
-          return section;
-        }
-
-        const table = document.createElement("table");
-        table.innerHTML = `
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Email</th>
-              <th>ID</th>
-              <th>Activo</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${data
-              .map(
-                t => `
-                <tr>
-                  <td>${t.fullName || "N/A"}</td>
-                  <td>${t.email || "N/A"}</td>
-                  <td>${t.id || "—"}</td>
-                  <td>${t.Uactive ? "✅" : "❌"}</td>
-                </tr>
-              `
-              )
-              .join("")}
-          </tbody>
-        `;
-
-        // Basic inline table styles
-        table.style.width = "100%";
-        table.style.borderCollapse = "collapse";
-        table.querySelectorAll("th, td").forEach(cell => {
-          cell.style.border = "1px solid #ccc";
-          cell.style.padding = "8px";
-          cell.style.textAlign = "left";
-        });
-        table.querySelectorAll("th").forEach(th => {
-          th.style.background = "#f4f4f4";
-        });
-
-        section.appendChild(table);
-        return section;
-      }
-
-      // Append both tables
-      teacherBlock.appendChild(
-        createTable("✅ Docentes Activos", activeTeachers, "green")
-      );
-      teacherBlock.appendChild(
-        createTable("🛑 Docentes Inactivos", inactiveTeachers, "red")
-      );
-
-      return { activeTeachers, inactiveTeachers };
-    }
-
-
-
-    function renderTotalActive(activeStudentsCount, activeTeachersCount) {
-      const totalActive = (activeStudentsCount || 0) + (activeTeachersCount || 0);
-      console.log(`📊 Total Active (Students + Teachers): ${totalActive}`);
-      renderText(totalActive, "TotalAll");
-    }
-
-
-    function checkActiveAffiliates(affiliates) {
-      if (!Array.isArray(affiliates)) {
-        console.error("❌ Invalid affiliates data");
-        return;
-      }
-
-      const activeAffiliates = affiliates.filter(a => a.Uactive === true);
-      const inactiveAffiliates = affiliates.filter(a => !a.Uactive);
-
-      console.log(`✅ Active Affiliates: ${activeAffiliates.length}`);
-      console.log(`🛑 Inactive Affiliates: ${inactiveAffiliates.length}`);
-
-      // Update total count in dashboard
-      renderText(activeAffiliates.length, "Totalaffiliates");
-
-      // --- Render active and inactive affiliates ---
-      const affiliatesBlock = document.getElementById("Affiliates-Block");
-      if (!affiliatesBlock) return;
-      affiliatesBlock.innerHTML = ""; // clear previous render
-
-      // Helper function to build each table
-      function createTable(title, data, color) {
-        const section = document.createElement("div");
-        section.style.marginBottom = "30px";
-
-        const header = document.createElement("h3");
-        header.textContent = title;
-        header.style.color = color;
-        header.style.marginBottom = "10px";
-        section.appendChild(header);
-
-        if (data.length === 0) {
-          section.innerHTML += `<p>No hay afiliados en esta categoría.</p>`;
-          return section;
-        }
-
-        const table = document.createElement("table");
-        table.innerHTML = `
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Email</th>
-              <th>ID</th>
-              <th>Activo</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${data
-              .map(
-                a => `
-                <tr>
-                  <td>${a.fullName || "N/A"}</td>
-                  <td>${a.email || "N/A"}</td>
-                  <td>${a.id || "—"}</td>
-                  <td>${a.Uactive ? "✅" : "❌"}</td>
-                </tr>
-              `
-              )
-              .join("")}
-          </tbody>
-        `;
-
-        // Inline table styles (same as others)
-        table.style.width = "100%";
-        table.style.borderCollapse = "collapse";
-        table.querySelectorAll("th, td").forEach(cell => {
-          cell.style.border = "1px solid #ccc";
-          cell.style.padding = "8px";
-          cell.style.textAlign = "left";
-        });
-        table.querySelectorAll("th").forEach(th => {
-          th.style.background = "#f4f4f4";
-        });
-
-        section.appendChild(table);
-        return section;
-      }
-
-      // Append both tables
-      affiliatesBlock.appendChild(
-        createTable("✅ Afiliados Activos", activeAffiliates, "green")
-      );
-      affiliatesBlock.appendChild(
-        createTable("🛑 Afiliados Inactivos", inactiveAffiliates, "red")
-      );
-
-      return { activeAffiliates, inactiveAffiliates };
-    }
-
-    function checkActiveCourses(coursesData) {
-      if (!coursesData || typeof coursesData !== "object") {
-        console.error("❌ Invalid courses data");
-        return;
-      }
-
-      let totalActiveCourses = 0;
-
-      for (const category of Object.values(coursesData)) {
-        for (const levelData of Object.values(category)) {
-          // Count only if the level is an object with data (not an empty string)
-          if (levelData && typeof levelData === "object" && Object.keys(levelData).length > 0) {
-            totalActiveCourses++;
-          }
-        }
-      }
-
-      console.log(`🎓 Total Active Courses: ${totalActiveCourses}`);
-      renderText(totalActiveCourses, "TotalCourse");
-
-      return totalActiveCourses;
-    }
-
-    
-
-
-    const { activeStudents, inactiveStudents } = checkActiveStudents(StudentsData);
-    const { activeTeachers, inactiveTeachers } = checkActiveTeachers(TeachersData);
-    renderTotalActive(activeStudents.length, activeTeachers.length);
-    const { activeAffiliates, inactiveAffiliates } = checkActiveAffiliates(AffiliatesData);
-    //renderText(MessagesData?.length, "TotalMensajes")
-
-
-    const Courses = BusinessData.Courses;
-    const totalActiveCourses = checkActiveCourses(Courses);
-
-
-    console.log(Courses)
-
-
-    console.log("Students:", StudentsData?.length || 0, "students loaded");
-    //console.log("Teachers:", TeachersData?.length || 0, "teachers loaded");
-    //console.log("Affiliates:", AffiliatesData?.length || 0, "affiliates loaded");
-    //console.log("Messages:", MessagesData?.length || 0, "messages loaded");
-    //console.log("Website:", WebsiteData?.length || 0, "website docs loaded");
-    //console.groupEnd();
-
-
-
-    
-
-
-
-
-  }
-
-
+  renderId()
+  renderUserImg()
+  renderWelcome()
 
 
 
@@ -1423,12 +1186,12 @@ async function fetchAllContent() {
     ToggleColorInput("Edit-Btn-ZonaHoraria", "AdminTimezone")
 
     function remderAdimnProfile(){
-      createImageInDiv("AdminProfilePicPreview", AdminData.Profile, "Placeholder Image", "sampleImg", "img-style");
-      renderText(AdminData.fullName, "Admin-Name")
+      createImageInDiv("AdminProfilePicPreview", AdminData.Personal.Profile, "Placeholder Image", "sampleImg", "img-style");
+      renderText(AdminData.Personal.FullName, "Admin-Name")
       renderText(AdminData.email, "Admin-Email")
-      renderText(AdminData.Phone, "Admin-Phone")
-      renderText(AdminData.Position, "Admin-Position")
-      renderText(AdminData.Timezone, "Admin-Timezonen")
+      renderText(AdminData.Personal.Phone, "Admin-Phone")
+      renderText(AdminData.Personal.Position, "Admin-Active-Position")
+      renderText(AdminData.Personal.Timezone, "Admin-Timezonen")
     }    
     function UploadAdminProfilePic() {
       // ---------------------------
@@ -1489,8 +1252,10 @@ async function fetchAllContent() {
             const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
             await setDoc(docRef, {
             
-              Profile:  downloadURL
               
+              Personal: {
+                Profile:  downloadURL
+              }
             
             }, { merge: true });
 
@@ -1500,6 +1265,93 @@ async function fetchAllContent() {
             console.error("❌ Error al guardar el URL de la foto de perfil en Firestore:", error);
             alert("❌ Error al guardar el URL de la foto de perfil en Firestore.");
           }
+        }
+      });
+    }
+    function SaveAdminName() {
+      // ---------------------------
+      // Save Admin Full Name to Firestore
+      // ---------------------------
+
+      const saveBtnName = document.getElementById("Save-Btn-AdminName");
+      const nameInput = document.getElementById("Admin-Full-Name");
+
+      if (!saveBtnName || !nameInput) {
+        console.error("❌ No se encontraron los elementos de entrada o botón para el nombre completo del administrador.");
+        return;
+      }
+
+      saveBtnName.addEventListener("click", async () => {
+        const fullNameValue = nameInput.value.trim();
+
+        if (!fullNameValue) {
+          alert("⚠️ Ingresa el nombre completo antes de guardar.");
+          return;
+        }
+
+        try {
+          // 🔹 Save Admin Full Name to Firestore
+          const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+          await setDoc(
+            docRef,
+            {
+              Personal: {
+                FullName: fullNameValue
+              }
+            },
+            { merge: true }
+          );
+
+          console.log("✅ Nombre completo del administrador guardado correctamente en Firestore.");
+          alert("✅ Nombre completo guardado en la base de datos.");
+        } catch (error) {
+          console.error("❌ Error al guardar el nombre completo del administrador en Firestore:", error);
+          alert("❌ Hubo un error al guardar el nombre completo.");
+        }
+      });
+    }
+    function SaveAdminEmail() {
+      const saveBtnEmail = document.getElementById("Save-Btn-AdminEmail");
+      const emailInput = document.getElementById("AdminEmail");
+
+      if (!saveBtnEmail || !emailInput) {
+        console.error("❌ No se encontraron los elementos de entrada o botón para el correo electrónico del administrador.");
+        return;
+      }
+
+      saveBtnEmail.addEventListener("click", async () => {
+        const emailValue = emailInput.value.trim();
+
+        if (!emailValue) {
+          alert("⚠️ Ingresa un correo electrónico antes de guardar.");
+          return;
+        }
+
+        // 🔹 Validación básica de correo
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailValue)) {
+          alert("⚠️ Ingresa un correo electrónico válido.");
+          return;
+        }
+
+        try {
+          // 🔹 Save Admin Email to Firestore
+          const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+          await setDoc(
+            docRef,
+            {
+    
+              email: emailValue
+      
+            },
+            { merge: true }
+          );
+
+          console.log("✅ Correo electrónico del administrador guardado correctamente en Firestore.");
+          alert("✅ Correo electrónico guardado en la base de datos.");
+        } catch (error) {
+          console.error("❌ Error al guardar el correo electrónico del administrador en Firestore:", error);
+          alert("❌ Hubo un error al guardar el correo electrónico.");
         }
       });
     }
@@ -1530,7 +1382,12 @@ async function fetchAllContent() {
           await setDoc(
             docRef,
             {
-              Phone: phoneValue
+
+              Personal: {
+                Phone: phoneValue
+              }
+
+             
             },
             { merge: true }
           );
@@ -1570,7 +1427,10 @@ async function fetchAllContent() {
           await setDoc(
             docRef,
             {
-              Position: positionValue
+              Personal: {
+                Position: positionValue
+              }
+              
             },
             { merge: true }
           );
@@ -1610,7 +1470,10 @@ async function fetchAllContent() {
           await setDoc(
             docRef,
             {
-              Timezone: timezoneValue
+              Personal: {
+                Timezone: timezoneValue
+              }
+              
             },
             { merge: true }
           );
@@ -1625,6 +1488,8 @@ async function fetchAllContent() {
     }
 
     UploadAdminProfilePic()
+    SaveAdminName()
+    SaveAdminEmail()
     remderAdimnProfile()
     SaveAdminPhone()
     SaveAdminPosition()
@@ -1635,259 +1500,561 @@ async function fetchAllContent() {
     ToggleColorInput("Edit-Btn-AdminPassword", "AdminConfirmPassword")
     ToggleColorInput("Edit-Btn-AdminPassword", "Show1")
     ToggleColorInput("Edit-Btn-AdminPassword", "Show2")
-   // ToggleColorInput("Edit-Btn-AdminEmail", "AdminEmail")
-   // ToggleColorInput("Edit-Btn-AdminPosition", "AdminPosition")
-
 
     function remderAdimnProfile(){
+      function getNewestValue(arr) {
+        if (!Array.isArray(arr) || arr.length === 0) {
+          return null; // or throw an error if you prefer
+        }
+        return arr[arr.length - 1];
+      }
+      function renderDevices(){
+        function getAllDeviceTypes(DevicesUsed) {
+          if (!Array.isArray(DevicesUsed) || DevicesUsed.length === 0) {
+            console.warn("⚠️ DevicesUsed is empty or not an array");
+            return [];
+          }
+
+          return DevicesUsed
+            .map(device => device.DeviceType)
+            .filter(type => typeof type === "string" && type.trim() !== "");
+        }
+
+         const AD = getAllDeviceTypes(AdminData.DevicesUsed)
+         return(AD)
+      }
+
+    
+
+      const DevicesUsed = getNewestValue(AdminData.DevicesUsed);
+      const Device = DevicesUsed.DeviceType
+      const  Browser =  DevicesUsed.Browser
+      
+      const LAD = DevicesUsed.OS +"/"+ Device+"/"+Browser
+
+
       renderText(AdminData.AdminId, "AdminUserId")
-      renderText(AdminData.email, "Admin-Passwordn")
-      renderText(AdminData.Phone, "RAdmin-Passwordn")
-      renderText(AdminData.Position, "Admin-Position")
+      renderText(LAD, "Last-Active-Device")
+      renderText(renderDevices(), "Last-Devices")
 
     }    
-    function UploadAdminProfilePic() {
-      // ---------------------------
-      // Upload Admin Profile Picture to Storage
-      // ---------------------------
-      async function uploadAdminProfilePic(file) {
-        if (!file) {
-          alert("⚠️ Selecciona una imagen antes de guardar.");
-          return null;
-        }
+    function SaveDeviceInfo() {
+      const saveBtnDevice = document.getElementById("Logout");
 
-        try {
-          // 🔹 Path in Firebase Storage
-          const filePath = `BusinessUnits/CorsoSkills/Admins/Profile/${file.name}`;
-          const fileRef = ref(storage, filePath);
-
-          // 🔹 Upload file
-          const snapshot = await uploadBytes(fileRef, file);
-          console.log(`✅ Archivo subido: ${file.name}`);
-
-          // 🔹 Get public download URL
-          const downloadURL = await getDownloadURL(snapshot.ref);
-          console.log(`📎 URL del archivo: ${downloadURL}`);
-
-          alert("✅ Foto de perfil subida correctamente.");
-          return downloadURL;
-        } catch (error) {
-          console.error("❌ Error al subir la foto de perfil:", error);
-          alert("❌ Hubo un error al subir la foto de perfil.");
-          return null;
-        }
-      }
-
-      // ---------------------------
-      // Save Button Handler
-      // ---------------------------
-      const saveBtnAPP = document.getElementById("Save-Btn-AdminPic");
-      const fileInput = document.getElementById("AdminProfilePic");
-
-      if (!saveBtnAPP || !fileInput) {
-        console.error("❌ No se encontraron los elementos de entrada o botón para la foto de perfil.");
+      if (!saveBtnDevice) {
+        console.error("❌ No se encontró el botón con id='Logout'.");
         return;
       }
 
-      saveBtnAPP.addEventListener("click", async () => {
-        const file = fileInput.files[0];
+      saveBtnDevice.addEventListener("click", async () => {
+        try {
+          const ua = navigator.userAgent.toLowerCase();
 
-        if (!file) {
-          alert("⚠️ Selecciona un archivo antes de guardar.");
-          return;
-        }
-
-        const downloadURL = await uploadAdminProfilePic(file);
-
-        if (downloadURL) {
-          try {
-            // 🔹 Save Photo URL to Firestore
-            const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
-            await setDoc(docRef, {
-            
-              Profile:  downloadURL
-              
-            
-            }, { merge: true });
-
-            console.log("✅ URL de la foto de perfil guardada correctamente en Firestore.");
-            alert("✅ Foto de perfil guardada en la base de datos.");
-          } catch (error) {
-            console.error("❌ Error al guardar el URL de la foto de perfil en Firestore:", error);
-            alert("❌ Error al guardar el URL de la foto de perfil en Firestore.");
+          // 🔹 Detect device type
+          let deviceType = "Desktop";
+          if (/mobile|iphone|ipod|android|blackberry|iemobile|kindle|silk-accelerated|opera mini/.test(ua)) {
+            deviceType = "Mobile";
+          } else if (/ipad|tablet|playbook|silk/.test(ua)) {
+            deviceType = "Tablet";
           }
-        }
-      });
-    }
-    function SaveAdminPhone() {
-      // ---------------------------
-      // Save Admin Phone Number to Firestore
-      // ---------------------------
 
-      const saveBtnPhone = document.getElementById("Save-Btn-AdminPhone");
-      const phoneInput = document.getElementById("AdminPhone");
+          // 🔹 Detect browser
+          let browser = "Unknown";
+          if (ua.includes("chrome") && !ua.includes("edge")) browser = "Chrome";
+          else if (ua.includes("safari") && !ua.includes("chrome")) browser = "Safari";
+          else if (ua.includes("firefox")) browser = "Firefox";
+          else if (ua.includes("edg")) browser = "Edge";
+          else if (ua.includes("opera") || ua.includes("opr")) browser = "Opera";
+          else if (ua.includes("msie") || ua.includes("trident")) browser = "Internet Explorer";
 
-      if (!saveBtnPhone || !phoneInput) {
-        console.error("❌ No se encontraron los elementos de entrada o botón para el número de teléfono del administrador.");
-        return;
-      }
+          // 🔹 Detect OS
+          let os = "Unknown";
+          if (ua.includes("win")) {
+            if (ua.includes("windows nt 10.0")) os = "Windows 10/11";
+            else if (ua.includes("windows nt 6.3")) os = "Windows 8.1";
+            else if (ua.includes("windows nt 6.2")) os = "Windows 8";
+            else if (ua.includes("windows nt 6.1")) os = "Windows 7";
+            else os = "Windows (Unknown Version)";
+          } else if (ua.includes("mac")) os = "MacOS";
+          else if (ua.includes("linux")) os = "Linux";
+          else if (ua.includes("android")) os = "Android";
+          else if (/iphone|ipad|ipod/.test(ua)) os = "iOS";
 
-      saveBtnPhone.addEventListener("click", async () => {
-        const phoneValue = phoneInput.value.trim();
+          // 🔹 Timestamp
+          const timestamp = new Date().toLocaleString();
 
-        if (!phoneValue) {
-          alert("⚠️ Ingresa un número de teléfono antes de guardar.");
-          return;
-        }
-
-        try {
-          // 🔹 Save Phone Number to Firestore
-          const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
-          await setDoc(
-            docRef,
-            {
-              Phone: phoneValue
-            },
-            { merge: true }
-          );
-
-          console.log("✅ Número de teléfono del administrador guardado correctamente en Firestore.");
-          alert("✅ Número de teléfono guardado en la base de datos.");
-        } catch (error) {
-          console.error("❌ Error al guardar el número de teléfono en Firestore:", error);
-          alert("❌ Hubo un error al guardar el número de teléfono.");
-        }
-      });
-    }
-    function SaveAdminPosition() {
-      // ---------------------------
-      // Save Admin Position to Firestore
-      // ---------------------------
-
-      const saveBtnPosition = document.getElementById("Save-Btn-AdminPosition");
-      const positionInput = document.getElementById("AdminPosition");
-
-      if (!saveBtnPosition || !positionInput) {
-        console.error("❌ No se encontraron los elementos de entrada o botón para el puesto del administrador.");
-        return;
-      }
-
-      saveBtnPosition.addEventListener("click", async () => {
-        const positionValue = positionInput.value.trim();
-
-        if (!positionValue) {
-          alert("⚠️ Ingresa el puesto del administrador antes de guardar.");
-          return;
-        }
-
-        try {
-          // 🔹 Save Admin Position to Firestore
-          const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
-          await setDoc(
-            docRef,
-            {
-              Position: positionValue
-            },
-            { merge: true }
-          );
-
-          console.log("✅ Puesto del administrador guardado correctamente en Firestore.");
-          alert("✅ Puesto del administrador guardado en la base de datos.");
-        } catch (error) {
-          console.error("❌ Error al guardar el puesto del administrador en Firestore:", error);
-          alert("❌ Hubo un error al guardar el puesto del administrador.");
-        }
-      });
-    }
-    function SaveAdminTimezone() {
-      // ---------------------------
-      // Save Admin Timezone to Firestore
-      // ---------------------------
-
-      const saveBtnTimezone = document.getElementById("Save-Btn-ZonaHoraria");
-      const timezoneSelect = document.getElementById("AdminTimezone");
-
-      if (!saveBtnTimezone || !timezoneSelect) {
-        console.error("❌ No se encontraron los elementos de entrada o botón para la zona horaria del administrador.");
-        return;
-      }
-
-      saveBtnTimezone.addEventListener("click", async () => {
-        const timezoneValue = timezoneSelect.value;
-
-        if (!timezoneValue) {
-          alert("⚠️ Selecciona una zona horaria antes de guardar.");
-          return;
-        }
-
-        try {
-          // 🔹 Save Admin Timezone to Firestore
-          const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
-          await setDoc(
-            docRef,
-            {
-              Timezone: timezoneValue
-            },
-            { merge: true }
-          );
-
-          console.log("✅ Zona horaria del administrador guardada correctamente en Firestore.");
-          alert("✅ Zona horaria guardada en la base de datos.");
-        } catch (error) {
-          console.error("❌ Error al guardar la zona horaria en Firestore:", error);
-          alert("❌ Hubo un error al guardar la zona horaria.");
-        }
-      });
-    }
-
-    remderAdimnProfile()
-  }
-  function RenderNotificacionesInfo(){
-    ToggleColorInput("Edit-Btn-NewUser", "NotifEmailNewUser")
-    ToggleColorInput("Edit-Btn-NewCourse", "NotifEmailNewCourse")
-    ToggleColorInput("Edit-Btn-NewEnrollment", "NotifEmailEnrollment")
-    ToggleColorInput("Edit-Btn-Certificate", "NotifEmailCertificate")
-    ToggleColorInput("Edit-Btn-AppMessages", "NotifAppMessages")
-    ToggleColorInput("Edit-Btn-PushReminders", "NotifPushReminders")
- 
-    function SaveAllNotifications() {
-      const saveBtnNotifications = document.getElementById("Notifications");
-      if (!saveBtnNotifications) {
-        console.error("❌ No se encontró el botón con id='Notifications'.");
-        return;
-      }
-
-      saveBtnNotifications.addEventListener("click", async () => {
-        try {
-          // 🔹 Fuerza todas las notificaciones a true por defecto
-          const notifData = {
-            NotifEmailNewUser: true,
-            NotifEmailNewCourse: true,
-            NotifEmailEnrollment: true,
-            NotifEmailCertificate: true,
-            NotifAppMessages: true,
-            NotifPushReminders: true,
+          // 🔹 Create a new entry for this exact event
+          const newDeviceEntry = {
+            DeviceType: deviceType,
+            Browser: browser,
+            OS: os,
+            LastUsed: timestamp
           };
 
-          // 🔹 Guarda en Firestore
+          // 🔹 Reference to user doc
           const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
-          await setDoc(
-            docRef,
-            {
-              Notifications: notifData,
-            },
-            { merge: true }
-          );
 
-          console.log("✅ Todas las preferencias de notificación se guardaron como TRUE.");
-          alert("✅ Todas las notificaciones activadas por defecto y guardadas correctamente.");
+          // 🔹 Ensure array exists
+          const docSnap = await getDoc(docRef);
+
+          if (docSnap.exists()) {
+            await updateDoc(docRef, {
+              DevicesUsed: arrayUnion(newDeviceEntry)
+            });
+            console.log("✅ Nuevo dispositivo agregado a la lista DevicesUsed.");
+          } else {
+            await setDoc(docRef, {
+              DevicesUsed: [newDeviceEntry]
+            });
+            console.log("✅ Documento creado con el primer dispositivo.");
+          }
+
+          alert("✅ Dispositivo guardado correctamente en la base de datos.");
         } catch (error) {
-          console.error("❌ Error al guardar las preferencias de notificación:", error);
-          alert("❌ Hubo un error al guardar las preferencias de notificación.");
+          console.error("❌ Error al guardar la información del dispositivo en Firestore:", error);
+          alert("❌ Hubo un error al guardar la información del dispositivo.");
         }
       });
     }
-    SaveAllNotifications()
+
+    function SaveAdminPassword() {
+      const saveBtn = document.getElementById("Save-Btn-AdminPassword");
+      const passwordInput = document.getElementById("AdminPassword");
+      const confirmInput = document.getElementById("AdminConfirmPassword");
+      const resultSpan = document.getElementById("Password-Result");
+
+      if (!saveBtn || !passwordInput || !confirmInput) {
+        console.error("❌ No se encontraron los elementos necesarios para la contraseña.");
+        return;
+      }
+
+      saveBtn.addEventListener("click", async () => {
+        const newPassword = passwordInput.value.trim();
+        const confirmPassword = confirmInput.value.trim();
+
+        // 🔍 Validate inputs
+        if (!newPassword || !confirmPassword) {
+          resultSpan.textContent = "⚠️ Ambos campos son obligatorios.";
+          resultSpan.style.color = "orange";
+          return;
+        }
+
+        if (newPassword !== confirmPassword) {
+          resultSpan.textContent = "❌ Las contraseñas no coinciden.";
+          resultSpan.style.color = "red";
+          return;
+        }
+
+        // 🔒 Password strength check
+        const strongPassword = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&.,;:])[A-Za-z\d@$!%*?&.,;:]{8,}$/;
+        if (!strongPassword.test(newPassword)) {
+          resultSpan.textContent = "⚠️ La contraseña debe tener 8+ caracteres, letras, números y símbolos.";
+          resultSpan.style.color = "orange";
+          return;
+        }
+
+        try {
+          const user = auth.currentUser;
+          if (!user) {
+            resultSpan.textContent = "❌ No hay un usuario autenticado.";
+            resultSpan.style.color = "red";
+            return;
+          }
+
+          // 🔄 Update password in Firebase Auth
+          await updatePassword(user, newPassword);
+
+          // (Optional) Update Firestore record
+          const adminRef = doc(db, "AdminData", user.uid);
+          await updateDoc(adminRef, {
+            "Security.LastPasswordChange": new Date().toISOString(),
+          });
+
+          resultSpan.textContent = "✅ Contraseña actualizada correctamente.";
+          resultSpan.style.color = "green";
+
+          // Clear inputs
+          passwordInput.value = "";
+          confirmInput.value = "";
+
+        } catch (error) {
+          console.error("❌ Error al actualizar la contraseña:", error);
+          if (error.code === "auth/requires-recent-login") {
+            resultSpan.textContent = "⚠️ Por seguridad, vuelve a iniciar sesión para cambiar la contraseña.";
+          } else {
+            resultSpan.textContent = "❌ No se pudo cambiar la contraseña.";
+          }
+          resultSpan.style.color = "red";
+        }
+      });
+    }
+
+    // Initialize the function
+    SaveAdminPassword();
+
+    SaveDeviceInfo()
+    remderAdimnProfile()
+  }
+
+
+
+
+  function RenderNotificacionesInfo(){
+    ToggleColorInput("Edit-Btn-NewUser", "Notif-New-Email")
+    ToggleColorInput("Edit-Btn-NewCourse", "Notif-New-Course")
+    ToggleColorInput("Edit-Btn-NewEnrollment", "Notif-New-Enrollment")
+    ToggleColorInput("Edit-Btn-Certificate", "Notif-New-Certificate")
+    ToggleColorInput("Edit-Btn-AppMessages", "Notif-New-AppMessages")
+    ToggleColorInput("Edit-Btn-PushReminders", "Notif-New-PushReminders")
+ 
+    function renderNotificacionesvalues(){
+
+      function getStatus(value) {
+        if(value === true) {
+          return "Activo"
+
+        }else if(value === false){
+          return "Desactivado"
+        }
+      }  
+
+      const notif = AdminData.Notifications;
+      renderText(getStatus(notif.NotifEmailNewUser), "NewUser-Status")
+      renderText(getStatus(notif.NotifNewCourse), "Notif-NewCourse-Status")
+      renderText(getStatus(notif.NotifNewCertificate), "Notif-NewEnrollment-Status")
+      renderText(getStatus(notif.NotifNewCourse), "Notif-Certificate-Status")
+      renderText(getStatus(notif.NotifNewEnrollment), "Notif-AppMessages-Status")
+      renderText(getStatus(notif.NotifPushReminders), "Notif-PushReminders-Status")
+    }
+
+
+    function SaveNotifEmailNewUser() {
+      const saveBtnNewUser = document.getElementById("Save-Btn-NewUser");
+      const notifEmailNewUserCheckbox = document.getElementById("Notif-New-Email");
+
+      if (!saveBtnNewUser || !notifEmailNewUserCheckbox) {
+        console.error("❌ No se encontraron los elementos: #Save-Btn-NewUser o #NotifEmailNewUser.");
+        return;
+      }
+
+      const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+
+      // Carga el valor actual desde Firestore. Si no existe, establece y guarda true.
+      async function loadNotifSetting() {
+        try {
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            const currentValue = data.Notifications?.NotifEmailNewUser;
+            // Si existe, aplica el valor; si no, usa true por defecto (pero no sobrescribe aún)
+            notifEmailNewUserCheckbox.checked = currentValue !== undefined ? currentValue : true;
+
+            // Si el campo no existía, guarda el valor por defecto (true) para inicializar el documento.
+            if (currentValue === undefined) {
+              await setDoc(docRef, { Notifications: { NotifEmailNewUser: true } }, { merge: true });
+              console.log("✅ Valor por defecto (true) guardado en Firestore.");
+            }
+          } else {
+            // Documento no existe: marca checkbox como true y crea el documento con valor por defecto
+            notifEmailNewUserCheckbox.checked = true;
+            await setDoc(docRef, { Notifications: { NotifEmailNewUser: true } }, { merge: true });
+            console.log("✅ Documento creado con valor por defecto (true).");
+          }
+        } catch (error) {
+          console.error("❌ Error al cargar la preferencia de notificación:", error);
+        }
+      }
+
+      // Guardar sólo cuando se hace click en el botón
+      saveBtnNewUser.addEventListener("click", async () => {
+        const newValue = notifEmailNewUserCheckbox.checked;
+        try {
+          await setDoc(docRef, { Notifications: { NotifEmailNewUser: newValue } }, { merge: true });
+          console.log("✅ Preferencia de notificación guardada:", newValue);
+          alert("✅ Preferencia de notificación guardada en la base de datos.");
+        } catch (error) {
+          console.error("❌ Error al guardar la preferencia de notificación:", error);
+          alert("❌ Hubo un error al guardar la preferencia de notificación.");
+        }
+      });
+
+      // Inicializa el estado del checkbox
+      loadNotifSetting();
+    }
+    function SaveNotifNewCourse() {
+      const saveBtn = document.getElementById("Save-Btn-NewCourse");
+      const notifCheckbox = document.getElementById("Notif-New-Course");
+
+      if (!saveBtn || !notifCheckbox) {
+        console.error("❌ No se encontraron los elementos #Save-Btn-NotifNewCourse o #NotifNewCourse.");
+        return;
+      }
+
+      const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+
+      // 🔹 Cargar valor actual o establecer por defecto (true)
+      async function loadNotifSetting() {
+        try {
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            const currentValue = data.Notifications?.NotifNewCourse;
+
+            if (currentValue === undefined) {
+              // Si no existe el campo, se inicializa con true
+              notifCheckbox.checked = true;
+              await setDoc(
+                docRef,
+                { Notifications: { NotifNewCourse: true } },
+                { merge: true }
+              );
+              console.log("✅ Preferencia inicializada en Firestore con valor true.");
+            } else {
+              notifCheckbox.checked = currentValue;
+            }
+          } else {
+            // Si no existe el documento, lo crea con valor por defecto
+            notifCheckbox.checked = true;
+            await setDoc(
+              docRef,
+              { Notifications: { NotifNewCourse: true } },
+              { merge: true }
+            );
+            console.log("✅ Documento creado con valor por defecto (true).");
+          }
+        } catch (error) {
+          console.error("❌ Error al cargar la preferencia de notificación:", error);
+        }
+      }
+
+      // 🔹 Guardar valor cuando se hace click en el botón
+      saveBtn.addEventListener("click", async () => {
+        const newValue = notifCheckbox.checked;
+        try {
+          await setDoc(
+            docRef,
+            { Notifications: { NotifNewCourse: newValue } },
+            { merge: true }
+          );
+          console.log("✅ Preferencia de notificación (nuevo curso) guardada:", newValue);
+          alert("✅ Preferencia de notificación guardada en la base de datos.");
+        } catch (error) {
+          console.error("❌ Error al guardar la preferencia de notificación:", error);
+          alert("❌ Hubo un error al guardar la preferencia de notificación.");
+        }
+      });
+
+      // Inicializa el estado
+      loadNotifSetting();
+    }
+    function SaveNotifNewEnrollment() {
+      const saveBtnNewEnrollment = document.getElementById("Save-Btn-NewEnrollment");
+      const notifNewEnrollmentCheckbox = document.getElementById("Notif-New-Enrollment");
+
+      if (!saveBtnNewEnrollment || !notifNewEnrollmentCheckbox) {
+        console.error("❌ No se encontraron los elementos: #Save-Btn-NewEnrollment o #Notif-New-Enrollment.");
+        return;
+      }
+
+      const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+
+      // 🔹 Cargar el valor actual o establecer el valor por defecto (true)
+      async function loadNotifSetting() {
+        try {
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            const currentValue = data.Notifications?.NotifNewEnrollment;
+            notifNewEnrollmentCheckbox.checked = currentValue !== undefined ? currentValue : true;
+
+            if (currentValue === undefined) {
+              await setDoc(docRef, { Notifications: { NotifNewEnrollment: true } }, { merge: true });
+              console.log("✅ Valor por defecto (true) guardado en Firestore para NewEnrollment.");
+            }
+          } else {
+            notifNewEnrollmentCheckbox.checked = true;
+            await setDoc(docRef, { Notifications: { NotifNewEnrollment: true } }, { merge: true });
+            console.log("✅ Documento creado con valor por defecto (true) para NewEnrollment.");
+          }
+        } catch (error) {
+          console.error("❌ Error al cargar la preferencia de notificación (NewEnrollment):", error);
+        }
+      }
+
+      // 🔹 Guardar cuando se hace click en el botón
+      saveBtnNewEnrollment.addEventListener("click", async () => {
+        const newValue = notifNewEnrollmentCheckbox.checked;
+        try {
+          await setDoc(docRef, { Notifications: { NotifNewEnrollment: newValue } }, { merge: true });
+          console.log("✅ Preferencia NewEnrollment guardada:", newValue);
+          alert("✅ Preferencia de notificación NewEnrollment guardada en la base de datos.");
+        } catch (error) {
+          console.error("❌ Error al guardar la preferencia NewEnrollment:", error);
+          alert("❌ Hubo un error al guardar la preferencia NewEnrollment.");
+        }
+      });
+
+      // 🔹 Inicializar checkbox
+      loadNotifSetting();
+    }
+    function SaveNotifNewCertificate() {
+      const saveBtnNewCertificate = document.getElementById("Save-Btn-Certificate");
+      const notifNewCertificateCheckbox = document.getElementById("Notif-New-Certificate");
+
+      if (!saveBtnNewCertificate || !notifNewCertificateCheckbox) {
+        console.error("❌ No se encontraron los elementos: #Save-Btn-Certificate o #Notif-New-Certificate.");
+        return;
+      }
+
+      const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+
+      // 🔹 Cargar el valor actual o establecer true por defecto
+      async function loadNotifSetting() {
+        try {
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            const currentValue = data.Notifications?.NotifNewCertificate;
+            notifNewCertificateCheckbox.checked = currentValue !== undefined ? currentValue : true;
+
+            if (currentValue === undefined) {
+              await setDoc(docRef, { Notifications: { NotifNewCertificate: true } }, { merge: true });
+              console.log("✅ Valor por defecto (true) guardado en Firestore para NotifNewCertificate.");
+            }
+          } else {
+            notifNewCertificateCheckbox.checked = true;
+            await setDoc(docRef, { Notifications: { NotifNewCertificate: true } }, { merge: true });
+            console.log("✅ Documento creado con valor por defecto (true) para NotifNewCertificate.");
+          }
+        } catch (error) {
+          console.error("❌ Error al cargar la preferencia de notificación (NotifNewCertificate):", error);
+        }
+      }
+
+      // 🔹 Guardar valor cuando se hace click en el botón
+      saveBtnNewCertificate.addEventListener("click", async () => {
+        const newValue = notifNewCertificateCheckbox.checked;
+        try {
+          await setDoc(docRef, { Notifications: { NotifNewCertificate: newValue } }, { merge: true });
+          console.log("✅ Preferencia NotifNewCertificate guardada:", newValue);
+          alert("✅ Preferencia de notificación NotifNewCertificate guardada en la base de datos.");
+        } catch (error) {
+          console.error("❌ Error al guardar la preferencia NotifNewCertificate:", error);
+          alert("❌ Hubo un error al guardar la preferencia NotifNewCertificate.");
+        }
+      });
+
+      // 🔹 Inicializar checkbox
+      loadNotifSetting();
+    }
+    function SaveNotifAppMessages() {
+      const saveBtnAppMessages = document.getElementById("Save-Btn-AppMessages");
+      const notifAppMessagesCheckbox = document.getElementById("Notif-New-AppMessages");
+
+      if (!saveBtnAppMessages || !notifAppMessagesCheckbox) {
+        console.error("❌ No se encontraron los elementos: #Save-Btn-AppMessages o #Notif-New-AppMessages.");
+        return;
+      }
+
+      const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+
+      // 🔹 Cargar el valor actual o establecer por defecto (true)
+      async function loadNotifSetting() {
+        try {
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            const currentValue = data.Notifications?.NotifAppMessages;
+            notifAppMessagesCheckbox.checked = currentValue !== undefined ? currentValue : true;
+
+            if (currentValue === undefined) {
+              await setDoc(docRef, { Notifications: { NotifAppMessages: true } }, { merge: true });
+              console.log("✅ Valor por defecto (true) guardado en Firestore para NotifAppMessages.");
+            }
+          } else {
+            notifAppMessagesCheckbox.checked = true;
+            await setDoc(docRef, { Notifications: { NotifAppMessages: true } }, { merge: true });
+            console.log("✅ Documento creado con valor por defecto (true) para NotifAppMessages.");
+          }
+        } catch (error) {
+          console.error("❌ Error al cargar la preferencia de notificación (NotifAppMessages):", error);
+        }
+      }
+
+      // 🔹 Guardar valor al hacer click en el botón
+      saveBtnAppMessages.addEventListener("click", async () => {
+        const newValue = notifAppMessagesCheckbox.checked;
+        try {
+          await setDoc(docRef, { Notifications: { NotifAppMessages: newValue } }, { merge: true });
+          console.log("✅ Preferencia NotifAppMessages guardada:", newValue);
+          alert("✅ Preferencia de notificación NotifAppMessages guardada en la base de datos.");
+        } catch (error) {
+          console.error("❌ Error al guardar la preferencia NotifAppMessages:", error);
+          alert("❌ Hubo un error al guardar la preferencia NotifAppMessages.");
+        }
+      });
+
+      // 🔹 Inicializar checkbox
+      loadNotifSetting();
+    }
+    function SaveNotifPushReminders() {
+      const saveBtnPushReminders = document.getElementById("Save-Btn-PushReminders");
+      const notifPushRemindersCheckbox = document.getElementById("Notif-New-PushReminders");
+
+      if (!saveBtnPushReminders || !notifPushRemindersCheckbox) {
+        console.error("❌ No se encontraron los elementos: #Save-Btn-PushReminders o #Notif-New-PushReminders.");
+        return;
+      }
+
+      const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+
+      // 🔹 Cargar el valor actual o establecer por defecto
+      async function loadNotifSetting() {
+        try {
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            const data = docSnap.data();
+            const currentValue = data.Notifications?.NotifPushReminders;
+            notifPushRemindersCheckbox.checked = currentValue !== undefined ? currentValue : true;
+
+            if (currentValue === undefined) {
+              await setDoc(docRef, { Notifications: { NotifPushReminders: true } }, { merge: true });
+              console.log("✅ Valor por defecto (true) guardado en Firestore para PushReminders.");
+            }
+          } else {
+            notifPushRemindersCheckbox.checked = true;
+            await setDoc(docRef, { Notifications: { NotifPushReminders: true } }, { merge: true });
+            console.log("✅ Documento creado con valor por defecto (true) para PushReminders.");
+          }
+        } catch (error) {
+          console.error("❌ Error al cargar la preferencia de notificación (PushReminders):", error);
+        }
+      }
+
+      // 🔹 Guardar valor cuando se presiona el botón
+      saveBtnPushReminders.addEventListener("click", async () => {
+        const newValue = notifPushRemindersCheckbox.checked;
+        try {
+          await setDoc(docRef, { Notifications: { NotifPushReminders: newValue } }, { merge: true });
+          console.log("✅ Preferencia PushReminders guardada:", newValue);
+          alert("✅ Preferencia de notificación PushReminders guardada en la base de datos.");
+        } catch (error) {
+          console.error("❌ Error al guardar la preferencia PushReminders:", error);
+          alert("❌ Hubo un error al guardar la preferencia PushReminders.");
+        }
+      });
+
+      // 🔹 Inicializar el estado del checkbox
+      loadNotifSetting();
+    }
+  
+    SaveNotifEmailNewUser()
+    SaveNotifNewCourse() 
+    SaveNotifNewEnrollment()
+    SaveNotifNewCertificate()
+    SaveNotifAppMessages()
+    SaveNotifPushReminders()
+    renderNotificacionesvalues()
   }
   function RenderBillingInfo(){
     ToggleColorInput("Edit-Btn-BillingName", "BillingName")
@@ -2220,6 +2387,697 @@ async function fetchAllContent() {
     renderBilingvalues()
 
   }
+  function renderConfiguraciónInfo(){
+    ToggleColorInput("Edit-Btn-CertificateOrientation", "CertificateOrientation")
+    ToggleColorInput("Edit-Btn-CertificateMessage", "CertificateMessage")
+    ToggleColorInput("Edit-Btn-CertificateBorderStyle", "CertificateBorderStyle")
+    ToggleColorInput("Edit-Btn-CertificateBackgroundImage", "CertificateBackgroundImage")
+    ToggleColorInput("Edit-Btn-CertificateFontFamily", "CertificateFontFamily")
+    ToggleColorInput("Edit-Btn-CertificateAccentColor", "CertificateAccentColor")
+    ToggleColorInput("Edit-Btn-CertificateFontColor", "CertificateFontColor")
+    ToggleColorInput("Edit-Btn-CertificateSignatureFile", "CertificateSignatureFile")
+    ToggleColorInput("Edit-Btn-CertificateSignatureFile", "link-Tag")
+
+
+    function renderConfiguraciónvalues(){
+      renderText(AdminData.CertificateSettings.CertificateOrientation, "Certificate-Orientation")
+      renderText(AdminData.CertificateSettings.CertificateMessage, "Certificate-Message")
+      renderText(AdminData.CertificateSettings.CertificateBorderStyle, "Certificate-BorderStyle")
+      createImageInDiv("Certificate-BackgroundImage",AdminData.CertificateSettings.CertificateBackgroundImage, "Certificate Background Image", "sampleImg", "img-style")
+      renderText(AdminData.CertificateSettings.CertificateFontFamily, "Certificate-FontFamily")
+      renderText(AdminData.CertificateSettings.CertificateFontColor, "Certificate-FontColor")
+      renderText(AdminData.CertificateSettings.CertificateAccentColor, "Certificate-AccentColor")
+      createImageInDiv("Certificate-SignaturePreview",AdminData.CertificateSettings.CertificateSignatureFile, "Certificate Signature", "sampleImg", "img-style")
+
+
+
+    }
+
+    function SaveCertificateOrientation() {
+
+      const saveBtnOrientation = document.getElementById("Save-Btn-CertificateOrientation");
+      const selectOrientation = document.getElementById("CertificateOrientation");
+
+      if (!saveBtnOrientation || !selectOrientation) {
+        console.error("❌ No se encontraron los elementos de entrada o botón para la orientación del certificado.");
+        return;
+      }
+
+      saveBtnOrientation.addEventListener("click", async () => {
+        const selectedOrientation = selectOrientation.value;
+
+        if (!selectedOrientation) {
+          alert("⚠️ Selecciona una orientación antes de guardar.");
+          return;
+        }
+
+        try {
+          // 🔹 Save Certificate Orientation to Firestore
+          const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+          await setDoc(
+            docRef,
+            {
+              CertificateSettings: {
+                CertificateOrientation: selectedOrientation
+              }
+            },
+            { merge: true }
+          );
+
+          console.log("✅ Orientación del certificado guardada correctamente en Firestore.");
+          alert("✅ Orientación del certificado guardada en la base de datos.");
+        } catch (error) {
+          console.error("❌ Error al guardar la orientación del certificado en Firestore:", error);
+          alert("❌ Hubo un error al guardar la orientación del certificado.");
+        }
+      });
+    }
+    function SaveCertificateMessage() {
+      const saveBtnMessage = document.getElementById("Save-Btn-CertificateMessage");
+      const messageInput = document.getElementById("CertificateMessage");
+
+      if (!saveBtnMessage || !messageInput) {
+        console.error("❌ No se encontraron los elementos de entrada o botón para el mensaje del certificado.");
+        return;
+      }
+
+      saveBtnMessage.addEventListener("click", async () => {
+        const certificateMessageValue = messageInput.value.trim();
+
+        if (!certificateMessageValue) {
+          alert("⚠️ Ingresa un mensaje antes de guardar.");
+          return;
+        }
+
+        try {
+          // 🔹 Save Certificate Message to Firestore
+          const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+          await setDoc(
+            docRef,
+            {
+              CertificateSettings: {
+                CertificateMessage: certificateMessageValue
+              }
+            },
+            { merge: true }
+          );
+
+          console.log("✅ Mensaje del certificado guardado correctamente en Firestore.");
+          alert("✅ Mensaje del certificado guardado en la base de datos.");
+        } catch (error) {
+          console.error("❌ Error al guardar el mensaje del certificado en Firestore:", error);
+          alert("❌ Hubo un error al guardar el mensaje del certificado.");
+        }
+      });
+    }
+    function SaveCertificateBorderStyle() {
+      const saveBtnBorderStyle = document.getElementById("Save-Btn-CertificateBorderStyle");
+      const selectBorderStyle = document.getElementById("CertificateBorderStyle");
+
+      if (!saveBtnBorderStyle || !selectBorderStyle) {
+        console.error("❌ No se encontraron los elementos de entrada o botón para el estilo de borde del certificado.");
+        return;
+      }
+
+      saveBtnBorderStyle.addEventListener("click", async () => {
+        const selectedBorderStyle = selectBorderStyle.value;
+
+        if (!selectedBorderStyle) {
+          alert("⚠️ Selecciona un tipo de borde antes de guardar.");
+          return;
+        }
+
+        try {
+          // 🔹 Save Certificate Border Style to Firestore
+          const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+          await setDoc(
+            docRef,
+            {
+              CertificateSettings: {
+                CertificateBorderStyle: selectedBorderStyle
+              }
+            },
+            { merge: true }
+          );
+
+          console.log("✅ Estilo de borde del certificado guardado correctamente en Firestore.");
+          alert("✅ Estilo de borde del certificado guardado en la base de datos.");
+        } catch (error) {
+          console.error("❌ Error al guardar el estilo de borde del certificado en Firestore:", error);
+          alert("❌ Hubo un error al guardar el estilo de borde del certificado.");
+        }
+      });
+    }
+    function SaveCertificateBackgroundImage() {
+      const saveBtnBackground = document.getElementById("Save-Btn-CertificateBackgroundImage");
+      const backgroundInput = document.getElementById("CertificateBackgroundImage");
+
+      if (!saveBtnBackground || !backgroundInput) {
+        console.error("❌ No se encontraron los elementos de entrada o botón para la imagen de fondo del certificado.");
+        return;
+      }
+
+      saveBtnBackground.addEventListener("click", async () => {
+        const file = backgroundInput.files[0];
+
+        if (!file) {
+          alert("⚠️ Selecciona una imagen antes de guardar.");
+          return;
+        }
+
+        try {
+          // 🔹 Path in Firebase Storage
+          const storagePath = `CertificateSettings/BackgroundImages/${UserUidInfo}/${file.name}`;
+          const storageRef = ref(storage, storagePath);
+
+          console.log("⬆️ Subiendo imagen de fondo a Firebase Storage...");
+
+          // 🔹 Upload file
+          await uploadBytes(storageRef, file);
+
+          // 🔹 Get public URL
+          const downloadURL = await getDownloadURL(storageRef);
+
+          // 🔹 Save URL to Firestore
+          const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+          await setDoc(
+            docRef,
+            {
+              CertificateSettings: {
+                CertificateBackgroundImage: downloadURL
+              }
+            },
+            { merge: true }
+          );
+
+          console.log("✅ Imagen de fondo del certificado guardada correctamente.");
+          alert("✅ Imagen de fondo guardada y registrada en la base de datos.");
+
+        } catch (error) {
+          console.error("❌ Error al subir o guardar la imagen de fondo del certificado:", error);
+          alert("❌ Hubo un error al guardar la imagen de fondo.");
+        }
+      });
+    }
+    function SaveCertificateFontFamily() {
+
+      const saveBtnFont = document.getElementById("Save-Btn-CertificateFontFamily");
+      const selectFont = document.getElementById("CertificateFontFamily");
+
+      if (!saveBtnFont || !selectFont) {
+        console.error("❌ No se encontraron los elementos de entrada o botón para la fuente del certificado.");
+        return;
+      }
+
+      saveBtnFont.addEventListener("click", async () => {
+        const selectedFont = selectFont.value;
+
+        if (!selectedFont) {
+          alert("⚠️ Selecciona una fuente antes de guardar.");
+          return;
+        }
+
+        try {
+          // 🔹 Save Certificate Font Family to Firestore
+          const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+          await setDoc(
+            docRef,
+            {
+              CertificateSettings: {
+                CertificateFontFamily: selectedFont
+              }
+            },
+            { merge: true }
+          );
+
+          console.log("✅ Fuente del certificado guardada correctamente en Firestore.");
+          alert("✅ Fuente del certificado guardada en la base de datos.");
+        } catch (error) {
+          console.error("❌ Error al guardar la fuente del certificado en Firestore:", error);
+          alert("❌ Hubo un error al guardar la fuente del certificado.");
+        }
+      });
+    }
+    function SaveCertificateFontColor() {
+      // ---------------------------
+      // Save Certificate Font Color to Firestore
+      // ---------------------------
+
+      const saveBtnFontColor = document.getElementById("Save-Btn-CertificateFontColor");
+      const colorInput = document.getElementById("CertificateFontColor");
+
+      if (!saveBtnFontColor || !colorInput) {
+        console.error("❌ No se encontraron los elementos de entrada o botón para el color de fuente del certificado.");
+        return;
+      }
+
+      saveBtnFontColor.addEventListener("click", async () => {
+        const selectedColor = colorInput.value;
+
+        if (!selectedColor) {
+          alert("⚠️ Selecciona un color antes de guardar.");
+          return;
+        }
+
+        try {
+          // 🔹 Save Certificate Font Color to Firestore
+          const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+          await setDoc(
+            docRef,
+            {
+              CertificateSettings: {
+                CertificateFontColor: selectedColor
+              }
+            },
+            { merge: true }
+          );
+
+          console.log("✅ Color de fuente del certificado guardado correctamente en Firestore.");
+          alert("✅ Color de fuente del certificado guardado en la base de datos.");
+        } catch (error) {
+          console.error("❌ Error al guardar el color de fuente del certificado en Firestore:", error);
+          alert("❌ Hubo un error al guardar el color de fuente del certificado.");
+        }
+      });
+    }
+    function SaveCertificateAccentColor() {
+      const saveBtnAccentColor = document.getElementById("Save-Btn-CertificateAccentColor");
+      const accentColorInput = document.getElementById("CertificateAccentColor");
+
+      if (!saveBtnAccentColor || !accentColorInput) {
+        console.error("❌ No se encontraron los elementos de entrada o botón para el color de acento del certificado.");
+        return;
+      }
+
+      saveBtnAccentColor.addEventListener("click", async () => {
+        const selectedAccentColor = accentColorInput.value;
+
+        if (!selectedAccentColor) {
+          alert("⚠️ Selecciona un color antes de guardar.");
+          return;
+        }
+
+        try {
+          // 🔹 Save Certificate Accent Color to Firestore
+          const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+          await setDoc(
+            docRef,
+            {
+              CertificateSettings: {
+                CertificateAccentColor: selectedAccentColor
+              }
+            },
+            { merge: true }
+          );
+
+          console.log("✅ Color de acento del certificado guardado correctamente en Firestore.");
+          alert("✅ Color de acento del certificado guardado en la base de datos.");
+        } catch (error) {
+          console.error("❌ Error al guardar el color de acento del certificado en Firestore:", error);
+          alert("❌ Hubo un error al guardar el color de acento del certificado.");
+        }
+      });
+    }
+    function SaveCertificateSignatureFile() {
+      const saveBtnSignature = document.getElementById("Save-Btn-CertificateSignatureFile");
+      const signatureInput = document.getElementById("CertificateSignatureFile");
+
+      if (!saveBtnSignature || !signatureInput) {
+        console.error("❌ No se encontraron los elementos de entrada o botón para la firma del certificado.");
+        return;
+      }
+
+      saveBtnSignature.addEventListener("click", async () => {
+        const file = signatureInput.files[0];
+
+        if (!file) {
+          alert("⚠️ Selecciona un archivo de firma antes de guardar.");
+          return;
+        }
+
+        try {
+          // 🔹 Path in Firebase Storage
+          const storagePath = `CertificateSettings/Signatures/${UserUidInfo}/${file.name}`;
+          const storageRef = ref(storage, storagePath);
+
+          console.log("⬆️ Subiendo archivo de firma a Firebase Storage...");
+
+          // 🔹 Upload the file
+          await uploadBytes(storageRef, file);
+
+          // 🔹 Get public URL
+          const downloadURL = await getDownloadURL(storageRef);
+
+          // 🔹 Save URL to Firestore
+          const docRef = doc(db, "CorsoSkillsAdmin", UserUidInfo);
+          await setDoc(
+            docRef,
+            {
+              CertificateSettings: {
+                CertificateSignatureFile: downloadURL
+              }
+            },
+            { merge: true }
+          );
+
+          console.log("✅ Archivo de firma guardado correctamente en Firestore.");
+          alert("✅ Archivo de firma del certificado guardado en la base de datos.");
+
+        } catch (error) {
+          console.error("❌ Error al subir o guardar el archivo de firma del certificado:", error);
+          alert("❌ Hubo un error al guardar el archivo de firma.");
+        }
+      });
+    }
+
+
+
+     
+    renderConfiguraciónvalues()
+    SaveCertificateOrientation()
+    SaveCertificateMessage()
+    SaveCertificateBorderStyle()
+    SaveCertificateBackgroundImage()
+    SaveCertificateFontFamily()
+    SaveCertificateFontColor()
+    SaveCertificateAccentColor()
+    SaveCertificateSignatureFile()
+
+
+  }
+
+
+
+  function RenderPersonalizaciónInfo(){
+    ToggleColorInput("Edit-Btn-QuoteText", "quoteText")
+    ToggleColorInput("Edit-Btn-Font-Category", "MainFont")
+    ToggleColorInput("Edit-Btn-CourseCategory", "courseCategory")
+
+
+
+    ToggleColorInput("Edit-Btn-Trophy", "trophyBanner")
+    ToggleColorInput("Edit-Btn-Trophy", "trophyTitle")
+    ToggleColorInput("Edit-Btn-Trophy", "trophyIcon")
+    ToggleColorInput("Edit-Btn-Trophy", "trophyTrigger")
+
+    function renderPersonalizaciónvalues(){
+      renderList(BusinessData.Quotes, "Quote-Text")
+      function setupFontPreview() {
+        const fontSelect = document.getElementById("MainFont");
+        const preview = document.getElementById("Main-Font");
+
+        if (!fontSelect || !preview) {
+          console.error("❌ No se encontraron los elementos de fuente o vista previa.");
+          return;
+        }
+
+        // Load Google Fonts dynamically if needed
+        const loadFont = (fontName) => {
+          if (!fontName || ["sans-serif", "serif", "monospace"].includes(fontName)) return;
+
+          const linkId = "font-link-" + fontName.replace(/\s+/g, "-");
+          if (!document.getElementById(linkId)) {
+            const link = document.createElement("link");
+            link.id = linkId;
+            link.rel = "stylesheet";
+            link.href = `https://fonts.googleapis.com/css2?family=${fontName.replace(/\s+/g, "+")}&display=swap`;
+            document.head.appendChild(link);
+          }
+        };
+
+        // Change preview font on selection
+        fontSelect.addEventListener("change", (e) => {
+          const selectedFont = e.target.value;
+          if (!selectedFont) return;
+
+          loadFont(selectedFont);
+          preview.style.fontFamily = `'${selectedFont}', sans-serif`;
+          preview.textContent = `Vista previa: ${selectedFont}`;
+        });
+      }
+      setupFontPreview()
+      renderText(BusinessData.Font, "Main-Font")
+      renderList(BusinessData.CourseCategory, "Course-Category")
+    }
+
+    function SaveQuoteText() {
+      const saveBtnQuote = document.getElementById("Save-Btn-QuoteText");
+      const quoteInput = document.getElementById("quoteText");
+
+      if (!saveBtnQuote || !quoteInput) {
+        console.error("❌ No se encontraron los elementos de entrada o botón para la cita motivacional.");
+        return;
+      }
+
+      saveBtnQuote.addEventListener("click", async () => {
+        const quoteValue = quoteInput.value.trim();
+
+        if (!quoteValue) {
+          alert("⚠️ Escribe una frase o cita antes de guardar.");
+          return;
+        }
+
+        try {
+          const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
+
+          // 🔹 Try to append to the Quotes array
+          await updateDoc(docRef, {
+            Quotes: arrayUnion(quoteValue)
+          }).catch(async (error) => {
+            // If doc or field doesn’t exist yet, create it
+            if (error.code === "not-found") {
+              await setDoc(
+                docRef,
+                { Quotes: [quoteValue] },
+                { merge: true }
+              );
+            } else {
+              throw error;
+            }
+          });
+
+          console.log("✅ Cita motivacional agregada correctamente al array Quotes en Firestore.");
+          alert("✅ Cita guardada correctamente en la base de datos.");
+
+          // Optional: clear textarea
+          quoteInput.value = "";
+
+        } catch (error) {
+          console.error("❌ Error al guardar la cita motivacional en Firestore:", error);
+          alert("❌ Hubo un error al guardar la cita.");
+        }
+      });
+    }
+    function SaveMainFont() {
+      const saveBtnFont = document.getElementById("Save-Btn-Font-Category");
+      const selectFont = document.getElementById("MainFont");
+
+      if (!saveBtnFont || !selectFont) {
+        console.error("❌ No se encontraron los elementos de entrada o botón para la fuente principal.");
+        return;
+      }
+
+      saveBtnFont.addEventListener("click", async () => {
+        const selectedFont = selectFont.value.trim();
+
+        if (!selectedFont) {
+          alert("⚠️ Selecciona una fuente antes de guardar.");
+          return;
+        }
+
+        try {
+          const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
+
+          // 🔹 Guardar o actualizar el campo "MainFont"
+          await updateDoc(docRef, {
+            Font: selectedFont
+          }).catch(async (error) => {
+            // Si el documento no existe, lo crea
+            if (error.code === "not-found") {
+              await setDoc(
+                docRef,
+                { Font: selectedFont },
+                { merge: true }
+              );
+            } else {
+              throw error;
+            }
+          });
+
+          console.log("✅ Fuente principal guardada correctamente en Firestore:", selectedFont);
+          alert("✅ Fuente principal guardada correctamente en la base de datos.");
+
+        } catch (error) {
+          console.error("❌ Error al guardar la fuente principal en Firestore:", error);
+          alert("❌ Hubo un error al guardar la fuente.");
+        }
+      });
+    }
+    function SaveCourseCategory() {
+      const saveBtnCategory = document.getElementById("Save-Btn-CourseCategory");
+      const inputCategory = document.getElementById("courseCategory");
+
+      if (!saveBtnCategory || !inputCategory) {
+        console.error("❌ No se encontraron los elementos de entrada o botón para Course Category.");
+        return;
+      }
+
+      saveBtnCategory.addEventListener("click", async () => {
+        const categoryValue = inputCategory.value.trim();
+
+        if (!categoryValue) {
+          alert("⚠️ Por favor ingresa una categoría de curso.");
+          return;
+        }
+
+        try {
+          // 🔹 Referencia al documento en Firestore
+          const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
+
+          // 🔹 Guardar el valor como un nuevo elemento del array
+          await updateDoc(docRef, {
+            CourseCategory: arrayUnion(categoryValue)
+          }).catch(async (error) => {
+            // Si el documento no existe, lo crea
+            if (error.code === "not-found") {
+              await setDoc(
+                docRef,
+                { CourseCategory: [categoryValue] },
+                { merge: true }
+              );
+            } else {
+              throw error;
+            }
+          });
+
+          console.log("✅ Categoría añadida correctamente al arreglo en Firestore:", categoryValue);
+          alert(`✅ Categoría agregada: ${categoryValue}`);
+
+          // (Opcional) Limpiar el input
+          inputCategory.value = "";
+
+        } catch (error) {
+          console.error("❌ Error al guardar la categoría en Firestore:", error);
+          alert("❌ Hubo un error al guardar la categoría.");
+        }
+      });
+    }
+
+    async function SaveTrophyBanner() {
+      const saveBtnBanner = document.getElementById("Save-Btn-Trophy");
+      const bannerInput = document.getElementById("trophyBanner");
+      const titleInput = document.getElementById("trophyTitle");
+      const triggerInput = document.getElementById("trophyTrigger");
+      const iconsInput = document.getElementById("trophyIcon");
+
+      if (!saveBtnBanner || !bannerInput || !titleInput || !triggerInput || !iconsInput) {
+        console.error("❌ No se encontraron los elementos de entrada o botón para el trofeo.");
+        return;
+      }
+
+      saveBtnBanner.addEventListener("click", async () => {
+        const bannerValue = bannerInput.value.trim();
+        const titleValue = titleInput.value.trim();
+        const triggerValue = triggerInput.value.trim();
+        const files = iconsInput.files;
+
+        if (!bannerValue || !titleValue || !triggerValue) {
+          alert("⚠️ Completa todos los campos (Banner, Título y Trigger) antes de guardar.");
+          return;
+        }
+
+        try {
+          const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
+
+          // 🔹 Obtener los trofeos existentes
+          const docSnap = await getDoc(docRef);
+          let currentData = docSnap.exists() ? docSnap.data() : {};
+          let trophies = currentData.Trophies || {};
+
+          // 🔹 Calcular nuevo ID (T1, T2, T3…)
+          const newTrophyId = "T" + (Object.keys(trophies).length + 1);
+
+          // 🔹 Subir los iconos al Storage y obtener URLs
+          let iconURLs = [];
+          if (files.length > 0) {
+            const uploadPromises = Array.from(files).map(async (file, index) => {
+              const storagePath = `BusinessUnits/${TBuInfo}/Trophys/${newTrophyId}_Icon_${index + 1}_${file.name}`;
+              const storageReference = ref(storage, storagePath);
+
+              await uploadBytes(storageReference, file);
+              const downloadURL = await getDownloadURL(storageReference);
+              return downloadURL;
+            });
+
+            iconURLs = await Promise.all(uploadPromises);
+          }
+
+          // 🔹 Crear el objeto del nuevo trofeo
+          const newTrophy = {
+            Banner: bannerValue,
+            Tittle: titleValue,
+            Trigger: triggerValue,
+            Icons: iconURLs.length > 0 ? iconURLs : []
+          };
+
+          // 🔹 Agregar el trofeo sin eliminar los anteriores
+          trophies[newTrophyId] = newTrophy;
+
+          // 🔹 Guardar en Firestore
+          await setDoc(docRef, { Trophies: trophies }, { merge: true });
+
+          console.log("🏆 Nuevo trofeo guardado correctamente:", newTrophy);
+          alert("✅ Nuevo trofeo guardado correctamente en la base de datos.");
+
+          // 🔹 Limpiar inputs después de guardar
+          bannerInput.value = "";
+          titleInput.value = "";
+          triggerInput.value = "";
+          iconsInput.value = "";
+
+        } catch (error) {
+          console.error("❌ Error al guardar el trofeo en Firestore:", error);
+          alert("❌ Hubo un error al guardar el trofeo.");
+        }
+      });
+    }
+
+
+
+
+
+
+
+    renderPersonalizaciónvalues()
+    SaveQuoteText()
+    SaveMainFont()
+    SaveCourseCategory()
+    SaveTrophyBanner()
+  }
+
+
+
+
+
+
+
+  function RenderSystemInfo(){
+
+    renderText(BusinessData.System.Comapny, "System-Name")   
+    renderText(BusinessData.System.Version, "System-Version")   
+
+    renderText(BusinessData.System.Phone, "Support-Phone") 
+    
+    renderEmailLink(BusinessData.System.Email, "Solicitud de soporte", "Hola, necesito ayuda con mi cuenta.", "Support-Email") 
+
+    renderLink(BusinessData.System.URL, BusinessData.System.URL, "System-URL")
+
+    const date = new Date(BusinessData.System.Date.seconds * 1000 + BusinessData.System.Date.nanoseconds / 1000000);
+      
+    renderText(date , "System-ImplementationDate")
+  }
+
+
 
 
 
@@ -2229,13 +3087,13 @@ async function fetchAllContent() {
   RenderSecurityInfo()
   RenderNotificacionesInfo()
   RenderBillingInfo()
+  renderConfiguraciónInfo()
 
 
 
+  RenderPersonalizaciónInfo()
 
-
-
-
+  RenderSystemInfo()
 
 
 
