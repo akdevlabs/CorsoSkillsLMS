@@ -23,112 +23,124 @@
 <body>
   <header id="header">
     <img id="header-logo"/>
-    <a href="index11.html" id="exit-link" class="exit-link">Salir</a>
+    <a class="exit-link" id="exit-link">Salir</a>
   </header>
-
-  <main class="container" id="container">
-    <div class="avatar">
-      <img id="Bulogos"/>
-    </div>
+  <main>
 
     <div class="tittle-block">
-      <h1 id="wecome-banner-tittle"></h1>
-      <h2>Queremos conocerte mejor para hacer tu experiencia única</h2>
-      <h3>Por favor, responde estas preguntas para ayudarnos a construir tu camino hacia el éxito</h3>
+      <img id="Bulogos"/>
+
+      <h2 id="T1">Queremos conocerte mejor para hacer tu experiencia única</h2>
+      <h3 id="T2">Por favor, responde estas preguntas para ayudarnos a construir tu camino hacia el éxito</h3>
     </div>
     
-    <form class="info-form">
+    <section class="Questions">
 
+      <div class="Question">
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" min="12" max="100" required />
+      </div>
 
-        <div class="slot">
-          <div class="form-group">
-            <label for="edad">Edad:</label>
-            <input type="number" id="edad" name="edad" min="12" max="100" required />
-          </div>
+      <div class="Question">
+        <label for="sexo">Sexo:</label>
+        <select id="sexo" name="sexo" required>
+          <option value="">Selecciona una opción</option>
+          <option value="femenino">Femenino</option>
+          <option value="masculino">Masculino</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
 
-          <div class="form-group">
-            <label for="sexo">Sexo:</label>
-            <select id="sexo" name="sexo" required>
-              <option value="">Selecciona una opción</option>
-              <option value="femenino">Femenino</option>
-              <option value="masculino">Masculino</option>
-            </select>
-          </div>
-        </div>
+      <div class="Question">
+        <label for="telefono">Número de teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" placeholder="+52 55 1234 5678" pattern="^\+?[0-9\s\-\(\)]{7,15}$" required/>
+      </div>
 
-        <div class="slot">
-          <div class="form-group">
-            <label>Nivel de Cursos</label>
-            <div id="level-toggle-buttons" class="toggle-buttons">
-              <button type="button" class="level-btn" data-value="All">Todos</button>
-              <button type="button" class="level-btn" data-value="Beginner">Principiante</button>
-              <button type="button" class="level-btn" data-value="Intermediate">Intermedio</button>
-              <button type="button" class="level-btn" data-value="Advanced">Avanzado</button>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="career">Carrera Profesional</label>
-            <select id="career" name="career" required>
-              <option value="">Seleccione una carrera</option>
-              <option value="ingenieria">Ingeniería</option>
-              <option value="medicina">Medicina</option>
-              <option value="derecho">Derecho</option>
-              <option value="administracion">Administración de Empresas</option>
-              <option value="contabilidad">Contaduría</option>
-              <option value="psicologia">Psicología</option>
-              <option value="arquitectura">Arquitectura</option>
-              <option value="educacion">Educación</option>
-              <option value="informatica">Informática / Sistemas</option>
-              <option value="turismo">Turismo</option>
-              <option value="gastronomia">Gastronomía</option>
-              <option value="enfermeria">Enfermería</option>
-              <option value="comunicacion">Comunicación</option>
-              <option value="biologia">Biología</option>
-              <option value="quimica">Química</option>
-              <option value="finanzas">Finanzas</option>
-              <option value="marketing">Mercadotecnia</option>
-              <option value="relaciones_internacionales">Relaciones Internacionales</option>
-              <option value="trabajo_social">Trabajo Social</option>
-              <option value="arte_diseno">Arte y Diseño</option>
-            </select>
-          </div>
-        </div>
+      <div class="Question">
+        <label for="imagen">Imagen (opcional):</label>
+        <input type="file" id="imagen" name="imagen" accept="image/*"/>
+      </div>
 
-        <div class="slot">
-          <div class="form-group">
-            <label for="telefono">Número de teléfono:</label>
-            <input type="tel" id="telefono" name="telefono" placeholder="Ej. 55 1234 5678" required pattern="[0-9]{10}" />
-          </div>
+      <div class="Question">
+          <label for="zonaHoraria">Zona horaria:</label>
+          <select id="zonaHoraria" name="zonaHoraria" required>
+            <option value="">Selecciona tu zona horaria</option>
+            <option value="America/Mexico_City">(GMT-6) Ciudad de México</option>
+            <option value="America/Bogota">(GMT-5) Bogotá, Lima, Quito</option>
+            <option value="America/New_York">(GMT-5) Nueva York, Toronto</option>
+            <option value="America/Chicago">(GMT-6) Chicago, Centro de EE. UU.</option>
+            <option value="America/Denver">(GMT-7) Denver, Montaña (EE. UU.)</option>
+            <option value="America/Los_Angeles">(GMT-8) Los Ángeles, San Francisco</option>
+            <option value="America/Santiago">(GMT-3) Santiago de Chile, Buenos Aires</option>
+            <option value="Europe/Madrid">(GMT+1) Madrid, París, Roma, Berlín</option>
+            <option value="Europe/London">(GMT+0) Londres, Lisboa</option>
+            <option value="Europe/Moscow">(GMT+3) Moscú, San Petersburgo</option>
+            <option value="Asia/Dubai">(GMT+4) Dubái, Abu Dabi</option>
+            <option value="Asia/Kolkata">(GMT+5:30) Nueva Delhi, Mumbai</option>              <option value="Asia/Bangkok">(GMT+7) Bangkok, Yakarta</option>
+            <option value="Asia/Hong_Kong">(GMT+8) Hong Kong, Beijing, Singapur</option>
+            <option value="Asia/Tokyo">(GMT+9) Tokio, Osaka</option>
+            <option value="Australia/Sydney">(GMT+10) Sídney, Melbourne</option>
+            <option value="Pacific/Auckland">(GMT+12) Auckland, Wellington</option>
+          </select>    
+      </div>
 
+      <div class="Question">
+        <label for="puestoActual">Puesto actual:</label>
+        <input type="text" id="puestoActual" name="puestoActual" placeholder="Ej. Gerente de Ventas, Desarrollador Web, Diseñador Gráfico" required/>
+      </div>
 
-          <div class="form-group">
-            <label for="cuenta">Número de cuenta bancaria:</label>
-            <input type="text" id="cuenta" name="cuenta" placeholder="Ej. 1234567890123456" required pattern="\d{10,18}" />
-          </div>
+      <div class="Question">
+        <label>Nivel de Cursos</label>
+        <select id="nivelDificultad" name="nivelDificultad" required>
+          <option value="">Selecciona un nivel</option>
+          <option value="All">Todos</option>
+          <option value="Beginner">Principiante</option>
+          <option value="Intermediate">Intermedio</option>
+          <option value="Advanced">Avanzado</option>
+        </select>
+      </div>
 
-        </div>
-      
-      
+      <div class="Question">
+        <label for="cuenta">Número de cuenta bancaria:</label>
+        <input type="text" id="cuenta" name="cuenta" placeholder="Ej. 1234567890123456" required pattern="\d{10,18}" />
+      </div>
 
-     
+      <div class="Question">
+        <label for="career">Carrera Profesional</label>
+        <select id="career" name="career" required>
+          <option value="">Seleccione una carrera</option>
+          <option value="ingenieria">Ingeniería</option>
+          <option value="medicina">Medicina</option>
+          <option value="derecho">Derecho</option>
+          <option value="administracion">Administración de Empresas</option>
+          <option value="contabilidad">Contaduría</option>
+          <option value="psicologia">Psicología</option>
+          <option value="arquitectura">Arquitectura</option>
+          <option value="educacion">Educación</option>
+          <option value="informatica">Informática / Sistemas</option>
+          <option value="turismo">Turismo</option>
+          <option value="gastronomia">Gastronomía</option>
+          <option value="enfermeria">Enfermería</option>
+          <option value="comunicacion">Comunicación</option>
+          <option value="biologia">Biología</option>
+          <option value="quimica">Química</option>
+          <option value="finanzas">Finanzas</option>
+          <option value="marketing">Mercadotecnia</option>
+          <option value="relaciones_internacionales">Relaciones Internacionales</option>
+          <option value="trabajo_social">Trabajo Social</option>
+          <option value="arte_diseno">Arte y Diseño</option>
+        </select>
+      </div>
 
+    </section>
 
-      <button id="next-button" type="submit" class="next-button">Siguiente →</button>
-      
-    </form>
-
-
-
-
-
-
-
-   
-
-   
-
-    
+    <button id="Save-Btn">Siguiente →</button>
+  
   </main>
+
+
+
+
 </body>
   <script  src="TeacherQuestions.js" type="module"></script>
 </html>

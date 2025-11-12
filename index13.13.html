@@ -57,13 +57,14 @@
     <main class="main-content">
       
       <header class="header">
-        <input type="text" placeholder="Search settings...">
+        <div></div>
         <div class="profile">
           <i class="fa-regular fa-bell"></i>
-          <img src="https://i.pravatar.cc/40?img=16" alt="User">
+          <div id="AdimImgUser"></div>
           <div>
-            <p class="name">Dipak Deb Nath</p>
-            <p class="role">Super Admin</p>
+    
+            <p id="User-Name"></p>
+            <p id="User-Id"></p>
           </div>
         </div>
       </header>
@@ -71,7 +72,6 @@
       <section class="Content">
         <div class="Content-header">
           <h2>Configuración</h2>
-          <p>Inicio > Configuración</p>
         </div>
 
         <div class="Content-Btns">
@@ -80,7 +80,7 @@
           <button class="Content-Btn" id="Security">Seguridad</button>
           <button class="Content-Btn" id="Notifications">Notificaciones</button>
           <button class="Content-Btn" id="Billing">Facturación</button>
-          <button class="Content-Btn" id="Integrations">Integraciones</button>
+          <button class="Content-Btn" id="Integrations">Certificados</button>
           <button class="Content-Btn" id="Roles">Roles y Permisos</button>
           <button class="Content-Btn" id="Customization">Personalización</button>
           <button class="Content-Btn" id="About">Acerca del Sistema</button>
@@ -348,19 +348,19 @@
           <div class="Blocks">
 
 
-            <div class="Block-Left" id="div49">
+            <div class="Block-Left">
               <label>Foto de Perfil</label>
               <i class="fa-solid fa-circle-question help-icon" 
                 data-message="Sube una foto de perfil del administrador. Esta imagen se mostrará en el panel, documentos oficiales y se usará para identificar al usuario dentro de la plataforma.">
               </i>
             </div>
-            <div class="Block" id="div50">
+            <div class="Block">
               <span id="AdminProfilePicPreview"></span>
             </div>
-            <div class="Block" id="div51">
+            <div class="Block">
               <input type="file" class="Upload-btn" id="AdminProfilePic" accept="image/*" />
             </div>
-            <div class="Block-BTNS" id="div52">
+            <div class="Block-BTNS">
               <i class="fa-solid fa-pen" id="Edit-Btn-AdminPic"></i>
               <i class="fa-solid fa-floppy-disk" id="Save-Btn-AdminPic"></i>
             </div>
@@ -428,7 +428,7 @@
               </i>
             </div>
             <div class="Block" id="div66">
-              <span id="Admin-Position"></span>
+              <span id="Admin-Active-Position"></span>
             </div>
             <div class="Block" id="div67">
               <input type="text" class="UpdateBlock" id="AdminPosition" placeholder="Ej. Director de Plataforma" />
@@ -532,117 +532,77 @@
         </div>
       </section>
 
-
-
-
-
-
       <section class="Block-Content" id="Security-Content">
         <h2>Configuración De Seguridad</h2>
 
         <div class="Line"></div>
 
         <div class="Blocks-Sections">
-          <div class="Blocks">
+        
+          <div class="Security">
+            <div class="Password-Title">
+              <label>Contraseña:</label>
+              <i class="fa-solid fa-circle-question help-icon" 
+                data-message="Ingresa una nueva contraseña segura para el administrador. Debe tener al menos 8 caracteres e incluir una combinación de letras, números y símbolos.">
+              </i>
+            </div>
+            <div class="Password-Result">
+              <span id="Password-Result"></span>
+            </div>
+            <div class="Password-Input">
+              <input type="password" class="UpdateBlock" id="AdminPassword" placeholder="Nueva contraseña" />
+              <i class="fa-solid fa-eye toggle-password" data-target="AdminPassword"  id="Show1"></i>
+            </div>
+            <div class="Password-Input-Recap">
+              <input type="password" class="UpdateBlock" id="AdminConfirmPassword" placeholder="Confirmar contraseña" />
+              <i class="fa-solid fa-eye toggle-password" data-target="AdminConfirmPassword"
+              id="Show2"></i>
+            </div>
+            <div class="Password-Btns">
+              <i class="fa-solid fa-pen" id="Edit-Btn-AdminPassword"></i>
+              <i class="fa-solid fa-floppy-disk" id="Save-Btn-AdminPassword"></i>
+            </div>
+          </div>
 
-            <div class="Block-Left" id="div69">
+          <div class="Blocks-facts">
+
+            <div class="Block-Left">
               <label>Id De Usuario:</label>
               <i class="fa-solid fa-circle-question help-icon" 
                 data-message="Este es el identificador único del usuario dentro de la plataforma. Se genera automáticamente y se utiliza para registrar, vincular y administrar la información del usuario.">
               </i>
             </div>
-            <div class="Block" id="div70">
+            <div class="Block">
               <span id="AdminUserId"></span>
             </div>
-            <div class="Block" id="div71"></div>
-            <div class="Block-BTNS" id="div72"></div>
-
-
-
-<!-- 🔐 Contraseña Principal -->
-<div class="Block-Left" id="div73">
-  <label>Contraseña:</label>
-  <i class="fa-solid fa-circle-question help-icon" 
-    data-message="Ingresa una nueva contraseña segura para el administrador. Debe tener al menos 8 caracteres e incluir una combinación de letras, números y símbolos.">
-  </i>
-</div>
-
-<div class="Block" id="div74">
-  <span id="Admin-Passwordn"></span>
-</div>
-
-<div class="Block password-container" id="div75">
-  <input type="password" class="UpdateBlock" id="AdminPassword" placeholder="Nueva contraseña" />
-  <i class="fa-solid fa-eye toggle-password" data-target="AdminPassword"  id="Show1"></i>
-</div>
-
-<div class="Block-BTNS" id="div76">
-  <i class="fa-solid fa-pen" id="Edit-Btn-AdminPassword"></i>
-  <i class="fa-solid fa-floppy-disk" id="Save-Btn-AdminPassword"></i>
-</div>
-
-<!-- 🔁 Confirmación de Contraseña -->
-<div class="Block-Left" id="div77"></div>
-
-<div class="Block" id="div78"></div>
-
-<div class="Block password-container" id="div79">
-  <input type="password" class="UpdateBlock" id="AdminConfirmPassword" placeholder="Confirmar contraseña" />
-  <i class="fa-solid fa-eye toggle-password" data-target="AdminConfirmPassword"
-   id="Show2"></i>
-</div>
-
-<div class="Block-BTNS" id="div80"></div>
 
 
 
 
+            <div class="Block-Left" id="div81">
+              <label>Últimos Dispositivos Usados:</label>
+              <i class="fa-solid fa-circle-question help-icon" 
+                data-message="Muestra los dos últimos dispositivos desde los cuales el administrador inició sesión en la plataforma. Esto ayuda a mantener un registro de seguridad y actividad reciente.">
+              </i>
+            </div>
+            <div class="Block" id="div82">
+              <span id="Last-Devices"></span>
+            </div>
 
+            <div class="Block-Left" id="div85">
+              <label>Último Dispositivo Activo:</label>
+              <i class="fa-solid fa-circle-question help-icon" 
+                data-message="Indica el último dispositivo activo del administrador. Puede ser una computadora, tablet o teléfono móvil, mostrando el sistema operativo y navegador utilizados.">
+              </i>
+            </div>
+            <div class="Block" id="div86">
+              <span id="Last-Active-Device"></span>
+            </div>
 
-
-<div class="Block-Left" id="div81">
-  <label>Últimos Dispositivos Usados:</label>
-  <i class="fa-solid fa-circle-question help-icon" 
-    data-message="Muestra los dos últimos dispositivos desde los cuales el administrador inició sesión en la plataforma. Esto ayuda a mantener un registro de seguridad y actividad reciente.">
-  </i>
-</div>
-<div class="Block" id="div82">
-  <span id="Last-Devices">Windows 10 - Chrome<br>iPhone 15 - Safari</span>
-</div>
-<div class="Block" id="div83"></div>
-<div class="Block-BTNS" id="div84"></div>
-
-<div class="Block-Left" id="div85">
-  <label>Último Dispositivo Activo:</label>
-  <i class="fa-solid fa-circle-question help-icon" 
-    data-message="Indica el último dispositivo activo del administrador. Puede ser una computadora, tablet o teléfono móvil, mostrando el sistema operativo y navegador utilizados.">
-  </i>
-</div>
-<div class="Block" id="div86">
-  <span id="Last-Active-Device">Windows 10 - Chrome</span>
-</div>
-<div class="Block" id="div87"></div>
-<div class="Block-BTNS" id="div88"></div>
-
-
-            
           </div>
 
         </div>
       </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
       <section class="Block-Content" id="Notifications-Content">
         <h2>Configuración De Notificaciones</h2>
@@ -657,10 +617,10 @@
             </i>
             </div>
             <div class="Block" id="div202">
-              <span id="Notif-NewUser-Status"></span>
+              <span id="NewUser-Status"></span>
             </div>
             <div class="Block" id="div203">
-              <input type="checkbox" class="UpdateBlock" id="NotifEmailNewUser"checked/>
+              <input type="checkbox" class="UpdateBlock" id="Notif-New-Email"/>
             </div>
             <div class="Block-BTNS" id="div204">
               <i class="fa-solid fa-pen" id="Edit-Btn-NewUser"></i>
@@ -668,19 +628,19 @@
             </div>
 
 
-            <div class="Block-Left" id="div205">
+            <div class="Block-Left">
               <label>Nuevo curso publicado:</label>
               <i class="fa-solid fa-circle-question help-icon"
                 data-message="Recibe alertas cuando se publique un nuevo curso dentro del LMS.">
               </i>
             </div>
-            <div class="Block" id="div206">
+            <div class="Block">
               <span id="Notif-NewCourse-Status"></span>
             </div>
-            <div class="Block" id="div207">
-              <input type="checkbox" class="UpdateBlock" id="NotifEmailNewCourse"checked/>
+            <div class="Block">
+              <input type="checkbox" class="UpdateBlock" id="Notif-New-Course"/>
             </div>
-            <div class="Block-BTNS" id="div208">
+            <div class="Block-BTNS">
               <i class="fa-solid fa-pen" id="Edit-Btn-NewCourse"></i>
               <i class="fa-solid fa-floppy-disk" id="Save-Btn-NewCourse"></i>
             </div>
@@ -696,7 +656,7 @@
               <span id="Notif-NewEnrollment-Status"></span>
             </div>
             <div class="Block" id="div211">
-              <input type="checkbox" class="UpdateBlock" id="NotifEmailEnrollment" checked/>
+              <input type="checkbox" class="UpdateBlock" id="Notif-New-Enrollment"/>
             </div>
             <div class="Block-BTNS" id="div212">
               <i class="fa-solid fa-pen" id="Edit-Btn-NewEnrollment"></i>
@@ -714,7 +674,7 @@
               <span id="Notif-Certificate-Status"></span>
             </div>
             <div class="Block" id="div215">
-              <input type="checkbox" class="UpdateBlock" id="NotifEmailCertificate" checked/>
+              <input type="checkbox" class="UpdateBlock" id="Notif-New-Certificate"/>
             </div>
             <div class="Block-BTNS" id="div216">
               <i class="fa-solid fa-pen" id="Edit-Btn-Certificate"></i>
@@ -732,7 +692,7 @@
               <span id="Notif-AppMessages-Status"></span>
             </div>
             <div class="Block" id="div219">
-              <input type="checkbox" class="UpdateBlock" id="NotifAppMessages" checked/>
+              <input type="checkbox" class="UpdateBlock" id="Notif-New-AppMessages" />
             </div>
             <div class="Block-BTNS" id="div220">
               <i class="fa-solid fa-pen" id="Edit-Btn-AppMessages"></i>
@@ -750,7 +710,7 @@
               <span id="Notif-PushReminders-Status"></span>
             </div>
             <div class="Block" id="div223">
-              <input type="checkbox" class="UpdateBlock" id="NotifPushReminders"checked/>
+              <input type="checkbox" class="UpdateBlock" id="Notif-New-PushReminders"/>
             </div>
             <div class="Block-BTNS" id="div224">
               <i class="fa-solid fa-pen" id="Edit-Btn-PushReminders"></i>
@@ -919,265 +879,207 @@
         </div>
       </section>
 
-
-
-
-
       <section class="Block-Content" id="Integrations-Content">
-        <h2>Configuración De Integraciones</h2>
+        <h2>Configuración De Plantilla De Certificados</h2>
         <div class="Line"></div>
+
         <div class="Blocks-Sections">
           <div class="Blocks">
-            <div class="Block-Left" id="div201">
-  <label>API Key:</label>
-  <i class="fa-solid fa-circle-question help-icon"
-    data-message="Clave pública proporcionada por el servicio externo para autenticar solicitudes.">
-  </i>
-</div>
-<div class="Block" id="div202">
-  <span id="Integration-APIKey"></span>
-</div>
-<div class="Block" id="div203">
-  <input type="text" class="UpdateBlock" id="IntegrationAPIKey" placeholder="Ej. pk_live_1234567890abcdef" />
-</div>
-<div class="Block-BTNS" id="div204">
-  <i class="fa-solid fa-pen" id="Edit-Btn-IntegrationAPIKey"></i>
-  <i class="fa-solid fa-floppy-disk" id="Save-Btn-IntegrationAPIKey"></i>
-</div>
 
-<!-- Secret Key -->
-<div class="Block-Left" id="div205">
-  <label>Secret Key:</label>
-  <i class="fa-solid fa-circle-question help-icon"
-    data-message="Clave privada que debe mantenerse confidencial para la autenticación segura de la API.">
-  </i>
-</div>
-<div class="Block" id="div206">
-  <span id="Integration-SecretKey"></span>
-</div>
-<div class="Block" id="div207">
-  <input type="password" class="UpdateBlock" id="IntegrationSecretKey" placeholder="••••••••••••••" />
-</div>
-<div class="Block-BTNS" id="div208">
-  <i class="fa-solid fa-pen" id="Edit-Btn-IntegrationSecretKey"></i>
-  <i class="fa-solid fa-floppy-disk" id="Save-Btn-IntegrationSecretKey"></i>
-</div>
 
-<!-- URL del Servicio -->
-<div class="Block-Left" id="div209">
-  <label>URL del servicio:</label>
-  <i class="fa-solid fa-circle-question help-icon"
-    data-message="Dirección base o endpoint del servicio externo con el que se realizará la integración.">
-  </i>
-</div>
-<div class="Block" id="div210">
-  <span id="Integration-ServiceURL"></span>
-</div>
-<div class="Block" id="div211">
-  <input type="url" class="UpdateBlock" id="IntegrationServiceURL" placeholder="Ej. https://api.servicio.com/v1/" />
-</div>
-<div class="Block-BTNS" id="div212">
-  <i class="fa-solid fa-pen" id="Edit-Btn-IntegrationServiceURL"></i>
-  <i class="fa-solid fa-floppy-disk" id="Save-Btn-IntegrationServiceURL"></i>
-</div>
+            <div class="Block-Left">
+              <label>Orientación del Certificado:</label>
+              <i class="fa-solid fa-circle-question help-icon"
+                data-message="Selecciona la orientación del diseño del certificado: horizontal (paisaje) o vertical (retrato).">
+              </i>
+            </div>
+            <div class="Block">
+              <span id="Certificate-Orientation"></span>
+            </div>
+            <div class="Block">
+              <select class="UpdateBlock" id="CertificateOrientation">
+                <option value="">Selecciona una orientación</option>
+                <option value="horizontal">Horizontal (Paisaje)</option>
+                <option value="vertical">Vertical (Retrato)</option>
+              </select>
+            </div>
+            <div class="Block-BTNS">
+              <i class="fa-solid fa-pen" id="Edit-Btn-CertificateOrientation"></i>
+              <i class="fa-solid fa-floppy-disk" id="Save-Btn-CertificateOrientation"></i>
+            </div>
 
-<!-- Tipo de Integración -->
-<div class="Block-Left" id="div213">
-  <label>Tipo de integración:</label>
-  <i class="fa-solid fa-circle-question help-icon"
-    data-message="Selecciona el tipo de servicio o integración que estás configurando.">
-  </i>
-</div>
-<div class="Block" id="div214">
-  <span id="Integration-Type"></span>
-</div>
-<div class="Block" id="div215">
-  <select class="UpdateBlock" id="IntegrationType">
-    <option value="">Selecciona un tipo</option>
-    <option value="Pago">Pasarela de pago</option>
-    <option value="Correo">Servicio de correo</option>
-    <option value="Automatización">Automatización / API externa</option>
-    <option value="CRM">CRM / Gestión de clientes</option>
-  </select>
-</div>
-<div class="Block-BTNS" id="div216">
-  <i class="fa-solid fa-pen" id="Edit-Btn-IntegrationType"></i>
-  <i class="fa-solid fa-floppy-disk" id="Save-Btn-IntegrationType"></i>
-</div>
+            <div class="Block-Left">
+              <label>Mensaje Principal:</label>
+              <i class="fa-solid fa-circle-question help-icon"
+                data-message="Texto central que describe el propósito o logro del certificado.">
+              </i>
+            </div>
+            <div class="Block">
+              <span id="Certificate-Message"></span>
+            </div>
+            <div class="Block">
+              <textarea class="UpdateBlock" id="CertificateMessage" placeholder="Ej. Este certificado acredita que..."></textarea>
+            </div>
+            <div class="Block-BTNS">
+              <i class="fa-solid fa-pen" id="Edit-Btn-CertificateMessage"></i>
+              <i class="fa-solid fa-floppy-disk" id="Save-Btn-CertificateMessage"></i>
+            </div>
 
-<!-- Estado de Conexión -->
-<div class="Block-Left" id="div217">
-  <label>Estado de conexión:</label>
-  <i class="fa-solid fa-circle-question help-icon"
-    data-message="Indica si la integración está activa o inactiva actualmente.">
-  </i>
-</div>
-<div class="Block" id="div218">
-  <span id="Integration-Status"></span>
-</div>
-<div class="Block" id="div219">
-  <select class="UpdateBlock" id="IntegrationStatus">
-    <option value="">Selecciona un estado</option>
-    <option value="Activa">Activa</option>
-    <option value="Inactiva">Inactiva</option>
-  </select>
-</div>
-<div class="Block-BTNS" id="div220">
-  <i class="fa-solid fa-pen" id="Edit-Btn-IntegrationStatus"></i>
-  <i class="fa-solid fa-floppy-disk" id="Save-Btn-IntegrationStatus"></i>
-</div>
+            <div class="Block-Left">
+              <label>Tipo de Borde del Certificado:</label>
+              <i class="fa-solid fa-circle-question help-icon"
+                data-message="Selecciona el estilo del borde o marco que se aplicará al certificado.">
+              </i>
+            </div>
+            <div class="Block">
+              <span id="Certificate-BorderStyle"></span>
+            </div>
+            <div class="Block">
+              <select class="UpdateBlock" id="CertificateBorderStyle">
+                <option value="">Selecciona un tipo de borde</option>
+                <option value="solid">Línea Sólida</option>
+                <option value="dashed">Línea Discontinua</option>
+                <option value="dotted">Línea Punteada</option>
+                <option value="double">Línea Doble</option>
+                <option value="groove">Efecto Hundido (Groove)</option>
+                <option value="ridge">Efecto Relieve (Ridge)</option>
+                <option value="inset">Borde Interior</option>
+                <option value="outset">Borde Exterior</option>
+                <option value="none">Sin Borde</option>
+              </select>
+            </div>
+            <div class="Block-BTNS">
+              <i class="fa-solid fa-pen" id="Edit-Btn-CertificateBorderStyle"></i>
+              <i class="fa-solid fa-floppy-disk" id="Save-Btn-CertificateBorderStyle"></i>
+            </div>
+            
+            <div class="Block-Left">
+              <label>Imagen de Fondo:</label>
+              <i class="fa-solid fa-circle-question help-icon"
+                data-message="Selecciona una imagen de fondo para el diseño del certificado.">
+              </i>
+            </div>
+            <div class="Block" >
+              <span id="Certificate-BackgroundImage"></span>
+            </div>
+            <div class="Block" id="div319">
+              <input type="file" class="UpdateBlock" id="CertificateBackgroundImage" accept="image/*" />
+            </div>
+            <div class="Block-BTNS" id="div320">
+              <i class="fa-solid fa-pen" id="Edit-Btn-CertificateBackgroundImage"></i>
+              <i class="fa-solid fa-floppy-disk" id="Save-Btn-CertificateBackgroundImage"></i>
+            </div>
 
-<!-- Descripción -->
-<div class="Block-Left" id="div221">
-  <label>Descripción o notas:</label>
-  <i class="fa-solid fa-circle-question help-icon"
-    data-message="Agrega una descripción o notas sobre la finalidad o el uso de esta integración.">
-  </i>
-</div>
-<div class="Block" id="div222">
-  <span id="Integration-Notes"></span>
-</div>
-<div class="Block" id="div223">
-  <textarea class="UpdateBlock" id="IntegrationNotes" placeholder="Ej. Integración utilizada para pagos automáticos con Stripe."></textarea>
-</div>
-<div class="Block-BTNS" id="div224">
-  <i class="fa-solid fa-pen" id="Edit-Btn-IntegrationNotes"></i>
-  <i class="fa-solid fa-floppy-disk" id="Save-Btn-IntegrationNotes"></i>
-</div>
+            <div class="Block-Left">
+              <label>Fuente Tipográfica:</label>
+              <i class="fa-solid fa-circle-question help-icon"
+                data-message="Selecciona la familia de fuente que se usará en el texto del certificado. Estas fuentes son populares y ampliamente compatibles.">
+              </i>
+            </div>
+            <div class="Block">
+              <span id="Certificate-FontFamily"></span>
+            </div>
+            <div class="Block" >
+              <select class="UpdateBlock" id="CertificateFontFamily">
+                <option value="">Selecciona una fuente</option>
+                <option value="Poppins">Poppins</option>
+                <option value="Roboto">Roboto</option>
+                <option value="Open Sans">Open Sans</option>
+                <option value="Lato">Lato</option>
+                <option value="Montserrat">Montserrat</option>
+                <option value="Nunito">Nunito</option>
+                <option value="Raleway">Raleway</option>
+                <option value="Playfair Display">Playfair Display</option>
+                <option value="Merriweather">Merriweather</option>
+                <option value="Oswald">Oswald</option>
+                <option value="Source Sans Pro">Source Sans Pro</option>
+                <option value="Inter">Inter</option>
+                <option value="Work Sans">Work Sans</option>
+                <option value="Ubuntu">Ubuntu</option>
+                <option value="Noto Sans">Noto Sans</option>
+                <option value="PT Sans">PT Sans</option>
+                <option value="Quicksand">Quicksand</option>
+                <option value="Josefin Sans">Josefin Sans</option>
+                <option value="Rubik">Rubik</option>
+                <option value="Titillium Web">Titillium Web</option>
+              </select>
+            </div>
+            <div class="Block-BTNS">
+              <i class="fa-solid fa-pen" id="Edit-Btn-CertificateFontFamily"></i>
+              <i class="fa-solid fa-floppy-disk" id="Save-Btn-CertificateFontFamily"></i>
+            </div>
+
+            <div class="Block-Left" id="div325">
+              <label>Color del Texto:</label>
+              <i class="fa-solid fa-circle-question help-icon"
+                data-message="Color principal usado para el texto en el certificado.">
+              </i>
+            </div>
+            <div class="Block" id="div326">
+              <span id="Certificate-FontColor"></span>
+            </div>
+            <div class="Block" id="div327">
+              <input type="color" class="UpdateBlock" id="CertificateFontColor" />
+            </div>
+            <div class="Block-BTNS" id="div328">
+              <i class="fa-solid fa-pen" id="Edit-Btn-CertificateFontColor"></i>
+              <i class="fa-solid fa-floppy-disk" id="Save-Btn-CertificateFontColor"></i>
+            </div>
+
+            <div class="Block-Left" id="div329">
+              <label>Color de Acento:</label>
+              <i class="fa-solid fa-circle-question help-icon"
+                data-message="Color secundario utilizado para los acentos o detalles del certificado.">
+              </i>
+            </div>
+            <div class="Block" id="div330">
+              <span id="Certificate-AccentColor"></span>
+            </div>
+            <div class="Block" id="div331">
+              <input type="color" class="UpdateBlock" id="CertificateAccentColor" />
+            </div>
+            <div class="Block-BTNS" id="div332">
+              <i class="fa-solid fa-pen" id="Edit-Btn-CertificateAccentColor"></i>
+              <i class="fa-solid fa-floppy-disk" id="Save-Btn-CertificateAccentColor"></i>
+            </div>
+
+            <div class="Block-Left" id="div333">
+              <label>Firma del Certificado:</label>
+              <i class="fa-solid fa-circle-question help-icon"
+                data-message="Sube una imagen con la firma que aparecerá en el certificado (formatos recomendados: PNG o SVG con fondo transparente).">
+              </i>
+            </div>
+            <div class="Block" id="div334">
+              <span id="Certificate-SignaturePreview"></span>
+            </div>
+            <div class="Block" id="Signe-Block">
+              <input type="file" class="UpdateBlock" id="CertificateSignatureFile" accept=".png, .jpg, .jpeg, .svg" />
+              <a id="link-Tag" href="https://www.signwell.com/online-signature/" target="_blank">Crear firma en SignWell</a>
+            </div>
+            <div class="Block-BTNS" id="div336">
+              <i class="fa-solid fa-pen" id="Edit-Btn-CertificateSignatureFile"></i>
+              <i class="fa-solid fa-floppy-disk" id="Save-Btn-CertificateSignatureFile"></i>
+            </div>
+
+
+
+
           </div>
-
         </div>
       </section>
+
+
+
+
 
       <section class="Block-Content" id="Roles-Content">
         <h2>Configuración De Roles y Permisos</h2>
         <div class="Line"></div>
         <div class="Blocks-Sections">
-          <div class="Blocks">
-            <!-- Nombre del Rol -->
-            <div class="Block-Left" id="div301">
-              <label>Nombre del rol:</label>
-              <i class="fa-solid fa-circle-question help-icon"
-                data-message="Define el nombre del rol que deseas crear o editar, por ejemplo: Administrador, Instructor o Estudiante.">
-              </i>
-            </div>
-            <div class="Block" id="div302">
-              <span id="Role-Name"></span>
-            </div>
-            <div class="Block" id="div303">
-              <input type="text" class="UpdateBlock" id="RoleName" placeholder="Ej. Administrador" />
-            </div>
-            <div class="Block-BTNS" id="div304">
-              <i class="fa-solid fa-pen" id="Edit-Btn-RoleName"></i>
-              <i class="fa-solid fa-floppy-disk" id="Save-Btn-RoleName"></i>
-            </div>
 
-            <!-- Descripción del Rol -->
-            <div class="Block-Left" id="div305">
-              <label>Descripción del rol:</label>
-              <i class="fa-solid fa-circle-question help-icon"
-                data-message="Agrega una breve descripción del rol y su propósito dentro de la plataforma.">
-              </i>
-            </div>
-            <div class="Block" id="div306">
-              <span id="Role-Description"></span>
-            </div>
-            <div class="Block" id="div307">
-              <textarea class="UpdateBlock" id="RoleDescription" placeholder="Ej. Tiene acceso completo a la configuración de la plataforma."></textarea>
-            </div>
-            <div class="Block-BTNS" id="div308">
-              <i class="fa-solid fa-pen" id="Edit-Btn-RoleDescription"></i>
-              <i class="fa-solid fa-floppy-disk" id="Save-Btn-RoleDescription"></i>
-            </div>
 
-            <!-- Nivel de Acceso -->
-            <div class="Block-Left" id="div309">
-              <label>Nivel de acceso:</label>
-              <i class="fa-solid fa-circle-question help-icon"
-                data-message="Selecciona el nivel de acceso general del rol, según su jerarquía o privilegios.">
-              </i>
-            </div>
-            <div class="Block" id="div310">
-              <span id="Role-AccessLevel"></span>
-            </div>
-            <div class="Block" id="div311">
-              <select class="UpdateBlock" id="RoleAccessLevel">
-                <option value="">Selecciona un nivel</option>
-                <option value="Alto">Alto</option>
-                <option value="Medio">Medio</option>
-                <option value="Bajo">Bajo</option>
-              </select>
-            </div>
-            <div class="Block-BTNS" id="div312">
-              <i class="fa-solid fa-pen" id="Edit-Btn-RoleAccessLevel"></i>
-              <i class="fa-solid fa-floppy-disk" id="Save-Btn-RoleAccessLevel"></i>
-            </div>
-
-            <!-- Permisos Asignados -->
-            <div class="Block-Left" id="div313">
-              <label>Permisos asignados:</label>
-              <i class="fa-solid fa-circle-question help-icon"
-                data-message="Selecciona los módulos o áreas del sistema a los que este rol tendrá acceso.">
-              </i>
-            </div>
-            <div class="Block" id="div314">
-              <span id="Role-Permissions"></span>
-            </div>
-            <div class="Block" id="div315">
-              <select class="UpdateBlock" id="RolePermissions" multiple>
-                <option value="Usuarios">Gestión de usuarios</option>
-                <option value="Cursos">Gestión de cursos</option>
-                <option value="Reportes">Reportes y estadísticas</option>
-                <option value="Pagos">Control de pagos</option>
-                <option value="Certificados">Emisión de certificados</option>
-                <option value="Configuración">Configuraciones generales</option>
-              </select>
-            </div>
-            <div class="Block-BTNS" id="div316">
-              <i class="fa-solid fa-pen" id="Edit-Btn-RolePermissions"></i>
-              <i class="fa-solid fa-floppy-disk" id="Save-Btn-RolePermissions"></i>
-            </div>
-
-            <!-- Estado del Rol -->
-            <div class="Block-Left" id="div317">
-              <label>Estado del rol:</label>
-              <i class="fa-solid fa-circle-question help-icon"
-                data-message="Indica si el rol está actualmente activo o inactivo dentro de la plataforma.">
-              </i>
-            </div>
-            <div class="Block" id="div318">
-              <span id="Role-Status"></span>
-            </div>
-            <div class="Block" id="div319">
-              <select class="UpdateBlock" id="RoleStatus">
-                <option value="">Selecciona un estado</option>
-                <option value="Activo">Activo</option>
-                <option value="Inactivo">Inactivo</option>
-              </select>
-            </div>
-            <div class="Block-BTNS" id="div320">
-              <i class="fa-solid fa-pen" id="Edit-Btn-RoleStatus"></i>
-              <i class="fa-solid fa-floppy-disk" id="Save-Btn-RoleStatus"></i>
-            </div>
-
-            <!-- Asignar Usuarios al Rol -->
-            <div class="Block-Left" id="div321">
-              <label>Usuarios asignados:</label>
-              <i class="fa-solid fa-circle-question help-icon"
-                data-message="Agrega o visualiza los usuarios que tienen asignado este rol.">
-              </i>
-            </div>
-            <div class="Block" id="div322">
-              <span id="Role-Users"></span>
-            </div>
-            <div class="Block" id="div323">
-              <input type="text" class="UpdateBlock" id="RoleUsers" placeholder="Ej. Juan Pérez, María López" />
-            </div>
-            <div class="Block-BTNS" id="div324">
-              <i class="fa-solid fa-pen" id="Edit-Btn-RoleUsers"></i>
-              <i class="fa-solid fa-floppy-disk" id="Save-Btn-RoleUsers"></i>
-            </div>
-          </div>
+          <div class="Block-Roles">
+         
 
         </div> 
       </section>
@@ -1189,143 +1091,155 @@
         <div class="Line"></div>
         <div class="Blocks-Sections">
           <div class="Blocks">
-<!-- Nombre de la Plataforma -->
-<div class="Block-Left" id="div401">
-  <label>Nombre de la plataforma:</label>
-  <i class="fa-solid fa-circle-question help-icon"
-    data-message="Especifica el nombre oficial de la plataforma que se mostrará en el encabezado, certificados y documentos.">
-  </i>
-</div>
-<div class="Block" id="div402">
-  <span id="Platform-Name"></span>
-</div>
-<div class="Block" id="div403">
-  <input type="text" class="UpdateBlock" id="PlatformName" placeholder="Ej. Corso Skills LMS" />
-</div>
-<div class="Block-BTNS" id="div404">
-  <i class="fa-solid fa-pen" id="Edit-Btn-PlatformName"></i>
-  <i class="fa-solid fa-floppy-disk" id="Save-Btn-PlatformName"></i>
-</div>
 
-<!-- Logotipo Principal -->
-<div class="Block-Left" id="div405">
-  <label>Logotipo principal:</label>
-  <i class="fa-solid fa-circle-question help-icon"
-    data-message="Sube el logotipo principal que se mostrará en los encabezados y materiales oficiales.">
-  </i>
-</div>
-<div class="Block" id="div406">
-  <span id="Platform-Logo"></span>
-</div>
-<div class="Block" id="div407">
-  <input type="file" class="UpdateBlock" id="PlatformLogo" accept="image/*" />
-</div>
-<div class="Block-BTNS" id="div408">
-  <i class="fa-solid fa-pen" id="Edit-Btn-PlatformLogo"></i>
-  <i class="fa-solid fa-floppy-disk" id="Save-Btn-PlatformLogo"></i>
-</div>
+            <div class="Block-Left">
+              <label>Frase Motivacional:</label>
+              <i class="fa-solid fa-circle-question help-icon"
+                data-message="Escribe una frase inspiradora o cita que se mostrará en la página principal o en los certificados.">
+              </i>
+            </div>
+            <div class="Block">
+              <span class="Lists" id="Quote-Text"></span>
+            </div>
+            <div class="Block">
+              <textarea class="UpdateBlock" id="quoteText" placeholder="Escribe tu frase o cita aquí..."></textarea>
+            </div>
+            <div class="Block-BTNS">
+              <i class="fa-solid fa-pen" id="Edit-Btn-QuoteText"></i>
+              <i class="fa-solid fa-floppy-disk" id="Save-Btn-QuoteText"></i>
+            </div>
 
-<!-- Ícono o Logo Simple -->
-<div class="Block-Left" id="div409">
-  <label>Ícono o logo simple:</label>
-  <i class="fa-solid fa-circle-question help-icon"
-    data-message="Sube el ícono simple (favicon o versión compacta) que representará la plataforma en pestañas o elementos reducidos.">
-  </i>
-</div>
-<div class="Block" id="div410">
-  <span id="Platform-Icon"></span>
-</div>
-<div class="Block" id="div411">
-  <input type="file" class="UpdateBlock" id="PlatformIcon" accept="image/*" />
-</div>
-<div class="Block-BTNS" id="div412">
-  <i class="fa-solid fa-pen" id="Edit-Btn-PlatformIcon"></i>
-  <i class="fa-solid fa-floppy-disk" id="Save-Btn-PlatformIcon"></i>
-</div>
 
-<!-- Color Primario -->
-<div class="Block-Left" id="div413">
-  <label>Color primario:</label>
-  <i class="fa-solid fa-circle-question help-icon"
-    data-message="Selecciona el color principal que define la identidad visual de la plataforma.">
-  </i>
-</div>
-<div class="Block" id="div414">
-  <span id="Primary-Color"></span>
-</div>
-<div class="Block" id="div415">
-  <input type="color" class="UpdateBlock" id="PrimaryColor" />
-</div>
-<div class="Block-BTNS" id="div416">
-  <i class="fa-solid fa-pen" id="Edit-Btn-PrimaryColor"></i>
-  <i class="fa-solid fa-floppy-disk" id="Save-Btn-PrimaryColor"></i>
-</div>
+            <div class="Block-Left">
+              <label>Tipografía principal:</label>
+              <i class="fa-solid fa-circle-question help-icon"
+                data-message="Selecciona la fuente principal que se usará en los textos y títulos de la plataforma.">
+              </i>
+            </div>
+            <div class="Block">
+              <span id="Main-Font"></span>
+            </div>
+            <div class="Block">
+              <select class="UpdateBlock" id="MainFont">
+                <option value="">Selecciona una fuente</option>
 
-<!-- Color Secundario -->
-<div class="Block-Left" id="div417">
-  <label>Color secundario:</label>
-  <i class="fa-solid fa-circle-question help-icon"
-    data-message="Selecciona el color secundario que se usará en botones, fondos y elementos interactivos.">
-  </i>
-</div>
-<div class="Block" id="div418">
-  <span id="Secondary-Color"></span>
-</div>
-<div class="Block" id="div419">
-  <input type="color" class="UpdateBlock" id="SecondaryColor" />
-</div>
-<div class="Block-BTNS" id="div420">
-  <i class="fa-solid fa-pen" id="Edit-Btn-SecondaryColor"></i>
-  <i class="fa-solid fa-floppy-disk" id="Save-Btn-SecondaryColor"></i>
-</div>
+                  <option value="sans-serif">Sans-Serif (Sistema)</option>
+                  <option value="serif">Serif (Sistema)</option>
+                  <option value="monospace">Monospace (Sistema)</option>
 
-<!-- Tipografía Principal -->
-<div class="Block-Left" id="div421">
-  <label>Tipografía principal:</label>
-  <i class="fa-solid fa-circle-question help-icon"
-    data-message="Selecciona la fuente principal que se usará en los textos y títulos de la plataforma.">
-  </i>
-</div>
-<div class="Block" id="div422">
-  <span id="Main-Font"></span>
-</div>
-<div class="Block" id="div423">
-  <select class="UpdateBlock" id="MainFont">
-    <option value="">Selecciona una fuente</option>
-    <option value="Inter">Inter</option>
-    <option value="Poppins">Poppins</option>
-    <option value="Roboto">Roboto</option>
-    <option value="Open Sans">Open Sans</option>
-    <option value="Montserrat">Montserrat</option>
-  </select>
-</div>
-<div class="Block-BTNS" id="div424">
-  <i class="fa-solid fa-pen" id="Edit-Btn-MainFont"></i>
-  <i class="fa-solid fa-floppy-disk" id="Save-Btn-MainFont"></i>
-</div>
+                <!-- 🌐 Sans-serif (Modern, clean) -->
+                <option value="Inter">Inter</option>
+                <option value="Poppins">Poppins</option>
+                <option value="Roboto">Roboto</option>
+                <option value="Open Sans">Open Sans</option>
+                <option value="Montserrat">Montserrat</option>
+                <option value="Lato">Lato</option>
+                <option value="Nunito">Nunito</option>
+                <option value="Raleway">Raleway</option>
+                <option value="Ubuntu">Ubuntu</option>
+                <option value="Work Sans">Work Sans</option>
 
-<!-- Estilo de Interfaz -->
-<div class="Block-Left" id="div425">
-  <label>Estilo de interfaz:</label>
-  <i class="fa-solid fa-circle-question help-icon"
-    data-message="Elige el estilo de la interfaz, por ejemplo: modo claro, oscuro o automático.">
-  </i>
-</div>
-<div class="Block" id="div426">
-  <span id="UI-Theme"></span>
-</div>
-<div class="Block" id="div427">
-  <select class="UpdateBlock" id="UITheme">
-    <option value="">Selecciona un estilo</option>
-    <option value="Claro">Claro</option>
-    <option value="Oscuro">Oscuro</option>
-    <option value="Automático">Automático</option>
-  </select>
-</div>
-<div class="Block-BTNS" id="div428">
-  <i class="fa-solid fa-pen" id="Edit-Btn-UITheme"></i>
-  <i class="fa-solid fa-floppy-disk" id="Save-Btn-UITheme"></i>
-</div>
+
+                <!-- ✍️ Serif (Elegant, formal) -->
+                <option value="Merriweather">Merriweather</option>
+                <option value="Playfair Display">Playfair Display</option>
+                <option value="Roboto Slab">Roboto Slab</option>
+                <option value="Lora">Lora</option>
+                <option value="Georgia">Georgia</option>
+
+                <!-- 🎨 Display / Decorative (Stylish titles) -->
+                <option value="Pacifico">Pacifico</option>
+                <option value="Dancing Script">Dancing Script</option>
+                <option value="Great Vibes">Great Vibes</option>
+                <option value="Oswald">Oswald</option>
+                <option value="Bebas Neue">Bebas Neue</option>
+              </select>
+            </div>
+            <div class="Block-BTNS">
+              <i class="fa-solid fa-pen" id="Edit-Btn-Font-Category"></i>
+              <i class="fa-solid fa-floppy-disk" id="Save-Btn-Font-Category"></i>
+            </div>
+
+            <div class="Block-Left">
+              <label>Categoría del curso:</label>
+              <i class="fa-solid fa-circle-question help-icon"
+                data-message="Especifica la categoría o tipo de curso, por ejemplo: Programación, Marketing, Diseño, Finanzas, etc.">
+              </i>
+            </div>
+            <div class="Block">
+              <span class="Lists" id="Course-Category"></span>
+            </div>
+            <div class="Block">
+              <input type="text" class="UpdateBlock" id="courseCategory" name="courseCategory" placeholder="Ej. Programación, Diseño, Marketing" />
+            </div>
+            <div class="Block-BTNS">
+              <i class="fa-solid fa-pen" id="Edit-Btn-CourseCategory"></i>
+              <i class="fa-solid fa-floppy-disk" id="Save-Btn-CourseCategory"></i>
+            </div>
+
+            <div class="Block-Left">
+              <label>Banner del trofeo:</label>
+              <i class="fa-solid fa-circle-question help-icon"
+                data-message="Sube o indica la URL de la imagen del banner que representará este trofeo.">
+              </i>
+            </div>
+            <div class="Block">
+              <span id="Trophy-Banner"></span>
+            </div>
+            <div class="Block">
+              <input type="text" class="UpdateBlock" id="trophyBanner" placeholder="We love work"/>
+            </div>
+            <div class="Block-BTNS"></div>
+
+            <!-- Title -->
+            <div class="Block-Left" id="div1005">
+              <label>Título del trofeo:</label>
+              <i class="fa-solid fa-circle-question help-icon"
+                data-message="Escribe el nombre o título del trofeo, por ejemplo: 'Campeón del Curso' o 'Aprendiz Estrella'.">
+              </i>
+            </div>
+            <div class="Block" id="div1006">
+              <span id="Trophy-Title"></span>
+            </div>
+            <div class="Block" id="div1007">
+              <input type="text" class="UpdateBlock" id="trophyTitle" placeholder="Ej. Aprendiz Estrella" />
+            </div>
+            <div class="Block-BTNS"></div>
+
+
+            <!-- Icon -->
+            <div class="Block-Left" id="div1009">
+              <label>Ícono del trofeo:</label>
+              <i class="fa-solid fa-circle-question help-icon"
+                data-message="Selecciona o indica la clase del ícono Font Awesome o URL de la imagen para el trofeo.">
+              </i>
+            </div>
+            <div class="Block">
+              <span id="Trophy-Icon"></span>
+            </div>
+            <div class="Block">
+              <input type="file" class="UpdateBlock" id="trophyIcon"/>
+            </div>
+            <div class="Block-BTNS"></div>
+
+            <!-- Trigger -->
+            <div class="Block-Left">
+              <label>Disparador (Trigger):</label>
+              <i class="fa-solid fa-circle-question help-icon"
+                data-message="Define el evento o condición que activa la obtención del trofeo (por ejemplo: completar un curso, obtener 100% en un examen, etc.).">
+              </i>
+            </div>
+            <div class="Block" id="div1014">
+              <span id="Trophy-Trigger"></span>
+            </div>
+            <div class="Block" id="div1015">
+              <input type="text" class="UpdateBlock" id="trophyTrigger" placeholder="Ej. Completar curso con 100%" />
+            </div>
+            <div class="Block-BTNS">
+              <i class="fa-solid fa-pen" id="Edit-Btn-Trophy"></i>
+              <i class="fa-solid fa-floppy-disk" id="Save-Btn-Trophy"></i>
+            </div>
+
           </div>
 
         </div>
@@ -1335,133 +1249,78 @@
         <h2>Configuración De Acerca del Sistema</h2>
         <div class="Line"></div>
         <div class="Blocks-Sections">
-          <div class="Blocks">
+          <div class="Blocks-facts">
 
         <!-- Nombre del Sistema -->
-        <div class="Block-Left" id="div501">
+        <div class="Block-Left">
           <label>Nombre del sistema:</label>
           <i class="fa-solid fa-circle-question help-icon"
             data-message="Nombre oficial del sistema o plataforma LMS. Aparecerá en la sección 'Acerca de' y documentos institucionales.">
           </i>
         </div>
-        <div class="Block" id="div502">
+        <div class="Block">
           <span id="System-Name"></span>
         </div>
-        <div class="Block" id="div503">
-          <input type="text" class="UpdateBlock" id="SystemName" placeholder="Ej. Corso Skills LMS" />
-        </div>
-        <div class="Block-BTNS" id="div504">
-          <i class="fa-solid fa-pen" id="Edit-Btn-SystemName"></i>
-          <i class="fa-solid fa-floppy-disk" id="Save-Btn-SystemName"></i>
-        </div>
+
 
         <!-- Versión Actual -->
-        <div class="Block-Left" id="div505">
+        <div class="Block-Left">
           <label>Versión actual:</label>
           <i class="fa-solid fa-circle-question help-icon"
             data-message="Número de versión actual del sistema. Útil para control de actualizaciones y soporte.">
           </i>
         </div>
-        <div class="Block" id="div506">
+        <div class="Block">
           <span id="System-Version"></span>
         </div>
-        <div class="Block" id="div507">
-          <input type="text" class="UpdateBlock" id="SystemVersion" placeholder="Ej. v3.2.1" />
-        </div>
-        <div class="Block-BTNS" id="div508">
-          <i class="fa-solid fa-pen" id="Edit-Btn-SystemVersion"></i>
-          <i class="fa-solid fa-floppy-disk" id="Save-Btn-SystemVersion"></i>
-        </div>
 
-        <!-- Desarrollador o Empresa -->
-        <div class="Block-Left" id="div509">
-          <label>Desarrollador / Empresa:</label>
-          <i class="fa-solid fa-circle-question help-icon"
-            data-message="Nombre del desarrollador o empresa responsable del mantenimiento del sistema.">
-          </i>
-        </div>
-        <div class="Block" id="div510">
-          <span id="System-Developer"></span>
-        </div>
-        <div class="Block" id="div511">
-          <input type="text" class="UpdateBlock" id="SystemDeveloper" placeholder="Ej. Corso Skills Tech" />
-        </div>
-        <div class="Block-BTNS" id="div512">
-          <i class="fa-solid fa-pen" id="Edit-Btn-SystemDeveloper"></i>
-          <i class="fa-solid fa-floppy-disk" id="Save-Btn-SystemDeveloper"></i>
-        </div>
 
         <!-- Correo de Soporte -->
-        <div class="Block-Left" id="div513">
+        <div class="Block-Left">
           <label>Correo de soporte:</label>
           <i class="fa-solid fa-circle-question help-icon"
             data-message="Dirección de correo electrónico utilizada para contacto técnico o atención al cliente.">
           </i>
         </div>
-        <div class="Block" id="div514">
+        <div class="Block">
           <span id="Support-Email"></span>
-        </div>
-        <div class="Block" id="div515">
-          <input type="email" class="UpdateBlock" id="SupportEmail" placeholder="Ej. soporte@corsoskills.com" />
-        </div>
-        <div class="Block-BTNS" id="div516">
-          <i class="fa-solid fa-pen" id="Edit-Btn-SupportEmail"></i>
-          <i class="fa-solid fa-floppy-disk" id="Save-Btn-SupportEmail"></i>
         </div>
 
         <!-- Teléfono de Soporte -->
-        <div class="Block-Left" id="div517">
+        <div class="Block-Left">
           <label>Teléfono de soporte:</label>
           <i class="fa-solid fa-circle-question help-icon"
             data-message="Número de contacto para soporte técnico o asistencia institucional.">
           </i>
         </div>
-        <div class="Block" id="div518">
+        <div class="Block">
           <span id="Support-Phone"></span>
         </div>
-        <div class="Block" id="div519">
-          <input type="tel" class="UpdateBlock" id="SupportPhone" placeholder="Ej. +52 55 1234 5678" />
-        </div>
-        <div class="Block-BTNS" id="div520">
-          <i class="fa-solid fa-pen" id="Edit-Btn-SupportPhone"></i>
-          <i class="fa-solid fa-floppy-disk" id="Save-Btn-SupportPhone"></i>
-        </div>
+
 
         <!-- URL Oficial -->
-        <div class="Block-Left" id="div521">
+        <div class="Block-Left">
           <label>URL oficial:</label>
           <i class="fa-solid fa-circle-question help-icon"
             data-message="Dirección web oficial del sistema o plataforma. Aparecerá en la sección 'Acerca de'.">
           </i>
         </div>
-        <div class="Block" id="div522">
+        <div class="Block">
           <span id="System-URL"></span>
         </div>
-        <div class="Block" id="div523">
-          <input type="url" class="UpdateBlock" id="SystemURL" placeholder="Ej. https://www.corsoskills.com" />
-        </div>
-        <div class="Block-BTNS" id="div524">
-          <i class="fa-solid fa-pen" id="Edit-Btn-SystemURL"></i>
-          <i class="fa-solid fa-floppy-disk" id="Save-Btn-SystemURL"></i>
-        </div>
+
 
         <!-- Fecha de Implementación -->
-        <div class="Block-Left" id="div525">
+        <div class="Block-Left">
           <label>Fecha de implementación:</label>
           <i class="fa-solid fa-circle-question help-icon"
             data-message="Fecha en la que el sistema fue implementado o activado por primera vez.">
           </i>
         </div>
-        <div class="Block" id="div526">
+        <div class="Block">
           <span id="System-ImplementationDate"></span>
         </div>
-        <div class="Block" id="div527">
-          <input type="date" class="UpdateBlock" id="SystemImplementationDate" />
-        </div>
-        <div class="Block-BTNS" id="div528">
-          <i class="fa-solid fa-pen" id="Edit-Btn-SystemImplementationDate"></i>
-          <i class="fa-solid fa-floppy-disk" id="Save-Btn-SystemImplementationDate"></i>
-        </div>
+
 
 
 

@@ -83,27 +83,6 @@
     © 2025 CorsoSkills. Todos los derechos reservados.
   </footer>
 
-  <!-- Stripe Payment Logic -->
-  <script>
-    const stripe = Stripe("pk_test_51RVlJuPP0Xlil7VVGeRnUzZx0GGULCxUNymNvSfrfjjCY3oHcOvYIYB7QeBdWVlbxsdw9p0V1zsC0OjrsUPvmjL0004YvCwOB9");
-
-    const handleCheckout = async (plan) => {
-      const response = await fetch("http://localhost:4242/create-checkout-session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ plan }),
-      });
-
-      const session = await response.json();
-      stripe.redirectToCheckout({ sessionId: session.id });
-    };
-
-    document.getElementById("Basic-btn").addEventListener("click", () => handleCheckout("Basic"));
-    document.getElementById("pro-btn").addEventListener("click", () => handleCheckout("Pro"));
-    document.getElementById("Anual-btn").addEventListener("click", () => handleCheckout("Anual"));
-  </script>
-
-  <!-- Firebase pricing theme loader -->
   <script type="module" src="Precio.js"></script>
 </body>
 </html>

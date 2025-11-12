@@ -23,95 +23,116 @@
 <body>
   <header id="header">
     <img id="header-logo"/>
-    <a href="index10.html" id="exit-link" class="exit-link">Salir</a>
+    <a class="exit-link" id="exit-link">Salir</a>
   </header>
 
-  <main class="container" id="container">
-    <div class="avatar">
-      <img id="Bulogos"/>
-    </div>
+  <main>
 
     <div class="tittle-block">
-      <h1 id="wecome-banner-tittle"></h1>
-      <h2>Queremos conocerte mejor para hacer tu experiencia única</h2>
-      <h3>Por favor, responde estas preguntas para ayudarnos a construir tu camino hacia el éxito</h3>
+      <img id="Bulogos"/>
+
+      <h2 id="T1">Queremos conocerte mejor para hacer tu experiencia única</h2>
+      <h3 id="T2">Por favor, responde estas preguntas para ayudarnos a construir tu camino hacia el éxito</h3>
     </div>
-    
-    <form class="info-form">
 
-      <div id="Info-block-1">
-        <div class="IFTop">
-          <div class="form-group">
-            <label for="edad">Edad:</label>
-            <input type="number" id="edad" name="edad" min="12" max="100" required />
-          </div>
+    <section class="Questions">
 
-          <div class="form-group">
-            <label for="sexo">Sexo:</label>
-            <select id="sexo" name="sexo" required>
-              <option value="">Selecciona una opción</option>
-              <option value="femenino">Femenino</option>
-              <option value="masculino">Masculino</option>
-              <option value="otro">Otro</option>
-            </select>
-          </div>
-        </div>
+      <div class="Question">
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" min="12" max="100" required />
+      </div>
 
-        <div class="IFBottom">
-          <div class="form-group">
-          <label for="carrera">Carrera o área profesional:</label>
-          <input type="text" id="carrera" name="carrera" placeholder="Ej. Educación Física, Marketing..." required />
-          </div>
+      <div class="Question">
+        <label for="sexo">Sexo:</label>
+        <select id="sexo" name="sexo" required>
+          <option value="">Selecciona una opción</option>
+          <option value="femenino">Femenino</option>
+          <option value="masculino">Masculino</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
 
-          <div class="form-group">
-            <label for="puesto">Puesto o posición laboral actual:</label>
-            <input type="text" id="puesto" name="puesto" placeholder="Ej. Profesor, Emprendedor..." required />
-          </div>
-        </div>
+      <div class="Question">
+        <label for="telefono">Número de teléfono:</label>
+        <input type="tel" id="telefono" name="telefono" placeholder="+52 55 1234 5678" pattern="^\+?[0-9\s\-\(\)]{7,15}$" required/>
+      </div>
+
+      <div class="Question">
+        <label for="imagen">Imagen (opcional):</label>
+        <input type="file" id="imagen" name="imagen" accept="image/*"/>
+      </div>
+
+      <div class="Question">
+          <label for="zonaHoraria">Zona horaria:</label>
+          <select id="zonaHoraria" name="zonaHoraria" required>
+            <option value="">Selecciona tu zona horaria</option>
+            <option value="America/Mexico_City">(GMT-6) Ciudad de México</option>
+            <option value="America/Bogota">(GMT-5) Bogotá, Lima, Quito</option>
+            <option value="America/New_York">(GMT-5) Nueva York, Toronto</option>
+            <option value="America/Chicago">(GMT-6) Chicago, Centro de EE. UU.</option>
+            <option value="America/Denver">(GMT-7) Denver, Montaña (EE. UU.)</option>
+            <option value="America/Los_Angeles">(GMT-8) Los Ángeles, San Francisco</option>
+            <option value="America/Santiago">(GMT-3) Santiago de Chile, Buenos Aires</option>
+            <option value="Europe/Madrid">(GMT+1) Madrid, París, Roma, Berlín</option>
+            <option value="Europe/London">(GMT+0) Londres, Lisboa</option>
+            <option value="Europe/Moscow">(GMT+3) Moscú, San Petersburgo</option>
+            <option value="Asia/Dubai">(GMT+4) Dubái, Abu Dabi</option>
+            <option value="Asia/Kolkata">(GMT+5:30) Nueva Delhi, Mumbai</option>              <option value="Asia/Bangkok">(GMT+7) Bangkok, Yakarta</option>
+            <option value="Asia/Hong_Kong">(GMT+8) Hong Kong, Beijing, Singapur</option>
+            <option value="Asia/Tokyo">(GMT+9) Tokio, Osaka</option>
+            <option value="Australia/Sydney">(GMT+10) Sídney, Melbourne</option>
+            <option value="Pacific/Auckland">(GMT+12) Auckland, Wellington</option>
+          </select>    
+      </div>
+
+      <div class="Question">
+        <label for="puestoActual">Puesto actual:</label>
+        <input type="text" id="puestoActual" name="puestoActual" placeholder="Ej. Gerente de Ventas, Desarrollador Web, Diseñador Gráfico" required/>
+      </div>
+
+      <div class="Question">
+        <label for="nivelDificultad">Nivel de dificultad que deseas aprender:</label>
+        <select id="nivelDificultad" name="nivelDificultad" required>
+          <option value="">Selecciona un nivel</option>
+          <option value="Beginner">Principiante</option>
+          <option value="Intermediate">Intermedio</option>
+          <option value="Advanced">Avanzado</option>
+        </select>
+      </div>
+
+      <div class="Question">
+        <label for="carrera">Carrera o área profesional:</label>
+        <input type="text" id="carrera" name="carrera" placeholder="Ej. Educación Física, Marketing..." required />
+      </div>
+
+    </section>
+
+    <section class="Cards">
       
-        <div class="cards">
-
-          <div class="card toggle-btn" id="Start-Carer">
-            <div class="Card-Icons" id="Icon-Start">
-              <i class="fa-solid fa-plane-departure" style="color: #ffffff;"></i>
-            </div>
-            <span>Empezar una carrera</span>
-          </div>
-
-          <div class="card toggle-btn" id="Rol-Change">
-            <div class="Card-Icons" id="Icon-Change">
-              <i class="fa-solid fa-code-branch" style="color: #ffffff;"></i>
-            </div>
-            <span>Cambiar de carrera</span>
-          </div>
-
-          <div class="card toggle-btn" id="Grow-Carer">
-            <div class="Card-Icons" id="Icon-Grow">
-              <i class="fa-solid fa-user-tie" style="color: #ffffff;"></i>
-            </div>
-            <span>Impulsar mi carrera</span>
-          </div>
-
-          <div class="card toggle-btn" id="New-Carer">
-            <div class="Card-Icons" id="Icon-New">
-              <i class="fa-solid fa-route" style="color: #ffffff;"></i>
-            </div>
-            <span>Crecimiento personal</span>
-          </div>
-
-        </div>
+      <div class="Card" id="Start-Career">
+        <i class="fa-solid fa-plane-departure"></i>
+        <span>Empezar una carrera</span>
       </div>
 
-      <button class="next-button" id="next-question-block">Siguiente </button>
-
-      <div class="hidden-Info-block" id="Info-block-2">
-        
-       <div class="coures-List" id="coures-List"></div>
-        <button id="next-button" type="submit" class="next-button">Siguiente →</button>
+      <div class="Card" id="Rol-Change">
+        <i class="fa-solid fa-code-branch"></i>
+        <span>Cambiar de carrera</span>
       </div>
-    </form>
 
+      <div class="Card" id="Grow-Career">
+        <i class="fa-solid fa-user-tie"></i>
+        <span>Impulsar mi carrera</span>
+      </div>
+
+      <div class="Card" id="New-Career">
+        <i class="fa-solid fa-route"></i>
+        <span>Crecimiento personal</span>
+      </div>
+
+    </section>
     
+    <button id="Save-Btn">Siguiente →</button>
+
   </main>
 </body>
   <script  src="Questions.js" type="module"></script>

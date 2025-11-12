@@ -59,13 +59,14 @@
       
       <!-- Header -->
       <header class="header">
-        <input type="text" placeholder="Search...">
+        <div></div>
         <div class="profile">
           <i class="fa-regular fa-bell"></i>
-          <img src="https://i.pravatar.cc/40?img=12" alt="User">
+          <div id="AdimImgUser"></div>
           <div>
-            <p class="name">Dipak Deb Nath</p>
-            <p class="role">Super Admin</p>
+    
+            <p id="User-Name"></p>
+            <p id="User-Id"></p>
           </div>
         </div>
       </header>
@@ -74,14 +75,14 @@
       <section class="users">
         <div class="users-header">
           <div>
-            <h2>Users</h2>
-            <p>Home > Users</p>
+            <h2>Usuarios</h2>
           </div>
           <div class="actions">
-            <button class="btn-gray">Bulk User Upload</button>
-            <button class="btn-green"><i class="fa-solid fa-user-plus"></i> New User</button>
+            <button class="btn-gray">Carga Masiva de Usuarios</button>
+            <button class="btn-green"><i class="fa-solid fa-user-plus"></i> Nuevo Usuario</button>
           </div>
         </div>
+
 
         <!-- Filter Row -->
         <div class="filters">
@@ -94,15 +95,15 @@
             </select>
             <span>Entries</span>
           </div>
-          <div class="right">
-            <select>
-              <option>All User</option>
-              <option>Admin</option>
-              <option>Trainer</option>
-              <option>Learner</option>
-            </select>
-            <input type="text" placeholder="Search">
-          </div>
+<div class="right">
+  <select>
+    <option>Todos los Usuarios</option>
+    <option>Administrador</option>
+    <option>Profesor</option>
+    <option>Estudiante</option>
+  </select>
+  <input type="text" placeholder="Buscar...">
+</div>
         </div>
 
         <!-- User Table -->
@@ -110,16 +111,20 @@
           <thead>
             <tr>
               <th><input type="checkbox"></th>
-              <th>User Name</th>
-              <th>User Id</th>
-              <th>Status</th>
-              <th>Designation</th>
-              <th>Employee Code</th>
-              <th>Role</th>
-              <th>Manage</th>
+              <th>Nombre de Usuario</th>
+              <th>ID de Usuario</th>
+              <th>Estado</th>
+              <th>Cargo</th>
+              <th>Código de Empleado</th>
+              <th>Rol</th>
+              <th>Gestionar</th>
             </tr>
           </thead>
-          <tbody>
+
+
+
+          <tbody id="usersTableBody">
+            
             <tr>
               <td><input type="checkbox"></td>
               <td>
@@ -144,7 +149,67 @@
             </tr>
             <!-- Repeat rows for more users -->
           </tbody>
+
+
         </table>
+        <!-- 🟩 User Info Popup Modal -->
+<!-- 🔹 Modal para VER usuario -->
+<div id="userInfoModal" class="modal">
+  <div class="modal-content">
+    <span id="closeModal" class="close">&times;</span>
+    <img id="modalUserPhoto" src="" alt="Foto del usuario" width="80" height="80" style="border-radius:50%">
+    <h2 id="modalUserName"></h2>
+    <p><strong>Correo:</strong> <span id="modalUserEmail"></span></p>
+    <p><strong>Teléfono:</strong> <span id="modalUserPhone"></span></p>
+    <p><strong>Sexo:</strong> <span id="modalUserGender"></span></p>
+    <p><strong>Rol:</strong> <span id="modalUserRole"></span></p>
+    <p><strong>Estado:</strong> <span id="modalUserStatus"></span></p>
+    <p><strong>Nivel:</strong> <span id="modalUserLevel"></span></p>
+    <p><strong>Último Inicio de Sesión:</strong> <span id="modalUserLastLogin"></span></p>
+    <p><strong>Creado el:</strong> <span id="modalUserCreatedAt"></span></p>
+    <div>
+      <strong>Historial de Inicios:</strong>
+      <ul id="modalUserLoginHistory"></ul>
+    </div>
+  </div>
+</div>
+
+<!-- 🔹 Modal para EDITAR usuario -->
+<div id="editUserModal" class="modal">
+  <div class="modal-content">
+    <span id="closeEditModal" class="close">&times;</span>
+    <h2>Editar Usuario</h2>
+
+    <label>Nombre Completo:</label>
+    <input type="text" id="editUserName">
+
+    <label>Correo Electrónico:</label>
+    <input type="email" id="editUserEmail">
+
+    <label>Teléfono:</label>
+    <input type="text" id="editUserPhone">
+
+    <label>Sexo:</label>
+    <select id="editUserGender">
+      <option value="Masculino">Masculino</option>
+      <option value="Femenino">Femenino</option>
+      <option value="No especificado">No especificado</option>
+    </select>
+
+    <label>Nivel:</label>
+    <input type="text" id="editUserLevel">
+
+    <label>Estado:</label>
+    <select id="editUserStatus">
+      <option value="true">Activo</option>
+      <option value="false">Desactivado</option>
+    </select>
+
+    <button id="saveUserChanges">Guardar Cambios</button>
+  </div>
+</div>
+
+
 
         <!-- Pagination -->
         <div class="pagination">
@@ -158,6 +223,7 @@
             <button>&gt;</button>
           </div>
         </div>
+
       </section>
     </main>
   </div>
