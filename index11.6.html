@@ -13,6 +13,8 @@
   <script src="https://kit.fontawesome.com/4a32509195.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+  <script src="https://meet.jit.si/external_api.js"></script>
+
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -23,12 +25,12 @@
 </head>
 <body>  
     <section class="User-Info">
-      <h1>Portal De Vista General Del Profesor</h1>
+      <h1>Portal De Lección en Vivo</h1>
       <div class="Alerts-User">
         <div class="Active-Portal-Alerts"
           id="APA"></div>
         <div class="User-Block">
-          <div id="profile-Icon"></div>
+          <div id="profile-img"></div>
           <div class="User-Info-Block">
             <h2 id="User-Id"></h2>
             <h1 id="User-Name"></h1>
@@ -117,37 +119,75 @@
 
       </section>
 
-      <section class="Main-Blocks" id="Content">
-        <h1 id="wecome-banner-tittle"></h1>
-        
-       <div class="container">
-        <div class="header">Portal de Lección en Vivo</div>
+      <section class="Blocks" id="Content">
 
-        <div class="lesson-area">
-          <!-- LEFT SIDE: VIDEO + RESOURCES -->
-          <div class="video-section">
-            <div class="video-box" id="liveVideo">
-              <!-- Embed Zoom/YouTube/live stream iframe here -->
+        <div class="Block" id="div1">
+          <div class="header">Portal de Lección en Vivo</div>
+
+        </div>
+
+        <div class="Block" id="div2">
+
+          <div class="Video-Call" id="jitsi-container"></div>
+
+          <div class="Video-Nav-Block">
+
+            <div class="Nav-Btns">
+
+              
+              <button class="NBtns primary" id="startClassBtn">
+                <i class="fas fa-video"></i> Iniciar Clase en Vivo
+              </button>
+
+              <button class="NBtns" id="preClassBtn">
+                <i class="fas fa-info-circle"></i> Prep. de Clase
+              </button>
+
+              <button class="NBtns" id="materialsBtn">
+                <i class="fas fa-folder-open"></i> Materiales
+              </button>
+
+
+
+              <button class="NBtns" id="pollsBtn">
+                <i class="fas fa-poll"></i> Encuestas
+              </button>
+
+              <button class="NBtns" id="whiteboardBtn">
+                <i class="fas fa-chalkboard"></i> Pizarra
+              </button>
+
+              <button class="NBtns" id="reactionsBtn">
+                <i class="fas fa-smile"></i> Reacciones
+              </button>
+
             </div>
-            <button class="btn-live"><i class="fas fa-video"></i> Iniciar Clase en Vivo</button>
 
-            <div class="lesson-meta">
-              <h3>Título: Yoga Intermedio - Posturas de equilibrio</h3>
+            <div class="active-block" id="Intro-Info">
+              <h3 id="Class-Tittle">Título: Yoga Intermedio - Posturas de equilibrio</h3>
               <p><strong>Duración:</strong> 45 minutos</p>
               <p><strong>Descripción:</strong> En esta clase se cubrirán técnicas de balance y respiración consciente para mejorar postura y estabilidad.</p>
             </div>
 
-            <div class="resources">
+            <div class="active-block" id="Resources">
               <h4>Material de Apoyo:</h4>
               <a href="#">PDF: Guía de respiración</a>
               <a href="#">Video extra: Ejercicios de estiramiento</a>
               <a href="#">Link: Artículo recomendado</a>
             </div>
-          </div>
+            <div class="active-block" id="Pre-Class"></div>
 
-          <!-- RIGHT SIDE: CHAT + STUDENTS -->
-          <div class="info-section">
-            <div class="student-list">
+
+
+            
+
+
+          </div>
+          
+        </div>
+
+        <div class="Block" id="div3">
+                    <div class="student-list">
               <h4>Estudiantes Conectados</h4>
               <ul>
                 <li>Laura Gómez</li>
@@ -168,18 +208,11 @@
                 <button><i class="fas fa-paper-plane"></i></button>
               </div>
             </div>
-          </div>
         </div>
-        
-       </div>
 
       </section>
 
     </section>
-
-
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script  src="TeacherLecciones.js" type="module"></script>
 </body>

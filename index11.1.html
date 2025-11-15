@@ -23,224 +23,113 @@
 </head>
 <body>  
 
-    <section class="User-Info">
-      <h1>Portal de Horarios del Profesor</h1>
-      <div class="Alerts-User">
-        <div class="Active-Portal-Alerts"
+  <section class="User-Info">
+    <h1>Portal De Vista General Del Profesor</h1>
+    <div class="Alerts-User">
+      <div class="Active-Portal-Alerts"
         id="APA"></div>
-
-
-
-        <div class="User-Block">
-          <div id="profile-Icon"></div>
-          <div class="User-Info-Block">
-            <h2 id="User-Id"></h2>
-            <h1 id="User-Name"></h1>
-          </div>
+      <div class="User-Block">
+        <div id="profile-img"></div>
+        <div class="User-Info-Block">
+          <h2 id="User-Id"></h2>
+          <h1 id="User-Name"></h1>
         </div>
+      </div>
+    </div>
+  </section> 
+
+  <section class="main">
+
+    <section class="Main-Blocks" id="sidebar">
+      
+      <div class="sidebar-content">
+        
+        <div class="sidebar-top">  
+          <img id="Bulogos"></img>
+          
+          <div class="Side-Btns" id="Home">
+            <i class="fa-solid fa-square-poll-vertical"></i>
+            <span class="linkName">Dashboard</span>
+          </div>
+
+          <div class="Side-Btns" id="Calander">
+            <i class="fa-solid fa-calendar-days"></i>
+            <span class="linkName">Calendario</span>
+          </div>
+          
+          <div class="Side-Btns" id="invocie">
+            <i class="fa-solid fa-file-invoice-dollar"></i>
+            <span class="linkName">Pagos</span>
+          </div>
+
+          <div class="Side-Btns" id="Students">
+            <i class="fa-solid fa-school"></i>
+            <span class="linkName">Estudiantes</span>
+          </div>
+
+          <div class="Side-Btns" id="Assignments">
+            <i class="fa-solid fa-list-check"></i>
+            <span class="linkName">Tareas</span>
+          </div>
+
+          <div class="Side-Btns" id="BCourse">    
+            <i class="fa-solid fa-atom"></i>
+            <span class="linkName">Crear Curso</span>
+          </div>
+          
+          <div class="Side-Btns" id="Lessons">    
+            <i class="fa-solid fa-person-chalkboard"></i>
+            <span class="linkName">Lecciones</span>
+          </div>
+
+          <div class="Side-Btns" id="Mensajes">    
+            <i class="fa-solid fa-message"></i>
+            <span class="linkName">Mensajes</span>
+          </div>
+
+        </div>
+
+        <div class="sidebar-bottom">
+
+          <div class="Side-Btns" id="Settings">
+            <i class="fa-solid fa-gear"></i>
+            <span class="linkName">Settings</span>
+          </div>
+   
+          <div class="Side-Btns" id="Logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="linkName">Cerrar sesión</span>
+          </div>
+        </div> 
+        
+      </div>
+
+      <div class="Action-nav-btns">
+      
+      <div class="Side-caret" id="open">
+          <i class="fa-solid fa-caret-right"></i>
+      </div>
+
+      <div class="Side-caret" id="close">
+          <i class="fa-solid fa-caret-left"></i>
+      </div>
+
       </div>
 
     </section>
 
-    <section class="body-Bottom">
-      <section class="nav" id="sidebar">
-          
-          <div class="sidebar-content">
-            
-            <div class="sidebar-top">  
-              <img id="Bulogos"></img>
-              
-              <div class="Side-Btns" id="Home">
-                <i class="fa-solid fa-square-poll-vertical"></i>
-                <span class="linkName">Dashboard</span>
-              </div>
+    <section class="Blocks" id="Content">
 
-              <div class="Side-Btns" id="Calander">
-                <i class="fa-solid fa-calendar-days"></i>
-                <span class="linkName">Calendario</span>
-              </div>
-              
-              <div class="Side-Btns" id="invocie">
-                <i class="fa-solid fa-file-invoice-dollar"></i>
-                <span class="linkName">Pagos</span>
-              </div>
+      <div class="Block" id="div1"></div>
+      <div class="Block" id="div2"></div>
+      <div class="Block" id="div3"></div>
+      <div class="Block" id="div4"></div>
+      <div class="Block" id="div5"></div>
+      <div class="Block" id="div6"></div>
 
-              <div class="Side-Btns" id="Students">
-                <i class="fa-solid fa-school"></i>
-                <span class="linkName">Estudiantes</span>
-              </div>
-
-              <div class="Side-Btns" id="Assignments">
-                <i class="fa-solid fa-list-check"></i>
-                <span class="linkName">Tareas</span>
-              </div>
-
-              <div class="Side-Btns" id="BCourse">    
-                <i class="fa-solid fa-atom"></i>
-                <span class="linkName">Crear Curso</span>
-              </div>
-          
-              <div class="Side-Btns" id="Lessons">    
-                <i class="fa-solid fa-person-chalkboard"></i>
-                <span class="linkName">Lecciones</span>
-              </div>
-
-              <div class="Side-Btns" id="Mensajes">    
-                <i class="fa-solid fa-message"></i>
-                <span class="linkName">Mensajes</span>
-              </div>
-
-            </div>
-
-            <div class="sidebar-bottom">
-
-              <div class="Side-Btns" id="Settings">
-                <i class="fa-solid fa-gear"></i>
-                <span class="linkName">Settings</span>
-              </div>
-      
-              <div class="Side-Btns" id="Logout">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <span class="linkName">Cerrar sesión</span>
-              </div>
-            </div> 
-            
-          </div>
-
-          <div class="Action-nav-btns">
-          
-          <div class="Side-caret" id="open">
-              <i class="fa-solid fa-caret-right"></i>
-          </div>
-
-          <div class="Side-caret" id="close">
-              <i class="fa-solid fa-caret-left"></i>
-          </div>
-
-          </div>
-      </section>
-
-      <section class="main" id="main">
-
-        <div class="Left">
-
-          <div class="Top">
-            
-            <div class="Pending-Tasks-Block">
-              <div class="PTB-Top">
-                <h1 class="PTB-Tittle">Pending Tasks</h1>
-              </div>
-              <div class="PTB-Bottom">
-                <span id="Pending-Tasks"></span>
-                <div  class="Alerts">
-                  <span id="Alert-PT-Color"></span>
-                  <span id="Alert-Level"></span>
-                </div>
-              </div>
-              
-            </div>
-
-
-            <div class="Progress-Block">
-              <h1>Progress Rate</h1>
-              <div class="circular-progress" id="progress" style="--progress: 0deg;">
-                <span id="progress-text">0%</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="Tasks-Block">
-            <div class="Tasks-Block-header">
-              <h1>Tasks</h1>
-            </div>
-            <div class="Active-Calander" id="Active-Calander"></div>
-
-            <div class="Active-Calander-Btns">
-              <button class="Calander-Btns" id="all-tasks">Todas las tareas</button>
-              <button class="Calander-Btns" id="To-do">Por hacer</button>
-              <button class="Calander-Btns" id="Completed">Completadas</button>
-              <button class="Calander-Btns" id="In-Progress">En progreso</button>
-            </div>
-
-      
-        <div class="AEB-Block">
-          <div class="AEB" id="add-event-btn">
-            <div id="time-box"></div>  
-            <div class="Add-Btn">
-              <span>Add   New   Event</span>
-              <i class="fa-solid fa-square-plus" id="Plus"></i>
-            </div>
-          </div>
-        </div>
-
-        <div id="event-list"></div>
-
-          </div>
-
-          <div id="event-modal" class="modal">
-            <div class="modal-content">
-              <span class="close-btn">&times;</span>
-              <h3>Crear Nuevo Evento</h3>
-              <div class="Date-Time-Inputs">
-                <label>Fecha: <input type="date" id="event-date"></label>
-                <label>Hora: <input type="time" id="event-time"></label>
-              </div>
-
-              <div class="Type-Level-Inputs">
-              <label for="event-course">Categoría:
-                <select id="event-course">
-                  <option value="">Selecciona</option>
-                </select>
-              </label>
-                <label>Nivel de la clase:
-                  <select id="event-level">
-                    <option value="">Seleccionar</option>
-                    <option value="Beginner">Principiante</option>
-                    <option value="Intermediate">Intermedio</option>
-                    <option value="Advanced">Avanzado</option>
-                  </select>
-                </label>
-              </div>
-              
-
-
-              
-              <label>Description:<br>
-                <textarea id="event-description" rows="3" placeholder="Enter event details..."></textarea>
-              </label>
-
-              <button id="save-event">Save Event</button>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="Right">
-          <div class="Attendence-Block">
-            <div class="calendar">
-              <div class="calendar-header" id="calendar-header"></div>
-              <div class="calendar-grid" id="calendar-grid"></div>
-            </div>
-          </div>
-
-          <div class="Feedback-Block">
-
-          </div>
-
-        </div>
-
-      </section>
     </section>
 
-
-
- 
-
-
-
-    
-
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </section>
 
   <script  src="TeacherCalendar.js" type="module"></script>
 </body>
