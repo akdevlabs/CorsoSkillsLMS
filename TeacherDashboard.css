@@ -8,6 +8,7 @@ body {
   gap: 1rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   margin: 1rem;
   height: 100vh; /* fixed height */
   overflow: hidden; /* prevent full page scroll */
@@ -66,7 +67,7 @@ body {
 .main{
   gap: 1rem;
   width: 100%;
-  height: 89vh;
+  height: 100vh;
   display: flex;
 }
 
@@ -143,8 +144,6 @@ body {
   display: flex;
   flex-direction: column;
 }
-
-
 /*----------- header ------------*/
 .header {
   display: flex;
@@ -170,8 +169,6 @@ body {
   font-weight: bold;
   margin: 0 0 -0.5rem 0;
 }
-
-
 /*----------- Content ------------*/
 #Content{
   width: 100%;
@@ -180,138 +177,65 @@ body {
 }
 #Line{
   padding: .1rem;
-  margin: -1rem 0 1rem 0;
 }
-
-
-/*----------- Tabs ------------*/
-.tabs-wrapper {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+#Content h1{
+  font-size: 1.7rem;
+  margin:1rem 1rem 0 0;
 }
-
-.scroll-btn {
-  font-size: 1.3rem;
-  padding: 8px 12px;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.scroll-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.tabs-container {
-  gap: 1rem;
-  display: flex;
-  overflow: auto;
-  margin: 1rem;
-  flex-wrap: nowrap;
-}
-
-.tabs {
-  gap: 2rem;
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-}
-
-.tab-btn {
-  padding: 0.5rem 2rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  flex-shrink: 0;
+#Content p{
   font-size: 1rem;
-  font-weight: bold;
+  margin: .5rem 0 0 0;
 }
-
-.Level-Btns-blocks {
-  gap: 1rem;
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 1rem;
-}
-
-.Level-Btns {
-  padding: 0.3rem 0.8rem;
-  border: none;
-  border-radius: 0.5rem;
-}
-
-#line {
-  height: 2.5rem;
-  width: 0.3rem;
-}
-
-
-
 /*----------- Stats ------------*/
 .stats-container {
   display: flex;
-  gap: 20px;
+  gap: 1rem;
   flex-wrap: wrap;
-  padding: .5rem 0 ;
+  padding: .5rem;
+  margin: 2rem 0 0 0;
 }
 .stat-card {
   flex: 1;
-  min-width: 100px;
-  padding: 1.3rem 20px;
-  border-radius: 16px;
-  background: #f9f9f9;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  min-width: 1rem;
+  padding: 1rem ;
+  border-radius: .5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.705);
   text-align: center;
   transition: all 0.3s ease;
   position: relative;
-}
-.stat-card-active {
-  flex: 1;
-  min-width: 100px;
-  padding: 1.3rem 20px;
-  border-radius: 16px;
-  background: #f9f9f9;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  text-align: center;
-  transition: all 0.3s ease;
-  position: relative;
-  background: #00777c; /* teal highlight */
-  color: #fff;
 }
 .stat-icon {
   position: absolute;
   top: -12px;
   left: -12px;
-  font-size: 1.5rem;
-  background: #fff;
+  font-size: 1rem;
   border-radius: 50%;
   padding: 8px 10px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 .stat-value {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  margin: 10px 0;
 }
 .stat-label {
-  font-size: 1rem;
+  font-size: .8rem;
   font-weight: 600;
-  margin-bottom: 8px;
 }
 /*----------- UpComingClasses Section ------------*/
-
+.UpComingClasses{
+  display: flex;
+  padding: .5rem;
+  border-radius: 1rem;
+  margin: 1rem 0;
+  flex-direction: column;
+}
 .UCC-Block{
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
 }
 .UCC-Btn-block{
-  
   display: flex;
-  background: #eef1f7;
 }
 .UCC-Title {
   margin: 0 1rem 1rem 1rem;
@@ -328,64 +252,108 @@ body {
   margin: 1rem 0;
   border-radius: .5rem;
 }
-
-
-
+/*----------- carousel-container ------------*/
 .carousel-container {
+  position: relative;            
   display: flex;
   align-items: center;
-  overflow: hidden;  
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+  padding: 1rem 2rem;           
+  box-sizing: border-box;
+}
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;                        
+  border: none;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+  cursor: pointer;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: transform 0.16s ease, background 0.16s ease;
+  user-select: none;
+}
+.carousel-btn.prev { 
+  left: 0.6rem; 
+}
+.carousel-btn.next { 
+  right: 0.6rem; 
+}
+.carousel-btn:hover {
+  transform: translateY(-50%) scale(1.06);
+}
+.carousel-btn:active {
+  transform: translateY(-50%) scale(0.98);
+}
+.carousel-btn.disabled {
+  opacity: 0.45;
 }
 .carousel-track {
   display: flex;
-  transition: transform 0.4s ease-in-out;
-  width: 100rem;    
-  overflow: hidden;  
+  transition: transform 0.45s cubic-bezier(.22,.9,.28,1);
+  gap: 1.25rem;
+  width: calc(100% - 6rem);     
+  box-sizing: border-box;
+  padding: 0 1rem;         
 }
 .card {
-  min-width: 300px;
-  max-width: 300px;
-  margin: 0 10px;
-  padding: 1.2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 0.9rem;
+  box-shadow: 0 4px 14px rgb(0, 0, 0);
+  min-width: 18rem;
+  max-width: 18rem;
+  padding: 1.4rem;
   flex-shrink: 0;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
-.card h4 {
-  margin-bottom: 5px;
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 26px rgba(0,0,0,0.12);
 }
-.card h3 {
-  font-size: 1rem;
-  margin-bottom: 10px;
+.card h4 { 
+  font-size: 0.9rem; 
+  margin: 0 0 .4rem 0; 
 }
-.hours {
-  font-size: 0.9rem;
-  margin-bottom: 10px;
+.card h3 { 
+  font-size: 1.05rem; 
+  margin: 0 0 .9rem 0; 
 }
-.btn {
-  padding: 8px 12px;
+.card .hours { 
+  font-weight: bold;
+  font-size: 0.85rem; 
+  margin-bottom: .9rem; 
+}
+.card .btn {
+  display: inline-block;
   border: none;
-  border-radius: 6px;
+  padding: .55rem .9rem;
+  border-radius: .45rem;
+  font-size: .9rem;
   cursor: pointer;
-  margin-bottom: 10px;        
+  transition: background .18s ease;
 }
-.avatars {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+.avatars { 
+  display: flex; 
+  align-items: center; 
+  margin-top: .9rem; 
 }
 .avatars img {
   border-radius: 50%;
+  margin-right: -8px;
   width: 28px;
   height: 28px;
+  box-sizing: content-box;
 }
-.carousel-btn {
-  top: 50%;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;            
+.avatars span { 
+  font-size: .8rem; 
+  margin-left: 10px; 
 }
 /*----------- Charts ------------*/
 .AC-Title{
@@ -412,7 +380,6 @@ body {
   justify-content: space-between;
   flex-wrap: wrap;
 }
-
 .Action-btns-card {
   width: 48%;
   text-align: center;
@@ -423,68 +390,78 @@ body {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-/*------------- Responsive Breakpoints -------------*/
-@media (max-width: 1024px) {
-  .Action-btns-card,
-  .chart-block {
-    width: 100%;
+/* =========================================================
+   📱 PHONE BREAKPOINT — ONLY MOBILE BEHAVIOR
+   Nothing changes until screen < 600px
+========================================================= */
+@media (max-width: 600px) {
+
+  body {
+    height: auto;
+    overflow: auto; /* allow scrolling on phones */
+    margin: 0.5rem;
   }
 
+  /* MAIN LAYOUT STACKS */
   .main {
-    margin: 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .header {
     flex-direction: column;
-    align-items: flex-start;
+    height: auto;
   }
 
-  .tabs {
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
-  .tab-btn {
+  /* SIDEBAR GOES FULL WIDTH */
+  #sidebar {
     width: 100%;
-    text-align: center;
-  }
-
-  .Level-Btns-blocks {
+    height: auto;
     justify-content: center;
   }
 
-  .Action-btns {
-    flex-direction: column;
-    gap: 1rem;
+  .nav {
+    width: 100%;
+    justify-content: center;
+    margin: .5rem 0;
   }
 
+  /* USER INFO STACKS */
+  .User-Info {
+    flex-direction: column;
+    text-align: center;
+    gap: .8rem;
+  }
+
+  /* CONTENT */
+  #Content {
+    height: auto;
+    padding: 0 .5rem;
+  }
+
+  /* STATS CARDS STACK */
+  .stats-container {
+    flex-direction: column;
+  }
+
+  .stat-card {
+    width: 100%;
+  }
+
+  /* UPCOMING CLASSES BUTTONS */
   .Action-btns-card {
     width: 100%;
   }
-}
 
-@media (max-width: 480px) {
-  .nav {
+  /* CAROUSEL */
+  .carousel-btn {
+    display: none; /* remove arrows on small phones */
+  }
+
+  .card {
+    min-width: 90%;
+    max-width: 90%;
+  }
+
+  /* UCC TOP BLOCK */
+  .UCC-Block {
     flex-direction: column;
-    align-items: center;
-  }
-
-  .sidebar-top,
-  .sidebar-bottom {
-    align-items: center;
-  }
-
-  .tabs-container {
-    flex-direction: column;
-  }
-
-  .chart-block {
-    width: 100%;
-  }
-
-  .card p {
-    font-size: 1.2rem;
+    align-items: flex-start;
+    gap: .5rem;
   }
 }

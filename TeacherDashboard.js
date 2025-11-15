@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js";
 
 import { 
-  getFirestore, doc, getDoc, collection, addDoc, setDoc, 
+  getFirestore, doc, getDoc,getDocs, collection, addDoc, setDoc, 
   Timestamp, deleteField, updateDoc, arrayUnion, serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js";
 
@@ -41,8 +41,6 @@ const UserUidInfo = localStorage.getItem("UserUidInfo");
  console.log(UserUidInfo);
 // Initialize Auth
 
-
-
 onAuthStateChanged(auth, (user) => {
   if (user) {
     //✅ Authenticated
@@ -62,6 +60,7 @@ onAuthStateChanged(auth, (user) => {
     window.location.href = "login.html"; // or your login route
   }
 });
+
 
 
 
@@ -235,16 +234,9 @@ applyBranding().then((data) => {
   function setheadercolors(){
     setTextColors("#header", Prime)
   }
-  function setstatColors(){
-   setallBackgroundColor(".stat-card", Prime5)
-   setallBackgroundColor(".stat-card-active", Base)
-   setTextColors(".stat-value", Prime)
-   setTextColors(".stat-label", Prime)
-   setTextColors("#Cclasses", Prime5)
-   setTextColors("#stat-label-active", Prime5)
-   setBorder(".stat-card", `2px solid ${Base}`);
-   setBorder(".stat-icon", `2px solid ${Base}`);
-  }
+
+
+
 
 
 
@@ -285,8 +277,83 @@ applyBranding().then((data) => {
     `;
     document.head.appendChild(style);
   }
-
-
+  function setContentColors() {
+    const style = document.createElement("style");
+    style.textContent = `
+        #Line{
+          background-color: ${Prime3};
+        }
+        #Content h1{
+          color: ${Base};
+        }
+        #Content p{
+          color: ${Prime};
+        } 
+        /*----------- Stats ------------*/
+        .stat-icon {
+          background: ${Prime5};
+        }
+        .stat-card {
+          background: ${Prime5};
+        }
+        .stat-card{
+          color:${Base};
+        }
+        .stat-card:hover{
+          color: ${Prime5};
+          background-color: ${Base};
+        }
+        /*----- UpComingClasses -------*/
+        .UpComingClasses {
+        background:${Prime4};
+        }
+        .carousel-btn {      
+          background:${Prime3};
+        }
+        .carousel-btn:hover {
+          background: ${Prime2};
+        }
+        .card {
+          background: ${Prime5};
+        }
+        .card:hover {
+          box-shadow: 0 8px 26px ${Prime3};
+        }
+        .card.active {
+          border: none;
+        }
+        .card h4 {  
+          color:${Prime2};
+        }
+        .card h3 {
+          color: ${Base};
+        }
+        .card .hours {
+          color: ${Prime3};
+        }
+        .card .btn {
+          background: ${Prime3};
+          color:${Prime5};
+        }
+        .card .btn:hover {
+          background: ${Prime2};
+        }
+        .card .btn.upcoming:hover {
+          background: ${Prime2};
+        }
+        .avatars img {
+          border: 2px solid${Prime2};
+        }
+        .avatars span {
+          color: ${Prime2};
+        }
+    `;
+    document.head.appendChild(style);
+  }
+  function setstatColors(){
+   setBorder(".stat-card", `2px solid ${Base}`);
+   setBorder(".stat-icon", `2px solid ${Base}`);
+  }
   
  
 
@@ -299,9 +366,9 @@ applyBranding().then((data) => {
   setheadercolors()
   setstatColors()
   setNextClassColors()
- setcardContainerColors()
+  setcardContainerColors()
 
-
+  setContentColors()
 });
 
 
@@ -323,9 +390,28 @@ async function getTeacherContent() {
     return null;
   }
 }
+async function getStudentsContent() {
+  try {
+    const querySnapshot = await getDocs(collection(db, "CorsoSkillsStudents"));
+    return querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  } catch (error) {
+    console.error("⚠️ Error fetching Students:", error);
+    return [];
+  }
+}
 async function getCorsoSkillAppContent() {
   try {
     const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
+    const docSnap = await getDoc(docRef);
+    return docSnap.exists() ? docSnap.data() : null;
+  } catch (error) {
+    console.error("⚠️ Error fetching Business document:", error);
+    return null;
+  }
+}
+async function getCorsoSkillsClassrooms() {
+  try {
+    const docRef = doc(db, "CorsoSkillsClassrooms", TBuInfo);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
@@ -340,24 +426,63 @@ async function getCorsoSkillAppContent() {
   }
 }
 async function fetchAllContent() {
-  const TeacherData = await getTeacherContent();
-  const businessData = await getCorsoSkillAppContent();
+  console.log("🔄 Fetching all Corso Skills data...");
 
-  if (!TeacherData && !businessData) {
-    console.error("❌ Could not load teacher or business data");
-    return;
+  // Fetch all in parallel for speed ⚡
+  // NOTE: adapt these three to whatever fetch functions you have
+  const [StudentsData, TeachersDataRaw, BusinessData,classroomData        ] = await Promise.all([
+    getStudentsContent(),           // expected: Array of student objects
+    getTeacherContent(),            // expected: Array or object for teachers
+    getCorsoSkillAppContent(),      
+    getCorsoSkillsClassrooms()
+  ]);
+
+  console.group("✅ All Firestore Data Loaded");
+  console.log("Business:", BusinessData);
+  console.log("Students:", StudentsData);
+  console.log("Teachers (raw):", TeachersDataRaw);
+  console.log("✅ Classroom Data:", classroomData);
+  console.groupEnd();
+
+  // Normalize teacher data: you sometimes treated teachers as array and sometimes as single
+  const TeachersData = Array.isArray(TeachersDataRaw) ? TeachersDataRaw : (TeachersDataRaw ? [TeachersDataRaw] : []);
+  const TeacherData = TeachersData[0] || TeachersDataRaw || null; // single teacher (for profile icon / greeting) if available
+
+  // Provide sensible fallbacks for subcollections that may be inside BusinessData
+  const AffiliatesData = BusinessData?.Affiliates || [];
+  const Courses = BusinessData?.Courses || {};
+
+  // ---------------- helpers ----------------
+  function renderText(text, elementId) {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.textContent = text;
+    } else {
+      console.warn(`Element with ID "${elementId}" not found. Tried to render:`, text);
+    }
   }
 
-  console.log("✅ Teacher Data:", TeacherData);
-  console.log("✅ Business Data:", businessData);
-
-  // destructure colors if businessData exists
-  let Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5;
-  if (businessData?.BuColors?.Colors) {
-    ({ Base, Prime, Prime1, Prime2, Prime3, Prime4, Prime5 } = businessData.BuColors.Colors);
+  function renderTextById(id, text, append = false) {
+    const element = document.getElementById(id);
+    if (!element) {
+      console.warn(`⚠️ No element found with ID: ${id}`);
+      return;
+    }
+    if (append) element.textContent += text;
+    else element.textContent = text;
   }
 
-  
+  function convertFirestoreTimestampToDate(timestamp) {
+    if (!timestamp || typeof timestamp.seconds !== "number") {
+      console.error("Invalid Firestore timestamp:", timestamp);
+      return null;
+    }
+    const date = new Date(timestamp.seconds * 1000 + (timestamp.nanoseconds || 0) / 1e6);
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    const year = date.getFullYear();
+    return `${month}/${day}/${year}`;
+  }
   function renderText(text, elementId) {
     const element = document.getElementById(elementId);
     if (element) {
@@ -366,188 +491,261 @@ async function fetchAllContent() {
       console.error(`Element with ID "${elementId}" not found.`);
     }
   }
-  function convertFirestoreTimestampToDate(timestamp) {
-    if (!timestamp || typeof timestamp.seconds !== "number") {
-      console.error("Invalid Firestore timestamp:", timestamp);
-      return null;
+  function countKeyOccurrences(obj, targetKey) {
+    let count = 0;
+
+    function traverse(current) {
+      if (typeof current !== "object" || current === null) return;
+
+      for (const key in current) {
+        if (key === targetKey) {
+          count++;
+        }
+
+        // Recursively check inside all children
+        traverse(current[key]);
+      }
     }
 
-    const date = new Date(timestamp.seconds * 1000 + timestamp.nanoseconds / 1e6);
-
-    // Format as MM/DD/YYYY
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day = date.getDate().toString().padStart(2, "0");
-    const year = date.getFullYear();
-
-    return `${month}/${day}/${year}`;
+    traverse(obj);
+    return count;
   }
-  function renderTextById(id, text, append = false) {
-    const element = document.getElementById(id);
-    if (!element) {
-      console.warn(`⚠️ No element found with ID: ${id}`);
-      return;
-    }
+function getCoursesByTeacher(allCourses, targetTeacherId) {
+  const result = [];
 
-    if (append) {
-      element.textContent += text;
-    } else {
-      element.textContent = text;
+  for (const category in allCourses) {
+    const levels = allCourses[category];
+
+    for (const level in levels) {
+      const courses = levels[level];
+
+      for (const courseId in courses) {
+        const course = courses[courseId];
+
+        if (course.createdBy?.teacherId === targetTeacherId) {
+          result.push({
+            category,
+            level,
+            courseId,
+            ...course
+          });
+        }
+      }
     }
   }
 
+  return result;
+}
 
+
+
+
+
+  // -----------------------------------------
+
+  // Render functions
   function renderWelcome() {
-    if (TeacherData?.fullName) {
-      renderText("Hola, " + TeacherData.fullName, "User-Name");
-    } else {
-      renderText("Missing", "User-Name");
-    }
+    // prefer single teacher's fullName if available, else fallback text
+    const name = (TeacherData && TeacherData.fullName) ? TeacherData.fullName : (TeachersData?.fullName || null);
+    renderText("Hola, " + name, "wecome-banner-tittle");
+    renderText(name, "User-Name");
+    
   }
+
   function renderId() {
     const userIdElement = document.getElementById("User-Id");
+    if (!userIdElement) return;
 
-    if (TeacherData?.TeacherId) {
-      const teacherId = TeacherData.TeacherId;
-      renderText("ID: " + teacherId, "User-Id");
+    const adminId = TeacherData?.TeacherId || TeacherData?.id || TeachersData?.[0]?.TeacherId || null;
 
-      // Make the ID clickable
+    if (adminId) {
+      renderText("ID: " + adminId, "User-Id");
       userIdElement.style.cursor = "pointer";
       userIdElement.title = "Haz clic para copiar el ID";
 
-      // Add click event to copy the ID
-      userIdElement.addEventListener("click", () => {
-        navigator.clipboard.writeText(teacherId).then(() => {
-          // Show feedback to the user
-          const originalText = userIdElement.textContent;
-          userIdElement.textContent = "ID copiado ✅";
+      // Remove any previously attached click handlers to avoid duplicates
+      const newEl = userIdElement.cloneNode(true);
+      userIdElement.parentNode.replaceChild(newEl, userIdElement);
 
-          // Restore after 1.5 seconds
+      newEl.addEventListener("click", () => {
+        navigator.clipboard.writeText(adminId).then(() => {
+          const originalText = newEl.textContent;
+          newEl.textContent = "ID copiado ✅";
           setTimeout(() => {
-            userIdElement.textContent = originalText;
+            newEl.textContent = originalText;
           }, 1500);
+        }).catch(err => {
+          console.error("Clipboard write failed:", err);
         });
       });
     } else {
       renderText("Falta ID", "User-Id");
     }
   }
+
+  function renderCardInfo() {
+    // students block
+    function checkActiveStudents(students) {
+      if (!Array.isArray(students)) {
+        console.error("❌ Invalid students data", students);
+        return { activeStudents: [], inactiveStudents: [] };
+      }
+
+      const activeStudents = students.filter(student => student.Uactive === true);
+      const inactiveStudents = students.filter(student => student.Uactive !== true);
+
+      //console.log(`✅ Active Students: ${activeStudents.length}`);
+      //console.log(`🛑 Inactive Students: ${inactiveStudents.length}`);
+
+      renderText(activeStudents.length, "Astudents");
+
+
+    }
+    function checkActiveTeachers(teachers) {
+      if (!Array.isArray(teachers)) {
+        console.error("❌ Invalid teachers data", teachers);
+        return { activeTeachers: [], inactiveTeachers: [] };
+      }
+
+      const activeTeachers = teachers.filter(t => t.Uactive === true);
+      const inactiveTeachers = teachers.filter(t => t.Uactive !== true);
+
+    //console.log(`✅ Active Teachers: ${activeTeachers.length}`);
+    //console.log(`🛑 Inactive Teachers: ${inactiveTeachers.length}`);
+
+     // renderText(activeTeachers.length, "TotalTeachers");
+
+   
+    }
+    function checkActiveCourses(coursesData) {
+      if (!coursesData || typeof coursesData !== "object") {
+        console.error("❌ Invalid courses data", coursesData);
+        return 0;
+      }
+
+      let totalActiveCourses = 0;
+      for (const category of Object.values(coursesData)) {
+        if (!category || typeof category !== "object") continue;
+        for (const levelData of Object.values(category)) {
+          if (levelData && typeof levelData === "object" && Object.keys(levelData).length > 0) {
+            totalActiveCourses++;
+          }
+        }
+      }
+
+    //console.log(`🎓 Total Active Courses: ${totalActiveCourses}`);
+     // renderText(totalActiveCourses, "Cclasses");
+      return totalActiveCourses;
+    }
+
+    // run the checks and render UI
+    checkActiveStudents(StudentsData || []);
+    checkActiveTeachers(TeachersData || []);
+
+  
+    const totalActiveCourses = checkActiveCourses(Courses);
+
+  //console.log("Students count:", (StudentsData && StudentsData.length) || 0);
+  //console.log("Teachers count:", (TeachersData && TeachersData.length) || 0);
+  //console.log("Active Courses:", totalActiveCourses);
+  }
+
   function renderUserIcon() {
     const container = document.getElementById("profile-Icon");
     if (!container) {
-      console.error("Element with ID 'profile-Icon' not found.");
+      console.warn("Element with ID 'profile-Icon' not found.");
       return;
     }
 
-    if (!TeacherData?.profileImg) {
+    if (!TeacherData || !TeacherData.profileImg) {
       container.innerHTML = `<i class="fa-solid fa-circle-user" style="font-size: 2rem;"></i>`;
     } else {
       container.innerHTML = `<img src="${TeacherData.profileImg}" alt="User Icon" width="50" height="50" style="border-radius: 50%;" />`;
-      
     }
   }
+
   function renderAlertIcons() {
-    const ActiveAlrts = 0; // change to 0 or null to test
+    const ActiveAlrts = 0; // change as needed
+    const Prime2 = "#333"; // fallback colors if your theme variables are not defined
+    const Prime5 = "#eee";
 
     function setTextColors(selector, Tcolor) {
-    if (selector.startsWith('#')) {
-      const element = document.getElementById(selector.slice(1));
-      if (element) {
-        element.style.color = Tcolor;
+      if (selector.startsWith('#')) {
+        const el = document.getElementById(selector.slice(1));
+        if (el) el.style.color = Tcolor;
+      } else if (selector.startsWith('.')) {
+        const els = document.querySelectorAll(selector);
+        els.forEach(e => e.style.color = Tcolor);
       } else {
-        console.error(`Element with ID '${selector}' not found.`);
+        const el = document.getElementById(selector);
+        if (el) el.style.color = Tcolor;
       }
-    } else if (selector.startsWith('.')) {
-      const elements = document.querySelectorAll(selector);
-      if (elements.length > 0) {
-        elements.forEach(el => el.style.color = Tcolor);
-      } else {
-        console.error(`No elements found with class '${selector}'.`);
-      }
-    } else {
-      console.error("Selector must start with '#' for ID or '.' for class.");
     }
-    }
+
     function setallBackgroundColor(selector, backgroundColor) {
-      // First check if it's an ID
       if (selector.startsWith("#")) {
-        const element = document.getElementById(selector.slice(1));
-        if (element) {
-          element.style.backgroundColor = backgroundColor;
-        } else {
-          console.error(`Element with ID '${selector}' not found.`);
-        }
-      } 
-      // If it's a class
-      else if (selector.startsWith(".")) {
-        const elements = document.querySelectorAll(selector);
-        if (elements.length > 0) {
-          elements.forEach(el => el.style.backgroundColor = backgroundColor);
-        } else {
-          console.error(`No elements with class '${selector}' found.`);
-        }
-      } 
-      // fallback: accept plain string (assume ID)
-      else {
-        const element = document.getElementById(selector);
-        if (element) {
-          element.style.backgroundColor = backgroundColor;
-        } else {
-          console.error(`Element with ID or class '${selector}' not found.`);
-        }
+        const el = document.getElementById(selector.slice(1));
+        if (el) el.style.backgroundColor = backgroundColor;
+      } else if (selector.startsWith(".")) {
+        const els = document.querySelectorAll(selector);
+        els.forEach(e => e.style.backgroundColor = backgroundColor);
+      } else {
+        const el = document.getElementById(selector);
+        if (el) el.style.backgroundColor = backgroundColor;
       }
     }
 
-    function checkValue(value) {
-      return value ? "yes" : "no";
-    }
-
-    const Alert = checkValue(ActiveAlrts);
-    console.log(Alert);
-
+    const Alert = ActiveAlrts ? "yes" : "no";
     const container = document.querySelector(".Active-Portal-Alerts");
-
-    if (!container) {
-      console.error("Element with class 'Active-Portal-Alerts' not found.");
-      return;
-    }
+    if (!container) return;
 
     if (Alert === "yes") {
-      setTextColors("#APA", Prime2)
-      setallBackgroundColor("#APA", Prime5)
+      setTextColors("#APA", Prime2);
+      setallBackgroundColor("#APA", Prime5);
       container.innerHTML = `<i class="fa-solid fa-bell"></i>`;
-    }else if (Alert === "no")
-      
+    } else {
       container.innerHTML = `<i class="fa-regular fa-bell"></i>`;
+    }
+  }
+
+  function renderEvents(){
+    const EventsCount = countKeyOccurrences(classroomData.Event, UserUidInfo)
+    renderText(EventsCount, "CVideos")
+  }
+
+  function renderCoursesCreated(){
+    const Coursecont = getCoursesByTeacher(classroomData.courses, UserUidInfo)
+    console.log(Coursecont.length      )
+    renderText(Coursecont.length, "Cclasses")
+
+
+
   }
 
 
 
 
-  
+
+
+  // --------- cards/carousel rendering (safe guards) ----------
   const classes = [
-      { title: "Contextual understanding and design process flow", subtitle: "UI/UX FUNDAMENTAL", hours: "14 Hours", status: "active", buttonText: "START THE CLASS", buttonType: "start" },
-      { title: "Introduction to foundation of desk research and how to present", subtitle: "UI/UX FUNDAMENTAL", hours: "20 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" },
-      { title: "Basic illustration and how to use the adobe illustrator", subtitle: "UI/UX FUNDAMENTAL", hours: "32 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" },
-      { title: "Introduction to foundation of desk research and how to present", subtitle: "UI/UX FUNDAMENTAL", hours: "20 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" },
-      { title: "Basic illustration and how to use the adobe illustrator", subtitle: "UI/UX FUNDAMENTAL", hours: "32 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" },
-      { title: "Basic illustration and how to use the adobe illustrator", subtitle: "UI/UX FUNDAMENTAL", hours: "32 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" },
-      { title: "Introduction to foundation of desk research and how to present", subtitle: "UI/UX FUNDAMENTAL", hours: "20 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" },
-      { title: "Basic illustration and how to use the adobe illustrator", subtitle: "UI/UX FUNDAMENTAL", hours: "32 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" }
-    ];
+    { title: "Contextual understanding and design process flow", subtitle: "UI/UX FUNDAMENTAL", hours: "14 Hours", status: "active", buttonText: "START THE CLASS", buttonType: "start" },
+    { title: "Introduction to foundation of desk research and how to present", subtitle: "UI/UX FUNDAMENTAL", hours: "20 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" },
+    { title: "Basic illustration and how to use the adobe illustrator", subtitle: "UI/UX FUNDAMENTAL", hours: "32 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" }
+  ];
 
-    const avatars = [
-      "https://i.pravatar.cc/28?img=1",
-      "https://i.pravatar.cc/28?img=2",
-      "https://i.pravatar.cc/28?img=3"
-    ];
+  const avatars = [
+    "https://i.pravatar.cc/28?img=1",
+    "https://i.pravatar.cc/28?img=2",
+    "https://i.pravatar.cc/28?img=3"
+  ];
 
-    const container = document.getElementById("cardContainer");
-
-    // Render cards
+  const container = document.getElementById("cardContainer");
+  if (container) {
+    container.innerHTML = ""; // clear previous cards
     classes.forEach(cls => {
       const card = document.createElement("div");
       card.className = `card ${cls.status === "active" ? "active" : ""}`;
-
       card.innerHTML = `
         <h4>${cls.subtitle}</h4>
         <h3>${cls.title}</h3>
@@ -560,44 +758,78 @@ async function fetchAllContent() {
       `;
       container.appendChild(card);
     });
+  }
 
-    // Carousel Logic
-    const track = document.querySelector(".carousel-track");
-    const prevBtn = document.querySelector(".carousel-btn.prev");
-    const nextBtn = document.querySelector(".carousel-btn.next");
-    let index = 0;
+  // Carousel logic: guard against missing nodes
+const track = document.querySelector(".carousel-track");
+const prevBtn = document.querySelector(".carousel-btn.prev");
+const nextBtn = document.querySelector(".carousel-btn.next");
+let index = 0;
 
-    function updateCarousel() {
-      const cardWidth = document.querySelector(".card").offsetWidth + 20; // card + margin
-      track.style.transform = `translateX(-${index * cardWidth}px)`;
-    }
-
-    prevBtn.addEventListener("click", () => {
-      if (index > 0) index--;
-      updateCarousel();
-    });
-
-    nextBtn.addEventListener("click", () => {
-      if (index < classes.length - 1) index++;
-      updateCarousel();
-    });
-
-
-
-
-
-
-
-
-
-
-
-  renderWelcome()
-  renderId()
-  renderUserIcon()
-  renderAlertIcons()
-
+function updateCarousel() {
+  const firstCard = track.querySelector(".card");
+  if (!track || !firstCard) return;
+  const style = window.getComputedStyle(firstCard);
+  const marginRight = parseFloat(style.marginRight || 20);
+  const cardWidth = firstCard.offsetWidth + marginRight;
+  // clamp index to valid range just in case
+  const maxIndex = Math.max(0, classes.length - 1);
+  if (index < 0) index = maxIndex;
+  if (index > maxIndex) index = 0;
+  track.style.transform = `translateX(-${index * cardWidth}px)`;
+  // optional: highlight active card
+  track.querySelectorAll(".card").forEach((c, i) => c.classList.toggle("active", i === index));
 }
+
+// wrap-around behavior so buttons always do something
+if (prevBtn) {
+  prevBtn.addEventListener("click", () => {
+    index = index - 1;
+    if (index < 0) index = classes.length - 1; // wrap to end
+    updateCarousel();
+  });
+}
+if (nextBtn) {
+  nextBtn.addEventListener("click", () => {
+    index = index + 1;
+    if (index >= classes.length) index = 0; // wrap to beginning
+    updateCarousel();
+  });
+}
+
+// call it once on load
+updateCarousel();
+
+// recalc on resize (keeps layout in sync)
+window.addEventListener("resize", () => {
+  updateCarousel();
+});
+
+
+
+
+
+
+
+  // initial renders
+  renderId();
+  renderWelcome();
+  renderCardInfo();
+  renderUserIcon();
+  renderAlertIcons();
+  renderEvents()
+  renderCoursesCreated()
+  // Optionally return all for later use
+  return {
+    BusinessData,
+    StudentsData,
+    TeachersData,
+    TeacherData,
+    AffiliatesData,
+    Courses,
+  };
+}
+
 
 fetchAllContent()
 

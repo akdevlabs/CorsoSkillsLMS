@@ -3,105 +3,78 @@
   margin: 0;
   padding: 0;
 }
-
 body {
   gap: 1rem;
   display: flex;
   flex-direction: column;
   margin: 1rem;
-  height: 100vh; /* fixed height */
-  overflow: hidden; /* prevent full page scroll */
-}
-
-
-/* ---------- nav -------------- */
-.hamburger {
-  position: fixed;
-  top: 1rem;
-  left: 1rem;
-  z-index: 1001;
-  font-size: 2rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: none;
-}
-.Mobile-close-btn{
-  display: none;
-}
-.nav {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  height: 97vh;
-  padding: 1rem .5rem;
-  border-radius: 1rem;
-  transition: width 0.3s ease;
-  margin: 1rem;
-}
-.sidebar-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
-.sidebar-top {
-  display: flex;
-  flex-direction: column;
-}
-.sidebar-bottom {
-  display: flex;
-  flex-direction: column;
-  gap: .5rem;
-}
-.Side-Btns {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 0.6rem 0.8rem;
-  border-radius: 0.6rem;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.Side-Btns i {
-  font-size: 1.5rem;
-}
-.linkName {
-  font-size: 0.85rem;
-  white-space: nowrap;
-}
-#Bulogos {
-  max-width: 100%;
-  width: 3rem;
+  justify-content: center;
+  width: auto;
   height: auto;
-  margin-bottom: 1.2rem;
+  overflow: hidden; 
 }
-.Side-caret {
-  font-size: 1.5rem;
+
+/*----------- User-Info ------------*/
+.User-Info{
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 1rem;
+  padding: 0 1rem;
 }
-#Multi-User{
-  display: none;
-}  
+.User-Info h1{
+  font-size: 1.3rem;
+}
+.Alerts-User{
+  gap: 2rem;
+  display: flex;
+  align-items: center;
+}
+.Active-Portal-Alerts{
+  font-size: 1.3rem;
+  border-radius: 50%;
+  padding: .2rem .4rem;
+}
+.User-Info-Block{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: .8rem .5rem 0 0;
+}
+.User-Block{
+  gap:1rem;
+  display: flex;
+  align-items: center;
+  
+}
+#User-Id{
+ font-size: .6rem; 
+}
+#User-Name{
+  font-size: .8rem;
+}
+#profile-img img{
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  margin: .5rem;
+}
 /*----------- main ------------*/
 .main{
   gap: 1rem;
   width: 100%;
-  height: 89vh;
+  height: 100vh;
   display: flex;
-} 
-/*----------- Main-Blocks ------------*/
-.Main-Blocks{
-  padding: 1rem;
-  border-radius: 1rem;
-}  
+}
 /*----------- Sidebar ------------*/
 #sidebar{
   display: flex;
   align-items: center;
+  justify-content: center;
   height:  87.5vh;
+  padding: .5rem;
+  border-radius: .5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.685);
 }
 .nav {
   padding: 1rem;
@@ -123,7 +96,6 @@ body {
   align-items: left;
 }
 .Side-Btns{
-
   display: flex;
 }
 .Side-Btns span {
@@ -165,51 +137,147 @@ body {
   display: flex;
   flex-direction: column;
 }
-/*----------- header ------------*/
-.header {
+/*----------- Content ------------*/
+#Content{
+  width: 100%;
+  height: 87.5vh;
+}
+
+.Blocks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 4rem 1fr 1fr; 
+  grid-column-gap: .8rem;
+  grid-row-gap:.8rem;
+}
+
+.Block{
+  padding:  1rem;
+  border-radius: 1rem;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.685);
+}
+
+#div1 { 
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin: 0 1rem 1rem 1rem;
+ 
+  
+  
+  grid-area: 1 / 1 / 2 / 4;
+
+}
+
+
+
+#div2 {
+ display: flex;
+ padding:1rem;
+ flex-direction: column;
+ justify-content: space-between;
+
+ 
+  grid-area: 2 / 1 / 4 / 3; 
+
+}
+
+
+.Video-Call{
+  height:450px;
+  border-radius: 1rem;
+  background-color: #003366;
+}
+.Video-Nav-Block{
+
+  padding: 1rem;
+  background-color: azure;
+}
+.Nav-Btns {
+  display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 0.7rem;
+  margin: 1rem 0;
 }
-.header h1 {
-  font-size: 1.3rem;
+
+.NBtns {
+  padding: 0.6rem 1rem;
+  background: #004a7c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: 0.2s ease;
 }
-.header p {
-  font-size: .9rem;
-  margin: -.5rem 0 0 0;
+
+.NBtns:hover {
+  background: #006bb3;
+  transform: translateY(-2px);
 }
-.Cursos-Ofrecidos-block-top {
+
+.primary {
+  background: #0088ff;
+}
+
+.primary:hover {
+  background: #0a9aff;
+}
+
+.lesson-meta{
   gap: 1rem;
   display: flex;
   flex-direction: column;
 }
-.COB-tittle {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin: 0 0 -0.5rem 0;
-}  
-  
-/*----------- Content ------------*/
-#Content{
-  width: 100%;
-  height:  87.5vh;
-  padding: 0.1rem  2rem;
-}
-#Line{
-  padding: .1rem;
-  margin: -1rem 0 1rem 0;
+
+.active-block{
+  display: none;
 }
 
-  
-  
-  
-  
-  
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+#div3 { 
+  
+
+   grid-area: 2 / 3 / 4 / 4;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     .header {
       font-size: 24px;
       font-weight: bold;

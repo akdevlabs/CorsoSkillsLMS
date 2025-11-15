@@ -311,8 +311,122 @@ applyBranding().then((data) => {
 
 
 
+let api = null;
+
+// Generate unique room ID
+function createRoomId() {
+  return "CS_" + Math.random().toString(36).substring(2, 12);
+}
+
+// Start the live class with full config
+function startClass(meetingId, teacherName = "Teacher") {
+  const domain = "meet.jit.si";
+
+  const options = {
+    roomName: meetingId,
+    width: "100%",
+    height: 470,
+    parentNode: document.getElementById("jitsi-container"),
+
+    userInfo: {
+      displayName: teacherName
+    },
+
+    configOverwrite: {
+      startWithAudioMuted: true,
+      startWithVideoMuted: true,
+      prejoinPageEnabled: false,
+    },
+
+    interfaceConfigOverwrite: {
+      DISABLE_JOIN_LEAVE_NOTIFICATIONS: false,
+    }
+  };
+
+  api = new JitsiMeetExternalAPI(domain, options);
+
+  // ----------------------------
+  // 💠 CLASSROOM CONTROLS
+  // ----------------------------
+
+  // 1) Set meeting password
+  api.addEventListener("videoConferenceJoined", () => {
+    api.executeCommand("password", "12345");
+  });
+
+  // 2) Force students to mute mic
+  function muteAll() {
+    api.executeCommand("muteEveryone");
+  }
+
+  // 3) Toggle tile view
+  function toggleView() {
+    api.executeCommand("toggleTileView");
+  }
+
+  // 4) Disable camera (for teacher or everyone)
+  function disableCamera() {
+    api.executeCommand("toggleCamera");
+  }
+
+  // ----------------------------
+  // 💠 LISTEN TO EVENTS
+  // ----------------------------
+
+  api.on("participantJoined", (data) => {
+    console.log("👤 User joined:", data);
+  });
+
+  api.on("participantLeft", (data) => {
+    console.log("👤 User left:", data);
+  });
+
+  api.on("readyToClose", () => {
+    console.log("📌 Meeting ended");
+    document.getElementById("jitsi-container").innerHTML = "";
+  });
+
+  // Return commands so you can call them from outside
+  return {
+    muteAll,
+    toggleView,
+    disableCamera
+  };
+}
+
+document.getElementById("startClassBtn").addEventListener("click", () => {
+  const meetingId = createRoomId();
+
+  const controls = startClass(meetingId, "Professor Juan");
+
+  // Example controls you can connect to buttons:
+  // controls.muteAll();
+  // controls.disableCamera();
+  // controls.toggleView();
+});
 
 
+document.addEventListener("DOMContentLoaded", () => {
+  const intro = document.getElementById("Intro-Info");
+  const resources = document.getElementById("Resources");
+
+  const preBtn = document.getElementById("preClassBtn");
+  const materialsBtn = document.getElementById("materialsBtn");
+
+  // Default: Show Intro, Hide Resources
+  intro.style.display = "block";
+  resources.style.display = "none";
+
+  preBtn.addEventListener("click", () => {
+    intro.style.display = "block";
+    resources.style.display = "none";
+  });
+
+  materialsBtn.addEventListener("click", () => {
+    intro.style.display = "none";
+    resources.style.display = "block";
+  });
+});
 
 
 
