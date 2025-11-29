@@ -688,6 +688,19 @@ async function fetchAllContent() {
     // Add to container
     container.appendChild(link);
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
   function renderEmailLink(email, subject = "", body = "",emailContainer) {
     const container = document.getElementById(emailContainer);
     container.innerHTML = "";
@@ -738,6 +751,84 @@ async function fetchAllContent() {
     // Agrega la lista al contenedor
     container.appendChild(list);
   }
+
+
+
+function renderCList(array, containerId, fieldName = "CourseCategory") {
+  const container = document.getElementById(containerId);
+
+  if (!container) {
+    console.error(`❌ No se encontró el contenedor con id "${containerId}"`);
+    return;
+  }
+
+  if (!Array.isArray(array)) {
+    console.error("⚠️ El parámetro proporcionado no es un arreglo.");
+    return;
+  }
+
+  // 🔥 Firestore reference built here
+  const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
+
+  container.innerHTML = "";
+  const list = document.createElement("ul");
+
+  array.forEach((item, index) => {
+    const key = Object.keys(item)[0];
+    const currentValue = item[key];
+
+    const li = document.createElement("li");
+    li.style.cursor = "pointer";
+    li.style.userSelect = "none";
+    li.textContent = `${key}: ${currentValue}`;
+
+    // 🔥 CLICK → toggle true/false
+    li.addEventListener("click", async () => {
+      try {
+        const newValue = !array[index][key];
+        array[index][key] = newValue;
+
+        // Clone array to avoid Firestore reference issues
+        const clonedArray = array.map(obj => ({ ...obj }));
+
+        // Save to Firestore
+        await updateDoc(docRef, {
+          [fieldName]: clonedArray
+        });
+
+        console.log(`🔄 ${key} cambiado a: ${newValue}`);
+
+        // Re-render list
+        renderCList(clonedArray, containerId, fieldName);
+
+      } catch (err) {
+        console.error("❌ Error actualizando Firestore:", err);
+      }
+    });
+
+    list.appendChild(li);
+  });
+
+  container.appendChild(list);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2817,8 +2908,11 @@ async function fetchAllContent() {
       }
       setupFontPreview()
       renderText(BusinessData.Font, "Main-Font")
-      renderList(BusinessData.CourseCategory, "Course-Category")
+      renderCList(BusinessData.CourseCategory, "Course-Category")
     }
+
+
+
 
     function SaveQuoteText() {
       const saveBtnQuote = document.getElementById("Save-Btn-QuoteText");
@@ -2931,18 +3025,21 @@ async function fetchAllContent() {
         }
 
         try {
-          // 🔹 Referencia al documento en Firestore
           const docRef = doc(db, "CorsoSkillBusiness", TBuInfo);
 
-          // 🔹 Guardar el valor como un nuevo elemento del array
+          // Create the array object entry
+          const newCategoryObj = {};
+          newCategoryObj[categoryValue] = true;
+
+          // Push into array using arrayUnion
           await updateDoc(docRef, {
-            CourseCategory: arrayUnion(categoryValue)
+            CourseCategory: arrayUnion(newCategoryObj)
           }).catch(async (error) => {
-            // Si el documento no existe, lo crea
+            // Document not found → create it
             if (error.code === "not-found") {
               await setDoc(
                 docRef,
-                { CourseCategory: [categoryValue] },
+                { CourseCategory: [newCategoryObj] },
                 { merge: true }
               );
             } else {
@@ -2950,10 +3047,9 @@ async function fetchAllContent() {
             }
           });
 
-          console.log("✅ Categoría añadida correctamente al arreglo en Firestore:", categoryValue);
+          console.log("✅ Categoría agregada al array:", newCategoryObj);
           alert(`✅ Categoría agregada: ${categoryValue}`);
 
-          // (Opcional) Limpiar el input
           inputCategory.value = "";
 
         } catch (error) {
@@ -2962,6 +3058,8 @@ async function fetchAllContent() {
         }
       });
     }
+
+
 
     async function SaveTrophyBanner() {
       const saveBtnBanner = document.getElementById("Save-Btn-Trophy");

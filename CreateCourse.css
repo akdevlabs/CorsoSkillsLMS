@@ -3,26 +3,26 @@
   margin: 0;
   padding: 0;
   }
-
 body {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 100%;
   overflow: hidden;
-
+  margin: 1rem;
+  display: grid;
+  grid-template-columns: auto 1fr; /* Sidebar auto-width */
+  grid-template-rows: 8vh auto;    /* Top user section */
+  gap: 1rem;
 }
 /*----------- User-Info ------------*/
-.User-Info{
+.User-Info {
+  grid-column: 1 / span 2;
+  height: 8vh;
+  border-radius: 1rem;
+  padding: .5rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 1rem;
-  padding: .5rem 1rem;
-  margin:1rem 1rem 0 1rem;
 }
 .User-Info h1{
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 .Alerts-User{
   gap: 2rem;
@@ -53,9 +53,16 @@ body {
 }
 /*----------- nav ------------*/
 .nav {
-  padding: 1rem ;
+  width: 5rem;     
   display: flex;
+  padding: 1rem ;
+  grid-column: 1; 
   border-radius: 1rem;
+  grid-row: 2 / span 6; 
+    /* Fix overflow issues */
+  min-height: 0;
+  height:  92%;
+  overflow-y: auto;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
 }
 .sidebar-content{
@@ -107,48 +114,38 @@ body {
   display: flex;
   flex-direction: column;
 }
-/*----------- main ------------*/
-main{
-  gap: 1rem;
-  height: 100vh;
-  display: flex;
-  margin: 1rem;
-}
-/*----------- Course-Creator-Block ------------*/
-.Course-Creator-Block{
-  width: 100%;
+
+/* Main course creator block */
+.Course-Creator-Block {
+  grid-column: 2;
+  grid-row: 2;
   padding: 1rem;
   border-radius: 1rem;
-  background-color: #fff;
+  /* Fix overflow issues */
+  min-height: 0;
+  height: 100%;
+  overflow-y: auto;
+
+  /* Ensures the block fits the grid area no matter what */
+  box-sizing: border-box;
 }
 /*-------- Course-Nav-block --------*/
 .Course-Nav-block{
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.2rem 1rem ;
   border-radius: 1rem;
+  align-items: center;
+  padding:1rem;
+  justify-content: space-between;
 }
 #Next-Btn{
   display: none;
   cursor: pointer;
   border-radius: 1rem;
-    padding: 10px 20px;
-  border-radius: 12px;
+  padding:.5rem 2rem;
+  border-radius: .5rem;
   font-weight: 600;
   transition: all 0.3s ease;
 }
-#Save-Btn{
-  display: none;
-  color: #f30101;
-  cursor: pointer;
-   font-weight: 600;
-  padding: .3rem 1rem;
-  border-radius: .5rem;
-  border: 2px solid red;
-  transition: all 0.3s ease;
-}
-
 .CCB {
   cursor: pointer;
   font-size: 1rem;
@@ -164,8 +161,21 @@ main{
 .glow-border {
   animation: borderGlow 1s ease-in-out infinite;
 }
+#Save-Btn{
+  display: none;
+  cursor: pointer;
+  font-weight: 600;
+  padding: .3rem 1rem;
+  border-radius: .5rem;
+  transition: all 0.3s ease;
+}
+
+
+
+
 /*-------- Course-Input-Blocks --------*/
 .Course-Input-Blocks {
+  max-height: 72vh;
   display: none;
 }
 .Course-Input-Blocks.active-block {
@@ -176,7 +186,8 @@ main{
 /*-------- Input-Blocks --------*/
 .Input-Blocks {
   width: 100%;
-  max-height: 710px; /* adjust height as needed */
+  height: auto;
+  max-height: 670px; /* adjust height as needed */
   overflow-y: auto;  /* enables vertical scroll */
   overflow-x: hidden; /* hides horizontal scroll */
   scroll-behavior: smooth; /* smooth scrolling */
@@ -196,6 +207,8 @@ main{
   font-weight: bolder;
   font-size: .9rem;
 }
+
+
 /*-------- Title-Block --------*/
 .Title-Block{
   margin: 0 0 1rem 0;
@@ -366,69 +379,6 @@ main{
 .level-option input[type="checkbox"]:checked + span {
   font-weight: 600;
 }
-/*-------- Tag-blocks --------*/
-#tagInput{
-  width: 100%;
-  margin: .5rem 0;
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-size: 15px;
-  outline: none;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease
-}
-#tagInput:focus {
-  box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
-}
-.tag-list{
-  gap:1rem;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  transition: background 0.3s ease;
-}
-.tag-list div{
-  gap: .5rem;
-  display: flex;
-  align-items: center;
-  padding: 6px 12px;
-  border-radius: 20px;
-  margin-bottom:.5rem;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-.tag-list div:hover {
-  transform: translateY(-1px);
-}
-.tag-list div .remove-tag {
-  border: none;
-  background: transparent;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: color 0.2s ease, transform 0.2s ease;
-  line-height: 1;
-  padding: 0;
-}
-.tag-list div .remove-tag:hover {
-  transform: scale(1.1);
-  animation: fadeInTag 0.25s ease;
-}
-.remove-tag {
-  margin-left: 8px;
-  background: none;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-.include-list {
-  display: flex;
-  gap: 8px;
-  margin-top: 10px;
-}
 /*-------- Description-blocks --------*/
 #descriptionInput{
   width: 100%;
@@ -463,7 +413,7 @@ main{
   display: flex;
   flex-wrap: wrap;
 }
-.include-item {
+.CIC-item {
   gap: 6px;
   display: flex;
   font-size: 13px;
@@ -475,166 +425,125 @@ main{
 /*-------- upload-section  --------*/
 .Uploads-Block{
   width: 100%;
-  gap: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-
-}
-.upload-section {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  margin: 20px 0;
-}
-.upload-box {
-  flex: 1;
-  min-width: 300px;
-}
-.upload-box h4 {
-  font-size: 14px;
-  margin-bottom: 8px;
+  align-items: center;
+  justify-content: space-evenly      ;
+
 }
 .drop-area {
-  border-radius: 10px;
-  text-align: center;
-  padding: 40px 20px;
-  transition: all 0.3s ease;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 40rem;
+  height: 12rem;
+  padding: 1rem 5rem;
+  border-radius: 1rem
+  
+}
+.drop-message{
+  gap: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 .drop-area i {
   font-size: 3rem;
   margin-bottom: 10px;
 }
-.drop-area p {
-  margin: 10px 0 5px;
-}
-.browse {
-  cursor: pointer;
-  font-weight: 600;
-}
 .drop-area small {
   font-size: 12px;
+}
+.upload-box h4 {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+.upload-box input{
+  width: 100%;
+  cursor: pointer;
+  padding: .5rem 1rem;
+  border-radius: 1rem
 }
 .preview {
   margin-top: 10px;
   max-width: 100%;
   border-radius: 8px;
 }
-#dropImage img{
-  width: 10rem;
+#imagePreview img{
+  width:  5rem;
 }
-
-
-/*-------- video-section  --------*/
-.video-drop-area {
-  border-radius: 8px;
-  text-align: center;
-  padding: 30px 20px;
-  width: 100%;
-  min-height: 100px;
-  max-width: 427px;  /* matches your sample box */
-  transition: border-color 0.3s, background-color 0.3s;
-  margin-top: 5px;
-}
-.video-drop-area i {
-  font-size: 40px;
-  margin-bottom: 10px;
-}
-.video-drop-area p {
-  font-size: 15px;
-  margin-bottom: 5px;
-}
-.video-drop-area small {
-  display: block;
-  margin-bottom: 15px;
-}
-.video-drop-area input {
-  width: 90%;
-  max-width: 380px;
-  padding: 10px;
-  border-radius: 6px;
-  outline: none;
-  font-size: 15px;
-}
-.video-drop-area input:focus {
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
-}
-
-
-
-
-
-
-
-
-
-
 
 
 /*-------- Starter-Page-Block  --------*/
 #Starter-Page-Block {
-  max-width: 110rem;
+  width: 100%;
+  height: 68vh;
+  box-sizing: border-box;
+}
+#Starter-Page-Block .Input-Blocks {
+  width: 70%;
+  height: auto;
+  max-height: 650px; /* adjust height as needed */
+  overflow-y: auto;  /* enables vertical scroll */
+  overflow-x: hidden; /* hides horizontal scroll */
+  scroll-behavior: smooth; /* smooth scrolling */
+  box-sizing: border-box;
 }
 #Starter-Page-Block h1{
   padding: 0 1rem;
+  font-size: 1.5rem;
 }
 #modules-container{
   width: 100%;
   margin: 1rem;
+  min-height: 0;
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 #Tema-Title{
-  font-size: 15px;
   outline: none;
+  font-size: .8rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 /*-------- Added-input-Block --------*/
 .Line{
-  padding:.1rem 0;
   margin:.8rem 0;
+  padding:.1rem 0;
 }
 .Line2{
-  padding:.1rem 0;
   margin:.8rem 0;
+  padding:.1rem 0;
 }
 .Line3{
-  padding:.1rem 0;
   margin:.8rem 0;
+  padding:.1rem 0;
 }
 .Added-input-Block{
   width: 98%;
   display: flex;
-  justify-content: space-between;
   margin: .5rem;
-}
-.remove-module{
-  font-weight: bolder;
-  font-size: 1.5rem;
-  border: none;
-  padding: .2rem 1rem;
-  background-color: transparent;
-}
-#modules-container{
-  width: 98%;
-  margin: 0 1rem;
+  justify-content: space-between;
 }
 /*-------- module-lesson-block --------*/
 .module-lesson-block{
-  width: 100%;
   gap: 1rem;
+  width: 100%;
   display: flex;
 }
 .module-lesson-block input{
   width: 83%;
-  border-radius: .5rem;
-  padding: .3rem 1rem;
-  font-size: 15px;
   outline: none;
+  font-size: 15px;
+  padding: .3rem 1rem;
+  border-radius: .5rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .module-lesson-block button{
-  width: 13rem;
+  width: 10rem;
   border: none;
+  font-size: .8rem;
   border-radius: .5rem;
   padding: .5rem 1.3rem;
 }
@@ -656,10 +565,10 @@ main{
   font-weight:500;
 }
 .input-block textarea{
-  padding: .5rem;
-  border-radius: .5rem;
-  font-size: 15px;
   outline: none;
+  padding: .5rem;
+  font-size: 15px;
+  border-radius: .5rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 /*-------- add-btns --------*/
@@ -667,12 +576,15 @@ main{
   gap: 1rem;
   display: flex;
   margin: .5rem 0;
+  align-items: center;
+  justify-content: center;
 }
 .add-btns button{
-  width: 10rem;
+  width: 8rem;
   border: none;
-  border-radius: .5rem;
+  font-size: 1.3rem;
   padding: .3rem 0;
+  border-radius: .5rem;
 }
 /*-------- Up-load-btn --------*/
 .Up-load-btn {
@@ -685,12 +597,52 @@ main{
   visibility: hidden;
 }
 .Up-load-btn::before {
-  content: 'Subir archivos';
-  display: inline-block;
   border: none;
+  cursor: pointer;
   border-radius: 8px;
   padding: 10px 16px;
+  display: inline-block;
+  content: 'Subir archivos';
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+.Up-load-btn:hover::before {
+  transform: translateY(-1px);
+}
+.Up-load-btn:active::before {
+  transform: translateY(1px);
+}
+/*-------- add-btns --------*/
+.add-btns{
+  gap: 1rem;
+  display: flex;
+  margin: .5rem 0;
+  align-items: center;
+  justify-content: center;
+}
+.add-btns button{
+  width: 8rem;
+  border: none;
+  font-size: .9rem;
+  padding: .3rem 0;
+  border-radius: .5rem;
+}
+/*-------- Up-load-btn --------*/
+.Up-load-btn {
+  border: none;
+  font-size: 15px;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+.Up-load-btn::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.Up-load-btn::before {
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 10px 16px;
+  display: inline-block;
+  content: 'Subir archivos';
   transition: background-color 0.3s ease, transform 0.1s ease;
 }
 .Up-load-btn:hover::before {
@@ -705,10 +657,10 @@ main{
 }
 #HW-Title{
   width: 100%;
+  outline: none;  
   padding: .5rem;
-  border-radius: .5rem;
-  font-size: 15px;
-  outline: none;
+  font-size: 15px;   
+  border-radius: .5rem;  
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 #HW-Text{
@@ -717,36 +669,36 @@ main{
   border-radius: .5rem;
 }
 .hw-date {
-  border-radius: 8px;
-  padding: 10px 14px;
-  font-size: 15px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
   outline: none;
   cursor: pointer;
+  font-size: 15px;  
+  border-radius: 8px;
+  padding: 10px 14px;  
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .hw-date:focus {
   box-shadow: 0 0 5px rgba(78, 115, 223, 0.3);
 }
 .hw-files {
-  color: transparent; /* Hide file name text */
   width: 180px;
   border: none;
+  cursor: pointer;
   border-radius: 8px;
   padding: 10px 14px;
-  cursor: pointer;
+  color: transparent; /* Hide file name text */
   transition: background-color 0.3s ease, transform 0.1s ease;
 }
 .hw-files::-webkit-file-upload-button {
   visibility: hidden;
 }
 .hw-files::before {
-  content: "Subir archivos";
-  display: inline-block;
-  border-radius: 8px;
-  padding: 10px 16px;
   font-size: 15px;
-  font-weight: 600;
   cursor: pointer;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 10px 16px;  
+  display: inline-block;
+  content: "Subir archivos";
   transition: background-color 0.3s ease, transform 0.1s ease;
 }
 .hw-files:hover::before {
@@ -759,14 +711,14 @@ main{
   outline-offset: 2px;
 }
 .add-file-input{
-  padding: .5rem 1rem;
   margin: .5rem 0;
+  padding: .5rem 1rem;
 }
 .HW-Bottom-Block{
+  margin: 1rem;
   display: flex;
   align-items: flex-start;
   justify-content: space-evenly;
-  margin: 1rem;
 }
 .file-inputs{
   display: flex;
@@ -782,77 +734,76 @@ main{
   border-radius: .5rem;
 }
 .Added-input-Block button{
-  font-size: 1.5rem;
-  background: none;
   border: none;
+  font-size: 1.5rem;
+  background: none;  
   font-weight: bolder;
 }
 /*-------- Tarea-Block --------*/
 .exam-title{
-  padding: .5rem;
-  border-radius: .5rem;
+  outline: none;  
+  padding: .5rem; 
   font-size: 15px;
-  outline: none;
+  border-radius: .5rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .exam-buttons{
   gap: 1rem;
   display: flex;
+  margin: .8rem 0;
   flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 .exam-buttons button{
-  width: 15rem;
-  border-radius: .5rem;
+  width: 12rem;
   border: none;
+  font-size: .8rem;
   padding: .5rem 0;
-  margin: 1rem auto;
+  border-radius: .5rem;
 }
 .exam-question-block {
   display: flex;
-  flex-direction: column;
   padding: 15px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.671);
   margin-bottom: 20px;
+  flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.671);
 }
 .Main-Question{
-  color: blue;
-  font-size: 1.3rem;
   border: none;
   padding: .5rem 0;
+  font-size: 1.3rem;
 }
 .Main-Question::placeholder{
-  color: blue;
   font-size: 1.3rem;
-  
 }
 .exam-question-block input{
   margin: .3rem 0;
-  border-radius: .5rem;
   padding: .4rem 1rem;
+  border-radius: .5rem;  
 }
 .QA{
+  outline: none;  
   padding: .5rem;
-  border-radius: .5rem;
   font-size: 15px;
-  outline: none;
+  border-radius: .5rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 /*-------- TFselector --------*/
 .TFselector {
   width: 100%;
-  padding: 10px 14px;
-  font-size: 15px;
-  font-weight: 500;
-  border-radius: 10px;
   outline: none;
-  transition: all 0.3s ease;
-  appearance: none;
+  font-size: 15px;
   cursor: pointer;
-  background-position: calc(100% - 18px) calc(1em + 2px), 
-  calc(100% - 13px) calc(1em + 2px);
-  background-size: 5px 5px, 5px 5px;
+  appearance: none;
+  font-weight: 500;
+  padding: 10px 14px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
   background-repeat: no-repeat;
+  background-size: 5px 5px, 5px 5px;
+  background-position: calc(100% - 18px) calc(1em + 2px), calc(100% - 13px) calc(1em + 2px);
 }
 .TFselector option {
   padding: 8px;
@@ -860,25 +811,24 @@ main{
 }
 /*-------- Element --------*/
 .Element-input{
-  padding: .5rem;
-  border-radius: .5rem;
-  font-size: 15px;
   outline: none;
+  padding: .5rem;
+  font-size: 15px;
+  border-radius: .5rem;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-/* === Dynamic Input Container === */
 .dynamic-inputs {
-  display: flex;
-  flex-direction: column;
   gap: 12px;
+  display: flex;
   margin-top: 12px;
+  flex-direction: column;
 }
 .input-block {
   position: relative;
-  border-radius: 12px;
   padding: 12px 14px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.692);
+  border-radius: 12px;
   transition: all 0.25s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.692);
 }
 .input-block label {
   display: block;
@@ -891,31 +841,31 @@ main{
 .input-block textarea,
 .input-block select {
   width: 100%;
+  outline: none;
   font-size: 14px;
   padding: 10px 12px;
   border-radius: 8px;
-  outline: none;
   transition: all 0.25s ease;
 }
 .input-block input[type="file"] {
   border: none;
-  background-color: transparent;
   font-size: 14px;
   cursor: pointer;
+  background-color: transparent;
 }
 .remove-input {
-  position: absolute;
   top: 10px;
   right: 12px;
-  border: none;
-  font-size: 13px;
-  font-weight: bold;
-  border-radius: 50%;
   width: 22px;
+  border: none;
   height: 22px;
-  line-height: 20px;
-  text-align: center;
   cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;  
+  line-height: 20px;
+  border-radius: 50%;
+  text-align: center;
+  position: absolute;
   transition: background 0.25s ease;
 }
 .input-block select {
@@ -923,46 +873,44 @@ main{
   background-size: 12px;
 }
 #add-module{
-  display: flex;
-  align-items:center ;
-  justify-content: center;
-  margin: 1rem 0;
   width: 100%;
   border: none;
+  display: flex;
+  margin: 1rem 0;
+  align-items:center;
   padding: .5rem 1rem;
   border-radius: .5rem;
+  justify-content: center;
 }
-
 
 
 /*-------- SPB-Preview-Blocks  --------*/
-.SPB-Preview-Blocks{
-  width: 40%;
-  padding: 1rem;
+.SPB-Preview-Blocks {
+  width: 30%;
+  min-width: 260px;
+   
+  height: 68vh;
   margin: 1rem;
+  padding: 1rem;
   border-radius: 1rem;
+  box-sizing: border-box;
 }
 #modules-Prview-block {
-  width: 30rem;
-  border-radius: 16px;
-  padding: 25px;
-  margin-top: 25px;
-  max-height: 600px;
-  overflow-y: auto;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  transition: all 0.3s ease;
-  scroll-behavior: smooth;
-}
-.preview-module {
-  border-radius: 12px;
+  width: 100%;
+  max-width: 30rem;
   padding: 20px;
+  overflow-y: auto;
+  margin-top: 25px;
+   min-height: 20rem;
+    max-height: 29rem;
+  border-radius: 12px;
   margin-bottom: 20px;
   transition: box-shadow 0.3s ease;
+  box-sizing: border-box;
 }
 .preview-module:hover {
   box-shadow: 0 4px 12px rgba(0,0,0,0.07);
 }
-
 .preview-module h2 {
   font-size: 1.4rem;
   font-weight: 700;;
@@ -970,67 +918,69 @@ main{
   padding-bottom: 6px;
 }
 .preview-lesson {
-  border-radius: 10px;
   padding: 16px;
+  border-radius: 10px;
   margin-bottom: 15px;
   transition: all 0.3s ease;
 }
 .preview-lesson h3 {
-  font-size: 1.1rem;
   font-weight: 600;
+  font-size: 1.1rem;
   margin-bottom: 10px;
 }
 .preview-lesson .description-section {
-  border-radius: 10px;
   padding: 12px 15px;
+  border-radius: 10px;
   margin-bottom: 10px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 .preview-lesson .description-section p {
   margin: 0;
-  font-size: 0.95rem;
   line-height: 1.5;
+  font-size: 0.95rem;
 }
 .preview-lesson p {
-  font-size: 0.95rem;
   margin: 5px 0;
   line-height: 1.5;
+  font-size: 0.95rem;
 }
 .preview-lesson p strong {
   font-weight: 600;
 }
 #modules-Prview-block p[style*="color:#999"] {
+  padding: 20px;
   text-align: center;
   font-size: 0.95rem;
-  padding: 20px;
   border-radius: 12px;
 }
 
 
 
-
-
-
-/*-------- Preview-Blocks  --------*/
-.Preview-Container{
+/*-------- Finalizar-Curso-Block  --------*/
+#Finalizar-Curso-Block{
   width: 100%;
-}
-.Preview-Block{
-  display: flex;
-  width: 100%;
+  height: 68vh;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .Preview-Left-Block{
-  width: 100%;
+  width: 80%;
+  display: flex;
+  margin: 0 1rem;
+  flex-direction: column;
+}
+.Preview-Left-Block{
+  width: 80%;
   display: flex;
   margin: 0 1rem;
   flex-direction: column;
 }
 .Preview-Title-Block{
+  gap: 2rem;
   display: flex;
   align-items: center;
-  font-size: .8rem;
+  padding: .1rem 1rem ;
   border-radius: 1rem;
-  padding: .3rem 1rem;
 }
 #Preview-Course-Img {
   display: flex;
@@ -1038,32 +988,25 @@ main{
   align-items: center;
 }
 #Preview-Course-Img img {
-  width: 3rem;           
-  height: 3rem;
+  width: 2.5rem;           
+  height: 2.5rem;
   border-radius: 50%;      
   object-fit: cover;       
 }
 .Preview-Title-Block h1{
-  margin: 0 auto;
+  font-size: 1.4rem;
 }
-/*-------- PCBBL-Teacher-Block  --------*/
-.PCBBL-Top{
-  margin: .5rem 1rem;
+/*-------- Preview-Video  --------*/
+.Preview-Video-block{
+  margin: .8rem 0;
+  border-radius: 1rem;
+  padding: 0;
 }
-.PCBBL-Teacher-Block{
-  gap: 1rem;
-  display: flex;
-  align-items: center;
-}
-.PCBBL-Teacher-Block span{
-  padding: .5rem 0;
-}
-/* --- Video Preview --- */
 #Preview-Video-Intro iframe,
 #Preview-Video-Intro video {
-  width: 80%;
-  max-width: 40%;
-  border-radius: 10px;
+  max-width: 60%;
+  height:17rem;
+  border-radius: 1rem;
   aspect-ratio: 16 / 9; /* maintains 16:9 ratio */
   display: block;
   margin: 1rem auto;
@@ -1071,33 +1014,67 @@ main{
 #Preview-Video-Intro {
   overflow: hidden;
 }
-/*-------- Preview-Content-BTN-Block  --------*/
+/*--- Preview-Content-BTN-Block ---*/
 .Preview-Content-BTN-Block{
-  padding: 1rem;
+  height: 40rem;
   border-radius: 1rem;
+  padding: 1rem;
 }
-/*-------- tabs-Block  --------*/
 .tabs{
+  gap: 1rem;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  border-radius: 1rem;
-  padding: .5rem 1rem;
+  justify-content: center;
+  margin: -1.5rem auto 1.5rem auto;
 }
 .tabs-Btns{
   width: 13rem;
-  border-radius: .5rem;
-  padding: .5rem 0;
   border: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  padding: .3rem 1rem;
+  border-radius: .5rem;
   transition: background 0.3s, color 0.3s;
 }
-.tabs-Btns.active {
-  border-radius: 6px;
-  padding: 6px 12px;
-  margin: 0 .5rem;
+#Teacher-Name{
+  font-size: 1rem;
+  font-weight: bolder;
+}
+#Teacher-About{
+  font-size: .9rem;
+}
+.PCB1{
+  display: flex;
+  align-items: center;
+  padding: .5REM 1rem;
+  border-radius: 1rem;
+  justify-content: space-between;
+}
+.PCBB1{
+  gap: 1rem;
+  display: flex;
+  align-items: center;
+}
+.PCBBB1{
+  gap: 1rem;
+  display: flex;
+  margin: 1rem 0;
+}
+.PCBBB1 .PC-Block{
+  gap: 1rem;
+  width: 50%;
+  padding: 1.5rem;
+  border-radius: 1rem;
+}
+.PC-Block{
+  display: flex;
+  flex-direction: column;
+}
+.PC-Icons{
+  gap: 2rem;
+  display: flex;
 }
 [id^="PCBB-Bottom-"] {
   display: none;
@@ -1105,12 +1082,10 @@ main{
 .active-block {
   display: block;
 }
-/*-------- PCBB-Bottom --------*/
-.PCBB{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.PCBB-4{
+  padding: .5rem;
 }
+/*-------- PCBB-Bottom --------*/
 .PCBB-Bottom {
   height: 15rem;
   overflow-y: auto;  
@@ -1122,93 +1097,277 @@ main{
   height: 6px;
   width: 6px;
 }
-/*-------- PCBBL-Bottom --------*/
-.PCBBL-Bottom{
-  margin:0 1rem;
-}
-.PCBBL-Bottom h2{
-  font-size:1.3rem;
-}
-.PCBBL-Bottom h3{
-  font-size:1rem;
-  margin: 0.3rem 1rem 0 1rem;
-}
-/*-------- Course-content-List  --------*/
-#Course-content-List{
-  list-style: none;
-  margin: 1rem 0;
-  max-height: 7rem; 
-  overflow-y: auto;  
-  overflow-x: hidden; 
-  border-radius: 1rem;
-  padding: .5rem  1rem;      
-  box-sizing: border-box;
-}
-#Course-content-List::-webkit-scrollbar {
-  width: 6px;
-}
-#Course-content-List::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-}
- #Course-content-List li {
-  position: relative;
-  padding: .2rem 0;
-  font-size: 1rem;
-  font-weight: 500;
-  transition: background 0.2s ease, color 0.2s ease;
-}
- #Course-content-List li::before {
-  content: "✔";
-  padding: 0 1rem 0 0;
-}
- #Course-content-List li:only-child::before {
-  content: "";
-}
-/*-------- Course-Description  --------*/
-#Course-Description{
-  width: 40rem;
+/* ===== PCBB-Resources Container ===== */
+#PCBB-Resources {
   padding: 1rem;
-  border-radius: 1rem;
+  margin: 20px auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
-#Course-Description p {
- margin: .5rem;
+#PCBB-Resources .resources-module {
+  margin-bottom: 18px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
 }
-/*-------- Preview-Right-Block  --------*/
+#PCBB-Resources .resources-module h2 {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+  cursor: pointer;
+  position: relative;
+  padding-left: 22px;
+}
+#PCBB-Resources .resources-module h2::before {
+  content: '▾';
+  position: absolute;
+  left: 0;
+  top: 1px;
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+#PCBB-Resources .resources-module.collapsed h2::before {
+  transform: rotate(-90deg);
+}
+#PCBB-Resources .resource-list {
+  list-style: none;
+  padding-left: 20px;
+  margin: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+#PCBB-Resources .resource-list li {
+  padding: 6px 0;
+  font-size: 0.95rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+#PCBB-Resources .resource-list li::before {
+  content: '📁';
+  margin-right: 8px;
+  font-size: 1rem;
+}
+#PCBB-Resources .resources-module p {
+  font-size: 0.9rem;
+  margin: 5px 0 0 0;
+}
+#PCBB-Resources .resources-module:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+#PCBB-Resources .resource-list.collapsed {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+/* -------------------------
+   HOMEWORK (Matches Resources)
+--------------------------*/
+#PCBB-HW {
+  padding: 1rem;
+  margin: 20px auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+#PCBB-HW .tareas-module {
+  margin-bottom: 18px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+}
+#PCBB-HW .tareas-module h2 {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+  cursor: pointer;
+  position: relative;
+  padding-left: 22px;
+}
+#PCBB-HW .tareas-module h2::before {
+  content: '▾';
+  position: absolute;
+  left: 0;
+  top: 1px;
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+#PCBB-HW .tarea-list {
+  list-style: none;
+  padding-left: 20px;
+  margin: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+#PCBB-HW .tarea-list li {
+  padding: 6px 0;
+  font-size: 0.95rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+#PCBB-HW .tarea-list li::before {
+  content: '📌'; /* You can change to 📁 if you prefer */
+  margin-right: 8px;
+  font-size: 1rem;
+}
+#PCBB-HW .tareas-module p {
+  font-size: 0.9rem;
+  margin: 5px 0 0 0;
+}
+#PCBB-HW .tareas-module:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+#PCBB-HW .tarea-list.collapsed {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+/* -------------------------
+   EXAMS (Matches Resources & Homework)
+--------------------------*/
+#PCBB-Exams {
+  padding: 1rem;
+  margin: 20px auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+#PCBB-Exams  h2 {
+  cursor: pointer;
+  font-size: 1.25rem;
+  position: relative;
+  padding-left: 22px;  
+  margin-bottom: 10px;
+}
+#PCBB-Exams h2::before {
+  left: 0;
+  top: 1px;
+  content: '▾';
+  font-size: 1rem;
+  position: absolute;
+  transition: transform 0.3s ease;
+}
+#PCBB-Exams .collapsed h2::before {
+  transform: rotate(-90deg);
+    color: blueviolet;
+}
+
+#PCBB-Exams li {
+  margin: 0;
+  list-style: none;
+  padding-left: 20px;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+#PCBB-Exams  li::before {
+  content: '❓';
+  margin-right: 8px;
+  font-size: 1rem;
+}
+#PCBB-Exams p {
+  font-size: 0.9rem;
+  margin: 5px 0 0 0;
+}
+#PCBB-Exams:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.219);
+}
+/* =========================
+   LIVE CLASSES TREE
+   ========================= */
+#PCBB-Live-Class {
+  padding: 1rem;
+  margin: 20px auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+#PCBB-Live-Class .live-module {
+  padding: 12px 18px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  transition: box-shadow 0.3s ease;
+}
+#PCBB-Live-Class .live-module h2 {
+  cursor: pointer;
+  font-size: 1.25rem;
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 10px;  
+}
+#PCBB-Live-Class .live-module h2::before {
+  content: '▾';
+  position: absolute;
+  left: 0;
+  top: 1px;
+  font-size: 1rem;
+  transition: transform 0.3s ease;
+}
+#PCBB-Live-Class .live-module.collapsed h2::before {
+  transform: rotate(-90deg);
+}
+#PCBB-Live-Class .live-list {
+  list-style: none;
+  padding-left: 20px;
+  margin: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+#PCBB-Live-Class .live-list li {
+  display: flex;
+  padding: 6px 0;
+  font-size: 0.95rem;
+  position: relative;
+  align-items: center;
+}
+#PCBB-Live-Class .live-list li::before {
+  content: '🎥'; /* Live class icon – can change if you prefer */
+  margin-right: 8px;
+  font-size: 1rem;
+}
+#PCBB-Live-Class .live-module p {
+  font-size: 0.9rem;
+  margin: 5px 0 0 0;
+}
+#PCBB-Live-Class .live-module:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+#PCBB-Live-Class .live-list.collapsed {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+
+
+
+
+
+/*--- Preview-Right-Block ---*/
 .Preview-Right-Block{
   width: 40%;
   display: flex;
-  flex-direction: column;
-  padding: 1rem;
+  padding: .5rem;
   border-radius:1rem;
+  flex-direction: column;
 }
 .Preview-Right-Block h1{
   font-size: 1.5rem;
 }
-
-
 /*-------- Course-Characteristics-block  --------*/
 .Course-Characteristics-block{
   gap: 1rem;
   display: flex;
+  padding: .6rem;
   flex-direction: column;
-  padding: 1rem;
 }
 .Course-Detials{
   gap:1rem;
   display:flex;
-  flex-direction: row;
   padding: 1rem;
+  flex-direction: row;
   border-radius: 1rem;
 }
 .Course-Detials-Blocks{
   gap: 1rem;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   margin: 0 auto;
+  align-items: center;
+  flex-direction: column;
 }
 .Course-Detials-Blocks i{
-  font-size:  1.2rem;
+  font-size:  1rem;
 }
 .Course-Detials-Blocks h3{
   font-size: 1rem;
@@ -1217,115 +1376,72 @@ main{
   gap: .3rem;
   display: flex;
   font-size: 1rem;
-  flex-direction: column;
+  font-weight: 600;  
   align-items: center;
-  font-weight: 600;
+  flex-direction: column;
 }
 /*-------- Avtive-Course-Tags  --------*/
-.Avtive-Course-Tags h3{
-  color: aqua;
-}
 .Preview-Active-Tags-Block{
   gap: 1rem;
-  color: aquamarine;
-  max-width: 25rem;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
+
+  font-size: 1rem;
   margin: .5rem 1rem;
-  
+    max-height: 5rem;
+  overflow-y: auto;
 }
 .Preview-lines{
   padding: .07rem 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* ==============================
    CORSOSKILLS COURSE STRUCTURE
    ============================== */
 #module-curse-coontent {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 25px 30px;
-  margin-top: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  font-family: "Poppins", sans-serif;
-  color: #1e293b;
-  max-height: 550px;
   overflow-y: auto;
+  max-height: 20rem;
+  border-radius: 20px;
   transition: all 0.3s ease;
-  border: 1px solid #e5e7eb;
-}
 
-/* Scrollbar Styling */
+}
 #module-curse-coontent::-webkit-scrollbar {
   width: 8px;
 }
 #module-curse-coontent::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #007bff, #00c6ff);
   border-radius: 10px;
 }
-#module-curse-coontent::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #0066cc, #00aaff);
-}
-
-/* === MODULE LEVEL === */
 #module-curse-coontent .structure-module {
-  margin-bottom: 28px;
   padding: 18px 20px;
-  border-left: 5px solid transparent;
-  border-image: linear-gradient(180deg, #007bff, #00c6ff) 1;
-  background: #f8fafc;
+  margin-bottom: 28px;
   border-radius: 16px;
   transition: all 0.3s ease;
+  border-left: 5px solid transparent;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
-
 #module-curse-coontent .structure-module:hover {
-  background: #f1f5f9;
   transform: translateY(-2px);
 }
-
 #module-curse-coontent .structure-module h2 {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 10px;
-  background: linear-gradient(90deg, #007bff, #00c6ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  border-radius: .5rem;
   letter-spacing: 0.5px;
+  padding: .3rem;
 }
-
-/* === TEMA LEVEL === */
 #module-curse-coontent .tema-list {
   list-style: none;
   margin: 0;
   padding-left: 20px;
 }
-
 #module-curse-coontent .tema-list li {
   position: relative;
   margin: 10px 0;
   padding-left: 28px;
   font-size: 0.95rem;
-  color: #334155;
   transition: all 0.2s ease;
 }
-
 #module-curse-coontent .tema-list li::before {
   content: "📘";
   position: absolute;
@@ -1334,46 +1450,33 @@ main{
   font-size: 1rem;
   opacity: 0.9;
 }
-
 #module-curse-coontent .tema-list li:hover {
-  color: #007bff;
   transform: translateX(3px);
 }
-
-/* === SUBTEMA LEVEL === */
 #module-curse-coontent .subtema-list {
   list-style: none;
   margin: 8px 0 0 25px;
   padding-left: 15px;
-  border-left: 2px dashed rgba(0, 123, 255, 0.3);
 }
-
 #module-curse-coontent .subtema-list li {
   margin: 6px 0;
   font-size: 0.9rem;
-  color: #475569;
   padding-left: 18px;
   position: relative;
   transition: all 0.2s ease;
 }
-
 #module-curse-coontent .subtema-list li::before {
-  content: "";
-  position: absolute;
   left: 0;
   top: 7px;
   width: 7px;
+  content: "";
   height: 7px;
-  background: linear-gradient(90deg, #007bff, #00c6ff);
+  position: absolute;
   border-radius: 50%;
 }
-
 #module-curse-coontent .subtema-list li:hover {
-  color: #00aaff;
   transform: translateX(3px);
 }
-
-/* === ANIMATION === */
 #module-curse-coontent .structure-module,
 #module-curse-coontent .tema-list li,
 #module-curse-coontent .subtema-list li {
@@ -1381,370 +1484,59 @@ main{
   transform: translateY(10px);
   animation: curseFadeInUp 0.4s ease forwards;
 }
-
 @keyframes curseFadeInUp {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-
-
-
-
-
-
-/* ===== PCBB-HW Container ===== */
-#PCBB-HW {
-  font-family: 'Arial', sans-serif;
-  padding: 15px;
-  background-color: #fefefe;
-  border-radius: 12px;
-  border: 1px solid #e0e0e0;
-  max-width: 800px;
-  margin: 20px auto;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-/* Each module inside PCBB-HW */
-#PCBB-HW .tareas-module {
-  margin-bottom: 18px;
-  background-color: #ffffff;
-  padding: 12px 18px;
-  border-radius: 8px;
-  border: 1px solid #dcdcdc;
-  transition: box-shadow 0.3s ease;
-}
-
-/* Module title */
-#PCBB-HW .tareas-module h2 {
-  font-size: 1.25rem;
-  color: #2c3e50;
-  margin-bottom: 10px;
-  cursor: pointer;
-  position: relative;
-  padding-left: 22px;
-}
-
-/* Arrow indicator for collapse/expand */
-#PCBB-HW .tareas-module h2::before {
-  content: '▾';
-  position: absolute;
-  left: 0;
-  top: 1px;
-  font-size: 1rem;
-  color: #3498db;
-  transition: transform 0.3s ease;
-}
-
-/* Collapsed state arrow rotation */
-#PCBB-HW .tareas-module.collapsed h2::before {
-  transform: rotate(-90deg);
-}
-
-/* List of tareas */
-#PCBB-HW .tarea-list {
-  list-style: none;
-  padding-left: 20px;
-  margin: 0;
-  transition: max-height 0.3s ease, opacity 0.3s ease;
-}
-
-/* Each tarea item */
-#PCBB-HW .tarea-list li {
-  padding: 6px 0;
-  font-size: 0.95rem;
-  color: #555;
-  position: relative;
-}
-
-/* Bullet style for tareas */
-#PCBB-HW .tarea-list li::before {
-  content: '📌';
-  margin-right: 8px;
-}
-
-/* No tareas message */
-#PCBB-HW .tareas-module p {
-  font-size: 0.9rem;
-  color: #999;
-  margin: 5px 0 0 0;
-}
-
-/* Hover effect on module */
-#PCBB-HW .tareas-module:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-/* Smooth collapse effect */
-#PCBB-HW .tarea-list.collapsed {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-}
-
-
-
-
-
-
-
-
-
-
-/* ===== PCBB-Exams Container ===== */
-#PCBB-Exams {
-  font-family: 'Arial', sans-serif;
-  padding: 15px;
-  background-color: #fefefe;
-  border-radius: 12px;
-  border: 1px solid #e0e0e0;
-  max-width: 800px;
-  margin: 20px auto;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-/* Each exam module inside PCBB-Exams */
-#PCBB-Exams .exam-module {
-  margin-bottom: 18px;
-  background-color: #ffffff;
-  padding: 12px 18px;
-  border-radius: 8px;
-  border: 1px solid #dcdcdc;
-  transition: box-shadow 0.3s ease;
-}
-
-/* Exam title */
-#PCBB-Exams .exam-module h2 {
-  font-size: 1.25rem;
-  color: #2c3e50;
-  margin-bottom: 10px;
-  cursor: pointer;
-  position: relative;
-  padding-left: 22px;
-}
-
-/* Arrow indicator for collapse/expand */
-#PCBB-Exams .exam-module h2::before {
-  content: '▾';
-  position: absolute;
-  left: 0;
-  top: 1px;
-  font-size: 1rem;
-  color: #3498db;
-  transition: transform 0.3s ease;
-}
-
-/* Collapsed state arrow rotation */
-#PCBB-Exams .exam-module.collapsed h2::before {
-  transform: rotate(-90deg);
-}
-
-/* Questions list */
-#PCBB-Exams .question-list {
-  list-style: none;
-  padding-left: 20px;
-  margin: 0;
-  transition: max-height 0.3s ease, opacity 0.3s ease;
-}
-
-/* Each question item */
-#PCBB-Exams .question-list li {
-  padding: 6px 0;
-  font-size: 0.95rem;
-  color: #555;
-  position: relative;
-}
-
-/* Bullet style for questions */
-#PCBB-Exams .question-list li::before {
-  content: '❓';
-  margin-right: 8px;
-}
-
-/* Message for empty state */
-#PCBB-Exams .exam-module p {
-  font-size: 0.9rem;
-  color: #999;
-  margin: 5px 0 0 0;
-}
-
-/* Hover effect on module */
-#PCBB-Exams .exam-module:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-/* Smooth collapse effect */
-#PCBB-Exams .question-list.collapsed {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-}
-
-
-
-
-
-
-
-
-
-
-
-/* ===== PCBB-Resources Container ===== */
-#PCBB-Resources {
-  font-family: 'Arial', sans-serif;
-  padding: 15px;
-  background-color: #fefefe;
-  border-radius: 12px;
-  border: 1px solid #e0e0e0;
-  max-width: 800px;
-  margin: 20px auto;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-/* Each module block */
-#PCBB-Resources .resources-module {
-  margin-bottom: 18px;
-  background-color: #ffffff;
-  padding: 12px 18px;
-  border-radius: 8px;
-  border: 1px solid #dcdcdc;
-  transition: box-shadow 0.3s ease;
-}
-
-/* Module title (click to collapse) */
-#PCBB-Resources .resources-module h2 {
-  font-size: 1.25rem;
-  color: #2c3e50;
-  margin-bottom: 10px;
-  cursor: pointer;
-  position: relative;
-  padding-left: 22px;
-}
-
-/* Arrow indicator for collapse/expand */
-#PCBB-Resources .resources-module h2::before {
-  content: '▾';
-  position: absolute;
-  left: 0;
-  top: 1px;
-  font-size: 1rem;
-  color: #3498db;
-  transition: transform 0.3s ease;
-}
-
-/* Collapsed state arrow rotation */
-#PCBB-Resources .resources-module.collapsed h2::before {
-  transform: rotate(-90deg);
-}
-
-/* File list inside module */
-#PCBB-Resources .resource-list {
-  list-style: none;
-  padding-left: 20px;
-  margin: 0;
-  transition: max-height 0.3s ease, opacity 0.3s ease;
-}
-
-/* Each file item */
-#PCBB-Resources .resource-list li {
-  padding: 6px 0;
-  font-size: 0.95rem;
-  color: #555;
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-/* File icon */
-#PCBB-Resources .resource-list li::before {
-  content: '📁';
-  margin-right: 8px;
-  font-size: 1rem;
-}
-
-/* Empty module message */
-#PCBB-Resources .resources-module p {
-  font-size: 0.9rem;
-  color: #999;
-  margin: 5px 0 0 0;
-}
-
-/* Hover effect */
-#PCBB-Resources .resources-module:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-
-/* Smooth collapse animation */
-#PCBB-Resources .resource-list.collapsed {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-}
-
-
-
-
-
-/* =========================
-   LIVE CLASSES TREE
-   ========================= */
-
-#PCBB-Live-Class {
-  margin: 1rem 0;
-  padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #fefefe;
-  font-family: 'Arial', sans-serif;
-}
-
-#PCBB-Live-Class .live-module {
-  margin-bottom: 1rem;
-  padding: 0.5rem 1rem;
-  border-left: 4px solid #4CAF50; /* Highlight for module */
-  background-color: #f9fff9;
-  border-radius: 4px;
-  transition: background 0.3s ease;
-}
-
-#PCBB-Live-Class .live-module h2 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1.1rem;
-  color: #333;
-  cursor: pointer;
-  user-select: none;
-}
-
-#PCBB-Live-Class .live-module p {
-  margin: 0.2rem 0 0.2rem 1.5rem; /* Indent for hierarchical style */
-  font-size: 0.95rem;
-  color: #555;
-  position: relative;
-}
-
-#PCBB-Live-Class .live-module p::before {
-  content: '▶';
-  font-size: 0.8rem;
-  color: #4CAF50;
-  position: absolute;
-  left: -1.2rem;
-  top: 0;
-}
-
-/* Optional: collapse/expand functionality styling */
-#PCBB-Live-Class .live-module.collapsed p {
+#Show-Btn{
   display: none;
 }
 
-#PCBB-Live-Class .live-module:hover {
-  background-color: #f0fff0;
+
+#loading-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  z-index: 999999;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.712);
+}
+#loading-popup .loading-box {
+  padding: 5rem;
+  text-align: center;
+  border-radius: 1rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.658);
+}
+#loading-popup .loading-box img {
+  width: 25rem;
+  margin-bottom: 10px;
+}
+#loading-popup .loading-box h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+#loading-popup .loading-box p {
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: bolder;
+}
+.rotate-loading {
+  animation: rotateIcon 3s linear infinite;
+}
+@keyframes rotateIcon {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* Style for empty module message */
-#PCBB-Live-Class .live-module p.empty {
-  color: #888;
-  font-style: italic;
-  margin-left: 1rem;
-}
+
