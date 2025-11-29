@@ -354,7 +354,29 @@ applyBranding().then((data) => {
    setBorder(".stat-card", `2px solid ${Base}`);
    setBorder(".stat-icon", `2px solid ${Base}`);
   }
-  
+  function setUpComingClassesColors() {
+    const style = document.createElement("style");
+    style.textContent = `
+
+.Course-List {
+   color: ${Prime4}; 
+  background-color: ${Base};
+
+}
+.Course-Categories {
+  border-bottom: 2px solid ${Prime5};
+}
+.Course-Row {
+  border-bottom: 1px solid ${Prime5};
+}
+.Course-Row:hover {
+color: ${Base};
+  background: ${Prime4}; 
+
+}
+    `;
+    document.head.appendChild(style);
+  }
  
 
   setGlobalFont(data.Font)
@@ -369,6 +391,7 @@ applyBranding().then((data) => {
   setcardContainerColors()
 
   setContentColors()
+  setUpComingClassesColors()
 });
 
 
@@ -547,7 +570,7 @@ function getCoursesByTeacher(allCourses, targetTeacherId) {
   function renderWelcome() {
     // prefer single teacher's fullName if available, else fallback text
     const name = (TeacherData && TeacherData.fullName) ? TeacherData.fullName : (TeachersData?.fullName || null);
-    renderText("Hola, " + name, "wecome-banner-tittle");
+   
     renderText(name, "User-Name");
     
   }
@@ -715,11 +738,7 @@ function getCoursesByTeacher(allCourses, targetTeacherId) {
 
   function renderCoursesCreated(){
     const Coursecont = getCoursesByTeacher(classroomData.courses, UserUidInfo)
-    console.log(Coursecont.length      )
     renderText(Coursecont.length, "Cclasses")
-
-
-
   }
 
 
@@ -727,12 +746,84 @@ function getCoursesByTeacher(allCourses, targetTeacherId) {
 
 
 
-  // --------- cards/carousel rendering (safe guards) ----------
-  const classes = [
-    { title: "Contextual understanding and design process flow", subtitle: "UI/UX FUNDAMENTAL", hours: "14 Hours", status: "active", buttonText: "START THE CLASS", buttonType: "start" },
-    { title: "Introduction to foundation of desk research and how to present", subtitle: "UI/UX FUNDAMENTAL", hours: "20 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" },
-    { title: "Basic illustration and how to use the adobe illustrator", subtitle: "UI/UX FUNDAMENTAL", hours: "32 Hours", status: "upcoming", buttonText: "UPCOMING CLASS", buttonType: "upcoming" }
-  ];
+  
+
+
+
+
+
+// --------------------- Extract Courses from Object ---------------------
+function getCoursesByTeacherId(allCoursesObj, teacherId) {
+  const result = [];
+
+  for (const categoryKey in allCoursesObj) {
+    const category = allCoursesObj[categoryKey];
+    if (typeof category !== "object") continue;
+
+    for (const levelKey in category) {
+      const level = category[levelKey];
+      if (typeof level !== "object") continue;
+
+      for (const courseKey in level) {
+        const course = level[courseKey];
+        if (!course || typeof course !== "object") continue;
+
+        if (course.createdBy?.teacherId === teacherId) {
+          result.push(course);
+        }
+      }
+    }
+  }
+  return result;
+}
+
+
+// --------------------- Extract ALL Live Classes ---------------------
+function getAllLiveClasses(allCoursesArray) {
+  const liveClasses = [];
+
+  allCoursesArray.forEach(course => {
+    const contents = course["Courses Content"];
+    if (!Array.isArray(contents)) return;
+
+    contents.forEach(item => {
+      if (item.type === "clase-en-vivo" && Array.isArray(item.clases)) {
+        item.clases.forEach(clase => {
+          liveClasses.push({
+            courseId: course.Id,
+            courseTitle: course.title,
+            ...clase
+          });
+        });
+      }
+    });
+  });
+
+  return liveClasses;
+}
+
+// --------------------- Convert Live Classes to Carousel Format ---------------------
+function convertLiveClassesToCarouselFormat(liveClasses) {
+  return liveClasses.map(lc => ({
+    title: lc.title || "Live Class",
+    subtitle: lc.courseTitle || "",
+    hours: `${lc.duration || 0} min`,
+    datetime: lc.datetime || "",
+    desc: lc.desc || "",
+    status: "active",
+    buttonText: "JOIN LIVE",
+    buttonType: "start"
+  }));
+}
+
+// --------------------- Build Carousel ---------------------
+function buildCarousel() {
+  const allCourses = getCoursesByTeacherId(classroomData.courses, UserUidInfo);
+  const liveClasses = getAllLiveClasses(allCourses);
+
+  console.log("Live Classes:", liveClasses);
+
+  const classes = convertLiveClassesToCarouselFormat(liveClasses);
 
   const avatars = [
     "https://i.pravatar.cc/28?img=1",
@@ -741,69 +832,147 @@ function getCoursesByTeacher(allCourses, targetTeacherId) {
   ];
 
   const container = document.getElementById("cardContainer");
-  if (container) {
-    container.innerHTML = ""; // clear previous cards
-    classes.forEach(cls => {
-      const card = document.createElement("div");
-      card.className = `card ${cls.status === "active" ? "active" : ""}`;
-      card.innerHTML = `
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  if (classes.length === 0) {
+    container.innerHTML = `<p style="color:#999; padding:1rem;">No live classes found.</p>`;
+    return;
+  }
+
+  classes.forEach(cls => {
+    const card = document.createElement("div");
+    card.className = `card ${cls.status === "active" ? "active" : ""}`;
+    card.innerHTML = `
         <h4>${cls.subtitle}</h4>
         <h3>${cls.title}</h3>
+        <p style="font-size:12px; color:#666;">
+  ${cls.desc?.length > 45 ? cls.desc.slice(0, 45) + "..." : cls.desc}
+</p>
         <div class="hours">${cls.hours}</div>
+        <div class="hours">${cls.datetime}</div>
         <button class="btn ${cls.buttonType}">${cls.buttonText}</button>
         <div class="avatars">
           ${avatars.map(src => `<img src="${src}" />`).join("")}
           <span>+22</span>
         </div>
-      `;
-      container.appendChild(card);
-    });
+    `;
+    container.appendChild(card);
+  });
+
+  initCarousel(classes.length);
+}
+
+buildCarousel();
+
+// --------------------- Carousel Logic ---------------------
+function initCarousel(totalCards) {
+  const track = document.querySelector(".carousel-track");
+  const prevBtn = document.querySelector(".carousel-btn.prev");
+  const nextBtn = document.querySelector(".carousel-btn.next");
+
+  let index = 0;
+
+  function updateCarousel() {
+    const firstCard = track.querySelector(".card");
+    if (!track || !firstCard) return;
+
+    const style = window.getComputedStyle(firstCard);
+    const marginRight = parseFloat(style.marginRight || 20);
+    const cardWidth = firstCard.offsetWidth + marginRight;
+
+    if (index < 0) index = totalCards - 1;
+    if (index >= totalCards) index = 0;
+
+    track.style.transform = `translateX(-${index * cardWidth}px)`;
+
+    track.querySelectorAll(".card").forEach((c, i) =>
+      c.classList.toggle("active", i === index)
+    );
   }
 
-  // Carousel logic: guard against missing nodes
-const track = document.querySelector(".carousel-track");
-const prevBtn = document.querySelector(".carousel-btn.prev");
-const nextBtn = document.querySelector(".carousel-btn.next");
-let index = 0;
+  if (prevBtn) prevBtn.addEventListener("click", () => { index--; updateCarousel(); });
+  if (nextBtn) nextBtn.addEventListener("click", () => { index++; updateCarousel(); });
 
-function updateCarousel() {
-  const firstCard = track.querySelector(".card");
-  if (!track || !firstCard) return;
-  const style = window.getComputedStyle(firstCard);
-  const marginRight = parseFloat(style.marginRight || 20);
-  const cardWidth = firstCard.offsetWidth + marginRight;
-  // clamp index to valid range just in case
-  const maxIndex = Math.max(0, classes.length - 1);
-  if (index < 0) index = maxIndex;
-  if (index > maxIndex) index = 0;
-  track.style.transform = `translateX(-${index * cardWidth}px)`;
-  // optional: highlight active card
-  track.querySelectorAll(".card").forEach((c, i) => c.classList.toggle("active", i === index));
-}
-
-// wrap-around behavior so buttons always do something
-if (prevBtn) {
-  prevBtn.addEventListener("click", () => {
-    index = index - 1;
-    if (index < 0) index = classes.length - 1; // wrap to end
-    updateCarousel();
-  });
-}
-if (nextBtn) {
-  nextBtn.addEventListener("click", () => {
-    index = index + 1;
-    if (index >= classes.length) index = 0; // wrap to beginning
-    updateCarousel();
-  });
-}
-
-// call it once on load
-updateCarousel();
-
-// recalc on resize (keeps layout in sync)
-window.addEventListener("resize", () => {
   updateCarousel();
-});
+  window.addEventListener("resize", updateCarousel);
+}
+
+
+
+
+
+// --------------------- Detect Level from Course ID ---------------------
+function getLevelFromId(courseId = "") {
+  if (!courseId || typeof courseId !== "string") return "—";
+  const match = courseId.match(/[A-Za-z]/);
+  if (!match) return "—";
+  const letter = match[0].toUpperCase();
+
+  switch (letter) {
+    case "B": return "Principiante";
+    case "I": return "Intermedio";
+    case "A": return "Avanzado";
+    default: return "—";
+  }
+}
+
+// --------------------- RENDER ALL COURSES (NOT FILTERED) ---------------------
+function renderAllCoursesList() {
+  const courses = getCoursesByTeacherId(classroomData.courses, UserUidInfo);
+
+  const container = document.querySelector(".Course-List");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  // Header
+  const header = document.createElement("div");
+  header.className = "Course-Categories";
+  header.innerHTML = `
+    <h4>Nombre del Curso</h4>
+    <h4>Inicio</h4>
+    <h4>Calificación</h4>
+    <h4>Nivel</h4>
+  `;
+  container.appendChild(header);
+
+  if (courses.length === 0) {
+    const empty = document.createElement("p");
+    empty.style.color = "#999";
+    empty.style.padding = "1rem";
+    empty.textContent = "No courses found.";
+    container.appendChild(empty);
+    return;
+  }
+
+  // Rows
+  courses.forEach(course => {
+    const createdDate = new Date(course.createdAt || null);
+    const formattedDate = createdDate.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric"
+    });
+
+    const row = document.createElement("div");
+    row.className = "Course-Row";
+
+    row.innerHTML = `
+      <div>${course.title || "Untitled Course"}</div>
+      <div>${formattedDate}</div>
+      <div>${course.rate || "—"}</div>
+      <div>${getLevelFromId(course.Id)}</div>
+    `;
+
+    container.appendChild(row);
+  });
+}
+
+renderAllCoursesList();
+
+
 
 
 
@@ -852,9 +1021,6 @@ fetchAllContent()
 
 
 
-
-
-
   function renderTodaysDate() {
     const container = document.querySelector(".UCC-Btn");
     if (!container) return;
@@ -882,7 +1048,12 @@ fetchAllContent()
 
 
 
+
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
+  const navbar = document.getElementById("sidebar");
   const openBtn = document.getElementById("open");
   const closeBtn = document.getElementById("close");
   const menuToggle = document.getElementById("menuToggle");
@@ -893,12 +1064,14 @@ document.addEventListener("DOMContentLoaded", function () {
     linkNames.forEach(el => el.style.display = "inline");
     openBtn.style.display = "none";
     closeBtn.style.display = "flex";
+    navbar.style.width = "10rem";
   }
 
   function hideSidebarText() {
     linkNames.forEach(el => el.style.display = "none");
     closeBtn.style.display = "none";
     openBtn.style.display = "flex";
+    navbar.style.width = "5rem";
   }
 
   function toggleMobileSidebar() {
@@ -908,7 +1081,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Attach event listeners
   openBtn.addEventListener("click", showSidebarText);
   closeBtn.addEventListener("click", hideSidebarText);
-  menuToggle.addEventListener("click", toggleMobileSidebar);
+
 
   // Initial state
   hideSidebarText();

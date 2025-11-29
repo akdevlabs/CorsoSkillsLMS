@@ -2,29 +2,27 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
+  }
 body {
-  gap: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  overflow: hidden;
   margin: 1rem;
-  height: 100vh; /* fixed height */
-  overflow: hidden; /* prevent full page scroll */
+  display: grid;
+  grid-template-columns: auto 1fr; /* Sidebar auto-width */
+  grid-template-rows: 8vh auto;    /* Top user section */
+  gap: 1rem;
 }
-
-
 /*----------- User-Info ------------*/
-.User-Info{
+.User-Info {
+  grid-column: 1 / span 2;
+  height: 8vh;
+  border-radius: 1rem;
+  padding: .5rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-radius: 1rem;
-  padding: 0 1rem;
 }
 .User-Info h1{
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 .Alerts-User{
   gap: 2rem;
@@ -40,13 +38,12 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding: .8rem .5rem 0 0;
 }
 .User-Block{
   gap:1rem;
   display: flex;
   align-items: center;
-  
+  padding: .4rem;
 }
 #User-Id{
  font-size: .6rem; 
@@ -54,145 +51,97 @@ body {
 #User-Name{
   font-size: .8rem;
 }
-#profile-Icon img{
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  margin: .5rem;
-}
-
-
-
-/*----------- main ------------*/
-.main{
-  gap: 1rem;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-}
-
-/*----------- Main-Blocks ------------*/
-.Main-Blocks{
-  padding: 1rem;
-  border-radius: 1rem;
-}
-/*----------- Sidebar ------------*/
-#sidebar{
-  display: flex;
-  align-items: center;
-  height:  87.5vh;
-}
+/*----------- nav ------------*/
 .nav {
-  padding: 1rem;
+  width: 5rem;     
   display: flex;
-  margin: 1rem;
+  padding: 1rem ;
+  grid-column: 1; 
   border-radius: 1rem;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.205);
-  flex-wrap: wrap;
+  grid-row: 2 / span 6; 
+    /* Fix overflow issues */
+  min-height: 0;
+  height:  92%;
+  overflow-y: auto;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
 }
 .sidebar-content{
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  justify-content:space-between;
 }
-#Bulogos {
+#Bulogos{
   width: 3rem;
   display: flex;
   align-items: left;
 }
-.Side-Btns{
-
-  display: flex;
-}
-.Side-Btns span {
-  display: none;
-}
-.sidebar-top {
+.sidebar-top{
   gap: 1.5rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: left;
   justify-content: center;
 }
-.Side-caret {
+.Side-caret{
   display: flex;
   align-items: flex-end;
-  justify-content: flex-end;
+  justify-content: right;
   font-size: 1.5rem;
 }
-.Action-nav-btns,
-.Side-Btns {
+.Action-nav-btns{
   display: flex;
   align-items: center;
-  gap: 0.5rem;
 }
-.Side-Btns i {
+.Side-Btns{
+  gap:.5rem;
+  display: flex;
+  align-items: center;
+
+}
+.Side-Btns i{
   font-size: 1.5rem;
 }
-.linkName {
-  font-size: 0.8rem;
+.linkName{
+  font-size: .8rem;
 }
-#open {
+#open{
   margin: 0 -1.3rem;
 }
-#close{
-  display: none;
-}
-.sidebar-bottom {
+.sidebar-bottom{
   gap: 1rem;
   display: flex;
   flex-direction: column;
 }
-/*----------- header ------------*/
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 1rem 1rem 1rem;
-  flex-wrap: wrap;
+/* Main course creator block */
+.Main-Blocks {
+  grid-column: 2;
+  grid-row: 2;
+  padding: 0 1rem;
+  border-radius: 1rem;
+  /* Fix overflow issues */
+  min-height: 0;
+  height: 100%;
+  overflow-y: auto;
+
+  /* Ensures the block fits the grid area no matter what */
+  box-sizing: border-box;
 }
-.header h1 {
-  font-size: 1.3rem;
-}
-.header p {
-  font-size: .9rem;
-  margin: -.5rem 0 0 0;
-}
-.Cursos-Ofrecidos-block-top {
-  gap: 1rem;
-  display: flex;
-  flex-direction: column;
-}
-.COB-tittle {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin: 0 0 -0.5rem 0;
-}
-/*----------- Content ------------*/
-#Content{
-  width: 100%;
-  height:  87.5vh;
-  padding: 0.1rem  2rem;
+.Main-Blocks h1{
+  font-size: 1.4rem;
+  padding: .5rem 0;
 }
 #Line{
-  padding: .1rem;
-}
-#Content h1{
-  font-size: 1.7rem;
-  margin:1rem 1rem 0 0;
-}
-#Content p{
-  font-size: 1rem;
-  margin: .5rem 0 0 0;
+  padding: .1rem ;
+  margin: -.5rem 0 .9rem 0;
 }
 /*----------- Stats ------------*/
 .stats-container {
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
-  padding: .5rem;
-  margin: 2rem 0 0 0;
+  padding: .1rem;
+  margin-bottom: .5rem;
 }
 .stat-card {
   flex: 1;
@@ -224,28 +173,24 @@ body {
 /*----------- UpComingClasses Section ------------*/
 .UpComingClasses{
   display: flex;
-  padding: .5rem;
   border-radius: 1rem;
-  margin: 1rem 0;
   flex-direction: column;
 }
 .UCC-Block{
   display: flex;
-  align-items: flex-end;
+  margin: 0 1rem;
+  align-items: center;
   justify-content: space-between;
 }
 .UCC-Btn-block{
   display: flex;
 }
-.UCC-Title {
-  margin: 0 1rem 1rem 1rem;
-}
+
 .UCC-Title h1{
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  margin-bottom: -.5rem;
 }
-.UCC-Title p{
-  margin: -.5rem  0 0 0;
-}
+
 .UCC-Btn-block{
   gap: 1rem;
   padding: .3rem 1rem;
@@ -260,7 +205,7 @@ body {
   justify-content: center;
   overflow: hidden;
   width: 100%;
-  padding: 1rem 2rem;           
+  padding: 2rem;           
   box-sizing: border-box;
 }
 .carousel-btn {
@@ -355,113 +300,31 @@ body {
   font-size: .8rem; 
   margin-left: 10px; 
 }
-/*----------- Charts ------------*/
-.AC-Title{
-  display: flex;
-  align-items:center;
-  justify-content:space-between ;
-}
-.Course-Categories{
-  gap: 50rem;
-  display: flex;
-  align-items:center;
-}
-.Course-Categories-points{
-  gap: 7rem;
-  display: flex;
-  align-items:center;
-}
-/*----------- Action Buttons ------------*/
-.Action-btns {
+/*----------- Course-List ------------*/
+.Course-List {
   width: 100%;
-  display: flex;
-  flex-direction: row;
+  height: 10rem;
+  overflow-y: auto;   /* Allow scrolling up/down */
+  overflow-x: hidden; /* No horizontal scroll */
+  box-sizing: border-box;
+  border-radius: .5rem;
+  padding-right: 6px; 
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+.Course-Categories,
+.Course-Row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  padding: 0.8rem 1rem;
 }
-.Action-btns-card {
-  width: 48%;
-  text-align: center;
-  font-size: 1.3rem;
-  padding: 0.5rem 1rem;
-  margin: 1rem 0.5rem;
-  border-radius: 1rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+.Course-Categories {
+  font-weight: bold;
 }
-
-/* =========================================================
-   📱 PHONE BREAKPOINT — ONLY MOBILE BEHAVIOR
-   Nothing changes until screen < 600px
-========================================================= */
-@media (max-width: 600px) {
-
-  body {
-    height: auto;
-    overflow: auto; /* allow scrolling on phones */
-    margin: 0.5rem;
-  }
-
-  /* MAIN LAYOUT STACKS */
-  .main {
-    flex-direction: column;
-    height: auto;
-  }
-
-  /* SIDEBAR GOES FULL WIDTH */
-  #sidebar {
-    width: 100%;
-    height: auto;
-    justify-content: center;
-  }
-
-  .nav {
-    width: 100%;
-    justify-content: center;
-    margin: .5rem 0;
-  }
-
-  /* USER INFO STACKS */
-  .User-Info {
-    flex-direction: column;
-    text-align: center;
-    gap: .8rem;
-  }
-
-  /* CONTENT */
-  #Content {
-    height: auto;
-    padding: 0 .5rem;
-  }
-
-  /* STATS CARDS STACK */
-  .stats-container {
-    flex-direction: column;
-  }
-
-  .stat-card {
-    width: 100%;
-  }
-
-  /* UPCOMING CLASSES BUTTONS */
-  .Action-btns-card {
-    width: 100%;
-  }
-
-  /* CAROUSEL */
-  .carousel-btn {
-    display: none; /* remove arrows on small phones */
-  }
-
-  .card {
-    min-width: 90%;
-    max-width: 90%;
-  }
-
-  /* UCC TOP BLOCK */
-  .UCC-Block {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: .5rem;
-  }
+.Course-Row {
+  font-size: 0.95rem;
+}
+.Course-Row:hover {
+  cursor: pointer;
 }
